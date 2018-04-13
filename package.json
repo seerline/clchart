@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "gulp watch",
-    "eslint": "eslint ./"
+    "eslint": "eslint ./",
+    "clean": "rm -rf node_modules && npm i"
   },
   "keywords": [],
   "author": "",
