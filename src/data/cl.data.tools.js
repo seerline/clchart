@@ -3,8 +3,22 @@
 import {
   FIELD_DAY,
   FIELD_TICK,
-  FIELD_RIGHT
+  FIELD_RIGHT,
+  FIELD_DAY5
 } from './cl.data.const';
+
+import {
+  copyArrayOfDeep,
+  isEmptyArray,
+  getDate,
+  getDayWeek,
+  getDayGap,
+  getDayMon,
+  getMinuteGap,
+  getMinute,
+  getMinCount,
+  getMinuteOffset
+} from '../util/cl.tools';
 
 // 按fields定义从数组value中获取，第index条标记为label的数据
 export default function getValue({
@@ -138,7 +152,7 @@ function _getExrightPara(rightdata) {
 }
 // 传入的价格和传出的价格都是放大coinunit倍的整形
 function _getExrightPrice(price, coinunit, rightpara, mode) {
-  if (coinunit === undefined) price_unit = 100;
+  if (coinunit === undefined) coinunit = 100;
   if (mode === 'forword') {
     price = (price * (1000 / coinunit) - rightpara.pg - rightpara.px) * 1000 / rightpara.gs;
   } else {
@@ -213,7 +227,7 @@ export function transExrightMin(days, coinunit, rights, mode, start, end) {
     for (let i = start; i <= end; i++) {
       for (let j = 0; j < rights.length; j++) {
         if (i < 1) continue;
-        if (_isRight(_getDate(days[i - 1][FIELD_DAY.time]), days[i][FIELD_DAY.time], rights[j][FIELD_RIGHT.time])) {
+        if (_isRight(getDate(days[i - 1][FIELD_DAY.time]), days[i][FIELD_DAY.time], rights[j][FIELD_RIGHT.time])) {
           _transExright(days, coinunit, rights[j], mode, start, i);
           break;
         }
@@ -632,7 +646,7 @@ export function fromTradeTimeToIndex(ttime, tradetime) { // time_t 返回０－�
     if (minute <= tradetime[i].begin && i === 0) { // 8:00:00---9:30:59秒前都=0
       return 0;
     }
-    if (minute <= tradetime[i].begin && (minute > _getMinuteOffset(tradetime[i].begin, -5))) { // 12:55:59--13:00:59秒
+    if (minute <= tradetime[i].begin && (minute > getMinuteOffset(tradetime[i].begin, -5))) { // 12:55:59--13:00:59秒
       return nowmin;
     }
 
@@ -641,7 +655,7 @@ export function fromTradeTimeToIndex(ttime, tradetime) { // time_t 返回０－�
     if (minute >= tradetime[i].end && i === tradetime.length - 1) { // 15:00:00秒后
       return nowmin - 1;
     }
-    if (minute >= tradetime[i].end && (minute < _getMinuteOffset(tradetime[i].end, 5))) { // 11:30:00--11:34:59秒
+    if (minute >= tradetime[i].end && (minute < getMinuteOffset(tradetime[i].end, 5))) { // 11:30:00--11:34:59秒
       return nowmin - 1;
     }
   }
@@ -656,7 +670,7 @@ export function fromIndexToTradeTime(tindex, tradetime, tradedate) {
   for (let i = 0; i < tradetime.length; i++) {
     nowmin = getMinuteGap(tradetime[i].begin, tradetime[i].end);
     if (index < nowmin) {
-      offset = _getMinuteOffset(tradetime[i].begin, index + 1);
+      offset = getMinuteOffset(tradetime[i].begin, index + 1);
       const ttime = new Date(Math.floor(tradedate / 10000), Math.floor(tradedate % 10000 / 100) - 1, tradedate % 100,
         Math.floor(offset / 100), offset % 100, 0);
       return Math.floor(ttime / 1000);
@@ -681,7 +695,7 @@ export function outputDay5(source, coinunit, tradetime) {
   let money = 0;
   let curDate = 0;
   const daymins = getMinCount(tradetime);
-  for (idx = 0; idx < day5_data.length; idx++) {
+  for (idx = 0; idx < source.length; idx++) {
     if (curDate !== getDate(source[idx][FIELD_TICK.time])) {
       curDate = getDate(source[idx][FIELD_TICK.time]);
       count++;

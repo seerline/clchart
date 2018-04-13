@@ -30,6 +30,7 @@ import {
 import {
   inArray,
   inRangeY,
+  intersectArray,
   formatPrice
 } from '../util/cl.tool';
 
@@ -59,7 +60,7 @@ export default function ClDrawSeer(father, rectMain) {
     const xx = this.rectMain.left + offset * (this.linkInfo.unitX + this.linkInfo.spaceX) + Math.floor(this.linkInfo.unitX / 2);
     let price = nowprice;
     if (nowprice === undefined) {
-      price = getValue(this.data, 'close', idx);
+      price = getValue(this.data, 'close', index);
     }
     const yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY);
     return {
@@ -78,7 +79,7 @@ export default function ClDrawSeer(father, rectMain) {
     const xx = this.rectMain.left + offset * (this.linkInfo.unitX + this.linkInfo.spaceX) + Math.floor(this.linkInfo.unitX / 2);
 
     const status = getValue(this.seerList, 'status', no);
-    const start_price = getValue(sthis.eerList, 'buy', no);
+    const start_price = getValue(this.seerList, 'buy', no);
     let price = start_price;
     let yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY);
 
@@ -206,7 +207,7 @@ export default function ClDrawSeer(father, rectMain) {
         display: true
       },
       {
-        txt: this.linkInfo.hideInfo ? '目标' : '目标:' + _formatPrice(price, this.static.decimal),
+        txt: this.linkInfo.hideInfo ? '目标' : '目标:' + formatPrice(price, this.static.decimal),
         set: 100,
         display: !this.linkInfo.hideInfo
       }
@@ -228,7 +229,7 @@ export default function ClDrawSeer(father, rectMain) {
       }
       ];
     }
-    if (_inRangeY(this.rectMain, yy)) {
+    if (inRangeY(this.rectMain, yy)) {
       _drawSignHLine(this.context, {
         linew: this.scale,
         xx,
@@ -302,7 +303,7 @@ export default function ClDrawSeer(father, rectMain) {
     this.stockInfo = this.source.getData('INFO');
 
     if (this.seerList.value.length < 1) return 0;
-    this.seerShow = filterSeer(); // name,date,[该按钮对应的id列表],chart按钮
+    this.seerShow = this.filterSeer(); // name,date,[该按钮对应的id列表],chart按钮
 
     // 先画点，最后画激活的那个
     // 不在视线内不显示任何信息
@@ -337,7 +338,7 @@ export default function ClDrawSeer(father, rectMain) {
       const acrR = 9;
       const nowStatus = arr.length > 0 ? 'focused' : 'enabled';
 
-      seerShow[k].chart.init({
+      this.seerShow[k].chart.init({
         rectMain: {
           left: pos.xx - acrR * this.scale,
           top: nowStatus === 'focused' ? pos.yy - acrR * this.scale - 2 * acrR * this.scale : pos.yy - acrR * this.scale,

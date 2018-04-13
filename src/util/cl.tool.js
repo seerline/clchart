@@ -90,7 +90,7 @@ export function getMinuteGap(beginMin, endMin) {
 }
 
 // 偏移分钟数，offset 为分钟数
-export function _getMinuteOffset(minute, offset) {
+export function getMinuteOffset(minute, offset) {
   const mincount = Math.floor(minute / 100) * 60 + minute % 100 + offset;
   return Math.floor(mincount / 60) * 100 + mincount % 60;
 }

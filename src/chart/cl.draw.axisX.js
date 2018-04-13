@@ -43,7 +43,7 @@ export default function ClDrawAxisX(father, rectMain) {
       for (let k = this.linkinfo.minIndex; k <= this.linkinfo.maxIndex; k++) {
         const index = getValue(this.data, 'idx', k);
         if (index < 0) continue;
-        days = Math.floor(index / 240);
+        days = Math.floor(index / this.linkinfo.maxCount);
         if (days > count) {
           count = days;
           xx = this.rectMain.left + spaceX / 2 + spaceX * count;

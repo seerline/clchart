@@ -37,6 +37,9 @@ import {
   isEmptyArray,
   copyArrayOfDeep
 } from '../util/cl.tool';
+import {
+  ClFormula
+} from '../formula/cl.formula';
 // 只保存一只股票的信息，当前日期，开收市时间
 function ClData() {
   this.formula = new ClFormula();
@@ -376,12 +379,12 @@ function ClData() {
       }
     } // for i
     if (hasData) {
-      curMin[min.fields.vol] = min.value[min.value.length - 1][min.fields.vol] - base_vol;
-      curMin[min.fields.money] = min.value[min.value.length - 1][min.fields.money] - base_money;
+      curMin[min.fields.vol] = min.value[min.value.length - 1][min.fields.vol] - sumVol;
+      curMin[min.fields.money] = min.value[min.value.length - 1][min.fields.money] - sumMoney;
       curMin[min.fields.time] = fromIndexToTradeTime(stopIdx, this.tradeTime, this.tradeDate);
       source.push(copyArrayOfDeep(curMin));
     }
-    return out;
+    return source;
   }
 
 

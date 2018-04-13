@@ -1,15 +1,20 @@
 'use strict'
 
-import ClDrawKBar from './ClDraw.KBar';
-import ClDrawLine from './ClDraw.Line';
-import ClDrawRight from './ClDraw.Right';
-import ClDrawSeer from './ClDraw.Seer';
-import ClDrawTrade from './ClDraw.Trade';
-import ClDrawVBar from './ClDraw.VBar';
-import ClDrawVLine from './ClDraw.VLine';
+import ClChart from './chart/cl.chart.base';
+import ClDrawKBar from './chart/cl.draw.kbar';
+import ClDrawLine from './/chart/cl.draw.line';
+import ClDrawRight from './chart/cl.draw.right';
+import ClDrawVBar from './chart/cl.draw.vbar';
+import ClDrawVLine from './chart/cl.draw.vline';
+import ClEvent from './event/cl.event';
+import ClData from './event/cl.data';
+import {
+  copyJsonOfDeep,
+  updateJsonOfDeep
+} from '../util/cl.tool';
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
-export const _systemInfo = {
+export let _systemInfo = {
   runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换
   axisPlatform: 'phone', // 'web' 对坐标显示的区别
   eventPlatform: 'html5', // 'react'所有事件
@@ -509,6 +514,7 @@ export function initCommonInfo(chart, father) {
   chart.eventPlatform = _systemInfo.eventPlatform;
 }
 export function checkLayout(layout) {
+  const scale = _systemInfo.scale;
   layout.margin.top *= scale;
   layout.margin.left *= scale;
   layout.margin.bottom *= scale;
@@ -584,7 +590,7 @@ export function createMulChart(cfg) {
   _initSystem(cfg);
   const event = new ClEvent(_systemInfo);
   const chartList = {};
-  for (key in cfg.charts) {
+  for (const key in cfg.charts) {
     const chart = new ClChart(cfg.context);
     const data = new ClData();
     chart.initChart(data, event);
