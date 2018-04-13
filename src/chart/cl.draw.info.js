@@ -6,6 +6,7 @@
 
 import {
   _fillRect,
+  _getTxtWidth,
   _drawTxt
 } from '../util/cl.draw';
 import {

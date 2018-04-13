@@ -153,7 +153,7 @@ export default function ClEventWeb(father) {
   // 触摸
   this.touchstart = function (event) {
     this.__timestamp = new Date();
-    const point = event.touches ? event.touches[0] : e;
+    const point = event.touches ? event.touches[0] : event;
     this.startX = point.pageX;
     this.startY = point.pageY;
     window.clearTimeout(this.longTapTimeout);
@@ -258,7 +258,7 @@ export default function ClEventWeb(father) {
       }
     } else {
       window.clearTimeout(this.longTapTimeout);
-      const point = event.touches ? event.touches[0] : e;
+      const point = event.touches ? event.touches[0] : event;
       const deltaX = this.moveX === null ? 0 : point.pageX - this.moveX;
       const deltaY = this.moveY === null ? 0 : point.pageY - this.moveY;
       // this._emitEvent('onMove', { deltaX, deltaY });

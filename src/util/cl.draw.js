@@ -43,7 +43,7 @@ export function _drawlineTo(context, xx, yy) {
 }
 
 // 画空心长方形
-export function '../util/cl.draw';(context, xx, yy, ww, hh) {
+export function _drawRect(context, xx, yy, ww, hh) {
   context.strokeRect(xx, yy, ww, hh); // 这里的宽度是指不算xx的起始点的宽度，所以你写宽5，实际出来图形是6个像素，
 }
 // 画实心长方形
@@ -98,7 +98,7 @@ export function _drawTxt(context, xx, yy, txt, font, pixel, clr, pos) {
   context.fillStyle = clr || context.fillStyle;
   context.textBaseline = pos ? pos.y || 'top' : 'top'; // top（默认）；middle bottom
   context.textAlign = pos ? pos.x || 'start' : 'start'; // start（默认）;center end
-  context.fillText(txt, xx, yy - cl_draw_offset);
+  context.fillText(txt, xx, yy);
 }
 
 export function _getTxtWidth(context, txt, font, pixel) {

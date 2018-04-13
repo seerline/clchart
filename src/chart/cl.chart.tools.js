@@ -47,16 +47,16 @@ export function setFixedLineFlags(info, config) {
   info.minIndex = 0;
   info.maxIndex = config.size - 1;
   // 5日线时 spaceX初始值设为0
-  const maxCount = config.maxCount > 1 ? config.maxCount : 2;
+  info.maxCount = config.maxCount > 1 ? config.maxCount : 2;
   info.unitX = _systemInfo.scale;
-  info.spaceX = config.width / maxCount - info.unitX;
+  info.spaceX = config.width / info.maxCount - info.unitX;
 }
 // 此种情况下spaceX最小需要一个像素
 export function setMoveLineFlags(info, config) {
   const spaceX = info.unitX / 4;
   info.spaceX = spaceX < _systemInfo.scale ? _systemInfo.scale : spaceX;
-  const maxCount = Math.floor(config.width / (info.unitX + info.spaceX)); // 整个图形区域最大显示记录数
-  const offset = maxCount > config.size ? config.size : maxCount;
+  info.maxCount = Math.floor(config.width / (info.unitX + info.spaceX)); // 整个图形区域最大显示记录数
+  const offset = info.maxCount > config.size ? config.size : info.maxCount;
 
   switch (info.showMode) {
     case 'fixed':
