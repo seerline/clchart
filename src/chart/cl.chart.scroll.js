@@ -9,7 +9,6 @@ import {
   _getTxtWidth,
   _setLineWidth,
   _drawTxt,
-  _drawRect,
   _fillRect,
   _drawBegin,
   _drawEnd
@@ -17,7 +16,8 @@ import {
 import {
   changeCursorStyle,
   initCommonInfo,
-  checkLayout
+  checkLayout,
+  CFG_LAYOUT,
 } from '../cl.chart';
 import {
   updateJsonOfDeep,
@@ -172,14 +172,14 @@ export default function ClChartScroll(father) {
     const mousePos = event.mousePos;
     if (inRect(this.rectMin, mousePos) || inRect(this.rectMax, mousePos)) {
       changeCursorStyle('col-resize');
-    } else if (_inRect(this.rectMid, pos)) {
+    } else if (inRect(this.rectMid, mousePos)) {
       changeCursorStyle('move');
     } else {
       changeCursorStyle('default');
     }
     if (this.who !== undefined) {
       let min, max;
-      const curIndex = this.findMouseIndex(pos.x);
+      const curIndex = this.findMouseIndex(mousePos.x);
       if (this.config.shape === 'free') {
         if (curIndex < this.config.select.max) {
           if (this.who === 'max') {
@@ -198,7 +198,7 @@ export default function ClChartScroll(father) {
         }
         this.onChange({ min, max, iscall: true });
       } else {
-        min = this.config.select.min + cur - this.index;
+        min = this.config.select.min + curIndex - this.index;
         this.index = curIndex;
         min = this.checkMin(min);
         this.onChange({ min, iscall: true });

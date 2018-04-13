@@ -3,6 +3,7 @@
 import {
   _systemInfo
 } from '../cl.chart';
+import getValue from '../data/cl.data.tools';
 
 // ///////////////////////////////////////
 // 和定位相关基本函数
@@ -18,7 +19,7 @@ export function findLabelToIndex(data, findvalue, label) {
   return -1;
 }
 // 查找最匹配time的记录号，direction为forword的时候表示从后面向前开始寻找，
-export function findNearTimeToIndex(data, findvalue, label) {
+export function findNearTimeToIndex(data, findvalue, label, direction) {
   if (label === undefined) label = 'time';
   if (direction && direction === 'forword') {
     for (let idx = data.value.length - 1; idx >= 0; idx--) {

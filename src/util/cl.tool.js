@@ -67,7 +67,7 @@ export function fromTTimeToStr(ttime, format, ttimePre) {
       if (ttimePre === undefined) {
         return mtime.getHours() + ':' + addPreZero(mtime.getMinutes(), 2);
       } else {
-        if (_getMinute(ttime) === getMinute(ttimePre)) {
+        if (getMinute(ttime) === getMinute(ttimePre)) {
           return ':' + addPreZero(mtime.getSeconds(), 2);
         } else {
           return mtime.getHours() + ':' + addPreZero(mtime.getMinutes(), 2);

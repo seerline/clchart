@@ -6,7 +6,6 @@
 // 画买卖盘和Tick
 
 import {
-  _drawRect,
   _fillRect,
   _drawHline,
   _setLineWidth,
@@ -18,11 +17,14 @@ import {
 import {
   fromTTimeToStr,
   formatVolume,
-  formatPrice
+  formatPrice,
+  updateJsonOfDeep,
+  offsetRect,
 } from '../util/cl.tool';
 import {
   initCommonInfo,
-  checkLayout
+  checkLayout,
+  CFG_LAYOUT,
 } from '../cl.chart';
 import {
   getValue

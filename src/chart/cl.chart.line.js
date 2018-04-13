@@ -12,19 +12,36 @@ import {
   _getImageData,
   _putImageData,
   _setLineWidth,
-  _getTxtWidth
+  _getTxtWidth,
+  _drawBegin,
+  _drawEnd,
 } from '../util/cl.draw';
 import {
   fromIndexToTradeTime,
   getMinuteCount
 } from '../data/cl.data.tools';
 import {
-  findLabelToIndex
+  findLabelToIndex,
+  setFixedLineFlags,
+  setMoveLineFlags,
 } from './cl.chart.tools';
 import {
   initCommonInfo,
-  checkLayout
+  checkLayout,
+  CFG_LAYOUT
 } from '../cl.chart';
+import {
+  updateJsonOfDeep,
+  copyJsonOfDeep,
+  offsetRect,
+  inArray,
+  isEmptyArray,
+  formatShowTime,
+  inRangeX,
+} from '../util/cl.tool';
+
+import { STOCK_TYPE_INDEX } from '../data/cl.data.const';
+import getValue, { getSize } from '../data/cl.data.tools';
 
 import ClChartButton from './cl.chart.button';
 import ClChartScroll from './cl.chart.scroll';
@@ -35,8 +52,6 @@ import ClDrawGrid from './cl.draw.grid';
 import ClDrawInfo from './cl.draw.info';
 import ClDrawLine from './cl.draw.line';
 import ClDrawVLine from './cl.draw.vline';
-
-import { STOCK_TYPE_INDEX } from '../data/cl.data.const';
 
 export default function ClChartLine(father) {
   initCommonInfo(this, father);
@@ -109,12 +124,12 @@ export default function ClChartLine(father) {
     // 计算rectAxisX和rectScroll矩形位置
     axisInfo.left = this.rectChart.left;
     axisInfo.right = this.rectChart.left + this.rectChart.width;
-    axisInfo.top = rectTitle.top + this.rectTitle.height;
+    axisInfo.top = this.rectTitle.top + this.rectTitle.height;
     axisInfo.bottom = this.rectChart.top + this.rectChart.height;
 
     if (this.axisPlatform !== 'phone') {
-      if (this.config.axisY.left.display !== 'none') axisInfo.left += axisX.width;
-      if (this.config.axisY.right.display !== 'none') axisInfo.right -= axisX.width;
+      if (this.config.axisY.left.display !== 'none') axisInfo.left += this.config.axisX.width;
+      if (this.config.axisY.right.display !== 'none') axisInfo.right -= this.config.axisX.width;
     }
     if (this.config.axisX.display !== 'none') {
       axisInfo.bottom -= this.layout.text.height;
@@ -154,7 +169,7 @@ export default function ClChartLine(father) {
     if (this.scroll.display !== 'none') {
       this.rectScroll = {
         left: axisInfo.left,
-        top: rectAxisX.top + rectAxisX.height + this.scale,
+        top: this.rectAxisX.top + this.rectAxisX.height + this.scale,
         width: axisInfo.right - axisInfo.left,
         height: this.scroll.size
       };
@@ -172,7 +187,7 @@ export default function ClChartLine(father) {
       line = new className(this, this.rectChart); 
 
       this.childLines['NAME' + i] = line;
-      line.hotKey = getLineDataKey(this.config.lines[i]);
+      line.hotKey = this.getLineDataKey(this.config.lines[i]);
       if (inArray(className, [ClDrawLine, ClDrawVLine])) {
         line.out = { labelX: 'idx', labelY: 'value' };
         if (this.config.lines[i].out !== undefined) line.out = this.config.lines[i].out;
@@ -598,7 +613,7 @@ export default function ClChartLine(father) {
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
   this.onClick = function(event) {
-    console.log('click', this.axisPlatform);
+    // console.log('click', this.axisPlatform);
     if (this.axisPlatform !== 'phone') {
       this.showCursorLine = !this.showCursorLine;
       if (this.showCursorLine) {
