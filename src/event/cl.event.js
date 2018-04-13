@@ -28,6 +28,7 @@ import {
   copyJsonOfDeep,
   inRect
 } from '../util/cl.tool';
+import ClEventWeb from './cl.event.web';
 
 export const EVENT_DEFINE = [
   'onMouseMove',
