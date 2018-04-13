@@ -2,7 +2,11 @@
   "name": "clchart",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/cl.chart.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seerline/clchart.git"
+  },
   "scripts": {
     "eslint": "eslint ./"
   },
