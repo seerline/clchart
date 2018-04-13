@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 
 import ClChart from './chart/cl.chart.base';
 import ClDrawKBar from './chart/cl.draw.kbar';
-import ClDrawLine from './/chart/cl.draw.line';
+import ClDrawLine from './chart/cl.draw.line';
 import ClDrawRight from './chart/cl.draw.right';
 import ClDrawVBar from './chart/cl.draw.vbar';
 import ClDrawVLine from './chart/cl.draw.vline';
 import ClEvent from './event/cl.event';
-import ClData from './event/cl.data';
+import ClData from './data/cl.data';
 import {
   copyJsonOfDeep,
   updateJsonOfDeep
-} from '../util/cl.tool';
+} from './util/cl.tool';
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
 export let _systemInfo = {

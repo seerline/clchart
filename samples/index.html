@@ -3,7 +3,7 @@
 
 <head>
 	<title>ClChart</title>
-	<script src="../dist/ClChart.bundle.js"></script>
+	<script src="../cl.chart.js"></script>
 	<style>
 		canvas {
 			-moz-user-select: none;
@@ -16,15 +16,18 @@
 
 <body>
 	<div class="container">
-		<canvas id="myChart"></canvas>
+		<h1>clchart</h1>
+		<canvas id="myChart" width="400" height="400"></canvas>
 	</div>
 	<script>
 		// 开始画图
-		// window.onload = function() {
-		// 	var ctx = document.getElementById('myChart').getContext('2d');
-		// 	var config = {};
-		// 	new Chart(ctx, config);
-		// };
+		window.onload = function() {
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var config = {
+				context: ctx
+			};
+			ClChart.createSingleChart(config);
+		};
 	</script>
 </body>
 

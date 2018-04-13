@@ -18,7 +18,7 @@ import {
   getMinute,
   getMinCount,
   getMinuteOffset
-} from '../util/cl.tools';
+} from '../util/cl.tool';
 
 // 按fields定义从数组value中获取，第index条标记为label的数据
 export default function getValue({
