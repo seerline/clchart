@@ -127,7 +127,7 @@ export function _drawTxtRect(context, xx, yy, txt, config) {
   _fillRect(context, xxx, yyy, tr.width, tr.height, config.bakclr);
 
   _drawBegin(context, config.clr);
-  '../util/cl.draw';(context, xxx, yyy, tr.width, tr.height);
+  _drawRect(context, xxx, yyy, tr.width, tr.height);
   xxx = xx;
   yyy = yy;
   if (config.x === 'start') xxx = xx + spaceX; // ||config.x==='center'
@@ -348,6 +348,7 @@ export function _drawKBar(context, config, item) {
   let hh;
 
   const yy = config.rect.top + Math.round((config.maxmin.max - item[0]) * config.unitY);
+
   if (item[0] === item[3]) {
     hh = 0;
     _drawHline(context, xx, xx + config.unitX, yy);
@@ -360,7 +361,7 @@ export function _drawKBar(context, config, item) {
     if (config.filled) {
       _fillRect(context, xx, yy, config.unitX, hh, config.fillclr);
     } else {
-      '../util/cl.draw';(context, xx, yy, config.unitX, hh);
+      _drawRect(context, xx, yy, config.unitX, hh);
     }
     _drawVline(context, xxm, yy + hh, yyl);
   }
@@ -373,7 +374,7 @@ export function _drawVBar(context, config, value) {
   if (config.filled) {
     _fillRect(context, xx, yy, config.unitX, hh, config.fillclr);
   } else {
-    '../util/cl.draw';(context, xx, yy, config.unitX, hh);
+    _drawRect(context, xx, yy, config.unitX, hh);
   }
 }
 

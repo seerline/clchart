@@ -161,7 +161,7 @@ export const CFG_CHART_KBAR = {
     className: ClDrawLine,
     info: {  // 输出在信息栏目的数据
       txt: '5:',
-      label: 'value',                  // 从key中获取对应的数据标签 用于显示信息用
+      labelY: 'value',                  // 从key中获取对应的数据标签 用于显示信息用
       format: 'price'
     },
     formula: { // 数据生成方式，都需要基于基本数据，没有formula表示取绑定的数据
@@ -173,7 +173,7 @@ export const CFG_CHART_KBAR = {
     className: ClDrawLine,
     info: {
       txt: '10:',
-      label: 'value',
+      labelY: 'value',
       format: 'price'
     },
     formula: {
@@ -185,7 +185,7 @@ export const CFG_CHART_KBAR = {
     className: ClDrawLine,
     info: {
       txt: '20:',
-      label: 'value',
+      labelY: 'value',
       format: 'price'
     },
     formula: {
@@ -197,7 +197,7 @@ export const CFG_CHART_KBAR = {
     className: ClDrawLine,
     info: {
       txt: '60:',
-      label: 'value',
+      labelY: 'value',
       format: 'price'
     },
     formula: {
@@ -240,7 +240,7 @@ export const CFG_CHART_VBAR = {
       minvalue: [0]    // 参与计算最小值的标签
     },
     info: {
-      label: 'vol',   // 需要显示的变量，从key中获取对应的数据标签
+      labelY: 'vol',   // 需要显示的变量，从key中获取对应的数据标签
       format: 'vol'
     },
   },
@@ -248,7 +248,7 @@ export const CFG_CHART_VBAR = {
     className: ClDrawLine,
     info: {
       txt: '5:',
-      label: 'value',   // 需要显示的变量，从key中获取对应的数据标签
+      labelY: 'value',   // 需要显示的变量，从key中获取对应的数据标签
       format: 'vol'
     },
     formula: {
@@ -260,7 +260,7 @@ export const CFG_CHART_VBAR = {
     className: ClDrawLine,
     info: {
       txt: '10:',
-      label: 'value',   // 需要显示的变量，从key中获取对应的数据标签
+      labelY: 'value',   // 需要显示的变量，从key中获取对应的数据标签
       format: 'vol'
     },
     formula: {
@@ -272,7 +272,7 @@ export const CFG_CHART_VBAR = {
     className: ClDrawLine,
     info: {
       txt: '20:',
-      label: 'value',   // 需要显示的变量，从key中获取对应的数据标签
+      labelY: 'value',   // 需要显示的变量，从key中获取对应的数据标签
       format: 'vol'
     },
     formula: {
@@ -280,7 +280,7 @@ export const CFG_CHART_VBAR = {
       command: `out = this.MA('vol',20)`  // 公式只能输出值到out中
     }
   }]
-}
+};
 
 export const CFG_CHART_NOW = {
   title: {
@@ -313,7 +313,7 @@ export const CFG_CHART_NOW = {
       maxvalue: ['high'],  // 参与计算最大值的标签
       minvalue: ['low']    // 参与计算最小值的标签
     },
-    out: {
+    info: {
       labelX: 'idx',
       labelY: 'close'
     }
@@ -325,7 +325,7 @@ export const CFG_CHART_NOW = {
       command: `out = this.AVGPRC()`  // 均价,要根据股票类型做变化
     }
   }]
-}
+};
 export const CFG_CHART_NOWVOL = {
   title: {
     display: 'none', // none 不显示 btn 按钮 text 文字
@@ -357,13 +357,13 @@ export const CFG_CHART_NOWVOL = {
       maxvalue: ['decvol'],  // 参与计算最大值的标签
       minvalue: [0]    // 参与计算最小值的标签
     },
-    out: {
+    info: {
       labelX: 'idx',
       labelY: 'decvol',
       color: 'vol'
     }
   }]
-}
+};
 
 export const CFG_CHART_DAY5 = {
   title: {
@@ -396,7 +396,7 @@ export const CFG_CHART_DAY5 = {
       maxvalue: ['decvol'],  // 参与计算最大值的标签
       minvalue: ['close']    // 参与计算最小值的标签
     },
-    out: {
+    info: {
       labelX: 'time',
       labelY: 'close'
     }
@@ -408,7 +408,7 @@ export const CFG_CHART_DAY5 = {
       command: `out = this.AVGPRC()`  // 均价,要根据股票类型做变化
     }
   }]
-}
+};
 
 export const CFG_CHART_DAY5VOL = {
   title: {
@@ -441,13 +441,13 @@ export const CFG_CHART_DAY5VOL = {
       maxvalue: ['vol'],  // 参与计算最大值的标签
       minvalue: [0]    // 参与计算最小值的标签
     },
-    out: {
+    info: {
       labelX: 'time',
       labelY: 'vol',
       color: 'vol'
     }
   }]
-}
+};
 
 export const CFG_CHART_NORMAL = {
   title: {
@@ -477,7 +477,7 @@ export const CFG_CHART_NORMAL = {
   lines: [{
     className: ClDrawLine,
   }]
-}
+};
 // ///////////////////////////
 //  下面是一个接口API函数
 // ///////////////////////////
@@ -573,9 +573,11 @@ export function changeCursorStyle(style) {
 export function createSingleChart(cfg) {
   _initSystem(cfg);
   _systemInfo.canvas = cfg.canvas;
+  // cfg.context.scale( 1 / cfg.scale, 1 / cfg.scale);
   const event = new ClEvent(_systemInfo);
   const chart = new ClChart(cfg.context);
   const data = new ClData();
+  
   chart.initChart(data, event);
   return chart;
 }

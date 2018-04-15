@@ -250,8 +250,8 @@ export default function ClDrawSeer(father, rectMain) {
     // 100 进行中
     if (inArray(status, [101, 102, 200, 201, 202, 300])) {
       const stopIdx = findNearTimeToIndex(this.data, stop, 'forword');
-      const stopOffset = stopIdx - this.linkinfo.minIndex;
-      const stopX = this.rectMain.left + stopOffset * (this.linkinfo.unitX + this.linkinfo.spaceX) + Math.floor(this.linkinfo.unitX / 2);
+      const stopOffset = stopIdx - this.linkInfo.minIndex;
+      const stopX = this.rectMain.left + stopOffset * (this.linkInfo.unitX + this.linkInfo.spaceX) + Math.floor(this.linkInfo.unitX / 2);
       if (stopX > this.rectMain.left && stopX < this.rectMain.left + this.rectMain.width - 4 * this.scale) {
         color = this.color.vol;
         price = getValue(this.seerList, 'buy', no);

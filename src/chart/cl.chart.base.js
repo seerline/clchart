@@ -9,13 +9,12 @@
 
 import {
   copyJsonOfDeep,
-  formatInfo,
-  inArray,
+  formatInfo
 } from '../util/cl.tool';
-import ClChartButton from './cl.chart.button';
+// import ClChartButton from './cl.chart.button';
 import ClChartLine from './cl.chart.line';
 import ClChartOrder from './cl.chart.order';
-import ClChartScroll from './cl.chart.scroll';
+// import ClChartScroll from './cl.chart.scroll';
 import getValue from '../data/cl.data.tools';
 import { setColor, _systemInfo } from '../cl.chart';
 
@@ -38,9 +37,10 @@ const CFG_LINKINFO = {
   minIndex: -1, // 当前画面的起始记录号 -1 表示第一次
   maxIndex: -1, // 当前画面的最大记录号 -1 表示第一次
   hotIndex: -1, // 循环时需要定位当前数据的指针定位
+  showCursorLine: false, // 是否显示光标信息
   moveIndex: -1, // 当前鼠标所在位置的记录号 -1 表示没有鼠标事件或第一次
-  spaceX: 1, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
-  unitX: 5, // 每天数据的宽度 默认为5， 可以在1..50之间切换
+  spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
+  unitX: 7, // 每天数据的宽度 默认为5， 可以在1..50之间切换
   rightMode: 'no', // 除权模式
   hideInfo: false  // 是否显示价格
 };
@@ -51,13 +51,13 @@ function ClChart(context) {
   this.context = context;
   // 通过这个来判断是否为根
   this.father = undefined;
-
   // //////////////////////////////////////////////
   // 重新初始化Chart，会清理掉所有的图表和数据
   // //////////////////////////////////////////////
   this.initChart = function (dataLayer, eventLayer) {
     // linkInfo 是所有子chart公用的参数集合，也是datalayer应用的集合
     this.linkInfo = copyJsonOfDeep(CFG_LINKINFO);
+    this.checkConfig();
     // 初始化子chart为空
     this.childCharts = {};
     // 设置数据层，同时对外提供设置接口
@@ -65,7 +65,10 @@ function ClChart(context) {
     // 设置事件层，同时对外提供设置接口
     this.setEventLayer(eventLayer);
   }
-
+  this.checkConfig = function() { // 检查配置有冲突的修正过来
+    this.linkInfo.unitX *= _systemInfo.scale;
+    this.linkInfo.spaceX *= _systemInfo.scale;
+  }
   this.getChart = function (key) {
     return this.childCharts[key];
   }
@@ -99,6 +102,7 @@ function ClChart(context) {
   }
   // 设置对应的chart基本的数据key
   this.bindData = function (chart, key) {
+    // console.log('bindData', chart, key);
     if (chart.hotKey !== key) {
       this.linkInfo.showMode = 'last'; // 切换数据后需要重新画图
       this.linkInfo.minIndex = -1;
@@ -107,6 +111,9 @@ function ClChart(context) {
     }
   }
   // 以下是客户端设置data中数据的接口
+  this.initData = function (tradedate, tradetime) {
+    this.datalayer.initData(tradedate, tradetime);
+  }
   this.setData = function (key, fields, value) {
     let info = value;
     if (typeof value === 'string') info = JSON.parse(value);
@@ -128,39 +135,41 @@ function ClChart(context) {
   }
   this.readyData = function (data, lines) {
     for (let k = 0; k < lines.length; k++) {
-      if (lines[k].ds === undefined || lines[k].ds.mode !== 'formula') continue;
-      if (!this.fastDraw || (this.fastDraw && this.fastBuffer[lines[k].ds.key] === undefined)) {
+      if (lines[k].formula === undefined) continue;
+      if (!this.fastDraw || (this.fastDraw && this.fastBuffer[lines[k].formula.key] === undefined)) {
+        // console.log('readyData', lines[k].formula, this.linkInfo);
         this.datalayer.makeLineData(
-          { data, minIndex: this.linkinfo.minIndex, maxIndex: this.linkinfo.maxIndex },
+          { data, minIndex: this.linkInfo.minIndex, maxIndex: this.linkInfo.maxIndex },
           lines[k].formula.key,
           lines[k].formula.command
         );
       }
     }
   }
-  // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
-  this.getMoveData = function (lines, index) {
-    const out = [];
-    if (!Array.isArray(lines)) return out;
+  // // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
+  // this.getMoveData = function (lines, index) {
+  //   const out = [];
+  //   if (!Array.isArray(lines)) return out;
 
-    index -= this.linkInfo.minIndex;
-    let value, info;
-    for (let k = 0; k < lines.length; k++) {
-      if (lines[k].info === undefined) continue;
-      if (lines[k].info.label !== undefined) {
-        if (lines[k].ds === undefined || lines[k].ds.mode === 'main') {
-          value = getValue(this.data, lines[k].info.label, index);
-        } else {
-          value = getValue(this.getData(lines[k].ds.key), lines[k].info.label, index);
-        }
-        info = formatInfo(value, lines[k].info.format, this.static.decimal);
-        out.push({ index: k, txt: lines[k].info.txt, value: info });
-      } else {
-        out.push({ index: k, txt: lines[k].info.txt });
-      }
-    }
-    return out;
-  }
+  //   index -= this.linkInfo.minIndex;
+  //   let value, info;
+  //   for (let k = 0; k < lines.length; k++) {
+  //     if (lines[k].info === undefined) continue;
+  //     if (lines[k].info.labelY !== undefined) {
+  //       if (lines[k].formula === undefined) {
+  //         console.log(this.data);
+  //         value = getValue(this.data, lines[k].info.labelY, index);
+  //       } else {
+  //         value = getValue(this.getData(lines[k].formula.key), lines[k].info.labelY, index);
+  //       }
+  //       info = formatInfo(value, lines[k].info.format, this.static.decimal);
+  //       out.push({ index: k, txt: lines[k].info.txt, value: info });
+  //     } else {
+  //       out.push({ index: k, txt: lines[k].info.txt });
+  //     }
+  //   }
+  //   return out;
+  // }
   // //////////////////////////////////////////////
   // name是唯一的名字，名字一样会覆盖以前同名的类，
   // className是调用什么类型的图，目前只支持 Line Order Button Scroll
@@ -168,14 +177,23 @@ function ClChart(context) {
   // callback 表示鼠标移动时返回的当前记录数据
   // //////////////////////////////////////////////
   this.createChart = function (name, className, usercfg, callback) {
-    if (!inArray(className, [
-      ClChartButton,
-      ClChartLine,
-      ClChartOrder,
-      ClChartScroll
-    ])) return undefined;
+    // console.log(name, className, ClChartLine);
 
-    const chart = new className(this);
+    // if (!inArray(className, [
+    //   ClChartButton,
+    //   ClChartLine,
+    //   ClChartOrder,
+    //   ClChartScroll
+    // ])) return undefined;
+    // const chart = new className(this);
+
+    let chart;
+    switch(className)
+    {
+      case 'CHART.ORDER': chart = new ClChartOrder(this);  break;
+      case 'CHART.LINE': chart = new ClChartLine(this);  break;
+      default : chart = new ClChartLine(this);  break;
+    }
 
     chart.name = name;
     this.childCharts[name] = chart;
@@ -189,6 +207,8 @@ function ClChart(context) {
   // 以下是chart画图的接口
   this.onPaint = function (chart) { // 需要重画时调用
     this.fastDrawBegin();
+    // console.log('paint', this.childCharts);
+    
     for (const key in this.childCharts) {
       if (chart !== undefined) {
         if (this.childCharts[key] === chart) {

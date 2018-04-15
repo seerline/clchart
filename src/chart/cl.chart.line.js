@@ -9,6 +9,7 @@
 
 import {
   _fillRect,
+  _drawRect,
   _getImageData,
   _putImageData,
   _setLineWidth,
@@ -37,11 +38,16 @@ import {
   inArray,
   isEmptyArray,
   formatShowTime,
+  formatInfo,
   inRangeX,
 } from '../util/cl.tool';
 
-import { STOCK_TYPE_INDEX } from '../data/cl.data.const';
-import getValue, { getSize } from '../data/cl.data.tools';
+import {
+  STOCK_TYPE_INDEX
+} from '../data/cl.data.const';
+import getValue, {
+  getSize
+} from '../data/cl.data.tools';
 
 import ClChartButton from './cl.chart.button';
 import ClChartScroll from './cl.chart.scroll';
@@ -58,17 +64,28 @@ export default function ClChartLine(father) {
 
   this.linkInfo = father.linkInfo;
   this.static = this.father.datalayer.static;
+
+  this.data = {};
+  this.maxmin = {};
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
-  this.init = function(cfg, callback) {
+  this.init = function (cfg, callback) {
     this.callback = callback;
-    this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 400, height: 200 };
+    this.rectMain = cfg.rectMain || {
+      left: 0,
+      top: 0,
+      width: 400,
+      height: 200
+    };
     this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
     this.config = copyJsonOfDeep(cfg.config);
     // 这里直接赋值是因为外部已经设置好了配置才会开始初始化
     this.buttons = cfg.buttons || [];
-    this.scroll = cfg.scroll || { display: 'none', size: 0 };
+    this.scroll = cfg.scroll || {
+      display: 'none',
+      size: 0
+    };
     this.childCharts = {};
 
     // 下面对配置做一定的校验
@@ -85,27 +102,37 @@ export default function ClChartLine(father) {
     // 初始化滚动条
     this.setScroll();
   }
-  this.checkConfig = function() { // 检查配置有冲突的修正过来
+  this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout);
     this.config.axisX.width *= this.scale;
     this.scroll.size *= this.scale;
-    this.maxmin = {};
-    this.data = {};
   }
-  this.setPublicRect = function() { // 计算所有矩形区域
-  // rectChart 画图区
-  // rectTitle rectMess
-  // rectAxisX
-  // rectScroll
-  // rectAxisYLeft rectAxisYRight
-  // rectGridLine 坐标线区域
+  this.setPublicRect = function () { // 计算所有矩形区域
+    // rectChart 画图区
+    // rectTitle rectMess
+    // rectAxisX
+    // rectScroll
+    // rectAxisYLeft rectAxisYRight
+    // rectGridLine 坐标线区域
 
     this.rectChart = offsetRect(this.rectMain, this.layout.margin);
-    const axisInfo = { width: this.config.axisX.width }; //
+    const axisInfo = {
+      width: this.config.axisX.width
+    }; //
 
     // 计算title和mess矩形位置
-    this.rectTitle = { left: 0, top: 0, width: 0, height: 0 };
-    this.rectMess = { left: 0, top: 0, width: 0, height: 0 };
+    this.rectTitle = {
+      left: 0,
+      top: 0,
+      width: 0,
+      height: 0
+    };
+    this.rectMess = {
+      left: 0,
+      top: 0,
+      width: 0,
+      height: 0
+    };
     if (this.config.title.display !== 'none') {
       this.rectTitle = {
         left: this.rectChart.left,
@@ -157,7 +184,12 @@ export default function ClChartLine(father) {
       height: axisInfo.bottom - axisInfo.top
     };
     this.rectChart = offsetRect(this.rectGridLine, this.layout.offset);
-    this.rectAxisX = { left: 0, top: axisInfo.bottom, width: 0, height: 0 };
+    this.rectAxisX = {
+      left: 0,
+      top: axisInfo.bottom,
+      width: 0,
+      height: 0
+    };
     if (this.config.axisX.display !== 'none') {
       this.rectAxisX = {
         left: axisInfo.left,
@@ -182,15 +214,23 @@ export default function ClChartLine(father) {
   this.setChildLines = function () {
     // l_kbar，l_line，l_nowvol，l_vbar l_nowline
     let line;
+    let clr = 0;
     for (let i = 0; i < this.config.lines.length; i++) {
       const className = this.config.lines[i].className;
-      line = new className(this, this.rectChart); 
+      line = new className(this, this.rectChart);
 
       this.childLines['NAME' + i] = line;
       line.hotKey = this.getLineDataKey(this.config.lines[i]);
       if (inArray(className, [ClDrawLine, ClDrawVLine])) {
-        line.out = { labelX: 'idx', labelY: 'value' };
-        if (this.config.lines[i].out !== undefined) line.out = this.config.lines[i].out;
+        line.info = {
+          labelX: 'idx',
+          labelY: 'value'
+        };
+        if (this.config.lines[i].info !== undefined) line.info = this.config.lines[i].info;
+        if (line.info.color === undefined) {
+          line.info.color = this.color.line[clr % this.color.line.length];
+        }
+        clr++;
       }
     }
   }
@@ -218,14 +258,19 @@ export default function ClChartLine(father) {
     this.childDraws['GRID'] = draw;
     // 下面是line的定义
   }
-  this.setScroll = function() {
+  this.setScroll = function () {
     if (this.scroll.display === 'none') return;
     const chart = new ClChartScroll(this);
     chart.name = 'HSCROLL';
     // this.father.bindEvent(chart);
     this.childCharts[chart.name] = chart;
 
-    chart.init({ rectMain: this.rectScroll, config: { width: 8 } },
+    chart.init({
+        rectMain: this.rectScroll,
+        config: {
+          width: 8
+        }
+      },
       result => {
         const self = result.self.father;
         if (self.father.linkInfo.minIndex !== result.minIndex) {
@@ -234,7 +279,7 @@ export default function ClChartLine(father) {
         }
       });
   }
-  this.createButton = function(name) {
+  this.createButton = function (name) {
     if (this.childCharts[name] !== undefined) return this.childCharts[name];
     const chart = new ClChartButton(this);
     chart.name = name;
@@ -242,62 +287,90 @@ export default function ClChartLine(father) {
     this.childCharts[name] = chart;
     return chart;
   }
-  this.setButtons = function() {
+  this.hasButton = function (key, buttons) {
+    for (let k = 0; k < buttons.length; k++) {
+      // console.log(buttons[k].key, key);
+      if (key === buttons[k].key) return true;
+    }
+    return false;
+  }
+  this.setButtons = function () {
     let chart;
     let xx, yy;
     let ww = 25 * this.scale;
-    if (inArray('zoomin', this.buttons) || inArray('zoomout', this.buttons)) {
+    if (this.hasButton('zoomin', this.buttons) || this.hasButton('zoomout', this.buttons)) {
       chart = this.createButton('zoomin');
       xx = Math.floor((this.rectChart.width - (ww + ww) * 2) / 4);
       yy = this.rectChart.top + this.rectChart.height * 0.98 - ww;
       chart.init({
-        rectMain: { left: xx, top: yy, width: ww, height: ww },
-        info: [{ map: '-' }]
-      },
+          rectMain: {
+            left: xx,
+            top: yy,
+            width: ww,
+            height: ww
+          },
+          info: [{
+            map: '-'
+          }]
+        },
         result => {
           const self = result.self.father;
-          if (self.zoomInfo.index > 0) {
-            self.zoomInfo.index--;
-            self.setZoomInfo(self.zoomInfo.index);
+          if (self.config.zoomInfo.index > 0) {
+            self.config.zoomInfo.index--;
+            self.setZoomInfo(self.config.zoomInfo.index);
             self.father.onPaint();
           }
         });
       chart = this.createButton('zoomout');
       xx += 2 * ww;
       chart.init({
-        rectMain: { left: xx, top: yy, width: ww, height: ww },
-        info: [{ map: '+' }]
-      },
+          rectMain: {
+            left: xx,
+            top: yy,
+            width: ww,
+            height: ww
+          },
+          info: [{
+            map: '+'
+          }]
+        },
         result => {
           const self = result.self.father;
-          if (self.zoomInfo.index < self.zoomInfo.list.length - 1) {
-            self.zoomInfo.index++;
-            self.setZoomInfo(self.zoomInfo.index);
+          if (self.config.zoomInfo.index < self.config.zoomInfo.list.length - 1) {
+            self.config.zoomInfo.index++;
+            self.setZoomInfo(self.config.zoomInfo.index);
             self.father.onPaint();
           }
         });
     }
-    if (inArray('exright', this.button)) {
+    if (this.hasButton('exright', this.buttons)) {
       chart = this.createButton('exright');
       ww = _getTxtWidth(this.context, '前复权', this.layout.text.font, this.layout.text.pixel - 2 * this.scale);
       xx = this.rectMain.width - ww - 6 * this.scale;
       chart.init({
-        rectMain: {
-          left: xx,
-          top: this.rectMess.top + this.scale,
-          width: ww + 4 * this.scale,
-          height: this.rectMess.height - 2 * this.scale
+          rectMain: {
+            left: xx,
+            top: this.rectMess.top + this.scale,
+            width: ww + 4 * this.scale,
+            height: this.rectMess.height - 2 * this.scale
+          },
+          config: {
+            shape: 'box'
+          },
+          info: [{
+              map: '不除权',
+              value: 'no'
+            },
+            {
+              map: '前复权',
+              value: 'forword'
+            }
+            // , {
+            //   map: '后复权',
+            //   value: 'back'
+            // }
+          ]
         },
-        config: { box: 'box' },
-        info: [
-          { map: '不除权', value: 'no' },
-          { map: '前复权', value: 'forword' }
-          // , {
-          //   map: '后复权',
-          //   value: 'back'
-          // }
-        ]
-      },
         result => {
           const self = result.self.father;
           self.father.linkInfo.rightMode = result.info.value;
@@ -313,11 +386,11 @@ export default function ClChartLine(father) {
     if (label === 'vol' || label === 'decvol') return 0;
     return this.static.decimal;
   }
-  this.addLine = function(line) {
+  this.addLine = function (line) {
     // this.removeLine(line.name);
     this.config.lines.push(line);
   }
-  this.removeLine = function(name) {
+  this.removeLine = function (name) {
     for (let i = 0; i < this.config.lines.length; i++) {
       if (this.config.lines[i].name === undefined) continue;
       if (this.config.lines[i].name === name) {
@@ -325,22 +398,23 @@ export default function ClChartLine(father) {
       }
     }
   }
-  this.setZoomInfo = function(index) {
-    this.linkInfo.unitX = this.zoomInfo.list[index] * this.scale;
+  this.setZoomInfo = function (index) {
+    this.linkInfo.unitX = this.config.zoomInfo.list[index] * this.scale;
     if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale;
-    this.linkInfo.spaceX = (this.linkInfo.unitX / this.scale) / 4 * this.scale;
+    this.linkInfo.spaceX = this.linkInfo.unitX / 4;
     if (this.linkInfo.spaceX < this.scale) this.linkInfo.spaceX = this.scale;
 
     if (this.childCharts['zoomin']) {
-      if (this.zoomInfo.index === 0) this.childCharts['zoomin'].setStatus('disabled');
+      if (this.config.zoomInfo.index === 0) this.childCharts['zoomin'].setStatus('disabled');
       else this.childCharts['zoomin'].setStatus('enabled');
     }
     if (this.childCharts['zoomout']) {
-      if (this.zoomInfo.index === this.zoomInfo.list.length - 1) this.childCharts['zoomout'].setStatus('disabled');
+      if (this.config.zoomInfo.index === this.config.zoomInfo.list.length - 1) this.childCharts['zoomout'].setStatus('disabled');
       else this.childCharts['zoomout'].setStatus('enabled');
     }
+    this.father.fastDrawEnd();
   }
-  this.setHotButton = function(chart) {
+  this.setHotButton = function (chart) {
     for (const name in this.childCharts) {
       if (this.childCharts[name] === chart) {
         this.childCharts[name].focused = true;
@@ -353,14 +427,15 @@ export default function ClChartLine(father) {
   // 下面的函数为绘图函数，
   // ////////////////////////////////////////////////
 
-  this.drawClear = function() {
+  this.drawClear = function () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back);
     _drawBegin(this.context, this.color.grid);
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
     _drawEnd(this.context);
   }
-  this.drawChildCharts = function() {
+  this.drawChildCharts = function () {
     let top;
+    // console.log('drawChildCharts', this.childCharts);
     for (const name in this.childCharts) {
       if (!this.childCharts[name].focused) {
         this.childCharts[name].onPaint();
@@ -372,6 +447,8 @@ export default function ClChartLine(father) {
   }
   this.drawChildLines = function () {
     for (const name in this.childLines) {
+      // console.log('..', this.childLines[name].hotKey);
+
       if (this.childLines[name].hotKey !== undefined) {
         this.childLines[name].onPaint(this.childLines[name].hotKey);
       } else {
@@ -379,11 +456,44 @@ export default function ClChartLine(father) {
       }
     }
   }
+  // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
+  this.getMoveData = function (index) {
+    let lines = this.config.lines;
+    const out = [];
+    if (!Array.isArray(lines)) return out;
+
+    let value, info;
+    for (let k = 0; k < lines.length; k++) {
+      if (lines[k].info === undefined) continue;
+      if (lines[k].info.labelY !== undefined) {
+        if (lines[k].formula === undefined) {
+          value = getValue(this.data, lines[k].info.labelY, index);
+          // console.log('getMoveData', this.data, lines[k].info.labelY, index, value);
+        } else {
+          value = getValue(this.father.getData(lines[k].formula.key), lines[k].info.labelY, 
+                index -  this.linkInfo.minIndex);
+        }
+        info = formatInfo(value, lines[k].info.format, this.static.decimal);
+        out.push({
+          index: k,
+          txt: lines[k].info.txt,
+          value: info
+        });
+      } else {
+        out.push({
+          index: k,
+          txt: lines[k].info.txt
+        });
+      }
+    }
+    // console.log('movedata', out);
+    return out;
+  }
   this.drawTitleInfo = function (index) {
     if (index < 0 || index > this.linkInfo.maxIndex) index = this.linkInfo.maxIndex;
-    this.childDraws['TITLE'].onPaint(this.father.getMoveData(this.config.lines, index));
+    this.childDraws['TITLE'].onPaint(this.getMoveData(index));
   }
-  this.drawChildDraws = function (name) {
+  this.drawChildDraw = function (name) {
     if (this.childDraws[name] !== undefined) {
       if (name === 'TITLE') {
         this.drawTitleInfo(this.linkInfo.moveIndex);
@@ -392,23 +502,25 @@ export default function ClChartLine(father) {
       }
     }
   }
-  this.onPaint = function() {
+  this.onPaint = function () {
     this.data = this.father.getData(this.hotKey);
+    this.locationData();
     this.father.readyData(this.data, this.config.lines);
 
     _setLineWidth(this.context, this.scale);
     this.drawClear(); // 清理画图区
 
-    this.drawChildDraws('GRID'); // 先画线格
+    this.drawChildDraw('GRID'); // 先画线格
+
     // 为画图做准备工作
     this.readyDraw();
-    this.drawChildDraws('AXISX');
-    this.drawChildDraws('AXISY_LEFT');
-    this.drawChildDraws('AXISY_RIGHT');
+    this.drawChildDraw('AXISX');
+    this.drawChildDraw('AXISY_LEFT');
+    this.drawChildDraw('AXISY_RIGHT');
 
-    this.drawChildLines();// 画出所有的线
+    this.drawChildLines(); // 画出所有的线
 
-    this.drawChildDraws('TITLE');
+    this.drawChildDraw('TITLE');
     this.drawChildCharts();
 
     this.img = _getImageData(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
@@ -417,20 +529,20 @@ export default function ClChartLine(father) {
   // ///////////////////////////////////////////////////////////
   // 画图前的准备工作
   // ////////////////////////////////////////////////////////////
-  this.getMiddle = function(method) {
+  this.getMiddle = function (method) {
     let middle = this.config.axisY.left.middle;
     if (method === 'fixedRight') middle = this.config.axisY.right.middle;
-    if(middle==='before') return this.static.before;
-    if(middle==='zero') return 0;
+    if (middle === 'before') return this.static.before;
+    if (middle === 'zero') return 0;
     return undefined;
   }
-  this.calcMaxMin = function(data, extremum, start, stop) {
+  this.calcMaxMin = function (data, extremum, start, stop) {
     const mm = {
       max: 0.0,
       min: 0.0
     };
     if (data === undefined || isEmptyArray(data.value)) {
-      if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight' ) {
+      if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
         const middle = this.getMiddle(extremum.method);
         mm.min = middle * (1 - 0.01);
         mm.max = middle * (1 + 0.01);
@@ -445,7 +557,7 @@ export default function ClChartLine(father) {
     for (let k = start; k <= stop; k++) {
       if (!isEmptyArray(extremum.maxvalue)) {
         for (let m = 0; m < extremum.maxvalue.length; m++) {
-          if (typeof(extremum.maxvalue[m]) !== 'string') continue;
+          if (typeof (extremum.maxvalue[m]) !== 'string') continue;
           value = getValue(data, extremum.maxvalue[m], k);
           if (value > 0 && value > mm.max) {
             mm.max = value;
@@ -454,7 +566,7 @@ export default function ClChartLine(father) {
       }
       if (!isEmptyArray(extremum.minvalue)) {
         for (let m = 0; m < extremum.minvalue.length; m++) {
-          if (typeof(extremum.minvalue[m]) !== 'string') continue;
+          if (typeof (extremum.minvalue[m]) !== 'string') continue;
           value = getValue(data, extremum.minvalue[m], k);
           if (mm.min === 0.0) mm.min = value;
           if (value > 0 && value < mm.min) {
@@ -466,7 +578,7 @@ export default function ClChartLine(father) {
     // //////////////////
     if (!isEmptyArray(extremum.maxvalue)) {
       for (let m = 0; m < extremum.maxvalue.length; m++) {
-        if (typeof(extremum.maxvalue[m]) === 'number') {
+        if (typeof (extremum.maxvalue[m]) === 'number') {
           mm.max = extremum.maxvalue[m];
           break;
         }
@@ -474,13 +586,13 @@ export default function ClChartLine(father) {
     }
     if (!isEmptyArray(extremum.minvalue)) {
       for (let m = 0; m < extremum.minvalue.length; m++) {
-        if (typeof(extremum.minvalue[m]) === 'number') {
+        if (typeof (extremum.minvalue[m]) === 'number') {
           mm.min = extremum.minvalue[m];
           break;
         }
       }
     }
-    if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight' ) {
+    if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
       const middle = this.getMiddle(extremum.method);
       if (mm.max === mm.min) {
         if (mm.max > middle) mm.min = middle;
@@ -489,7 +601,7 @@ export default function ClChartLine(father) {
       const maxrate = Math.abs(mm.max - middle);
       const minrate = Math.abs(middle - mm.min);
       if (maxrate / middle < 0.01 && minrate / middle < 0.01 &&
-          this.static.stktype !== STOCK_TYPE_INDEX) {
+        this.static.stktype !== STOCK_TYPE_INDEX) {
         mm.min = middle * (1 - 0.01);
         mm.max = middle * (1 + 0.01);
       } else {
@@ -505,19 +617,19 @@ export default function ClChartLine(father) {
 
     return mm;
   }
-  this.readyScroll = function() { // 计算最大最小值等
+  this.readyScroll = function () { // 计算最大最小值等
     if (this.scroll.display === 'none') return;
     if (this.childCharts['HSCROLL'] !== undefined) {
       let left = getValue(this.data, 'time', this.linkInfo.minIndex);
       left = formatShowTime(this.data.key, left, this.father.datalayer.tradetime[0].begin);
       let right = getValue(this.data, 'time', this.linkInfo.maxIndex);
       right = formatShowTime(this.data.key, right,
-            this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
+        this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
       let head = getValue(this.data, 'time', 0);
       head = formatShowTime(this.data.key, head, this.father.datalayer.tradetime[0].begin);
       let tail = getValue(this.data, 'time', this.data.value.length - 1);
       tail = formatShowTime(this.data.key, tail,
-            this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
+        this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
 
       this.childCharts['HSCROLL'].onChange({
         head,
@@ -531,50 +643,61 @@ export default function ClChartLine(father) {
     }
   }
   this.getDataRange = function (data) {
-    const out = { minIndex: -1, maxIndex: -1 };
+    const out = {
+      minIndex: -1,
+      maxIndex: -1
+    };
     if (isEmptyArray(data.value) || isEmptyArray(this.data.value)) return out;
     const start = getValue(this.data, 'time', this.linkInfo.minIndex);
     const stop = getValue(this.data, 'time', this.linkInfo.maxIndex);
     for (let k = 0; k <= data.value.length - 1; k++) {
       const tt = getValue(data, 'time', k);
-      if (tt >= start) { out.minIndex = k; break; }
+      if (tt >= start) {
+        out.minIndex = k;
+        break;
+      }
     }
     for (let k = data.value.length - 1; k >= 0; k--) {
       const tt = getValue(data, 'time', k);
-      if (tt <= stop) { out.maxIndex = k; break; }
+      if (tt <= stop) {
+        out.maxIndex = k;
+        break;
+      }
     }
     return out;
   }
-  this.readyDraw = function () { // 计算最大最小值等
+  this.locationData = function () {
     if (this.data === undefined) return;
-
+    const size = getSize(this.data);
     if (this.config.axisX.type === 'day1') {
       setFixedLineFlags(
-        this.linkInfo,
-        {
+        this.linkInfo, {
           width: this.rectChart.width,
-          size: getSize(this.data),
+          size,
           maxCount: getMinuteCount(this.father.datalayer.tradetime)
         }
       );
     } else if (this.config.axisX.type === 'day5') {
       setFixedLineFlags(
-        this.linkInfo,
-        {
+        this.linkInfo, {
           width: this.rectChart.width,
-          size: getSize(this.data),
+          size,
           maxCount: 5 * getMinuteCount(this.father.datalayer.tradetime)
         }
       );
     } else {
       setMoveLineFlags(
-        this.linkInfo,
-        {
+        this.linkInfo, {
           width: this.rectChart.width,
-          size: getSize(this.data)
+          size
         }
       );
+      if (size < 10) // 临时处理
+        this.setZoomInfo(this.config.zoomInfo.list.length - 1);
     }
+  }
+  this.readyDraw = function () { // 计算最大最小值等
+
     // 画滚动块
     this.readyScroll();
 
@@ -582,13 +705,14 @@ export default function ClChartLine(father) {
     let mm, maxmin;
     // const force = true;   // 由于定义了没有在后面使用，因此注释掉
     for (let i = 0; i < this.config.lines.length; i++) {
-      if (isEmptyArray(this.config.lines[i].extremum.maxvalue) && 
-          isEmptyArray(this.config.lines[i].extremum.minvalue)) continue;
+      if (this.config.lines[i].extremum === undefined) continue;
+      if (isEmptyArray(this.config.lines[i].extremum.maxvalue) &&
+        isEmptyArray(this.config.lines[i].extremum.minvalue)) continue;
       // 只对第一个线和有需要的线计算最大最小值
-      const ds = this.getLineDS(this.config.lines[i]);
-
-      if (ds.mode !== 'main') {
-        const newdata = this.father.getData(ds.key);
+      // const ds = this.getLineDS(this.config.lines[i]);
+      const formula = this.config.lines[i].formula;
+      if (formula !== undefined) {
+        const newdata = this.father.getData(formula.key);
         const range = this.getDataRange(newdata);
         mm = this.calcMaxMin(newdata, this.config.lines[i].extremum,
           range.minIndex, range.maxIndex);
@@ -602,7 +726,8 @@ export default function ClChartLine(father) {
         maxmin.min = maxmin.min < mm.min ? maxmin.min : mm.min;
       }
     } // for
-    this.maxmin = maxmin;
+    this.maxmin.max = maxmin.max;
+    this.maxmin.min = maxmin.min;
     this.maxmin.unitY = (this.rectChart.height - 2) / (this.maxmin.max - this.maxmin.min); // 一个单位价位多少像素
 
     // console.log('maxmin', this.maxmin);
@@ -612,31 +737,31 @@ export default function ClChartLine(father) {
   // ////////////////////////////////////////////////
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
-  this.onClick = function(event) {
-    // console.log('click', this.axisPlatform);
-    if (this.axisPlatform !== 'phone') {
-      this.showCursorLine = !this.showCursorLine;
-      if (this.showCursorLine) {
+  this.onClick = function (event) {
+    console.log('click', this.axisPlatform);
+    if (this.axisPlatform !== 'phone1') {
+      this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine;
+      if (this.linkInfo.showCursorLine) {
         this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event, this);
       } else {
-        event.reDraw = true;  // 需要重画
+        event.reDraw = true; // 需要重画
         this.father.eventLayer.boardEvent(this.father, 'onMouseOut', event, this);
       }
     }
   }
-  this.onLongPress = function(event) {
-    this.showCursorLine = true;
+  this.onLongPress = function (event) {
+    this.linkInfo.showCursorLine = true;
     this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event, this);
   }
-  this.onMouseOut = function(event) {
-    if (this.showCursorLine || event.reDraw) {
+  this.onMouseOut = function (event) {
+    if (this.linkInfo.showCursorLine || event.reDraw) {
       this.onPaint();
     }
   }
-  this.onMouseWheel = function(event) {
+  this.onMouseWheel = function (event) {
     const step = Math.floor(event.deltaY / 10);
     if (step >= 1) {
-      if (this.zoomInfo.index > 0) {
+      if (this.config.zoomInfo.index > 0) {
         if (this.linkInfo.maxIndex < this.data.value.length - 1) {
           const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1);
           this.linkInfo.moveDate = getValue(this.data, 'time', mid);
@@ -644,12 +769,12 @@ export default function ClChartLine(father) {
         } else {
           this.linkInfo.minIndex = -1;
         }
-        this.zoomInfo.index--;
-        this.setZoomInfo(this.zoomInfo.index);
+        this.config.zoomInfo.index--;
+        this.setZoomInfo(this.config.zoomInfo.index);
         this.father.onPaint();
       }
     } else if (step <= -1) {
-      if (this.zoomInfo.index < this.zoomInfo.list.length - 1) {
+      if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
         if (this.linkInfo.maxIndex < this.data.value.length - 1) {
           const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1);
           this.linkInfo.moveDate = getValue(this.data, 'time', mid);
@@ -657,13 +782,13 @@ export default function ClChartLine(father) {
         } else {
           this.linkInfo.minIndex = -1;
         }
-        this.zoomInfo.index++;
-        this.setZoomInfo(this.zoomInfo.index);
+        this.config.zoomInfo.index++;
+        this.setZoomInfo(this.config.zoomInfo.index);
         this.father.onPaint();
       }
     }
   }
-  this.onKeyDown = function(event) {
+  this.onKeyDown = function (event) {
     switch (event.keyCode) {
       case 38: // up
         break;
@@ -676,10 +801,10 @@ export default function ClChartLine(father) {
     }
     // console.log('key:', event.keyCode);
   }
-  this.onMouseMove = function(event) {
+  this.onMouseMove = function (event) {
     if (this.img === undefined) return;
     if (this.linkInfo.hideInfo) return;
-    if (!this.showCursorLine) return;
+    if (!this.linkInfo.showCursorLine) return;
     // this.draw_clear();
     // 找到X坐标对应的数据索引
     const mousePos = event.mousePos;
@@ -698,7 +823,7 @@ export default function ClChartLine(father) {
         idx = mouseIndex;
       }
       if (this.config.title.display !== 'none') {
-        // console.log(this.name, mouseIndex, 'mouseIndex', this.rectChart, mousePos, _inRangeX(this.rectChart, mousePos.x));
+        // console.log(this.name, mouseIndex, 'mouseIndex', this.rectChart, mousePos, inRangeX(this.rectChart, mousePos.x));
         if (inRangeX(this.rectChart, mousePos.x)) {
           this.drawTitleInfo(idx);
         }
@@ -719,7 +844,7 @@ export default function ClChartLine(father) {
   // ////////////////////////////////////////////////////////////////
   //   处理数据的函数集合
   // ///////////////////////////////////////////////////////////////
-  this.getMouseMoveData = function(xpos) {
+  this.getMouseMoveData = function (xpos) {
     const elementW = this.linkInfo.unitX;
     const spaceX = this.linkInfo.spaceX;
     const idx = Math.round((xpos - this.rectChart.left) / (elementW + spaceX) - 0.5);

@@ -138,14 +138,14 @@ export function updateJsonOfDeep(obj, source) {
     if (Array.isArray(source)) {
       out = [];
       for (const key in source) {
-        out[key] = obj[key] ?
+        out[key] = obj && obj[key] ?
           updateJsonOfDeep(obj[key], source[key]) :
           copyArrayOfDeep(source[key]);
       }
     } else {
       out = {};
       for (const key in source) {
-        out[key] = obj[key] ?
+        out[key] = obj && obj[key] ?
           updateJsonOfDeep(obj[key], source[key]) :
           copyJsonOfDeep(source[key]);
       }

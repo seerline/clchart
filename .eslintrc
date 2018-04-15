@@ -11,5 +11,6 @@
   },
   "plugins": ["html"],
   "rules": {
+    "Unexpected console statement" : "off"
   }
 }

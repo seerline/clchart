@@ -22,11 +22,11 @@ import {
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
 export default function ClDrawCursor(father, rectMain, rectChart) {
   initCommonInfo(this, father);
-  this.rectMain = rectMain;
-  this.rectChart = rectChart;
+  this.rectMain = rectMain;  // 画十字线和边界标签
+  this.rectChart = rectChart; // 鼠标有效区域
 
   this.static = father.father.static;
-  this.linkinfo = father.father.linkinfo;
+  this.linkInfo = father.father.linkInfo;
 
   this.axisX = father.config.axisX;
   this.axisY = father.config.axisY;
@@ -35,7 +35,7 @@ export default function ClDrawCursor(father, rectMain, rectChart) {
   this.text = father.layout.text;
 
   this.onPaint = function (mousePos, valueX, valueY) {
-    if (this.maxmin === undefined) return;
+    // console.log(mousePos, this.rectChart);
     if (inRangeX(this.rectChart, mousePos.x) === false) return;
 
     let txt;
@@ -47,10 +47,11 @@ export default function ClDrawCursor(father, rectMain, rectChart) {
     // 如果鼠标在本图区域，就画横线信息
     if (inRangeY(this.rectChart, mousePos.y)) {
       if (valueY === undefined) {
-        valueY = this.maxmin.max - (this.mousePos.y - this.rectChart.top) / this.maxmin.unitY;
+        valueY = this.maxmin.max - (mousePos.y - this.rectChart.top) / this.maxmin.unitY;
       } else {
         yy = (this.maxmin.max - valueY) * this.maxmin.unitY + this.rectChart.top;
       }
+      // console.log(mousePos, valueY );
 
       _drawLineAlone(this.context, this.rectMain.left, yy, this.rectMain.left + this.rectMain.width, yy, this.color.grid)
       let posX = this.axisPlatform === 'phone' ? 'start' : 'end';
@@ -95,7 +96,7 @@ export default function ClDrawCursor(father, rectMain, rectChart) {
       xx = mousePos.x;
       th = Math.floor((this.text.height - this.text.pixel) / 2);
       yy = this.rectMain.top + this.rectMain.height + th;
-      txt = formatShowTime(this.data.key, valueX);
+      txt = formatShowTime(this.father.data.key, valueX);
       const len = Math.round(_getTxtWidth(this.context, txt, this.text.font, this.text.pixel) / 2);
       let posX = 'center';
       if (xx - len < this.rectMain.left + offX) { xx = this.rectMain.left + offX; posX = 'start'; }

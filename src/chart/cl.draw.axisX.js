@@ -22,15 +22,14 @@ export default function ClDrawAxisX(father, rectMain) {
   initCommonInfo(this, father);
   this.rectMain = rectMain;
 
-  this.linkinfo = father.father.linkinfo;
+  this.linkInfo = father.father.linkInfo;
   this.axisX = father.config.axisX;
 
   this.maxmin = father.maxmin;
   this.text = father.layout.text;
 
-  this.data = father.data;
-
   this.onPaint = function () {
+    this.data = father.data;
     if (this.axisX.display === 'none') return;
 
     let xx, value, spaceX;
@@ -40,10 +39,10 @@ export default function ClDrawAxisX(father, rectMain) {
       let count = -1;
       let days = 0;
       spaceX = this.rectMain.width / (this.axisX.lines + 1);
-      for (let k = this.linkinfo.minIndex; k <= this.linkinfo.maxIndex; k++) {
+      for (let k = this.linkInfo.minIndex; k <= this.linkInfo.maxIndex; k++) {
         const index = getValue(this.data, 'idx', k);
         if (index < 0) continue;
-        days = Math.floor(index / this.linkinfo.maxCount);
+        days = Math.floor(index / this.linkInfo.maxCount);
         if (days > count) {
           count = days;
           xx = this.rectMain.left + spaceX / 2 + spaceX * count;
@@ -53,13 +52,13 @@ export default function ClDrawAxisX(father, rectMain) {
         }
       }
     } else {
-      value = getValue(this.data, 'time', this.linkinfo.minIndex);
+      value = getValue(this.data, 'time', this.linkInfo.minIndex);
       value = formatShowTime(this.data.key, value, this.maxmin.min);
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, this.color.axis);
 
       xx = this.rectMain.left + this.rectMain.width - 3;
-      value = getValue(this.data, 'time', this.linkinfo.maxIndex);
+      value = getValue(this.data, 'time', this.linkInfo.maxIndex);
       value = formatShowTime(this.data.key, value, this.maxmin.max);
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, this.color.axis, { x: 'end' });

@@ -10,6 +10,7 @@ import {
   _setLineWidth,
   _drawTxt,
   _fillRect,
+  _drawRect,
   _drawBegin,
   _drawEnd
 } from '../util/cl.draw';
@@ -211,7 +212,7 @@ export default function ClChartScroll(father) {
   }
   this.drawGridline = function() {
     _drawBegin(this.context, this.color.grid);
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height);
     _drawEnd(this.context);
   }
   this.drawButton = function() {
@@ -230,7 +231,7 @@ export default function ClChartScroll(father) {
       }
 
       _drawBegin(this.context, this.color.colume);
-      '../util/cl.draw';(this.context, this.rectMid.left, this.rectMid.top,
+      _drawRect(this.context, this.rectMid.left, this.rectMid.top,
         this.rectMid.width, this.rectMid.height);
       _fillRect(this.context, this.rectMid.left, this.rectMid.top,
         this.rectMid.width, this.rectMid.height, this.color.box);

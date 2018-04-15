@@ -6,7 +6,7 @@
 // ////////////////////////////////////////
 import getValue from '../data/cl.data.tools';
 
-function ClFormula() {
+export function ClFormula() {
   this.source = {
     data: {},
     minIndex: 0,
@@ -22,14 +22,16 @@ function ClFormula() {
 
     return getValue(this.source.data, label, index);
   }
-  this.runSingleStock = function (source, outkey, formula) {
+  this.runSingleStock = function (source, formula) {
     const singleValue = [];
     this.source = source;
+    // console.log('source', source);
     const command = `
     for (this.source.nowIndex = this.source.minIndex;this.source.nowIndex <= this.source.maxIndex;this.source.nowIndex++) {
           const ${formula}
           singleValue.push([this.getValue('idx', 0), out]);
     }`;
+    // console.log(command);
     eval(command);
     return singleValue;
   }
@@ -79,5 +81,4 @@ function ClFormula() {
 //   }
 // }
 // break;
-export default ClFormula;
 

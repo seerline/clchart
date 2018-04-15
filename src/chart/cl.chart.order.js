@@ -7,6 +7,7 @@
 
 import {
   _fillRect,
+  _drawRect,
   _drawHline,
   _setLineWidth,
   _drawTxt,
@@ -168,8 +169,8 @@ export default function ClChartOrder(father) {
     }
   }
   this.drawIndex = function() {
-    _drawBegin(this.context, this.color.grid)
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
+    _drawBegin(this.context, this.color.grid);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
 
     const offy = this.rectOrder.height / 3;
     const offx = this.rectOrder.width / 3;
@@ -351,8 +352,8 @@ export default function ClChartOrder(father) {
   }
 
   this.drawGridLine = function() {
-    _drawBegin(this.context, this.color.grid)
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
+    _drawBegin(this.context, this.color.grid);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
 
     let mmp_count = 1;
     if (this.showMode === 'normal') {
