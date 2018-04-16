@@ -2,7 +2,7 @@
 
 import {
   _systemInfo
-} from '../cl.chart';
+} from '../cl.api';
 import getValue from '../data/cl.data.tools';
 
 // ///////////////////////////////////////

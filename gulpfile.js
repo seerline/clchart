@@ -105,7 +105,7 @@ function buildTask() {
     }
   }
 
-  const bundled = browserify('./src/cl.chart.js', { standalone: 'ClChart' })
+  const bundled = browserify('./src/cl.api.js', { standalone: 'ClChart' })
     .transform("babelify", { presets: ["es2015"] })
     .plugin(collapse)
     .bundle()
@@ -120,7 +120,7 @@ function buildTask() {
     .pipe(streamify(concat('ClChart.bundle.min.js')))
     .pipe(gulp.dest(outDir));
 
-  const nonBundled = browserify('./src/cl.chart.js', { standalone: 'ClChart' })
+  const nonBundled = browserify('./src/cl.api.js', { standalone: 'ClChart' })
     .transform("babelify", { presets: ["es2015"] })
     .plugin(collapse)
     .bundle()

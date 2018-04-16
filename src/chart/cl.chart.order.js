@@ -25,8 +25,8 @@ import {
 import {
   initCommonInfo,
   checkLayout,
-  CFG_LAYOUT,
-} from '../cl.chart';
+} from '../cl.api';
+import { CFG_LAYOUT } from '../cl.cfg';
 import {
   getValue
 } from '../data/cl.data.tools';

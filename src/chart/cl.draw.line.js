@@ -11,7 +11,7 @@ import {
   _drawlineTo
 } from '../util/cl.draw';
 import getValue from '../data/cl.data.tools';
-import { initCommonInfo } from '../cl.chart';
+import { initCommonInfo } from '../cl.api';
 import {
   inRect
 } from '../util/cl.tool';

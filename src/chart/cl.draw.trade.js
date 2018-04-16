@@ -14,7 +14,7 @@ import {
 import getValue from '../data/cl.data.tools';
 import {
   initCommonInfo
-} from '../cl.chart';
+} from '../cl.api';
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来

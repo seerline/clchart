@@ -30,9 +30,9 @@ export let _systemInfo = {
 export function setColor(syscolor, standard) {
   let color = {};
   if (syscolor === 'white') {
-    color = copyJsonOfDeep(COLOR_WHITE);
+    color = copyJsonOfDeep(ClCFG.COLOR_WHITE);
   } else {
-    color = copyJsonOfDeep(COLOR_BLACK);
+    color = copyJsonOfDeep(ClCFG.COLOR_BLACK);
   }
   // 当发现国别为美国需要修改颜色配对
   if (standard === 'usa') {

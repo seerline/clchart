@@ -16,7 +16,7 @@ import ClChartLine from './cl.chart.line';
 import ClChartOrder from './cl.chart.order';
 // import ClChartScroll from './cl.chart.scroll';
 import getValue from '../data/cl.data.tools';
-import { setColor, _systemInfo } from '../cl.chart';
+import { setColor, _systemInfo } from '../cl.api';
 
 const CFG_LINKINFO = {
   showMode: 'last',

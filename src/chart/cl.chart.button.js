@@ -19,8 +19,8 @@ import {
 import {
   initCommonInfo,
   checkLayout,
-  CFG_LAYOUT
-} from '../cl.chart';
+} from '../cl.api';
+import { CFG_LAYOUT } from '../cl.cfg';
 import { updateJsonOfDeep } from '../util/cl.tool';
 
 export const CFG_BUTTON = {

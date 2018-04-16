@@ -2,7 +2,7 @@
   "name": "clchart",
   "version": "1.0.0",
   "description": "A fast, simple, cross-platform, and configurable stock chart library created using canvas.",
-  "main": "src/cl.chart.js",
+  "main": "src/cl.api.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/seerline/clchart.git"

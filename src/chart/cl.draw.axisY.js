@@ -9,7 +9,7 @@ import {
 } from '../util/cl.draw';
 import {
   initCommonInfo
-} from '../cl.chart';
+} from '../cl.api';
 import {
   formatInfo
 } from '../util/cl.tool';
