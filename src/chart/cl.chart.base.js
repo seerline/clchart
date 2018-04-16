@@ -199,7 +199,6 @@ function ClChart(context) {
     this.childCharts[name] = chart;
 
     // this.bindEvent(chart);
-    console.log(usercfg);
     chart.init(usercfg, callback); // 根据用户配置初始化信息框
 
     return chart;

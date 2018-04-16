@@ -1,50 +1,25 @@
 <!doctype html>
 <html>
-
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	canvas {
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		width: 100%;
-	}
-
-	.canvas_container {
-		border: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #c45151;
-	}
-	#myChart {
-		display: block;
-	}
-</style>
-
 <head>
 	<title>ClChart Demo</title>
+	<meta data-n-head="true" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script src="../dist/ClChart.js"></script>
 	<script src="./index_data.js"></script>
-	<style>
-		canvas {
-			-moz-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 
 <body>
 	<div class="container">
-		<h1>clchart</h1>
-	</div>
-	<div class='canvas_container'>
-		<canvas id="myChart" height="800"></canvas>
+		<div class="header-container">
+			<div class="btn-group">
+				<button onclick="handleMin()" class="action-button shadow animate">分时</button>
+				<button onclick="handleFiveDay()" class="action-button shadow animate">五日</button>
+				<button onclick="handleKline()" class="action-button shadow animate">日K</button>
+			</div>
+		</div>
+		<div class="chart-container">
+			<canvas id="myChart"></canvas>
+		</div>
 	</div>
 	<script>
 		// 开始画图
@@ -56,7 +31,20 @@
 				height: canvas.height
 			};
 		}
-		window.onload = function () {
+
+		// 画分钟线
+		function handleMin() {
+			console.log('Min Line');
+
+		}
+		// 画五日线
+		function handleFiveDay() {
+			console.log('Five Day Line');
+
+		}
+		// 画日线
+		function handleKline() {
+			console.log('dsfjalsdj');
 			var canvas = document.getElementById('myChart');
 			var wh = setscale(canvas, window.devicePixelRatio);
 			// console.log(wh, canvas, canvas.style);
@@ -107,6 +95,10 @@
 			Chart.bindData(KVBarChart, 'DAY');
 
 			Chart.onPaint();
+		}
+
+		window.onload = function () {
+			// handleKline();
 		};
 	</script>
 </body>
