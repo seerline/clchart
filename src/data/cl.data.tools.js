@@ -16,7 +16,6 @@ import {
   getDayMon,
   getMinuteGap,
   getMinute,
-  getMinCount,
   getMinuteOffset
 } from '../util/cl.tool';
 
@@ -694,7 +693,7 @@ export function outputDay5(source, coinunit, tradetime) {
   let vol = 0;
   let money = 0;
   let curDate = 0;
-  const daymins = getMinCount(tradetime);
+  const daymins = getMinuteCount(tradetime);
   for (idx = 0; idx < source.length; idx++) {
     if (curDate !== getDate(source[idx][FIELD_TICK.time])) {
       curDate = getDate(source[idx][FIELD_TICK.time]);

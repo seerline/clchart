@@ -620,15 +620,15 @@ export default function ClChartLine(father) {
     if (this.scroll.display === 'none') return;
     if (this.childCharts['HSCROLL'] !== undefined) {
       let left = getValue(this.data, 'time', this.linkInfo.minIndex);
-      left = formatShowTime(this.data.key, left, this.father.datalayer.tradetime[0].begin);
+      left = formatShowTime(this.data.key, left, this.father.datalayer.tradeTime[0].begin);
       let right = getValue(this.data, 'time', this.linkInfo.maxIndex);
       right = formatShowTime(this.data.key, right,
-        this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
+        this.father.datalayer.tradeTime[this.father.datalayer.tradeTime.length - 1].end);
       let head = getValue(this.data, 'time', 0);
-      head = formatShowTime(this.data.key, head, this.father.datalayer.tradetime[0].begin);
+      head = formatShowTime(this.data.key, head, this.father.datalayer.tradeTime[0].begin);
       let tail = getValue(this.data, 'time', this.data.value.length - 1);
       tail = formatShowTime(this.data.key, tail,
-        this.father.datalayer.tradetime[this.father.datalayer.tradetime.length - 1].end);
+        this.father.datalayer.tradeTime[this.father.datalayer.tradeTime.length - 1].end);
 
       this.childCharts['HSCROLL'].onChange({
         head,
@@ -667,13 +667,14 @@ export default function ClChartLine(father) {
   }
   this.locationData = function () {
     if (this.data === undefined) return;
+    // console.log(this.father.datalayer.tradeTime);
     const size = getSize(this.data);
     if (this.config.axisX.type === 'day1') {
       setFixedLineFlags(
         this.linkInfo, {
           width: this.rectChart.width,
           size,
-          maxCount: getMinuteCount(this.father.datalayer.tradetime)
+          maxCount: getMinuteCount(this.father.datalayer.tradeTime)
         }
       );
     } else if (this.config.axisX.type === 'day5') {
@@ -681,7 +682,7 @@ export default function ClChartLine(father) {
         this.linkInfo, {
           width: this.rectChart.width,
           size,
-          maxCount: 5 * getMinuteCount(this.father.datalayer.tradetime)
+          maxCount: 5 * getMinuteCount(this.father.datalayer.tradeTime)
         }
       );
     } else {
@@ -759,6 +760,7 @@ export default function ClChartLine(father) {
     }
   }
   this.onMouseWheel = function (event) {
+    if (this.config.zoomInfo === undefined) return ;
     const step = Math.floor(event.deltaY / 10);
     if (step >= 1) {
       if (this.config.zoomInfo.index > 0) {
@@ -816,7 +818,7 @@ export default function ClChartLine(father) {
     if (mouseIndex > 0) {
       if (this.config.axisX.type === 'day1' || this.config.axisX.type === 'day5') {
         valueX = valueX % 240;
-        valueX = fromIndexToTradeTime(valueX, this.father.tradetime, this.father.tradedate);
+        valueX = fromIndexToTradeTime(valueX, this.father.datalayer.tradeTime, this.father.datalayer.tradedate);
         idx = findLabelToIndex(this.data, mouseIndex, 'idx');
       } else {
         valueX = getValue(this.data, 'time', mouseIndex);

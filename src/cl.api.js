@@ -5,6 +5,7 @@ import ClEvent from './event/cl.event';
 import ClData from './data/cl.data';
 
 import * as ClCFG from './cl.cfg';
+import * as ClDATACFG from './data/cl.data.const';
 
 import {
   copyJsonOfDeep,
@@ -12,6 +13,7 @@ import {
 } from './util/cl.tool';
 
 export const CFG = ClCFG;
+export const DATACFG = ClDATACFG;
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
 export let _systemInfo = {
@@ -124,15 +126,28 @@ export function changeCursorStyle(style) {
 //   context:  // 画布
 //   canvas:   // 用于接受事件处理的
 // ///////////////////////////////////
-
+export function setScale (canvas, scale) {
+  console.log(canvas.clientWidth, canvas.width);
+  canvas.width = canvas.clientWidth * scale;
+  canvas.height = canvas.clientHeight * scale;
+  return {
+    width: canvas.width,
+    height: canvas.height
+  };
+}
 export function createSingleChart(cfg) {
+  if (cfg.canvas !== undefined && cfg.scale !== 1) {
+    setScale(cfg.canvas, cfg.scale);
+  }
+  console.log(cfg)
   _initSystem(cfg);
+  console.log(cfg)
   _systemInfo.canvas = cfg.canvas;
   // cfg.context.scale( 1 / cfg.scale, 1 / cfg.scale);
   const event = new ClEvent(_systemInfo);
   const chart = new ClChart(cfg.context);
   const data = new ClData();
-  
+
   chart.initChart(data, event);
   return chart;
 }

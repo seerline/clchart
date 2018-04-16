@@ -17,7 +17,7 @@ import {
   findIndexInMin,
   matchDayToWeek,
   matchDayToMon,
-  getMinCount,
+  getMinuteCount,
   transExrightMin,
   transExrightDay
 } from './cl.data.tools';
@@ -41,6 +41,9 @@ import {
   ClFormula
 } from '../formula/cl.formula';
 // 只保存一只股票的信息，当前日期，开收市时间
+export function mockGetValue() {
+  
+}
 export default function ClData() {
   // this.formula = new ClFormula();
   this.static = {
@@ -70,6 +73,7 @@ export default function ClData() {
     } else {
       this.tradeTime = tradetime;
     }
+    
     if (tradedate === undefined) {
       this.tradeDate = getDate(); // 得到当天的日期
     } else {
@@ -288,7 +292,7 @@ export default function ClData() {
     if (min === undefined || isEmptyArray(min.value)) {
       return out;
     }
-    const daymins = getMinCount(this.tradeTime) * 4;
+    const daymins = getMinuteCount(this.tradeTime) * 4;
     let money;
     for (let k = 0; k < min.value.length; k++) {
       if (this.static.stktype === 0) {
