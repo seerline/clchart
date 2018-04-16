@@ -11,8 +11,7 @@ import {
 import {
   findNearTimeToIndex
 } from './cl.chart.tools';
-import {
-  getValue,
+import getValue, {
   getSize
 } from '../data/cl.data.tools';
 import {
