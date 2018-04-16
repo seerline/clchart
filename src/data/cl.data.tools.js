@@ -5,7 +5,7 @@ import {
   FIELD_TICK,
   FIELD_RIGHT,
   FIELD_DAY5
-} from '../cl.data.cfg';
+} from '../cl.data.def';
 
 import {
   copyArrayOfDeep,
@@ -374,7 +374,7 @@ export function checkDayZero(source) {
   return out;
 }
 
-export function checkDay5(source, tradedate) {
+export function checkDay5(source, coinunit, tradedate, tradetime) {
   const out = [];
   if (source.length < 1) return out;
 
@@ -396,6 +396,28 @@ export function checkDay5(source, tradedate) {
     }
     out.unshift(source[idx]);
   }
+
+  count = 0;
+  curDate = 0;
+  let vol = 0;
+  let money = 0;
+  const daymins = getMinuteCount(tradetime);
+  for (idx = 0; idx < out.length; idx++) {
+    // console.log(idx,day5_data[idx]);
+    if (curDate !== getDate(out[idx][FIELD_TICK.time])) { // 增加记录
+      curDate = getDate(out[idx][FIELD_TICK.time]);
+      count++;
+      vol = 0;
+      money = 0;
+    }
+    vol += out[idx][FIELD_TICK.vol];
+    money += out[idx][FIELD_TICK.close] * out[idx][FIELD_TICK.vol] / coinunit;
+    let index = fromTradeTimeToIndex(out[idx][FIELD_TICK.time], tradetime);
+    index += (count - 1) * daymins;
+    out[idx].allvol = vol;
+    out[idx].allmoney = money;
+    out[idx].idx = index;
+  }  
   return out;
 }
 

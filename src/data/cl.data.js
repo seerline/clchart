@@ -31,7 +31,7 @@ import {
   FIELD_NOW,
   FIELD_ILINE,
   FIELD_ENOW
-} from '../cl.data.cfg';
+} from '../cl.data.def';
 import {
   getDate,
   isEmptyArray,
@@ -41,9 +41,7 @@ import {
   ClFormula
 } from '../formula/cl.formula';
 // 只保存一只股票的信息，当前日期，开收市时间
-export function mockGetValue() {
-  
-}
+
 export default function ClData() {
   // this.formula = new ClFormula();
   this.static = {
@@ -93,7 +91,7 @@ export default function ClData() {
     if (this.InData[key] === undefined) this.InData[key] = {};
     switch (key) {
       case 'DAY5':
-        value = checkDay5(value, this.tradeDate);
+        value = checkDay5(value, this.static.coinunit, this.tradeDate, this.tradeTime);
         break;
       case 'NOW':
       case 'ENOW':
@@ -284,7 +282,7 @@ export default function ClData() {
     let out = [];
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value);
-      const lastDate = getDate(source.value[source.value.length - 1][source.fields.time]);
+      const lastDate = getDate(source.value[source.value.length - 1][source.fields.idx]);
       if (lastDate === this.tradeDate) {
         return out;
       }
@@ -305,11 +303,12 @@ export default function ClData() {
         money = min.value[k][min.fields.money];
       }
       out.push([
-        fromIndexToTradeTime(min.value[k][min.fields.time], this.tradeTime, this.tradeDate),
+        fromIndexToTradeTime(min.value[k][min.fields.idx], this.tradeTime, this.tradeDate),
         min.value[k][min.fields.close],
         k === 0 ? min.value[k][min.fields.vol] : min.value[k][min.fields.vol] - min.value[k - 1][min.fields.vol],
         daymins + min.value[k][min.fields.idx],
-        money / min.value[k][min.fields.vol]
+        min.value[k][min.fields.vol],
+        money
       ]);
     }
     return out;

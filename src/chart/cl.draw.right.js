@@ -16,7 +16,7 @@ import getValue, {
 } from '../data/cl.data.tools';
 import {
   initCommonInfo
-} from '../cl.api';
+} from '../chart/cl.chart.init';
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
 export default function ClDrawRight(father, rectMain) {
@@ -42,7 +42,7 @@ export default function ClDrawRight(father, rectMain) {
       }
       let clr = this.color.button;
       if (this.linkInfo.rightMode !== 'no') clr = this.color.vol;
-      _drawTxt(this.context, xx - Math.floor(len / 2), this.rectMain.top,
+      _drawTxt(this.context, xx - Math.floor(len / 2), this.rectMain.top + this.rectMain.height - this.symbol.pixel - this.symbol.spaceY,
           '▲', this.symbol.font, this.symbol.pixel, clr, { y: 'top' });
     }
   };

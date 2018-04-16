@@ -19,20 +19,19 @@ import {
 import {
   initCommonInfo,
   checkLayout,
-} from '../cl.api';
-import { CFG_LAYOUT } from '../cl.chart.cfg';
+} from '../chart/cl.chart.init';
+import { CHART_LAYOUT } from '../cl.chart.def';
 import { updateJsonOfDeep } from '../util/cl.tool';
 
-export const CFG_BUTTON = {
-  shape: 'arc', // box range radio checkbox set(位置)
-  maxR: 4,
-  hotIdx: 0,
-  visible: true,
-  status: 'enabled' // disable focused : 热点
-};
-
 export default function ClChartButton(father) {
-  initCommonInfo(this, father);
+  const DEFAULT_BUTTON = {
+    shape: 'arc', // box range radio checkbox set(位置)
+    maxR: 4,
+    hotIdx: 0,
+    visible: true,
+    status: 'enabled' // disable focused : 热点
+  };
+    initCommonInfo(this, father);
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
@@ -44,8 +43,8 @@ export default function ClChartButton(father) {
       width: 25,
       height: 25
     };
-    this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
-    this.config = updateJsonOfDeep(cfg.config, CFG_BUTTON);
+    this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT);
+    this.config = updateJsonOfDeep(cfg.config, DEFAULT_BUTTON);
 
     this.info = cfg.info || [{
       map: '+'

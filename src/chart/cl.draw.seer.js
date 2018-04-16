@@ -26,7 +26,7 @@ import {
 import getValue from '../data/cl.data.tools';
 import {
   initCommonInfo
-} from '../cl.api';
+} from '../chart/cl.chart.init';
 import {
   inArray,
   inRangeY,

@@ -14,7 +14,7 @@ import {
 import getValue from '../data/cl.data.tools';
 import {
   initCommonInfo
-} from '../cl.api';
+} from '../chart/cl.chart.init';
 
 export default function ClDrawVLine(father, rectMain) {
   initCommonInfo(this, father);

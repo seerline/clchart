@@ -11,7 +11,7 @@ import {
 } from '../util/cl.draw';
 import {
   initCommonInfo
-} from '../cl.api';
+} from '../chart/cl.chart.init';
 import {
   inRangeX,
   inRangeY,

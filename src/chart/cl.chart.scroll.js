@@ -18,25 +18,24 @@ import {
   changeCursorStyle,
   initCommonInfo,
   checkLayout,
-} from '../cl.api';
-import { CFG_LAYOUT } from '../cl.chart.cfg';
+} from '../chart/cl.chart.init';
+import { CHART_LAYOUT } from '../cl.chart.def';
 import {
   updateJsonOfDeep,
   offsetRect,
   inRect
 } from '../util/cl.tool';
 
-export const CFG_SCROLL = {
-  // display: 'none', // true 
-  shape: 'fixed', // fixed 为固定宽度 free有边界
-  direct: 'horizontal', // ver 竖立 和横
-  range: 100,
-  select: { min: 40, max: 60 }, // min == beginIdx max = pageCount
-  status: 'enabled',
-  txt: {}
-};
-
 export default function ClChartScroll(father) {
+  const DEFAULT_SCROLL = {
+    // display: 'none', // true 
+    shape: 'fixed', // fixed 为固定宽度 free有边界
+    direct: 'horizontal', // ver 竖立 和横
+    range: 100,
+    select: { min: 40, max: 60 }, // min == beginIdx max = pageCount
+    status: 'enabled',
+    txt: {}
+  };
   initCommonInfo(this, father);
 
   // ////////////////////////////////////////////////////////////////
@@ -45,8 +44,8 @@ export default function ClChartScroll(father) {
   this.init = function(cfg, callback) {
     this.callback = callback;
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 25 };
-    this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
-    this.config = updateJsonOfDeep(cfg.config, CFG_SCROLL);
+    this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT);
+    this.config = updateJsonOfDeep(cfg.config, DEFAULT_SCROLL);
 
     // 下面对配置做一定的校验
     this.checkConfig();
