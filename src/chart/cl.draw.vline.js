@@ -19,7 +19,14 @@ import {
 export default function ClDrawVLine(father, rectMain) {
   initCommonInfo(this, father);
   this.rectMain = rectMain;
-
+  // this.rectMain = {
+  //   left:rectMain.left,
+  //   top:rectMain.top,
+  //   width:rectMain.width,
+  //   height:rectMain.height
+  // };
+  console.log('---1--',this.rectMain);
+  
   this.linkInfo = father.father.linkInfo;
   this.source = father.father;
 
@@ -27,18 +34,23 @@ export default function ClDrawVLine(father, rectMain) {
 
   this.onPaint = function (key) {
     this.data = this.source.getData(key);
-
+    console.log(this.data, key, this.info, this.maxmin,this.rectMain);
+    
     if (this.info.labelX === undefined) this.info.labelX = 'time';
     if (this.info.labelY === undefined) this.info.labelY = 'vol';
 
-    let index;
     let xx, yy, value;
+    let idx;
 
-    _drawBegin(this.context, this.info.color);
-    for (let k = this.linkInfo.minIndex; k <= this.linkInfo.maxIndex; k++) {
-      index = getValue(this.data, this.info.labelX, k);
-      if (index < 0) continue;
-      xx = this.rectMain.left + Math.floor(index * (this.linkInfo.spaceX + this.linkInfo.unitX));
+    _drawBegin(this.context, this.color[this.info.color]);
+    for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++, index++) {
+      if (this.info.showSort===undefined) {
+        idx = index;
+      } else {
+        idx = getValue(this.data, this.info.showSort, index);
+      }
+      // if (getValue(this.data, this.info.labelX, index) < 0) continue;
+      xx = this.rectMain.left + Math.floor(idx * (this.linkInfo.spaceX + this.linkInfo.unitX));
       value = getValue(this.data, this.info.labelY, k);
       if (value < 0) continue;
       yy = this.rectMain.top + Math.round((this.maxmin.max - value) * this.maxmin.unitY);

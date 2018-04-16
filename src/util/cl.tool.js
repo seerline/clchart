@@ -42,17 +42,17 @@ export function getMinute(ttime) {
 }
 // 求星期几 0-周日 6-周六
 export function getDayWeek(day) {
-  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100), day % 100);
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100);
   return mtime.getDay();
 }
 // 求星期几 0-周日 6-周六
 export function getDayMon(day) {
-  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100), day % 100);
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100);
   return mtime.getMonth() + 1;
 }
 // 日期转换成time_t
 function _dayToTTime(day) {
-  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100), day % 100);
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100);
   return mtime / 1000;
 }
 // 得到两个日期间隔的天数

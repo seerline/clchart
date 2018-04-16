@@ -306,7 +306,7 @@ export const CHART_NOWVOL = {
   lines: [{
     className: ClDrawVLine,
     extremum:{ // 如何取极值
-      method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+      method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['decvol'],  // 参与计算最大值的标签
       minvalue: [0]    // 参与计算最小值的标签
     },
@@ -324,7 +324,7 @@ export const CHART_DAY5 = {
   },
   axisX: {
     lines: 4,
-    display: 'none', // none不显示，both 边各一个值, block：根据块大小每个块显示一个值 = 显示坐标
+    display: 'none', // none不显示，both 边各一个值, block 根据块大小每个块显示一个值 = 显示坐标
     type: 'day5', // 有 day1 day5 和 normal 三种模式
     format: 'date' // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
   },
@@ -349,12 +349,16 @@ export const CHART_DAY5 = {
       minvalue: ['close']    // 参与计算最小值的标签
     },
     info: {
+      showSort: 'idx',
       labelX: 'time',
       labelY: 'close'
     }
   },
   {
     className: ClDrawLine,
+    info: {
+      showSort: 'idx'
+    },
     formula: {
       key: 'NOWDAY5',     // 获取数据的key，
       command: `out = this.AVGPRC()`  // 均价,要根据股票类型做变化
@@ -373,14 +377,14 @@ export const CHART_DAY5VOL = {
     format: 'date'  // date time datetime normal 显示的x轴信息方式
   },
   axisY: {
-    lines: 3,
+    lines: 1,
     left: {
-      display: 'both', // none不显示，all, noupper不显示最上面, nofoot不显示最下面 = 显示坐标
+      display: 'nofoot', // none不显示，all, noupper不显示最上面, nofoot不显示最下面 = 显示坐标
       middle: 'none',
       format: 'vol'  // 输出数据的格式 rate, price, vol
     },
     right: {
-      display: 'both', // none不显示，noupper不显示最上面, nofoot不显示最下面 = 显示坐标
+      display: 'nofoot', // none不显示，noupper不显示最上面, nofoot不显示最下面 = 显示坐标
       middle: 'none',
       format: 'vol'   // rate, price vol
     }
@@ -388,11 +392,12 @@ export const CHART_DAY5VOL = {
   lines: [{
     className: ClDrawVLine,
     extremum:{ // 如何取极值
-      method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+      method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['vol'],  // 参与计算最大值的标签
       minvalue: [0]    // 参与计算最小值的标签
     },
     info: {
+      showSort: 'idx',
       labelX: 'time',
       labelY: 'vol',
       color: 'vol'
