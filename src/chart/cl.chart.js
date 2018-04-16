@@ -43,7 +43,7 @@ function ClChart(context) {
     showCursorLine: false, // 是否显示光标信息
     moveIndex: -1, // 当前鼠标所在位置的记录号 -1 表示没有鼠标事件或第一次
     spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
-    unitX: 7, // 每天数据的宽度 默认为5， 可以在1..50之间切换
+    unitX: 5, // 每天数据的宽度 默认为5， 可以在1..50之间切换
     rightMode: 'no', // 除权模式
     hideInfo: false  // 是否显示价格
   };

@@ -105,6 +105,12 @@ export default function ClChartLine(father) {
   }
   this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout);
+    if (this.config.zoomInfo !== undefined) {
+      this.linkInfo.unitX = this.config.zoomInfo.list[this.config.zoomInfo.index] * this.scale;
+      if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale;
+      this.linkInfo.spaceX = this.linkInfo.unitX / 4;
+    }
+
   }
   this.setPublicRect = function () { // 计算所有矩形区域
     // rectChart 画图区

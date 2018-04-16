@@ -156,8 +156,14 @@
 			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', source));
 			var mainHeight = canvas.height * 2 / 3;
 			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
+			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
 			var usercfg = {
-				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				layout: {
+					offset : {
+						left: 5,
+						right: 50
+					}
+				},
 				buttons: ClChart.DEF_CHART.CHART_BUTTONS,
 				config: ClChart.DEF_CHART.CHART_KBAR,
 				rectMain: {
@@ -174,7 +180,12 @@
 			Chart.bindData(KBarChart, peroid);
 
 			usercfg = {
-				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				layout: {
+					offset : {
+						left: 5,
+						right: 50
+					}
+				},
 				config: ClChart.DEF_CHART.CHART_VBAR,
 				rectMain: {
 					left: 0,
