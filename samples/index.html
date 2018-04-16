@@ -58,13 +58,13 @@
 			};
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
-			Chart.setData('INFO', ClChart.CFG.FIELD_INFO, ['', 1, 2, 100, 3000, 3300, 2700]);
-			Chart.setData('DAY', ClChart.CFG.FIELD_DAY, TESTDATA.DAY);
+			Chart.setData('INFO', ClChart.ChartCFG.FIELD_INFO, ['', 1, 2, 100, 3000, 3300, 2700]);
+			Chart.setData('DAY', ClChart.ChartCFG.FIELD_DAY, TESTDATA.DAY);
 			var mainHeight = wh.height * 2 / 3;
 			var usercfg = {
-				layout: ClChart.CFG.CFG_LAYOUT,
-				buttons: ClChart.CFG.CFG_BUTTONS,
-				config: ClChart.CFG.CFG_CHART_KBAR,
+				layout: ClChart.ChartCFG.CFG_LAYOUT,
+				buttons: ClChart.ChartCFG.CFG_BUTTONS,
+				config: ClChart.ChartCFG.CFG_CHART_KBAR,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -79,8 +79,8 @@
 			Chart.bindData(KBarChart, 'DAY');
 
 			usercfg = {
-				layout: ClChart.CFG.CFG_LAYOUT,
-				config: ClChart.CFG.CFG_CHART_VBAR,
+				layout: ClChart.ChartCFG.CFG_LAYOUT,
+				config: ClChart.ChartCFG.CFG_CHART_VBAR,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
