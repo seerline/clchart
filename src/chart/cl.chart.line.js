@@ -30,7 +30,7 @@ import {
   initCommonInfo,
   checkLayout,
 } from '../cl.api';
-import { CFG_LAYOUT } from '../cl.cfg';
+import { CFG_LAYOUT } from '../cl.chart.cfg';
 import {
   updateJsonOfDeep,
   copyJsonOfDeep,
@@ -44,7 +44,7 @@ import {
 
 import {
   STOCK_TYPE_INDEX
-} from '../data/cl.data.const';
+} from '../data/../cl.data.cfg';
 import getValue, {
   getSize
 } from '../data/cl.data.tools';

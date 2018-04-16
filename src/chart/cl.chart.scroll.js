@@ -19,7 +19,7 @@ import {
   initCommonInfo,
   checkLayout,
 } from '../cl.api';
-import { CFG_LAYOUT } from '../cl.cfg';
+import { CFG_LAYOUT } from '../cl.chart.cfg';
 import {
   updateJsonOfDeep,
   offsetRect,

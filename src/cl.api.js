@@ -4,7 +4,7 @@ import ClChart from './chart/cl.chart.base';
 import ClEvent from './event/cl.event';
 import ClData from './data/cl.data';
 
-import * as ClCFG from './cl.cfg';
+import * as ClCFG from './cl.chart.cfg';
 
 import {
   copyJsonOfDeep,

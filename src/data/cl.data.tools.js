@@ -5,7 +5,7 @@ import {
   FIELD_TICK,
   FIELD_RIGHT,
   FIELD_DAY5
-} from './cl.data.const';
+} from '../cl.data.cfg';
 
 import {
   copyArrayOfDeep,
