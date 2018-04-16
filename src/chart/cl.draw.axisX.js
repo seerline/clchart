@@ -5,7 +5,7 @@
 // //////////////////////////////////////////////////
 
 import {
-  _drawLineAlone,
+  // _drawLineAlone,
   _drawTxt
 } from '../util/cl.draw';
 import getValue from '../data/cl.data.tools';
