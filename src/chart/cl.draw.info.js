@@ -22,34 +22,34 @@ export default function ClDrawInfo(father, rectMain, rectMess) {
 
   this.linkInfo = father.father.linkInfo;
 
-  this.text = father.layout.text;
-  this.title = father.config.title;
+  this.title = father.layout.title;
+  this.titleInfo = father.config.title;
 
   this.onPaint = function (message) {
-    if (this.title.display === 'none' || this.linkInfo.hideInfo) return;
+    if (this.titleInfo.display === 'none' || this.linkInfo.hideInfo) return;
 
     _fillRect(this.context, this.rectMain.left + this.scale, this.rectMain.top + this.scale,
       this.rectMess.left + this.rectMess.width - 2 * this.scale, 
       this.rectMain.height - 2 * this.scale, this.color.back);
 
     let clr = this.color.txt;
-    const spaceY = Math.round((this.text.height - this.text.pixel) / 2) - this.scale;
+    const spaceY = Math.round((this.title.height - this.title.pixel) / 2) - this.scale;
     const yy = this.rectMess.top + spaceY;
 
-    if (this.title.label !== undefined) {
-      _drawTxt(this.context, this.rectMain.left + this.scale, yy, this.title.label,
-        this.text.font, this.text.pixel, clr);
+    if (this.titleInfo.label !== undefined) {
+      _drawTxt(this.context, this.rectMain.left + this.scale, yy, this.titleInfo.label,
+        this.title.font, this.title.pixel, clr);
     }
     let xx = this.rectMess.left + this.scale;
     for (let i = 0; i < message.length; i++) {
       clr = this.color.line[i];
       if (message[i].txt !== undefined) {
-        _drawTxt(this.context, xx, yy, message[i].txt, this.text.font, this.text.pixel, clr);
-        xx += _getTxtWidth(this.context, message[i].txt, this.text.font, this.text.pixel) + this.text.spaceX;
+        _drawTxt(this.context, xx, yy, message[i].txt, this.title.font, this.title.pixel, clr);
+        xx += _getTxtWidth(this.context, message[i].txt, this.title.font, this.title.pixel) + this.title.spaceX;
       }
       if (message[i].value === undefined) continue;
-      _drawTxt(this.context, xx, yy, ' ' + message[i].value, this.text.font, this.text.pixel, clr);
-      xx += _getTxtWidth(this.context, ' ' + message[i].value, this.text.font, this.text.pixel) + this.text.spaceX;
+      _drawTxt(this.context, xx, yy, ' ' + message[i].value, this.title.font, this.title.pixel, clr);
+      xx += _getTxtWidth(this.context, ' ' + message[i].value, this.title.font, this.title.pixel) + this.title.spaceX;
     }
   }
 }

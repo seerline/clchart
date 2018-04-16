@@ -82,9 +82,8 @@ export default function ClChartLine(father) {
     this.config = copyJsonOfDeep(cfg.config);
     // 这里直接赋值是因为外部已经设置好了配置才会开始初始化
     this.buttons = cfg.buttons || [];
-    this.scroll = cfg.scroll || {
-      display: 'none',
-      size: 0
+    this.scroll = cfg.config.scroll || {
+      display: 'none'
     };
     this.childCharts = {};
 
@@ -104,8 +103,6 @@ export default function ClChartLine(father) {
   }
   this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout);
-    this.config.axisX.width *= this.scale;
-    this.scroll.size *= this.scale;
   }
   this.setPublicRect = function () { // 计算所有矩形区域
     // rectChart 画图区
@@ -117,7 +114,7 @@ export default function ClChartLine(father) {
 
     this.rectChart = offsetRect(this.rectMain, this.layout.margin);
     const axisInfo = {
-      width: this.config.axisX.width
+      width: this.layout.axisX.width
     }; //
 
     // 计算title和mess矩形位置
@@ -138,13 +135,13 @@ export default function ClChartLine(father) {
         left: this.rectChart.left,
         top: this.rectChart.top,
         width: axisInfo.width,
-        height: this.layout.text.height
+        height: this.layout.title.height
       };
       this.rectMess = {
         left: this.rectChart.left + axisInfo.width + this.scale,
         top: this.rectChart.top,
         width: this.rectChart.width - axisInfo.width * 2,
-        height: this.layout.text.height
+        height: this.layout.title.height
       };
     }
 
@@ -155,14 +152,14 @@ export default function ClChartLine(father) {
     axisInfo.bottom = this.rectChart.top + this.rectChart.height;
 
     if (this.axisPlatform !== 'phone') {
-      if (this.config.axisY.left.display !== 'none') axisInfo.left += this.config.axisX.width;
-      if (this.config.axisY.right.display !== 'none') axisInfo.right -= this.config.axisX.width;
+      if (this.config.axisY.left.display !== 'none') axisInfo.left += this.layout.axisX.width;
+      if (this.config.axisY.right.display !== 'none') axisInfo.right -= this.layout.axisX.width;
     }
     if (this.config.axisX.display !== 'none') {
-      axisInfo.bottom -= this.layout.text.height;
+      axisInfo.bottom -= this.layout.axisX.height;
     }
     if (this.scroll.display !== 'none') {
-      axisInfo.bottom -= this.scroll.size;
+      axisInfo.bottom -= this.layout.scroll.size;
     }
     // 此时已经可以得出画坐标线的区域了
     this.rectGridLine = {
@@ -195,7 +192,7 @@ export default function ClChartLine(father) {
         left: axisInfo.left,
         top: axisInfo.bottom + this.scale,
         width: axisInfo.right - axisInfo.left,
-        height: this.layout.text.height
+        height: this.layout.axisX.height
       };
     }
     if (this.scroll.display !== 'none') {
@@ -203,7 +200,7 @@ export default function ClChartLine(father) {
         left: axisInfo.left,
         top: this.rectAxisX.top + this.rectAxisX.height + this.scale,
         width: axisInfo.right - axisInfo.left,
-        height: this.scroll.size
+        height: this.layout.scroll.size
       };
     }
   }
@@ -301,7 +298,7 @@ export default function ClChartLine(father) {
     if (this.hasButton('zoomin', this.buttons) || this.hasButton('zoomout', this.buttons)) {
       chart = this.createButton('zoomin');
       xx = Math.floor((this.rectChart.width - (ww + ww) * 2) / 4);
-      yy = this.rectChart.top + this.rectChart.height * 0.98 - ww;
+      yy = this.rectChart.top + this.rectChart.height * 0.95 - ww;
       chart.init({
           rectMain: {
             left: xx,
@@ -345,14 +342,15 @@ export default function ClChartLine(father) {
     }
     if (this.hasButton('exright', this.buttons)) {
       chart = this.createButton('exright');
-      ww = _getTxtWidth(this.context, '前复权', this.layout.text.font, this.layout.text.pixel - 2 * this.scale);
-      xx = this.rectMain.width - ww - 6 * this.scale;
+      ww = _getTxtWidth(this.context, '前复权', this.layout.symbol.font, this.layout.symbol.pixel);
+      xx = this.rectMain.left + this.rectMain.width - ww - 2 * this.layout.symbol.spaceX;
+      yy = (this.rectMess.height - this.layout.symbol.pixel - 2 * this.layout.symbol.spaceY) / 2;
       chart.init({
           rectMain: {
             left: xx,
-            top: this.rectMess.top + this.scale,
-            width: ww + 4 * this.scale,
-            height: this.rectMess.height - 2 * this.scale
+            top: this.rectMess.top + yy,
+            width: ww + this.layout.symbol.spaceX,
+            height: this.rectMess.height - 2 * yy
           },
           config: {
             shape: 'box'
@@ -490,7 +488,8 @@ export default function ClChartLine(father) {
     return out;
   }
   this.drawTitleInfo = function (index) {
-    if (index < 0 || index > this.linkInfo.maxIndex) index = this.linkInfo.maxIndex;
+    if (this.config.title.display === 'none') return;
+    if (index === undefined || index < 0 || index > this.linkInfo.maxIndex) index = this.linkInfo.maxIndex;
     this.childDraws['TITLE'].onPaint(this.getMoveData(index));
   }
   this.drawChildDraw = function (name) {
@@ -738,14 +737,14 @@ export default function ClChartLine(father) {
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
   this.onClick = function (event) {
-    console.log('click', this.axisPlatform);
+    // console.log('click', this.axisPlatform);
     if (this.axisPlatform !== 'phone1') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine;
       if (this.linkInfo.showCursorLine) {
-        this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event, this);
+        this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event);
       } else {
         event.reDraw = true; // 需要重画
-        this.father.eventLayer.boardEvent(this.father, 'onMouseOut', event, this);
+        this.father.eventLayer.boardEvent(this.father, 'onMouseOut', event);
       }
     }
   }
@@ -755,6 +754,7 @@ export default function ClChartLine(father) {
   }
   this.onMouseOut = function (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
+      this.linkInfo.moveIndex = this.linkInfo.maxIndex;
       this.onPaint();
     }
   }
@@ -822,11 +822,8 @@ export default function ClChartLine(father) {
         valueX = getValue(this.data, 'time', mouseIndex);
         idx = mouseIndex;
       }
-      if (this.config.title.display !== 'none') {
-        // console.log(this.name, mouseIndex, 'mouseIndex', this.rectChart, mousePos, inRangeX(this.rectChart, mousePos.x));
-        if (inRangeX(this.rectChart, mousePos.x)) {
-          this.drawTitleInfo(idx);
-        }
+      if (inRangeX(this.rectChart, mousePos.x)) {
+        this.drawTitleInfo(idx);
       }
       if (this.linkInfo.moveIndex !== mouseIndex) {
         this.linkInfo.moveIndex = mouseIndex;
@@ -845,9 +842,7 @@ export default function ClChartLine(father) {
   //   处理数据的函数集合
   // ///////////////////////////////////////////////////////////////
   this.getMouseMoveData = function (xpos) {
-    const elementW = this.linkInfo.unitX;
-    const spaceX = this.linkInfo.spaceX;
-    const idx = Math.round((xpos - this.rectChart.left) / (elementW + spaceX) - 0.5);
+    const idx = Math.round((xpos - this.rectChart.left) / (this.linkInfo.unitX + this.linkInfo.spaceX) - 0.5);
     if (this.config.axisX.type === 'day1') {
       return idx;
     } else if (this.config.axisX.type === 'day5') {

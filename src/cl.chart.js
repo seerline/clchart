@@ -70,14 +70,27 @@ export const CFG_LAYOUT = {
     left: 2,
     top: 2,
     right: 2,
-    bottom: 2
+    bottom: 0
   }, // 实际画图区域的偏移值
-  text: {
+  title: {
     pixel: 12,
     height: 18,
     spaceX: 10,
     font: 'sans-serif'
   }, // 标题文字的定义
+  axisX: {
+    pixel: 12,
+    height: 18,
+    width: 50,
+    spaceX: 2,
+    font: 'sans-serif'
+  },
+  scroll: {
+    pixel: 12,
+    size: 15,
+    spaceX: 10,
+    font: 'sans-serif'
+  },
   digit: {
     pixel: 12,
     height: 16,
@@ -88,6 +101,7 @@ export const CFG_LAYOUT = {
     pixel: 10,
     size: 16,
     spaceX: 3,
+    spaceY: 2,
     font: 'Arial'
   }// 标记的定义
 };
@@ -97,11 +111,6 @@ export const CFG_BUTTONS = [
   { key: 'zoomout' },
   { key: 'exright' }
 ];
-// 滚动条的预定义
-export const CFG_SCROLL = {
-  display: 'horizontal', // none不显示 horizontal 横着显示 vertical 竖着显示
-  size: 25    // 宽度或高度
-};
 
 // 预定义参数
 export const CFG_ORDER = {
@@ -119,6 +128,9 @@ export const CFG_CHART_KBAR = {
     index: 3,
     list: [1, 2, 3, 5, 8, 13, 21]
   },
+  scroll: {
+    display: 'none' // none不显示
+  },
   title: {
     display: 'text', // none 不显示 btn 按钮 text 文字
     label: 'K线'   // 需要显示的文字信息
@@ -128,8 +140,7 @@ export const CFG_CHART_KBAR = {
     display: 'none', // none不显示， both 两边各一个值, block ：根据lines每个块显示一个值 = 显示坐标
     type: 'normal', // 有 day1 当日 day5 5日线 和 normal:日线 三种模式
     // ??? 是否把这三种统一起来
-    format: 'date',  // date time datetime normal tradetime(9:30) 根据交易时间此时 = 输出的信息格式
-    width: 50       // 显示宽度，web下
+    format: 'date'  // date time datetime normal tradetime(9:30) 根据交易时间此时 = 输出的信息格式    width: 50       // 显示宽度，web下
   },
   axisY: {
     lines: 3,
@@ -216,8 +227,7 @@ export const CFG_CHART_VBAR = {
     lines: 0,
     display: 'both', // 左右两边显示
     type: 'normal', // 有 day1 day5 和 normal 三种模式
-    format: 'date', // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
-    width: 50 // 显示宽度，web下
+    format: 'date' // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
   },
   axisY: {
     lines: 1,
@@ -290,8 +300,7 @@ export const CFG_CHART_NOW = {
     lines: 3,
     display: 'none', // none不显示，sides：两边各一个值, block：根据块大小每个块显示一个值 = 显示坐标
     type: 'day1', // 有 day1 day5 和 normal 三种模式
-    format: 'tradetime',
-    width: 50       // 显示宽度，web下
+    format: 'tradetime'
   },
   axisY: {
     lines: 3,
@@ -334,8 +343,7 @@ export const CFG_CHART_NOWVOL = {
     lines: 3,
     display: 'both', // 左右两边显示
     type: 'day1', // 有 day1 day5 和 normal 三种模式
-    format: 'tradetime',
-    width: 50 // 显示宽度，web下
+    format: 'tradetime'
   },
   axisY: {
     lines: 1,
@@ -373,8 +381,7 @@ export const CFG_CHART_DAY5 = {
     lines: 4,
     display: 'none', // none不显示，both 边各一个值, block：根据块大小每个块显示一个值 = 显示坐标
     type: 'day5', // 有 day1 day5 和 normal 三种模式
-    format: 'date', // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
-    width: 50       // 显示宽度，web下
+    format: 'date' // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
   },
   axisY: {
     lines: 3,
@@ -418,8 +425,7 @@ export const CFG_CHART_DAY5VOL = {
     lines: 4,
     display: 'block',
     type: 'day5', // 有 day1 day5 和 normal 三种模式
-    format: 'date',  // date time datetime normal 显示的x轴信息方式
-    width: 50 // 显示宽度，web下
+    format: 'date'  // date time datetime normal 显示的x轴信息方式
   },
   axisY: {
     lines: 3,
@@ -458,8 +464,7 @@ export const CFG_CHART_NORMAL = {
     lines: 0,
     display: 'none',
     type: 'normal', // 有 day1 day5 和 normal 三种模式
-    format: 'date',  // date time datetime normal 显示的x轴信息方式
-    width: 50
+    format: 'date'  // date time datetime normal 显示的x轴信息方式
   },
   axisY: {
     lines: 1,
@@ -525,13 +530,22 @@ export function checkLayout(layout) {
   layout.offset.bottom *= scale;
   layout.offset.right *= scale;
 
-  layout.text.pixel *= scale;
-  layout.text.height *= scale;
-  layout.text.spaceX *= scale;
+  layout.title.pixel *= scale;
+  layout.title.height *= scale;
+  layout.title.spaceX *= scale;
 
-  if (layout.text.height < (layout.text.pixel + 2 * scale)) {
-    layout.text.height = layout.text.pixel + 2 * scale;
+  if (layout.title.height < (layout.title.pixel + 2 * scale)) {
+    layout.title.height = layout.title.pixel + 2 * scale;
   }
+
+  layout.axisX.pixel *= scale;
+  layout.axisX.width *= scale;
+  layout.axisX.height *= scale;
+  layout.axisX.spaceX *= scale;
+
+  layout.scroll.pixel *= scale;
+  layout.scroll.size *= scale;
+  layout.scroll.spaceX *= scale;
 
   layout.digit.pixel *= scale;
   layout.digit.height *= scale;
@@ -544,6 +558,7 @@ export function checkLayout(layout) {
   layout.symbol.pixel *= scale;
   layout.symbol.size *= scale;
   layout.symbol.spaceX *= scale;
+  layout.symbol.spaceY *= scale;
 
   if (layout.symbol.size < (layout.symbol.pixel + 2 * scale)) {
     layout.symbol.size = layout.symbol.pixel + 2 * scale;

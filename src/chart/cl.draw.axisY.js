@@ -27,7 +27,7 @@ export default function ClDrawAxisY(father, rectMain, align) {
   this.axisY = father.config.axisY;
 
   this.maxmin = father.maxmin;
-  this.text = father.layout.text;
+  this.text = father.layout.title;
 
   this.onPaint = function () {
     if (this.axisY[this.align].display === 'none') return;

@@ -5,6 +5,7 @@
 // //////////////////////////////////////////////////
 
 import {
+  _drawLineAlone,
   _drawTxt
 } from '../util/cl.draw';
 import getValue from '../data/cl.data.tools';
@@ -26,15 +27,15 @@ export default function ClDrawAxisX(father, rectMain) {
   this.axisX = father.config.axisX;
 
   this.maxmin = father.maxmin;
-  this.text = father.layout.text;
+  this.text = father.layout.axisX;
 
   this.onPaint = function () {
     this.data = father.data;
     if (this.axisX.display === 'none') return;
 
     let xx, value, spaceX;
-    xx = this.rectMain.left + 2;
-    const yy = this.rectMain.top;
+    xx = this.rectMain.left + this.text.spaceX;
+    const yy = this.rectMain.top + this.rectMain.height / 2;
     if (this.axisX.display === 'block') {
       let count = -1;
       let days = 0;
@@ -48,20 +49,22 @@ export default function ClDrawAxisX(father, rectMain) {
           xx = this.rectMain.left + spaceX / 2 + spaceX * count;
           value = getDate(getValue(this.data, 'time', k));
           _drawTxt(this.context, xx, yy, value,
-            this.text.font, this.text.pixel, this.color.axis, { x: 'center' });
+            this.text.font, this.text.pixel, this.color.axis, { y:'middle', x: 'center' });
         }
       }
     } else {
+      // _drawLineAlone(this.context, this.rectMain.left, this.rectMain.top, 
+      //   this.rectMain.left + this.rectMain.width, this.rectMain.top, this.color.red)
       value = getValue(this.data, 'time', this.linkInfo.minIndex);
       value = formatShowTime(this.data.key, value, this.maxmin.min);
       _drawTxt(this.context, xx, yy, value,
-        this.text.font, this.text.pixel, this.color.axis);
+        this.text.font, this.text.pixel, this.color.axis, { y:'middle' });
 
       xx = this.rectMain.left + this.rectMain.width - 3;
       value = getValue(this.data, 'time', this.linkInfo.maxIndex);
       value = formatShowTime(this.data.key, value, this.maxmin.max);
       _drawTxt(this.context, xx, yy, value,
-        this.text.font, this.text.pixel, this.color.axis, { x: 'end' });
+        this.text.font, this.text.pixel, this.color.axis, { y:'middle', x: 'end' });
     }
   };
 }

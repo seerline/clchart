@@ -160,14 +160,14 @@ export default function ClChartButton(father) {
       case '8':
       case '9':
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy, info.map,
-          this.layout.text.font, this.layout.text.pixel, this.color.baktxt, {
+          this.layout.title.font, this.layout.title.pixel, this.color.baktxt, {
             x: 'center',
             y: 'middle'
           });
         break;
       case '*':
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy - 2 * this.scale, '...',
-          this.layout.text.font, this.layout.text.pixel, this.color.baktxt, {
+          this.layout.title.font, this.layout.title.pixel, this.color.baktxt, {
             x: 'center',
             y: 'middle'
           });
