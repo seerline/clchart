@@ -26,13 +26,13 @@ import {
   initCommonInfo,
   checkLayout,
 } from '../cl.api';
-import { CFG_LAYOUT, CFG_ORDER } from '../cl.cfg';
+import { CFG_LAYOUT, CFG_ORDER } from '../cl.chart.cfg';
 import getValue from '../data/cl.data.tools';
 import {
   FIELD_NOW,
   FIELD_NOW_IDX,
   FIELD_TICK
-} from '../data/cl.data.const';
+} from '../data/../cl.data.cfg';
 
 export default function ClChartOrder(father) {
   initCommonInfo(this, father);

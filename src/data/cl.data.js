@@ -31,7 +31,7 @@ import {
   FIELD_NOW,
   FIELD_ILINE,
   FIELD_ENOW
-} from './cl.data.const';
+} from '../cl.data.cfg';
 import {
   getDate,
   isEmptyArray,

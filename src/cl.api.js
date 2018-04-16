@@ -4,16 +4,16 @@ import ClChart from './chart/cl.chart.base';
 import ClEvent from './event/cl.event';
 import ClData from './data/cl.data';
 
-import * as ClCFG from './cl.cfg';
-import * as ClDATACFG from './data/cl.data.const';
+import * as ClChartCFG from './cl.chart.cfg';
+import * as ClDataCFG from './cl.data.cfg';
 
 import {
   copyJsonOfDeep,
   updateJsonOfDeep
 } from './util/cl.tool';
 
-export const CFG = ClCFG;
-export const DATACFG = ClDATACFG;
+export const CFG_CHART = ClChartCFG;
+export const CFG_DATA = ClDataCFG;
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
 export let _systemInfo = {
@@ -32,9 +32,9 @@ export let _systemInfo = {
 export function setColor(syscolor, standard) {
   let color = {};
   if (syscolor === 'white') {
-    color = copyJsonOfDeep(ClCFG.COLOR_WHITE);
+    color = copyJsonOfDeep(ClChartCFG.COLOR_WHITE);
   } else {
-    color = copyJsonOfDeep(ClCFG.COLOR_BLACK);
+    color = copyJsonOfDeep(ClChartCFG.COLOR_BLACK);
   }
   // 当发现国别为美国需要修改颜色配对
   if (standard === 'usa') {

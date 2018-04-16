@@ -20,7 +20,7 @@ import {
   initCommonInfo,
   checkLayout,
 } from '../cl.api';
-import { CFG_LAYOUT } from '../cl.cfg';
+import { CFG_LAYOUT } from '../cl.chart.cfg';
 import { updateJsonOfDeep } from '../util/cl.tool';
 
 export const CFG_BUTTON = {
