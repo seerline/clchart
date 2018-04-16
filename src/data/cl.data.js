@@ -17,7 +17,6 @@ import {
   findIndexInMin,
   matchDayToWeek,
   matchDayToMon,
-  getMinCount,
   transExrightMin,
   transExrightDay
 } from './cl.data.tools';
@@ -35,7 +34,8 @@ import {
 import {
   getDate,
   isEmptyArray,
-  copyArrayOfDeep
+  copyArrayOfDeep,
+  getMinute,
 } from '../util/cl.tool';
 import {
   ClFormula
@@ -288,7 +288,7 @@ export default function ClData() {
     if (min === undefined || isEmptyArray(min.value)) {
       return out;
     }
-    const daymins = getMinCount(this.tradeTime) * 4;
+    const daymins = getMinute(this.tradeTime) * 4;
     let money;
     for (let k = 0; k < min.value.length; k++) {
       if (this.static.stktype === 0) {

@@ -27,9 +27,7 @@ import {
   checkLayout,
 } from '../cl.api';
 import { CFG_LAYOUT } from '../cl.chart.cfg';
-import {
-  getValue
-} from '../data/cl.data.tools';
+import getValue from '../data/cl.data.tools';
 import {
   FIELD_NOW,
   FIELD_NOW_IDX,
