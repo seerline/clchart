@@ -11,7 +11,7 @@ import {
   _drawlineTo
 } from '../util/cl.draw';
 import getValue from '../data/cl.data.tools';
-import { initCommonInfo } from '../cl.api';
+import { initCommonInfo } from '../chart/cl.chart.init';
 import {
   inRect
 } from '../util/cl.tool';
@@ -27,7 +27,7 @@ export default function ClDrawLine(father, rectMain) {
 
   this.onPaint = function (key) {
     this.data = this.source.getData(key);
-    // console.log(this.data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, this.maxmin);
+    console.log(this.data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, this.maxmin);
 
     if (this.info.labelX === undefined) this.info.labelX = 'idx';
     if (this.info.labelY === undefined) this.info.labelY = 'value';

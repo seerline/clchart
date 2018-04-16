@@ -29,8 +29,8 @@ import {
 import {
   initCommonInfo,
   checkLayout,
-} from '../cl.api';
-import { CFG_LAYOUT } from '../cl.chart.cfg';
+} from '../chart/cl.chart.init';
+import { CHART_LAYOUT } from '../cl.chart.def';
 import {
   updateJsonOfDeep,
   copyJsonOfDeep,
@@ -44,7 +44,7 @@ import {
 
 import {
   STOCK_TYPE_INDEX
-} from '../data/../cl.data.cfg';
+} from '../data/../cl.data.def';
 import getValue, {
   getSize
 } from '../data/cl.data.tools';
@@ -78,7 +78,7 @@ export default function ClChartLine(father) {
       width: 400,
       height: 200
     };
-    this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
+    this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT);
     this.config = copyJsonOfDeep(cfg.config);
     // 这里直接赋值是因为外部已经设置好了配置才会开始初始化
     this.buttons = cfg.buttons || [];
@@ -233,9 +233,10 @@ export default function ClChartLine(father) {
   }
   this.setChildDraw = function () {
     let draw;
+    draw = new ClDrawCursor(this, this.rectGridLine, this.rectChart);
+    this.childDraws['CURSOR'] = draw;
+
     if (this.config.title.display !== 'none') {
-      draw = new ClDrawCursor(this, this.rectGridLine, this.rectChart);
-      this.childDraws['CURSOR'] = draw;
       draw = new ClDrawInfo(this, this.rectTitle, this.rectMess);
       this.childDraws['TITLE'] = draw;
     }
@@ -311,11 +312,11 @@ export default function ClChartLine(father) {
           }]
         },
         result => {
-          const self = result.self.father;
-          if (self.config.zoomInfo.index > 0) {
-            self.config.zoomInfo.index--;
-            self.setZoomInfo(self.config.zoomInfo.index);
-            self.father.onPaint();
+          // const self = result.self.father;
+          if (this.config.zoomInfo.index > 0) {
+            this.config.zoomInfo.index--;
+            this.setZoomInfo(this.config.zoomInfo.index);
+            this.father.onPaint();
           }
         });
       chart = this.createButton('zoomout');
@@ -332,11 +333,11 @@ export default function ClChartLine(father) {
           }]
         },
         result => {
-          const self = result.self.father;
-          if (self.config.zoomInfo.index < self.config.zoomInfo.list.length - 1) {
-            self.config.zoomInfo.index++;
-            self.setZoomInfo(self.config.zoomInfo.index);
-            self.father.onPaint();
+          // const self = result.self.father;
+          if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
+            this.config.zoomInfo.index++;
+            this.setZoomInfo(this.config.zoomInfo.index);
+            this.father.onPaint();
           }
         });
     }
@@ -370,9 +371,10 @@ export default function ClChartLine(father) {
           ]
         },
         result => {
-          const self = result.self.father;
-          self.father.linkInfo.rightMode = result.info.value;
-          self.father.onPaint();
+          // const self = result.self.father;
+          this.father.linkInfo.rightMode = result.info.value;
+          this.father.fastDrawEnd();
+          this.father.onPaint();
         });
       chart.hotIdx = 0;
     }

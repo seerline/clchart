@@ -28,7 +28,9 @@ export const FIELD_MIN = {
   low: 3,
   close: 4,
   vol: 5,
-  money: 6
+  money: 6,
+  allvol: 5, // 增补
+  allmoney: 6 // 增补  
 };
 
 export const FIELD_TICK = {
@@ -40,8 +42,9 @@ export const FIELD_DAY5 = {
   time: 0,
   close: 1,
   vol: 2,
-  idx: 3,
-  avgprc: 4
+  idx: 3,  // 增补
+  allvol: 4, // 增补
+  allmoney: 5 // 增补
 };
 
 // 两种单线的定义

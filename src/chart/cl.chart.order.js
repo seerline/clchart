@@ -25,14 +25,14 @@ import {
 import {
   initCommonInfo,
   checkLayout,
-} from '../cl.api';
-import { CFG_LAYOUT, CFG_ORDER } from '../cl.chart.cfg';
+} from '../chart/cl.chart.init';
+import { CHART_LAYOUT, CHART_ORDER } from '../cl.chart.def';
 import getValue from '../data/cl.data.tools';
 import {
   FIELD_NOW,
   FIELD_NOW_IDX,
   FIELD_TICK
-} from '../data/../cl.data.cfg';
+} from '../data/../cl.data.def';
 
 export default function ClChartOrder(father) {
   initCommonInfo(this, father);
@@ -46,9 +46,9 @@ export default function ClChartOrder(father) {
   // ///////////////////////////////////////////////////////////////
   this.init = function(cfg) {
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 };
-    this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
+    this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT);
 
-    this.config = updateJsonOfDeep(cfg.config, CFG_ORDER);
+    this.config = updateJsonOfDeep(cfg.config, CHART_ORDER);
 
     this.showMode = cfg.config.showMode || 'normal';
     // 下面对配置做一定的校验

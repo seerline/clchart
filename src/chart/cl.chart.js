@@ -16,38 +16,38 @@ import ClChartLine from './cl.chart.line';
 import ClChartOrder from './cl.chart.order';
 // import ClChartScroll from './cl.chart.scroll';
 // import getValue from '../data/cl.data.tools';
-import { setColor, _systemInfo } from '../cl.api';
+import { setColor, _systemInfo } from '../chart/cl.chart.init';
 
-const CFG_LINKINFO = {
-  showMode: 'last',
-  // 'last' 以最新数据为定位，maxIndex=-1 表示显示最新的数据
-  // ‘move’ 当发生移动就设置该参数，-- 可能不需要
-  // fixed 固定显示一定范围的 分时图和5日线这一类固定数量的显示模式
-  // locked 指定某条记录放中间位置
-  fixed: {   // 对应fixed模式
-    min: -1, // 最小记录, 为-1表示最小记录加上left
-    max: -1, // 最大记录, 为-1表式最大记录减去right
-    left: 20,
-    right: 20
-  },
-  locked: {  // 只有当showMode==‘locked’模式才有作用
-    index: -1, // 当前锁定的记录号，
-    set: 0.5   // 表示锁定在中间，1表示锁定在最后一条记录，当前记录的百分比
-  },
-  minIndex: -1, // 当前画面的起始记录号 -1 表示第一次
-  maxIndex: -1, // 当前画面的最大记录号 -1 表示第一次
-  hotIndex: -1, // 循环时需要定位当前数据的指针定位
-  showCursorLine: false, // 是否显示光标信息
-  moveIndex: -1, // 当前鼠标所在位置的记录号 -1 表示没有鼠标事件或第一次
-  spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
-  unitX: 7, // 每天数据的宽度 默认为5， 可以在1..50之间切换
-  rightMode: 'no', // 除权模式
-  hideInfo: false  // 是否显示价格
-};
 
-// 必须包含 context，其他初始化信息参考_initSystem
+// 必须包含 context，其他初始化信息参考initSystem
 function ClChart(context) {
-  // 必须设置context
+  const DEFAULT_LINKINFO = {
+    showMode: 'last',
+    // 'last' 以最新数据为定位，maxIndex=-1 表示显示最新的数据
+    // ‘move’ 当发生移动就设置该参数，-- 可能不需要
+    // fixed 固定显示一定范围的 分时图和5日线这一类固定数量的显示模式
+    // locked 指定某条记录放中间位置
+    fixed: {   // 对应fixed模式
+      min: -1, // 最小记录, 为-1表示最小记录加上left
+      max: -1, // 最大记录, 为-1表式最大记录减去right
+      left: 20,
+      right: 20
+    },
+    locked: {  // 只有当showMode==‘locked’模式才有作用
+      index: -1, // 当前锁定的记录号，
+      set: 0.5   // 表示锁定在中间，1表示锁定在最后一条记录，当前记录的百分比
+    },
+    minIndex: -1, // 当前画面的起始记录号 -1 表示第一次
+    maxIndex: -1, // 当前画面的最大记录号 -1 表示第一次
+    hotIndex: -1, // 循环时需要定位当前数据的指针定位
+    showCursorLine: false, // 是否显示光标信息
+    moveIndex: -1, // 当前鼠标所在位置的记录号 -1 表示没有鼠标事件或第一次
+    spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
+    unitX: 7, // 每天数据的宽度 默认为5， 可以在1..50之间切换
+    rightMode: 'no', // 除权模式
+    hideInfo: false  // 是否显示价格
+  };
+   // 必须设置context
   this.context = context;
   // 通过这个来判断是否为根
   this.father = undefined;
@@ -56,7 +56,7 @@ function ClChart(context) {
   // //////////////////////////////////////////////
   this.initChart = function (dataLayer, eventLayer) {
     // linkInfo 是所有子chart公用的参数集合，也是datalayer应用的集合
-    this.linkInfo = copyJsonOfDeep(CFG_LINKINFO);
+    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO);
     this.checkConfig();
     // 初始化子chart为空
     this.childCharts = {};

@@ -4,43 +4,7 @@ import ClDrawRight from './chart/cl.draw.right';
 import ClDrawVBar from './chart/cl.draw.vbar';
 import ClDrawVLine from './chart/cl.draw.vline';
 
-export const COLOR_WHITE = {
-  sys: 'white',
-  line: ['#4048cc', '#dd8d2d', '#168ee0', '#ad7eac', '#ff8290', '#ba1215'],
-  back: '#fafafa',
-  txt: '#2f2f2f',
-  baktxt: '#2f2f2f',
-  axis: '#7f7f7f',
-  grid: '#cccccc',
-  red: '#ff6a6c',
-  green: '#32cb47',
-  white: '#7e7e7e',
-  vol: '#dd8d2d',
-  button: '#888888',
-  colume: '#41bfd0',
-  box: '#ddf4df',
-  code: '#3f3f3f'
-};
-
-export const COLOR_BLACK = {
-  sys: 'black',
-  line: ['#efefef', '#fdc104', '#5bbccf', '#ad7eac', '#bf2f2f', '#cfcfcf'],
-  back: '#232323',
-  txt: '#bfbfbf',
-  baktxt: '#2f2f2f',
-  axis: '#afafaf',
-  grid: '#373737',
-  red: '#ff6a6c',
-  green: '#6ad36d',
-  white: '#9f9f9f',
-  vol: '#fdc104',
-  button: '#9d9d9d',
-  colume: '#41bfd0',
-  box: '#373737',
-  code: '#41bfd0'
-};
-
-export const CFG_LAYOUT = {
+export const CHART_LAYOUT = {
   margin: {
     left: 0,
     top: 0,
@@ -87,21 +51,21 @@ export const CFG_LAYOUT = {
   }// 标记的定义
 };
 // 按钮的预定义
-export const CFG_BUTTONS = [
+export const CHART_BUTTONS = [
   { key: 'zoomin' },
   { key: 'zoomout' },
   { key: 'exright' }
 ];
 
 // 预定义参数
-export const CFG_ORDER = {
+export const CHART_ORDER = {
   showMode: 'normal', // 'tiny'只显示买一卖一 'normal' 5档买卖盘
   title: {
     display: 'text' // none 不显示 btn 按钮 text 文字
   }
 };
 // 预定义参数
-export const CFG_CHART_KBAR = {
+export const CHART_KBAR = {
   // buttons: ['zoomin', 'exright', 'zoomout'],
   // title: { display: 'none' },
   // scroll: {display: 'none'},
@@ -199,7 +163,7 @@ export const CFG_CHART_KBAR = {
   }]
 };
 
-export const CFG_CHART_VBAR = {
+export const CHART_VBAR = {
   title: {
     display: 'text', // none 不显示 btn 按钮 text 文字
     label: 'VOL'   // 需要显示的文字信息
@@ -273,7 +237,7 @@ export const CFG_CHART_VBAR = {
   }]
 };
 
-export const CFG_CHART_NOW = {
+export const CHART_NOW = {
   title: {
     display: 'none', // none 不显示 btn 按钮 text 文字
   },
@@ -316,7 +280,7 @@ export const CFG_CHART_NOW = {
     }
   }]
 };
-export const CFG_CHART_NOWVOL = {
+export const CHART_NOWVOL = {
   title: {
     display: 'none', // none 不显示 btn 按钮 text 文字
   },
@@ -354,7 +318,7 @@ export const CFG_CHART_NOWVOL = {
   }]
 };
 
-export const CFG_CHART_DAY5 = {
+export const CHART_DAY5 = {
   title: {
     display: 'none', // none 不显示 btn 按钮 text 文字
   },
@@ -381,7 +345,7 @@ export const CFG_CHART_DAY5 = {
     className: ClDrawLine,
     extremum:{ // 如何取极值
       method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
-      maxvalue: ['decvol'],  // 参与计算最大值的标签
+      maxvalue: ['close'],  // 参与计算最大值的标签
       minvalue: ['close']    // 参与计算最小值的标签
     },
     info: {
@@ -398,7 +362,7 @@ export const CFG_CHART_DAY5 = {
   }]
 };
 
-export const CFG_CHART_DAY5VOL = {
+export const CHART_DAY5VOL = {
   title: {
     display: 'none', // none 不显示 btn 按钮 text 文字
   },
@@ -436,7 +400,7 @@ export const CFG_CHART_DAY5VOL = {
   }]
 };
 
-export const CFG_CHART_NORMAL = {
+export const CHART_NORMAL = {
   title: {
     display: 'text', // none 不显示 btn 按钮 text 文字
     label: 'NORMAL'

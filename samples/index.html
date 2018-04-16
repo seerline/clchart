@@ -37,16 +37,16 @@
 			};
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
-			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData(code, 'INFO'));
-			Chart.setData('MIN', ClChart.CFG_DATA.FIELD_MIN, getMockData(code, 'MIN'));
-			Chart.setData('TICK', ClChart.CFG_DATA.FIELD_TICK, getMockData(code, 'TICK'));
-			Chart.setData('NOW', ClChart.CFG_DATA.FIELD_NOW, getMockData(code, 'NOW'));
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'));
+			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'));
+			Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, getMockData(code, 'TICK'));
+			Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, getMockData(code, 'NOW'));
 			var mainHeight = canvas.height * 2 / 3;
 			var mainWidth = canvas.width * 3 / 4;
 			if (code === 'SH000001') mainWidth = canvas.width;
 			var usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_CHART_NOW,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_NOW,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -61,8 +61,8 @@
 			Chart.bindData(Chart1, 'MIN');
 
 			usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_CHART_NOWVOL,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_NOWVOL,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
@@ -78,8 +78,8 @@
 
 			if (code !== 'SH000001') {
 				usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_ORDER,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_ORDER,
 				rectMain: {
 					left: mainWidth,
 					top: 0,
@@ -108,13 +108,13 @@
 			};
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
-			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData(code, 'INFO'));
-			Chart.setData('DAY5', ClChart.CFG_DATA.FIELD_DAY5, getMockData(code, 'DAY5'));
-			Chart.setData('MIN', ClChart.CFG_DATA.FIELD_MIN, getMockData(code, 'MIN'));
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'));
+			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'));
+			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'));
 			var mainHeight = canvas.height * 2 / 3;
 			var usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_CHART_DAY5,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_DAY5,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -129,8 +129,8 @@
 			Chart.bindData(KBarChart, 'DAY5');
 
 			usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_CHART_DAY5VOL,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_DAY5VOL,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
@@ -157,14 +157,15 @@
 			};
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
-			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'));
-			Chart.setData('RIGHT', ClChart.CFG_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
-			Chart.setData('DAY', ClChart.CFG_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'));
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'));
+			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
+			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'));
 			var mainHeight = canvas.height * 2 / 3;
+			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
 			var usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				buttons: ClChart.CFG_CHART.CFG_BUTTONS,
-				config: ClChart.CFG_CHART.CFG_CHART_KBAR,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				buttons: ClChart.DEF_CHART.CHART_BUTTONS,
+				config: ClChart.DEF_CHART.CHART_KBAR,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -179,8 +180,8 @@
 			Chart.bindData(KBarChart, 'DAY');
 
 			usercfg = {
-				layout: ClChart.CFG_CHART.CFG_LAYOUT,
-				config: ClChart.CFG_CHART.CFG_CHART_VBAR,
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_VBAR,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
