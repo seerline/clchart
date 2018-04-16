@@ -59,7 +59,7 @@
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
 			Chart.setData('INFO', ClChart.ChartCFG.FIELD_INFO, ['', 1, 2, 100, 3000, 3300, 2700]);
-			Chart.setData('DAY', ClChart.ChartCFG.FIELD_DAY, TESTDATA.DAY);
+			Chart.setData('DAY', ClChart.ChartCFG.FIELD_DAY, getMockData('SZ300545', 'DAY'));
 			var mainHeight = wh.height * 2 / 3;
 			var usercfg = {
 				layout: ClChart.ChartCFG.CFG_LAYOUT,
