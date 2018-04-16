@@ -14,12 +14,12 @@ export const STOCK_TYPE_OTHER = 5;
 // 基本日线定义，历史分钟线，
 export const FIELD_DAY = {
   time: 0,
-  open: 2,
-  high: 3,
-  low: 4,
-  close: 5,
-  vol: 6,
-  money: 7
+  open: 1,
+  high: 2,
+  low: 3,
+  close: 4,
+  vol: 5,
+  money: 6
 };
 export const FIELD_MIN = {
   idx: 0,

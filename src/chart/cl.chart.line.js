@@ -691,8 +691,8 @@ export default function ClChartLine(father) {
           size
         }
       );
-      if (size < 10) // 临时处理
-        this.setZoomInfo(this.config.zoomInfo.list.length - 1);
+      // if (size < 10) // 临时处理
+      //   this.setZoomInfo(this.config.zoomInfo.list.length - 1);
     }
   }
   this.readyDraw = function () { // 计算最大最小值等

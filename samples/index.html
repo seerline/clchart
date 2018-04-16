@@ -2,6 +2,10 @@
 <html>
 
 <style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
 	canvas {
 		-moz-user-select: none;
 		-webkit-user-select: none;
@@ -11,12 +15,13 @@
 	}
 
 	.canvas_container {
-		margin: 0;
-		padding: 0;
 		border: 0;
 		width: 100%;
 		height: 100%;
 		background-color: #c45151;
+	}
+	#myChart {
+		display: block;
 	}
 </style>
 
@@ -69,9 +74,9 @@
 			Chart.setData('DAY', ClChart.CFG.FIELD_DAY, TESTDATA.DAY);
 			var mainHeight = wh.height * 2 / 3;
 			var usercfg = {
-				layout: ClChart.CFG_LAYOUT,
-				buttons: ClChart.CFG_BUTTONS,
-				config: ClChart.CFG_CHART_KBAR,
+				layout: ClChart.CFG.CFG_LAYOUT,
+				buttons: ClChart.CFG.CFG_BUTTONS,
+				config: ClChart.CFG.CFG_CHART_KBAR,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -86,8 +91,8 @@
 			Chart.bindData(KBarChart, 'DAY');
 
 			usercfg = {
-				layout: ClChart.CFG_LAYOUT,
-				config: ClChart.CFG_CHART_VBAR,
+				layout: ClChart.CFG.CFG_LAYOUT,
+				config: ClChart.CFG.CFG_CHART_VBAR,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
