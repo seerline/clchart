@@ -11,7 +11,10 @@ import {
 import {
   findNearTimeToIndex
 } from './cl.chart.tools';
-import getValue from '../data/cl.data.tools';
+import {
+  getValue,
+  getSize
+} from '../data/cl.data.tools';
 import {
   initCommonInfo
 } from '../cl.chart';
@@ -28,6 +31,7 @@ export default function ClDrawRight(father, rectMain) {
   this.onPaint = function(key) {
     this.data = this.source.getData(key);
     this.rightData = this.source.getData('RIGHT');
+    if (getSize(this.rightData) < 1) return ;
 
     const len = _getTxtWidth(this.context, '▲', this.symbol.font, this.symbol.pixel);
     for (let i = 0; i < this.rightData.value.length; i++) {

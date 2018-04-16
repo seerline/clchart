@@ -102,8 +102,8 @@ export default function ClDrawSeer(father, rectMain) {
       right: this.rectMain.left + this.rectMain.width - 2 * this.scale,
       clr: color,
       bakclr: this.color.back,
-      font: this.text.font,
-      pixel: this.text.pixel,
+      font: this.title.font,
+      pixel: this.title.pixel,
       spaceX: 4 * this.scale,
       spaceY: 3 * this.scale,
       x: 'start',
@@ -125,8 +125,8 @@ export default function ClDrawSeer(father, rectMain) {
       bottom: this.rectMain.top + this.rectMain.height,
       clr: color,
       bakclr: this.color.back,
-      font: this.text.font,
-      pixel: this.text.pixel,
+      font: this.title.font,
+      pixel: this.title.pixel,
       spaceX: 2 * this.scale,
       paceY: 2 * this.scale
     }, [{
@@ -148,7 +148,7 @@ export default function ClDrawSeer(father, rectMain) {
     let infos;
     price = getValue(this.seerList, 'stoploss', no);
     let yl = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY);
-    if (yl - yy > 1.5 * this.text.pixel) {
+    if (yl - yy > 1.5 * this.title.pixel) {
       infos = [{
         txt: 'arc',
         set: 0,
@@ -187,8 +187,8 @@ export default function ClDrawSeer(father, rectMain) {
         right: this.rectMain.left + this.rectMain.width - 2 * this.scale,
         clr: this.color.green,
         bakclr: this.color.back,
-        font: this.text.font,
-        pixel: this.text.pixel,
+        font: this.title.font,
+        pixel: this.title.pixel,
         spaceX: 4 * this.scale,
         spaceY: 3 * this.scale,
         x: 'start',
@@ -198,7 +198,7 @@ export default function ClDrawSeer(father, rectMain) {
 
     price = getValue(this.seerList, 'target', no);
     yl = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY);
-    if (yy - yl > 1.5 * this.text.pixel) {
+    if (yy - yl > 1.5 * this.title.pixel) {
       infos = [{
         txt: 'arc',
         set: 0,
@@ -237,8 +237,8 @@ export default function ClDrawSeer(father, rectMain) {
         right: this.rectMain.left + this.rectMain.width + this.config.drawoffset.right - 2 * this.scale,
         clr: this.color.red,
         bakclr: this.color.back,
-        font: this.text.font,
-        pixel: this.text.pixel,
+        font: this.title.font,
+        pixel: this.title.pixel,
         spaceX: 4 * this.scale,
         spaceY: 3 * this.scale,
         x: 'start',
@@ -250,8 +250,8 @@ export default function ClDrawSeer(father, rectMain) {
     // 100 进行中
     if (inArray(status, [101, 102, 200, 201, 202, 300])) {
       const stopIdx = findNearTimeToIndex(this.data, stop, 'forword');
-      const stopOffset = stopIdx - this.linkinfo.minIndex;
-      const stopX = this.rectMain.left + stopOffset * (this.linkinfo.unitX + this.linkinfo.spaceX) + Math.floor(this.linkinfo.unitX / 2);
+      const stopOffset = stopIdx - this.linkInfo.minIndex;
+      const stopX = this.rectMain.left + stopOffset * (this.linkInfo.unitX + this.linkInfo.spaceX) + Math.floor(this.linkInfo.unitX / 2);
       if (stopX > this.rectMain.left && stopX < this.rectMain.left + this.rectMain.width - 4 * this.scale) {
         color = this.color.vol;
         price = getValue(this.seerList, 'buy', no);

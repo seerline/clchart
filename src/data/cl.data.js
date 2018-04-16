@@ -41,8 +41,8 @@ import {
   ClFormula
 } from '../formula/cl.formula';
 // 只保存一只股票的信息，当前日期，开收市时间
-function ClData() {
-  this.formula = new ClFormula();
+export default function ClData() {
+  // this.formula = new ClFormula();
   this.static = {
     stktype: 1,
     volunit: 100,
@@ -54,7 +54,8 @@ function ClData() {
   };
 
   // 只保存一只股票的信息，当前日期，开收市时间
-  this.init = function (tradedate, tradetime) {
+  this.initData = function (tradedate, tradetime) {
+    this.formula = new ClFormula();
     this.clearData();
     if (tradetime === undefined) {
       this.tradeTime = [{
@@ -257,9 +258,11 @@ function ClData() {
         ]);
       }
     }
-    out = transExrightDay(out, this.static.coinunit, this.InData['RIGHT'].value, rightMode,
+    if(this.InData['RIGHT']&&rightMode!=='none'){
+      out = transExrightDay(out, this.static.coinunit, this.InData['RIGHT'].value, rightMode,
+          0, out.length - 1);
+    }
       // this.config.start,this.config.stop);
-      0, out.length - 1);
 
     return out;
   }
@@ -392,7 +395,6 @@ function ClData() {
   //  以下为公司系统，自由计算的定义
   // /////////////////////////////////////////
   this.makeLineData = function (source, outkey, formula) {
-    if (formula === undefined) return;
     const value = this.formula.runSingleStock(source, formula);
     if (this.OutData[outkey] === undefined) {
       this.OutData[outkey] = {
@@ -408,4 +410,3 @@ function ClData() {
   }
 } // end.
 
-export default ClData;

@@ -10,6 +10,7 @@ import {
   _setLineWidth,
   _drawTxt,
   _fillRect,
+  _drawRect,
   _drawBegin,
   _drawEnd
 } from '../util/cl.draw';
@@ -26,9 +27,9 @@ import {
 } from '../util/cl.tool';
 
 export const CFG_SCROLL = {
+  // display: 'none', // true 
   shape: 'fixed', // fixed 为固定宽度 free有边界
   direct: 'horizontal', // ver 竖立 和横
-  width: 5,
   range: 100,
   select: { min: 40, max: 60 }, // min == beginIdx max = pageCount
   status: 'enabled',
@@ -54,7 +55,6 @@ export default function ClChartScroll(father) {
   }
   this.checkConfig = function() { // 检查配置有冲突的修正过来
     checkLayout(this.layout);
-    this.config.width *= this.scale;
   }
   this.setPublicRect = function() { // 计算所有矩形区域
     const count = this.config.range;
@@ -70,21 +70,21 @@ export default function ClChartScroll(father) {
       stop = this.rectMain.left + spaceX * this.config.select.max;
       if (this.config.shape === 'free') {
         this.rectMin = {
-          left: start - this.config.width / 2,
+          left: start - this.layout.scroll.size / 2,
           top: this.rectMain.top + this.scale,
-          width: this.config.width,
+          width: this.layout.scroll.size,
           height: spaceY
         }
         this.rectMax = {
-          left: stop - this.config.width / 2,
+          left: stop - this.layout.scroll.size / 2,
           top: this.rectMain.top + this.scale,
-          width: this.config.width,
+          width: this.layout.scroll.size,
           height: spaceY
         }
         this.rectMid = {
-          left: start + this.config.width / 2,
+          left: start + this.layout.scroll.size / 2,
           top: this.rectMain.top + this.scale,
-          width: stop - start - this.config.width,
+          width: stop - start - this.layout.scroll.size,
           height: spaceY
         }
       } else {
@@ -211,26 +211,26 @@ export default function ClChartScroll(father) {
   }
   this.drawGridline = function() {
     _drawBegin(this.context, this.color.grid);
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height);
     _drawEnd(this.context);
   }
   this.drawButton = function() {
     if (this.config.direct === 'horizontal') {
-      // console.log('DDD', spaceX, spaceY, start, stop, this.config.width);
-      const spaceY = (this.rectChart.height - this.config.title.height) / 2;
+      // console.log('DDD', spaceX, spaceY, start, stop, this.layout.scroll.size);
+      const spaceY = (this.rectChart.height - this.layout.scroll.height) / 2;
       if (this.config.txt.head !== undefined) {
         _drawTxt(this.context, this.rectChart.left + this.scale, this.rectChart.top + spaceY,
           this.config.txt.head,
-          this.config.title.font, this.config.title.pixel, this.color.axis);
+          this.layout.scroll.font, this.layout.scroll.pixel, this.color.axis);
       }
       if (this.config.txt.tail !== undefined) {
         _drawTxt(this.context, this.rectChart.left + this.rectChart.width - this.scale,
           this.rectChart.top + spaceY, this.config.txt.tail,
-          this.config.title.font, this.config.title.pixel, this.color.axis, { x: 'end' });
+          this.layout.scroll.font, this.layout.scroll.pixel, this.color.axis, { x: 'end' });
       }
 
       _drawBegin(this.context, this.color.colume);
-      '../util/cl.draw';(this.context, this.rectMid.left, this.rectMid.top,
+      _drawRect(this.context, this.rectMid.left, this.rectMid.top,
         this.rectMid.width, this.rectMid.height);
       _fillRect(this.context, this.rectMid.left, this.rectMid.top,
         this.rectMid.width, this.rectMid.height, this.color.box);
@@ -241,17 +241,17 @@ export default function ClChartScroll(father) {
           this.rectMax.width, this.rectMax.height, this.color.colume);
       }
       _drawEnd(this.context);
-      const len = _getTxtWidth(this.context, this.config.txt.left, this.config.title.font, this.config.title.pixel) + 2 * this.scale;
+      const len = _getTxtWidth(this.context, this.config.txt.left, this.layout.scroll.font, this.layout.scroll.pixel) + 2 * this.scale;
       // console.log('len', len, this.rectMid.width);
       if (this.config.txt.left !== undefined && this.rectMid.width > len) {
         _drawTxt(this.context, this.rectMid.left + this.scale, this.rectMid.top + spaceY,
           this.config.txt.left,
-          this.config.title.font, this.config.title.pixel, this.color.axis);
+          this.layout.scroll.font, this.layout.scroll.pixel, this.color.axis);
       }
       if (this.config.txt.right !== undefined && this.rectMid.width > 2 * len) {
         _drawTxt(this.context, this.rectMid.left + this.rectMid.width - this.scale,
           this.rectMid.top + spaceY, this.config.txt.right,
-          this.config.title.font, this.config.title.pixel, this.color.axis, { x: 'end' });
+          this.layout.scroll.font, this.layout.scroll.pixel, this.color.axis, { x: 'end' });
       }
     }
     // else {

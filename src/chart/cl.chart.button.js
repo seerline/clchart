@@ -67,9 +67,8 @@ export default function ClChartButton(father) {
   // ////////////////////////////////////////////////////////////////
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
-  this.onClick = function () {
-    if (this.config.visible !== 'true') return;
-    // console.log(e);
+  this.onClick = function (event) {
+    if (!this.config.visible) return;
     if (this.info.length > 1) {
       this.config.hotIdx++;
       this.config.hotIdx %= this.info.length;
@@ -85,10 +84,11 @@ export default function ClChartButton(father) {
         self: this
       });
     }
+    event.break = true;
   }
   // 事件监听
   this.onPaint = function () { // 重画
-    if (this.config.visible !== 'true') return;
+    if (!this.config.visible) return;
     _setLineWidth(this.context, this.scale);
 
     if (this.config.status === 'disabled') _drawBegin(this.context, this.color.grid);
@@ -160,14 +160,14 @@ export default function ClChartButton(father) {
       case '8':
       case '9':
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy, info.map,
-          this.layout.text.font, this.layout.text.pixel, this.color.baktxt, {
+          this.layout.title.font, this.layout.title.pixel, this.color.baktxt, {
             x: 'center',
             y: 'middle'
           });
         break;
       case '*':
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy - 2 * this.scale, '...',
-          this.layout.text.font, this.layout.text.pixel, this.color.baktxt, {
+          this.layout.title.font, this.layout.title.pixel, this.color.baktxt, {
             x: 'center',
             y: 'middle'
           });
@@ -177,7 +177,7 @@ export default function ClChartButton(father) {
         break;
       default:
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy, info.map,
-          this.layout.text.font, this.layout.text.pixel, this.color.button, {
+          this.layout.symbol.font, this.layout.symbol.pixel, this.color.button, {
             x: 'center',
             y: 'middle'
           });

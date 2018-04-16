@@ -1,9 +1,29 @@
 <!doctype html>
 <html>
 
+<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		width: 100%;
+	}
+
+	.canvas_container {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #c45151;
+	}
+</style>
+
 <head>
-	<title>ClChart</title>
+	<title>ClChart Demo</title>
 	<script src="../dist/ClChart.js"></script>
+	<script src="./index_data.js"></script>
 	<style>
 		canvas {
 			-moz-user-select: none;
@@ -17,16 +37,71 @@
 <body>
 	<div class="container">
 		<h1>clchart</h1>
-		<canvas id="myChart" width="400" height="400"></canvas>
+	</div>
+	<div class='canvas_container'>
+		<canvas id="myChart" height="800"></canvas>
 	</div>
 	<script>
 		// 开始画图
-		window.onload = function() {
-			var ctx = document.getElementById('myChart').getContext('2d');
-			var config = {
+		setscale = function (canvas, scale) {
+			canvas.width = canvas.clientWidth * scale;
+			canvas.height = canvas.clientHeight * scale;
+			return {
+				width: canvas.width,
+				height: canvas.height
+			};
+		}
+		window.onload = function () {
+			var canvas = document.getElementById('myChart');
+			var wh = setscale(canvas, window.devicePixelRatio);
+			// console.log(wh, canvas, canvas.style);
+
+			var ctx = canvas.getContext('2d');
+			// ctx.scale(ratio, ratio);
+			var syscfg = {
+				canvas,
+				scale: window.devicePixelRatio,
 				context: ctx
 			};
-			ClChart.createSingleChart(config);
+			var Chart = ClChart.createSingleChart(syscfg);
+			Chart.initData();
+			Chart.setData('INFO', ClChart.CFG.FIELD_INFO, ['', 1, 2, 100, 3000, 3300, 2700]);
+			Chart.setData('DAY', ClChart.CFG.FIELD_DAY, TESTDATA.DAY);
+			var mainHeight = wh.height * 2 / 3;
+			var usercfg = {
+				layout: ClChart.CFG_LAYOUT,
+				buttons: ClChart.CFG_BUTTONS,
+				config: ClChart.CFG_CHART_KBAR,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: wh.width,
+					height: mainHeight,
+				}
+			};
+			 var KBarChart = Chart.createChart('KBAR', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(KBarChart, 'DAY');
+
+			usercfg = {
+				layout: ClChart.CFG_LAYOUT,
+				config: ClChart.CFG_CHART_VBAR,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: wh.width,
+					height: wh.height - mainHeight,
+				}
+			};
+			var KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(KVBarChart, 'DAY');
+
+			Chart.onPaint();
 		};
 	</script>
 </body>

@@ -34,8 +34,8 @@ export default function ClDrawVBar(father, rectMain) {
         _drawVBar(this.context, {
           filled: this.color.sys === 'white',
           index: k,
-          spaceX: this.linkInfo.unitX,
-          unitX: this.linkInfo.spaceX,
+          spaceX: this.linkInfo.spaceX,
+          unitX: this.linkInfo.unitX,
           unitY: this.maxmin.unitY,
           maxmin: this.maxmin,
           rect: this.rectMain,
@@ -51,8 +51,8 @@ export default function ClDrawVBar(father, rectMain) {
         _drawVBar(this.context, {
           filled: true,
           index: k,
-          spaceX: this.linkInfo.unitX,
-          unitX: this.linkInfo.spaceX,
+          spaceX: this.linkInfo.spaceX,
+          unitX: this.linkInfo.unitX,
           unitY: this.maxmin.unitY,
           maxmin: this.maxmin,
           rect: this.rectMain,

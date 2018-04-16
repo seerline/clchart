@@ -21,31 +21,30 @@ export default function ClDrawLine(father, rectMain) {
   this.rectMain = rectMain;
 
   this.linkInfo = father.father.linkInfo;
-
+  this.source = father.father;
+  
   this.maxmin = father.maxmin;
 
   this.onPaint = function (key) {
     this.data = this.source.getData(key);
+    // console.log(this.data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, this.maxmin);
 
-    let clr;
-    if (this.out.labelX === undefined) this.out.labelX = 'idx';
-    if (this.out.labelY === undefined) this.out.labelY = 'value';
-    if (this.out.color === undefined) clr = this.color.line[0];
-    else clr = this.color[this.out.color];
+    if (this.info.labelX === undefined) this.info.labelX = 'idx';
+    if (this.info.labelY === undefined) this.info.labelY = 'value';
     // 分钟线为‘close’
 
     let xx, yy;
-    let index;
     let isBegin = false;
 
-    _drawBegin(this.context, clr);
-    for (let k = this.linkInfo.minIndex; k <= this.linkInfo.maxIndex; k++) {
-      index = getValue(this.data, this.out.labelX, k);
-      if (index < 0) continue;
+    // console.log(this.rectMain.left, this.rectMain.top);
+    _drawBegin(this.context, this.info.color);
+    for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++,index++) {
+      if (getValue(this.data, this.info.labelX, index) < 0) continue;
       xx = this.rectMain.left + index * (this.linkInfo.unitX + this.linkInfo.spaceX);
-      yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.out.labelX, k)) * this.maxmin.unitY);
+      yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY);
+      // console.log(xx, yy);
       if (!isBegin) {
-        isBegin = inRect(this.rectChart, { x: xx, y: yy });
+        isBegin = inRect(this.rectMain, { x: xx, y: yy });
         if (isBegin) _drawmoveTo(this.context, xx, yy);
         continue;
       }

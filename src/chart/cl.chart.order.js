@@ -7,6 +7,7 @@
 
 import {
   _fillRect,
+  _drawRect,
   _drawHline,
   _setLineWidth,
   _drawTxt,
@@ -140,7 +141,7 @@ export default function ClChartOrder(father) {
         left: this.rectChart.left,
         top: yy,
         width: this.rectChart.width,
-        height: this.layout.text.height
+        height: this.layout.title.height
       };
     } else {
       this.rectTitle = {
@@ -168,8 +169,8 @@ export default function ClChartOrder(father) {
     }
   }
   this.drawIndex = function() {
-    _drawBegin(this.context, this.color.grid)
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
+    _drawBegin(this.context, this.color.grid);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
 
     const offy = this.rectOrder.height / 3;
     const offx = this.rectOrder.width / 3;
@@ -218,7 +219,7 @@ export default function ClChartOrder(father) {
     if (this.config.title.display !== 'none') {
       _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top);
       _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top + this.rectTitle.height);
-      const ticklen = _getTxtWidth(this.context, '分时成交', this.layout.text.font, this.layout.digit.pixel);
+      const ticklen = _getTxtWidth(this.context, '分时成交', this.layout.title.font, this.layout.digit.pixel);
       xx = this.rectTitle.left + (this.rectTitle.width - ticklen) / 2;
       yy = this.rectTitle.top + 3 * this.scale;
       _drawTxt(this.context, xx, yy, '分时成交',
@@ -351,8 +352,8 @@ export default function ClChartOrder(father) {
   }
 
   this.drawGridLine = function() {
-    _drawBegin(this.context, this.color.grid)
-    '../util/cl.draw';(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
+    _drawBegin(this.context, this.color.grid);
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height);
 
     let mmp_count = 1;
     if (this.showMode === 'normal') {
@@ -365,7 +366,7 @@ export default function ClChartOrder(father) {
     const strint = ['①', '②', '③', '④', '⑤'];
     const offy = this.rectOrder.height / (mmp_count * 2);
 
-    len = _getTxtWidth(this.context, '卖①', this.layout.text.font, this.layout.digit.height);
+    len = _getTxtWidth(this.context, '卖①', this.layout.title.font, this.layout.digit.height);
     yy = this.rectOrder.top + Math.floor((offy - this.layout.digit.pixel) / 2); // 画最上面的
     for (let idx = mmp_count - 1; idx >= 0; idx--) {
       xx = this.rectOrder.left + this.layout.digit.spaceX;
@@ -389,7 +390,7 @@ export default function ClChartOrder(father) {
       } else {
         value = '分时成交 ▽';
       }
-      const ticklen = _getTxtWidth(this.context, value, this.layout.text.font, this.layout.digit.pixel);
+      const ticklen = _getTxtWidth(this.context, value, this.layout.title.font, this.layout.digit.pixel);
       xx = this.rectTitle.left + (this.rectTitle.width - ticklen) / 2;
       yy = this.rectTitle.top + 3 * this.scale;
       _drawTxt(this.context, xx, yy, value,

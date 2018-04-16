@@ -26,20 +26,26 @@ export default function ClDrawKBar(father, rectMain) {
 
   this.onPaint = function (key) {
     this.data = this.source.getData(key);
+    // console.log('ClDrawKBar', this.data, this.linkInfo);
+    this.codeInfo = this.source.getData('INFO');    
 
     let clr = this.color.red;
     _drawBegin(this.context, clr);
-    let open, close, before;
+    let open, close;
+    let before = getValue(this.codeInfo, 'before', 0);
     for (let k = 0, idx = this.linkInfo.minIndex; idx <= this.linkInfo.maxIndex; k++, idx++) {
       if (idx > 0) before = getValue(this.data, 'close', idx - 1);
       open = getValue(this.data, 'open', idx);
       close = getValue(this.data, 'close', idx);
       if (open < close || (open === close && close >= before)) {
-        _drawKBar(this.context, {
+      // console.log('red',k, open, close, 
+      // getValue(this.data, 'high', idx),
+      // getValue(this.data, 'low', idx));
+      _drawKBar(this.context, {
           filled: false,
           index: k,
-          spaceX: this.linkInfo.unitX,
-          unitX: this.linkInfo.spaceX,
+          spaceX: this.linkInfo.spaceX,
+          unitX: this.linkInfo.unitX,
           unitY: this.maxmin.unitY,
           maxmin: this.maxmin,
           rect: this.rectMain,
@@ -60,11 +66,14 @@ export default function ClDrawKBar(father, rectMain) {
       open = getValue(this.data, 'open', idx);
       close = getValue(this.data, 'close', idx);
       if (open > close || (open === close && close < before)) {
+        // console.log('green',k, open, close, 
+        // getValue(this.data, 'high', idx),
+        // getValue(this.data, 'low', idx));
         _drawKBar(this.context, {
           filled: true,
           index: k,
-          spaceX: this.linkInfo.unitX,
-          unitX: this.linkInfo.spaceX,
+          spaceX: this.linkInfo.spaceX,
+          unitX: this.linkInfo.unitX,
           unitY: this.maxmin.unitY,
           maxmin: this.maxmin,
           rect: this.rectMain,
