@@ -26,7 +26,7 @@ import {
   initCommonInfo,
   checkLayout,
 } from '../cl.api';
-import { CFG_LAYOUT } from '../cl.chart.cfg';
+import { CFG_LAYOUT, CFG_ORDER } from '../cl.chart.cfg';
 import getValue from '../data/cl.data.tools';
 import {
   FIELD_NOW,
@@ -38,14 +38,17 @@ export default function ClChartOrder(father) {
   initCommonInfo(this, father);
 
   this.linkInfo = father.linkInfo;
-  // ////////////////////////////////////////////////////////////////
+  this.static = this.father.datalayer.static;
+  console.log('ClChartOrder', this.static);
+  
+    // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
   this.init = function(cfg) {
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 };
     this.layout = updateJsonOfDeep(cfg.layout, CFG_LAYOUT);
 
-    this.config = updateJsonOfDeep(cfg.config, CFG_LAYOUT);
+    this.config = updateJsonOfDeep(cfg.config, CFG_ORDER);
 
     this.showMode = cfg.config.showMode || 'normal';
     // 下面对配置做一定的校验
@@ -68,7 +71,7 @@ export default function ClChartOrder(father) {
   // //////////
   //
   // ///////////
-  this._onClick = function(/* e */) {
+  this.onClick = function(/* e */) {
     if (this.isIndex) return;  // 如果是指数就啥也不干
     if (this.showMode === 'normal') {
       this.showMode = 'tiny';
@@ -80,11 +83,13 @@ export default function ClChartOrder(father) {
   // 事件监听
   this.onPaint = function() { // 重画
     // console.log(this.charttype);
-    this.codeInfo = this.father.getData('CODE');
+    console.log('ClChartOrder 1', this.static);
+    this.codeInfo = this.father.getData('INFO');
     this.orderData = this.father.getData('NOW');
-    this.orderData.coinunit = this.father.static.coinunit;
     this.tickData = this.father.getData('TICK');
-    this.tickData.coinunit = this.father.static.coinunit;
+    if (this.orderData === undefined || this.tickData === undefined) return ;
+    this.orderData.coinunit = this.static.coinunit;
+    this.tickData.coinunit = this.static.coinunit;
     this.isIndex = getValue(this.codeInfo, 'type') === 0;
 
     _setLineWidth(this.context, this.scale);
@@ -246,8 +251,8 @@ export default function ClChartOrder(father) {
       xx = this.rectOrder.left + xpos + offx + this.closeLen;
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.orderData, 'sell' + idx);
-        clr = this.getColor(value, this.father.static.before);
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.father.static.decimal),
+        clr = this.getColor(value, this.static.before);
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           });
@@ -267,8 +272,8 @@ export default function ClChartOrder(father) {
       xx = this.rectOrder.left + xpos + offx + this.closeLen;
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.orderData, 'buy' + idx);
-        clr = this.getColor(value, this.father.static.before);
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.father.static.decimal),
+        clr = this.getColor(value, this.static.before);
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           });
@@ -317,8 +322,8 @@ export default function ClChartOrder(father) {
         xx = this.rectTick.left + this.rectTick.width - this.layout.digit.spaceX;
 
         value = getValue(this.tickData, 'close', idx)
-        clr = this.getColor(value, this.father.static.before);
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.father.static.decimal),
+        clr = this.getColor(value, this.static.before);
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           });
@@ -329,8 +334,8 @@ export default function ClChartOrder(father) {
 
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.tickData, 'close', idx)
-        clr = this.getColor(value, this.father.static.before);
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.father.static.decimal),
+        clr = this.getColor(value, this.static.before);
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           });

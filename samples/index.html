@@ -12,45 +12,24 @@
 	<div class="container">
 		<div class="header-container">
 			<div class="btn-group">
-				<button onclick="handleMin()" class="action-button shadow animate">分时</button>
-				<button onclick="handleFiveDay()" class="action-button shadow animate">五日</button>
+				<button onclick="handleMin('SH000001')" class="action-button shadow animate">分时(指数)</button>
+				<button onclick="handleFiveDay('SH000001')" class="action-button shadow animate">五日(指数)</button>
+				<button onclick="handleMin('SZ300545')" class="action-button shadow animate">分时</button>
+				<button onclick="handleFiveDay('SZ300545')" class="action-button shadow animate">五日</button>
 				<button onclick="handleKline()" class="action-button shadow animate">日K</button>
 			</div>
 		</div>
 		<div class="chart-container">
-			<canvas id="myChart"></canvas>
+			<canvas id="myChart" width="400" height="600"></canvas>
 		</div>
 	</div>
 	<script>
 		// 开始画图
-		setscale = function (canvas, scale) {
-			canvas.width = canvas.clientWidth * scale;
-			canvas.height = canvas.clientHeight * scale;
-			return {
-				width: canvas.width,
-				height: canvas.height
-			};
-		}
-
 		// 画分钟线
-		function handleMin() {
+		function handleMin(code) {
 			console.log('Min Line');
-
-		}
-		// 画五日线
-		function handleFiveDay() {
-			console.log('Five Day Line');
-
-		}
-		// 画日线
-		function handleKline() {
-			console.log('dsfjalsdj');
 			var canvas = document.getElementById('myChart');
-			var wh = setscale(canvas, window.devicePixelRatio);
-			// console.log(wh, canvas, canvas.style);
-
 			var ctx = canvas.getContext('2d');
-			// ctx.scale(ratio, ratio);
 			var syscfg = {
 				canvas,
 				scale: window.devicePixelRatio,
@@ -58,17 +37,138 @@
 			};
 			var Chart = ClChart.createSingleChart(syscfg);
 			Chart.initData();
-			Chart.setData('INFO', ClChart.ChartCFG.FIELD_INFO, ['', 1, 2, 100, 3000, 3300, 2700]);
-			Chart.setData('DAY', ClChart.ChartCFG.FIELD_DAY, getMockData('SZ300545', 'DAY'));
-			var mainHeight = wh.height * 2 / 3;
+			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData(code, 'INFO'));
+			Chart.setData('MIN', ClChart.CFG_DATA.FIELD_MIN, getMockData(code, 'MIN'));
+			Chart.setData('TICK', ClChart.CFG_DATA.FIELD_TICK, getMockData(code, 'TICK'));
+			Chart.setData('NOW', ClChart.CFG_DATA.FIELD_NOW, getMockData(code, 'NOW'));
+			var mainHeight = canvas.height * 2 / 3;
+			var mainWidth = canvas.width * 3 / 4;
+			if (code === 'SH000001') mainWidth = canvas.width;
 			var usercfg = {
-				layout: ClChart.ChartCFG.CFG_LAYOUT,
-				buttons: ClChart.ChartCFG.CFG_BUTTONS,
-				config: ClChart.ChartCFG.CFG_CHART_KBAR,
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_CHART_NOW,
 				rectMain: {
 					left: 0,
 					top: 0,
-					width: wh.width,
+					width: mainWidth,
+					height: mainHeight,
+				}
+			};
+			 var Chart1 = Chart.createChart('MIN', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(Chart1, 'MIN');
+
+			usercfg = {
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_CHART_NOWVOL,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: mainWidth,
+					height: canvas.height - mainHeight,
+				}
+			};
+			var Chart2 = Chart.createChart('MINNOW', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(Chart2, 'MIN');
+
+			if (code !== 'SH000001') {
+				usercfg = {
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_ORDER,
+				rectMain: {
+					left: mainWidth,
+					top: 0,
+					width: canvas.width - mainWidth,
+					height: canvas.height,
+				}
+			};
+			var Chart3 = Chart.createChart('ORDER', 'CHART.ORDER', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			// Chart.bindData(Chart3, 'TICK');
+			}
+
+			Chart.onPaint();
+		}
+		// 画五日线
+		function handleFiveDay(code) {
+			console.log('Five Day Line');
+			var canvas = document.getElementById('myChart');
+			var ctx = canvas.getContext('2d');
+			var syscfg = {
+				canvas,
+				scale: window.devicePixelRatio,
+				context: ctx
+			};
+			var Chart = ClChart.createSingleChart(syscfg);
+			Chart.initData();
+			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData(code, 'INFO'));
+			Chart.setData('DAY5', ClChart.CFG_DATA.FIELD_DAY5, getMockData(code, 'DAY5'));
+			Chart.setData('MIN', ClChart.CFG_DATA.FIELD_MIN, getMockData(code, 'MIN'));
+			var mainHeight = canvas.height * 2 / 3;
+			var usercfg = {
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_CHART_DAY5,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
+					height: mainHeight,
+				}
+			};
+			 var KBarChart = Chart.createChart('DAY5', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(KBarChart, 'DAY5');
+
+			usercfg = {
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_CHART_DAY5VOL,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight,
+				}
+			};
+			var KVBarChart = Chart.createChart('VLINE5', 'CHART.LINE', usercfg, result => 
+			 	{ 
+				//  console.log(result); 
+				});
+			Chart.bindData(KVBarChart, 'DAY5');
+
+			Chart.onPaint();
+		}
+		// 画日线
+		function handleKline() {
+			var canvas = document.getElementById('myChart');
+			var ctx = canvas.getContext('2d');
+			var syscfg = {
+				canvas,
+				scale: window.devicePixelRatio,
+				context: ctx
+			};
+			var Chart = ClChart.createSingleChart(syscfg);
+			Chart.initData();
+			Chart.setData('INFO', ClChart.CFG_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'));
+			Chart.setData('RIGHT', ClChart.CFG_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
+			Chart.setData('DAY', ClChart.CFG_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'));
+			var mainHeight = canvas.height * 2 / 3;
+			var usercfg = {
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				buttons: ClChart.CFG_CHART.CFG_BUTTONS,
+				config: ClChart.CFG_CHART.CFG_CHART_KBAR,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
 					height: mainHeight,
 				}
 			};
@@ -79,13 +179,13 @@
 			Chart.bindData(KBarChart, 'DAY');
 
 			usercfg = {
-				layout: ClChart.ChartCFG.CFG_LAYOUT,
-				config: ClChart.ChartCFG.CFG_CHART_VBAR,
+				layout: ClChart.CFG_CHART.CFG_LAYOUT,
+				config: ClChart.CFG_CHART.CFG_CHART_VBAR,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
-					width: wh.width,
-					height: wh.height - mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight,
 				}
 			};
 			var KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', usercfg, result => 
