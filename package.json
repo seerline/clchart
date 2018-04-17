@@ -12,7 +12,7 @@
     "lint": "eslint ./ --fix",
     "clean": "rm -rf node_modules && npm i",
     "build": "webpack --config webpack.prod.js",
-    "deploy": "sh ./scripts/deploy.sh"
+    "ghpages": "sh ./scripts/deploy.sh"
   },
   "keywords": [],
   "author": "",
