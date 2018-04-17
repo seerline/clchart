@@ -67,6 +67,8 @@ html, body, .container {
 
 .menu-item{
   height: 40px;
+  border: 1px solid #454545;
+  border-bottom: none;
   padding: 0 14px;
   font-size: 16px;
   line-height: 40px;
@@ -75,6 +77,9 @@ html, body, .container {
   background-color: #232323;
   list-style: none;
   z-index: 9999;
+}
+.menu-item:last-child {
+  border-bottom: 1px solid #454545;
 }
 
 .active {
