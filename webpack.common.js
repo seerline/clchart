@@ -9,7 +9,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist'])
   ],
   output: {
-    filename: 'ClChart.js',
+    filename: 'clchart.js',
     path: path.resolve(__dirname, 'dist'),
     library: 'ClChart',
     libraryTarget: 'umd',
