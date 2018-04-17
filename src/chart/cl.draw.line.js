@@ -35,7 +35,7 @@ export default function ClDrawLine(father, rectMain) {
 
     let xx, yy;
     let isBegin = false;
-    let idx;
+    let idx, count = 0;
     // console.log(this.rectMain.left, this.rectMain.top);
     _drawBegin(this.context, this.info.color);
     for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++,index++) {
@@ -48,6 +48,10 @@ export default function ClDrawLine(father, rectMain) {
       xx = this.rectMain.left + idx * (this.linkInfo.unitX + this.linkInfo.spaceX);
       yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY);
       // console.log(index, this.data, this.info.labelX, getValue(this.data, this.info.labelY, index));
+      if (Math.floor(idx/this.info.skips) > count) {
+        count =Math.floor(idx/this.info.skips);
+        isBegin = false;
+      }
       if (!isBegin) {
         isBegin = inRect(this.rectMain, { x: xx, y: yy });
         if (isBegin) _drawmoveTo(this.context, xx, yy);
