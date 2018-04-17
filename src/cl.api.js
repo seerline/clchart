@@ -32,12 +32,14 @@ import {
 // ///////////////////////////////////
 export function createSingleChart(cfg) {
   initSystem(cfg);
-  const event = new ClEvent(cfg);
   const chart = new ClChart(cfg.context);
+  const event = new ClEvent(cfg);
   const data = new ClData();
+  
   chart.initChart(data, event);
   return chart;
 }
+
 // ///////////////////////////////////
 //   多股票同列的处理
 //   context:  // 画布

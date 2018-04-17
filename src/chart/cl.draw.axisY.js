@@ -19,10 +19,10 @@ import {
 export default function ClDrawAxisY(father, rectMain, align) {
   initCommonInfo(this, father);
   this.rectMain = rectMain;
-
-  this.static = father.father.static;
   this.linkInfo = father.father.linkInfo;
 
+  this.static = father.static;
+  
   this.align = align;
   this.axisY = father.config.axisY;
 
@@ -31,7 +31,6 @@ export default function ClDrawAxisY(father, rectMain, align) {
 
   this.onPaint = function () {
     if (this.axisY[this.align].display === 'none') return;
-
     if (this.linkInfo.hideInfo) return;
 
     let xx, yy;
@@ -89,6 +88,8 @@ export default function ClDrawAxisY(father, rectMain, align) {
           value = this.axisY[this.align].middle === 'zero' ? 0 : this.static.before;
         }
       }
+      // console.log(this.static.before);
+      
       value = formatInfo(
         value,
         this.axisY[this.align].format,

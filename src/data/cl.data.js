@@ -10,6 +10,7 @@ import {
   fromTradeTimeToIndex,
   fromIndexToTradeTime,
   checkZero,
+  getSize,
   checkDayZero,
   checkDay5,
   updateStatic,
@@ -55,7 +56,7 @@ export default function ClData() {
   };
 
   // 只保存一只股票的信息，当前日期，开收市时间
-  this.initData = function (tradedate, tradetime) {
+  this.initData = function (tradeDate, tradetime) {
     this.formula = new ClFormula();
     this.clearData();
     if (tradetime === undefined) {
@@ -72,10 +73,10 @@ export default function ClData() {
       this.tradeTime = tradetime;
     }
     
-    if (tradedate === undefined) {
+    if (tradeDate === undefined) {
       this.tradeDate = getDate(); // 得到当天的日期
     } else {
-      this.tradeDate = tradedate; // 最近一个交易日期，并不一定等于今天的日期，比如节假日期间
+      this.tradeDate = tradeDate; // 最近一个交易日期，并不一定等于今天的日期，比如节假日期间
     }
   }
   // 包含一个股票所有的数据,以便于以后做公式系统也使用这个数据定义
@@ -118,7 +119,8 @@ export default function ClData() {
   }
 
   this.flushTick = function (nowdata, fields) {
-    if (this.InData['TICK'] === undefined) {
+    // if (this.static.stktype == 0) return ;
+    if (getSize(this.InData['TICK']) < 1) {
       if (nowdata[fields.vol] > 0) {
         this.InData['TICK'] = {
           key: 'TICK',
@@ -201,7 +203,7 @@ export default function ClData() {
           key,
           fields: FIELD_DAY
         };
-        this.OutData['WEEK'].value = this.mergeMon(this.InData['DAY'], this.InData['NOW'], rightMode);
+        this.OutData['WEEK'].value = this.mergeWeek(this.InData['DAY'], this.InData['NOW'], rightMode);
         // 每次都从日线计算生成 -- 避免除权数据无法正确显示的错误
         break;
       case 'MON':
@@ -209,7 +211,7 @@ export default function ClData() {
           key,
           fields: FIELD_DAY
         };
-        this.OutData['MON'].value = this.mergeWeek(this.InData['DAY'], this.InData['NOW'], rightMode);
+        this.OutData['MON'].value = this.mergeMon(this.InData['DAY'], this.InData['NOW'], rightMode);
         // 每次都从日线计算生成 -- 避免除权数据无法正确显示的错误
         break;
       case 'DAY5':
@@ -230,9 +232,34 @@ export default function ClData() {
         };
         this.OutData[key].value = this.makeMinute(key, this.InData[key], this.InData['MIN'], rightMode);
         break;
-    }
+      case 'MIN':
+        this.OutData[key] = {
+          key,
+          fields: FIELD_MIN
+        };
+        this.OutData[key].value = this.updateMinute(this.InData[key]);
+        break;
+      }
     // 先找Out中的数据，没有就找In的数据
     return this.OutData[key] ? this.OutData[key] : this.InData[key];
+  }
+  this.updateMinute = function (source) {
+    let out = copyArrayOfDeep(source.value);
+
+    let allmoney;
+    for (let k = 0; k < out.length; k++) {
+      if (this.static.stktype === 0) {
+        if (k === 0) {
+          allmoney = out[k][FIELD_MIN.vol] * out[k][FIELD_MIN.close] / this.static.coinunit;
+        } else {
+          allmoney += (out[k][FIELD_MIN.vol] - out[k - 1][FIELD_MIN.vol]) * out[k][FIELD_MIN.close] / this.static.coinunit;
+        }
+        out[k][FIELD_MIN.allmoney] = allmoney;
+      } else {
+        // value[k][fields.allmoney] = value[k][fields.money];
+      }
+    }
+    return out;
   }
   this.mergeDay = function (source, now, rightMode) {
     let out = copyArrayOfDeep(source.value);
@@ -280,9 +307,10 @@ export default function ClData() {
   }
   this.mergeDay5 = function (source, min) {
     let out = [];
+    
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value);
-      const lastDate = getDate(source.value[source.value.length - 1][source.fields.idx]);
+      const lastDate = getDate(source.value[source.value.length - 1][source.fields.time]);
       if (lastDate === this.tradeDate) {
         return out;
       }
@@ -311,6 +339,7 @@ export default function ClData() {
         money
       ]);
     }
+    // console.log(out);
     return out;
   }
   // source历史分钟线 nowmin当日分钟线

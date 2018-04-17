@@ -63,7 +63,7 @@ export default function ClChartLine(father) {
   initCommonInfo(this, father);
 
   this.linkInfo = father.linkInfo;
-  this.static = this.father.datalayer.static;
+  this.static = this.father.dataLayer.static;
 
   this.data = {};
   this.maxmin = {};
@@ -78,6 +78,8 @@ export default function ClChartLine(father) {
       width: 400,
       height: 200
     };
+
+    // console.log('---0--',this.rectMain);    
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT);
     this.config = copyJsonOfDeep(cfg.config);
     // 这里直接赋值是因为外部已经设置好了配置才会开始初始化
@@ -103,6 +105,12 @@ export default function ClChartLine(father) {
   }
   this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout);
+    if (this.config.zoomInfo !== undefined) {
+      this.linkInfo.unitX = this.config.zoomInfo.list[this.config.zoomInfo.index] * this.scale;
+      if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale;
+      this.linkInfo.spaceX = this.linkInfo.unitX / 4;
+    }
+
   }
   this.setPublicRect = function () { // 计算所有矩形区域
     // rectChart 画图区
@@ -119,14 +127,14 @@ export default function ClChartLine(father) {
 
     // 计算title和mess矩形位置
     this.rectTitle = {
-      left: 0,
-      top: 0,
+      left: this.rectMain.left,
+      top: this.rectMain.top,
       width: 0,
       height: 0
     };
     this.rectMess = {
-      left: 0,
-      top: 0,
+      left: this.rectMain.left,
+      top: this.rectMain.top,
       width: 0,
       height: 0
     };
@@ -180,7 +188,9 @@ export default function ClChartLine(father) {
       width: axisInfo.width,
       height: axisInfo.bottom - axisInfo.top
     };
+
     this.rectChart = offsetRect(this.rectGridLine, this.layout.offset);
+
     this.rectAxisX = {
       left: 0,
       top: axisInfo.bottom,
@@ -311,7 +321,7 @@ export default function ClChartLine(father) {
             map: '-'
           }]
         },
-        result => {
+        (/* result */) => {
           // const self = result.self.father;
           if (this.config.zoomInfo.index > 0) {
             this.config.zoomInfo.index--;
@@ -332,7 +342,7 @@ export default function ClChartLine(father) {
             map: '+'
           }]
         },
-        result => {
+        (/* result */) => {
           // const self = result.self.father;
           if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
             this.config.zoomInfo.index++;
@@ -535,21 +545,19 @@ export default function ClChartLine(father) {
     if (method === 'fixedRight') middle = this.config.axisY.right.middle;
     if (middle === 'before') return this.static.before;
     if (middle === 'zero') return 0;
-    return undefined;
+    return 0;
   }
   this.calcMaxMin = function (data, extremum, start, stop) {
     const mm = {
       max: 0.0,
       min: 0.0
     };
-    if (data === undefined || isEmptyArray(data.value)) {
-      if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
-        const middle = this.getMiddle(extremum.method);
-        mm.min = middle * (1 - 0.01);
-        mm.max = middle * (1 + 0.01);
-      }
-      return mm;
+    if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
+      const middle = this.getMiddle(extremum.method);
+      mm.min = middle * (1 - 0.01);
+      mm.max = middle * (1 + 0.01);
     }
+    if (data === undefined || isEmptyArray(data.value)) return mm;
 
     let value;
     if (start === undefined) start = 0;
@@ -593,28 +601,30 @@ export default function ClChartLine(father) {
         }
       }
     }
+    // console.log(mm, this.getMiddle(extremum.method));
+    
     if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
       const middle = this.getMiddle(extremum.method);
       if (mm.max === mm.min) {
         if (mm.max > middle) mm.min = middle;
         if (mm.min < middle) mm.max = middle;
       }
-      const maxrate = Math.abs(mm.max - middle);
-      const minrate = Math.abs(middle - mm.min);
-      if (maxrate / middle < 0.01 && minrate / middle < 0.01 &&
+      const maxrate = Math.abs(mm.max - middle) / middle;
+      const minrate = Math.abs(middle - mm.min) / middle;
+      if (maxrate < 0.01 && minrate < 0.01 &&
         this.static.stktype !== STOCK_TYPE_INDEX) {
         mm.min = middle * (1 - 0.01);
         mm.max = middle * (1 + 0.01);
       } else {
         if (maxrate > minrate) {
-          mm.min = middle - maxrate;
+          mm.min = middle / ( 1 + maxrate);
         } else {
-          mm.max = middle + minrate;
+          mm.max = middle * ( 1 + minrate);
         }
       }
       if (mm.min < 0) mm.min = 0;
     }
-    // console.log('getmaxmin', mm, start, stop);
+    console.log('getmaxmin', mm, start, stop);
 
     return mm;
   }
@@ -622,15 +632,15 @@ export default function ClChartLine(father) {
     if (this.scroll.display === 'none') return;
     if (this.childCharts['HSCROLL'] !== undefined) {
       let left = getValue(this.data, 'time', this.linkInfo.minIndex);
-      left = formatShowTime(this.data.key, left, this.father.datalayer.tradeTime[0].begin);
+      left = formatShowTime(this.data.key, left, this.father.dataLayer.tradeTime[0].begin);
       let right = getValue(this.data, 'time', this.linkInfo.maxIndex);
       right = formatShowTime(this.data.key, right,
-        this.father.datalayer.tradeTime[this.father.datalayer.tradeTime.length - 1].end);
+        this.father.dataLayer.tradeTime[this.father.dataLayer.tradeTime.length - 1].end);
       let head = getValue(this.data, 'time', 0);
-      head = formatShowTime(this.data.key, head, this.father.datalayer.tradeTime[0].begin);
+      head = formatShowTime(this.data.key, head, this.father.dataLayer.tradeTime[0].begin);
       let tail = getValue(this.data, 'time', this.data.value.length - 1);
       tail = formatShowTime(this.data.key, tail,
-        this.father.datalayer.tradeTime[this.father.datalayer.tradeTime.length - 1].end);
+        this.father.dataLayer.tradeTime[this.father.dataLayer.tradeTime.length - 1].end);
 
       this.childCharts['HSCROLL'].onChange({
         head,
@@ -669,14 +679,14 @@ export default function ClChartLine(father) {
   }
   this.locationData = function () {
     if (this.data === undefined) return;
-    // console.log(this.father.datalayer.tradeTime);
+    // console.log(this.father.dataLayer.tradeTime);
     const size = getSize(this.data);
     if (this.config.axisX.type === 'day1') {
       setFixedLineFlags(
         this.linkInfo, {
           width: this.rectChart.width,
           size,
-          maxCount: getMinuteCount(this.father.datalayer.tradeTime)
+          maxCount: getMinuteCount(this.father.dataLayer.tradeTime)
         }
       );
     } else if (this.config.axisX.type === 'day5') {
@@ -684,7 +694,7 @@ export default function ClChartLine(father) {
         this.linkInfo, {
           width: this.rectChart.width,
           size,
-          maxCount: 5 * getMinuteCount(this.father.datalayer.tradeTime)
+          maxCount: 5 * getMinuteCount(this.father.dataLayer.tradeTime)
         }
       );
     } else {
@@ -820,7 +830,7 @@ export default function ClChartLine(father) {
     if (mouseIndex > 0) {
       if (this.config.axisX.type === 'day1' || this.config.axisX.type === 'day5') {
         valueX = valueX % 240;
-        valueX = fromIndexToTradeTime(valueX, this.father.datalayer.tradeTime, this.father.datalayer.tradedate);
+        valueX = fromIndexToTradeTime(valueX, this.father.dataLayer.tradeTime, this.father.dataLayer.tradeDate);
         idx = findLabelToIndex(this.data, mouseIndex, 'idx');
       } else {
         valueX = getValue(this.data, 'time', mouseIndex);
@@ -838,6 +848,7 @@ export default function ClChartLine(father) {
         });
       }
     }
+    // console.log('-----',valueX, mouseIndex, this.father.dataLayer.tradeTime);
     this.childDraws['CURSOR'].onPaint(mousePos, valueX, valueY);
   }
 

@@ -16,7 +16,10 @@
 				<button onclick="handleFiveDay('SH000001')" class="action-button shadow animate">五日(指数)</button>
 				<button onclick="handleMin('SZ300545')" class="action-button shadow animate">分时</button>
 				<button onclick="handleFiveDay('SZ300545')" class="action-button shadow animate">五日</button>
-				<button onclick="handleKline()" class="action-button shadow animate">日K</button>
+				<button onclick="handleKline('DAY')" class="action-button shadow animate">日K</button>
+				<button onclick="handleKline('WEEK')" class="action-button shadow animate">周线</button>
+				<button onclick="handleKline('MON')" class="action-button shadow animate">月线</button>
+				<button onclick="handleKline('M5')" class="action-button shadow animate">5分钟</button>
 			</div>
 		</div>
 		<div class="chart-container">
@@ -25,18 +28,21 @@
 	</div>
 	<script>
 		// 开始画图
-		// 画分钟线
-		function handleMin(code) {
-			console.log('Min Line');
-			var canvas = document.getElementById('myChart');
-			var ctx = canvas.getContext('2d');
-			var syscfg = {
+		var canvas = document.getElementById('myChart');
+		var ctx = canvas.getContext('2d');
+		var syscfg = {
 				canvas,
 				scale: window.devicePixelRatio,
 				context: ctx
-			};
-			var Chart = ClChart.createSingleChart(syscfg);
-			Chart.initData();
+		};
+		if (Chart) Chart.clear();
+		var Chart = ClChart.createSingleChart(syscfg);
+		window.onload = function () {
+		};		// 画分钟线
+		function handleMin(code) {
+			console.log('Min Line');
+			Chart.clear();
+			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME);
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'));
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'));
 			Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, getMockData(code, 'TICK'));
@@ -99,15 +105,8 @@
 		// 画五日线
 		function handleFiveDay(code) {
 			console.log('Five Day Line');
-			var canvas = document.getElementById('myChart');
-			var ctx = canvas.getContext('2d');
-			var syscfg = {
-				canvas,
-				scale: window.devicePixelRatio,
-				context: ctx
-			};
-			var Chart = ClChart.createSingleChart(syscfg);
-			Chart.initData();
+			Chart.clear();
+			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME);
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'));
 			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'));
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'));
@@ -147,23 +146,24 @@
 			Chart.onPaint();
 		}
 		// 画日线
-		function handleKline() {
-			var canvas = document.getElementById('myChart');
-			var ctx = canvas.getContext('2d');
-			var syscfg = {
-				canvas,
-				scale: window.devicePixelRatio,
-				context: ctx
-			};
-			var Chart = ClChart.createSingleChart(syscfg);
-			Chart.initData();
+		function handleKline(peroid) {
+			let source = peroid;
+ 			if (peroid ==='WEEK'||peroid==='MON') source = 'DAY';
+			Chart.clear();
+			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME);
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'));
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
-			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'));
+			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', source));
 			var mainHeight = canvas.height * 2 / 3;
 			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
+			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
 			var usercfg = {
-				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				layout: {
+					offset : {
+						left: 5,
+						right: 50
+					}
+				},
 				buttons: ClChart.DEF_CHART.CHART_BUTTONS,
 				config: ClChart.DEF_CHART.CHART_KBAR,
 				rectMain: {
@@ -177,10 +177,15 @@
 			 	{ 
 				//  console.log(result); 
 				});
-			Chart.bindData(KBarChart, 'DAY');
+			Chart.bindData(KBarChart, peroid);
 
 			usercfg = {
-				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				layout: {
+					offset : {
+						left: 5,
+						right: 50
+					}
+				},
 				config: ClChart.DEF_CHART.CHART_VBAR,
 				rectMain: {
 					left: 0,
@@ -193,14 +198,12 @@
 			 	{ 
 				//  console.log(result); 
 				});
-			Chart.bindData(KVBarChart, 'DAY');
+			Chart.bindData(KVBarChart, peroid);
 
 			Chart.onPaint();
 		}
 
-		window.onload = function () {
-			// handleKline();
-		};
+
 	</script>
 </body>
 

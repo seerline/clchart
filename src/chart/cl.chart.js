@@ -43,7 +43,7 @@ function ClChart(context) {
     showCursorLine: false, // 是否显示光标信息
     moveIndex: -1, // 当前鼠标所在位置的记录号 -1 表示没有鼠标事件或第一次
     spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
-    unitX: 7, // 每天数据的宽度 默认为5， 可以在1..50之间切换
+    unitX: 5, // 每天数据的宽度 默认为5， 可以在1..50之间切换
     rightMode: 'no', // 除权模式
     hideInfo: false  // 是否显示价格
   };
@@ -55,20 +55,28 @@ function ClChart(context) {
   // 重新初始化Chart，会清理掉所有的图表和数据
   // //////////////////////////////////////////////
   this.initChart = function (dataLayer, eventLayer) {
-    // linkInfo 是所有子chart公用的参数集合，也是datalayer应用的集合
+    // linkInfo 是所有子chart公用的参数集合，也是dataLayer应用的集合
     this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO);
-    this.checkConfig();
+    // this.checkConfig();
     // 初始化子chart为空
     this.childCharts = {};
     // 设置数据层，同时对外提供设置接口
     this.setDataLayer(dataLayer);
     // 设置事件层，同时对外提供设置接口
     this.setEventLayer(eventLayer);
+    
   }
-  this.checkConfig = function() { // 检查配置有冲突的修正过来
-    this.linkInfo.unitX *= _systemInfo.scale;
-    this.linkInfo.spaceX *= _systemInfo.scale;
+  this.clear = function () {
+    this.childCharts = {};
+    this.fastDraw = false;
+    this.dataLayer.clearData()
+    // this.eventLayer.clear();
+    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO);
   }
+  // this.checkConfig = function() { // 检查配置有冲突的修正过来
+  //   this.linkInfo.unitX *= _systemInfo.scale;
+  //   this.linkInfo.spaceX *= _systemInfo.scale;
+  // }
   this.getChart = function (key) {
     return this.childCharts[key];
   }
@@ -92,13 +100,13 @@ function ClChart(context) {
   // 下面是绑定数据层，engine
   // //////////////////////////////////////////////
   this.getDataLayer = function () {
-    return this.datalayer;
+    return this.dataLayer;
   }
   this.setDataLayer = function (layer) {
     if (layer === undefined) return;
-    this.datalayer = layer;
+    this.dataLayer = layer;
     layer.father = this; // 告诉数据层
-    this.static = this.datalayer.static;
+    this.static = this.dataLayer.static;
   }
   // 设置对应的chart基本的数据key
   this.bindData = function (chart, key) {
@@ -111,13 +119,13 @@ function ClChart(context) {
     }
   }
   // 以下是客户端设置data中数据的接口
-  this.initData = function (tradedate, tradetime) {
-    this.datalayer.initData(tradedate, tradetime);
+  this.initData = function (tradeDate, tradetime) {
+    this.dataLayer.initData(tradeDate, tradetime);
   }
   this.setData = function (key, fields, value) {
     let info = value;
     if (typeof value === 'string') info = JSON.parse(value);
-    this.datalayer.setData(key, fields, info);
+    this.dataLayer.setData(key, fields, info);
     this.fastDrawEnd(); // 新的数据被设置，就重新计算
   }
   // 按key获取一个数组数据
@@ -127,7 +135,7 @@ function ClChart(context) {
         return this.fastBuffer[key];
       }
     }
-    const out = this.datalayer.getData(key, this.linkInfo.rightMode);
+    const out = this.dataLayer.getData(key, this.linkInfo.rightMode);
     if (this.fastDraw) {
       this.fastBuffer[key] = out;
     }
@@ -138,7 +146,7 @@ function ClChart(context) {
       if (lines[k].formula === undefined) continue;
       if (!this.fastDraw || (this.fastDraw && this.fastBuffer[lines[k].formula.key] === undefined)) {
         // console.log('readyData', lines[k].formula, this.linkInfo);
-        this.datalayer.makeLineData(
+        this.dataLayer.makeLineData(
           { data, minIndex: this.linkInfo.minIndex, maxIndex: this.linkInfo.maxIndex },
           lines[k].formula.key,
           lines[k].formula.command
@@ -258,7 +266,7 @@ function ClChart(context) {
   // //////////////////////////////////
 
   // this.makeLineData = function(data, key, formula, punit) {
-  //   return this.datalayer.makeLineData(data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, formula);
+  //   return this.dataLayer.makeLineData(data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, formula);
   // }
 }
 

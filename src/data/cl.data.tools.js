@@ -226,7 +226,11 @@ export function transExrightMin(days, coinunit, rights, mode, start, end) {
     for (let i = start; i <= end; i++) {
       for (let j = 0; j < rights.length; j++) {
         if (i < 1) continue;
-        if (_isRight(getDate(days[i - 1][FIELD_DAY.time]), days[i][FIELD_DAY.time], rights[j][FIELD_RIGHT.time])) {
+        if (_isRight(
+          getDate(days[i - 1][FIELD_DAY.time]), 
+          getDate(days[i][FIELD_DAY.time]), 
+          rights[j][FIELD_RIGHT.time])) 
+        {
           _transExright(days, coinunit, rights[j], mode, start, i);
           break;
         }
@@ -374,27 +378,28 @@ export function checkDayZero(source) {
   return out;
 }
 
-export function checkDay5(source, coinunit, tradedate, tradetime) {
+export function checkDay5(source, coinunit, tradeDate, tradetime) {
   const out = [];
   if (source.length < 1) return out;
 
-  const lastDate = getDate(source[source.length - 1][FIELD_TICK.time]);
+  const lastDate = getDate(source[source.length - 1][FIELD_DAY5.time]);
   // 判断是否已经有收盘数据了
   let maxDays = 5;
-  if (!lastDate === tradedate) maxDays = 4;
-
+  if (!lastDate === tradeDate) maxDays = 4;
+  // console.log(source);
+  
   let idx, count = 0;
   let curDate = 0;
   for (idx = source.length - 1; idx >= 0; idx--) {
-    if (curDate !== getDate(source[idx][FIELD_TICK.time])) {
-      curDate = getDate(source[idx][FIELD_TICK.time]);
+    if (curDate !== getDate(source[idx][FIELD_DAY5.time])) {
+      curDate = getDate(source[idx][FIELD_DAY5.time]);
       count++;
       if (count > maxDays) {
         idx++;
         break;
       }
     }
-    out.unshift(source[idx]);
+    out.splice(0, 0, [source[idx][FIELD_DAY5.time], source[idx][FIELD_DAY5.close], source[idx][FIELD_DAY5.vol]]);
   }
 
   count = 0;
@@ -404,20 +409,21 @@ export function checkDay5(source, coinunit, tradedate, tradetime) {
   const daymins = getMinuteCount(tradetime);
   for (idx = 0; idx < out.length; idx++) {
     // console.log(idx,day5_data[idx]);
-    if (curDate !== getDate(out[idx][FIELD_TICK.time])) { // 增加记录
-      curDate = getDate(out[idx][FIELD_TICK.time]);
+    if (curDate !== getDate(out[idx][FIELD_DAY5.time])) { // 增加记录
+      curDate = getDate(out[idx][FIELD_DAY5.time]);
       count++;
       vol = 0;
       money = 0;
     }
-    vol += out[idx][FIELD_TICK.vol];
-    money += out[idx][FIELD_TICK.close] * out[idx][FIELD_TICK.vol] / coinunit;
-    let index = fromTradeTimeToIndex(out[idx][FIELD_TICK.time], tradetime);
+    vol += out[idx][FIELD_DAY5.vol];
+    money += out[idx][FIELD_DAY5.close] * out[idx][FIELD_DAY5.vol] / coinunit;
+    let index = fromTradeTimeToIndex(out[idx][FIELD_DAY5.time], tradetime);
     index += (count - 1) * daymins;
-    out[idx].allvol = vol;
-    out[idx].allmoney = money;
-    out[idx].idx = index;
+    out[idx][FIELD_DAY5.idx] = index;
+    out[idx][FIELD_DAY5.allvol] = vol;
+    out[idx][FIELD_DAY5.allmoney] = money;
   }  
+  // console.log(out);
   return out;
 }
 
@@ -490,7 +496,7 @@ export function updateStatic(fields, value) {
 //         base_vol = minvalue[k][minfields.vol];
 //         base_money = minvalue[k][minfields.money];
 
-//         cur_min[minfields.time] = fromIndexToTradeTime(stopIdx, this.tradetime, this.tradedate);
+//         cur_min[minfields.time] = fromIndexToTradeTime(stopIdx, this.tradetime, this.tradeDate);
 //         // console.log("match 2:",stopIdx,cur_min.toString());
 //         out.push(copyArrayOfDeep(cur_min));
 //       }
@@ -518,7 +524,7 @@ export function updateStatic(fields, value) {
 //   if (hasData) {
 //     cur_min[minfields.vol] = minvalue[minvalue.length - 1][minfields.vol] - base_vol;
 //     cur_min[minfields.money] = minvalue[minvalue.length - 1][minfields.money] - base_money;
-//     cur_min[minfields.time] = fromIndexToTradeTime(stopIdx, this.tradetime, this.tradedate);
+//     cur_min[minfields.time] = fromIndexToTradeTime(stopIdx, this.tradetime, this.tradeDate);
 //     out.push(copyArrayOfDeep(cur_min));
 //     // alert('4:'+out.toString());
 //     // console.log('match 3:', stopIdx, cur_min.toString());
@@ -590,7 +596,7 @@ export function matchDayToWeek(daydata) {
 
     // 周五 or 下一个日期跨越一周
     const week = getDayWeek(daydata[k][field.time]);
-
+    console.log('week', k, week, daydata[k][field.time]);
     if (k >= daydata.length - 1 || week === 5 ||
       (getDayGap(daydata[k][field.time], daydata[k + 1][field.time]) + week > 7)) {
       zipday[field.time] = daydata[k][field.time];
@@ -598,7 +604,7 @@ export function matchDayToWeek(daydata) {
       isBegin = true;
     }
   } // for i
-  if (isBegin) {
+  if (!isBegin) {
     zipday[field.time] = daydata[daydata.length - 1][field.time];
     out.push(copyArrayOfDeep(zipday));
   }
@@ -636,7 +642,7 @@ export function matchDayToMon(daydata) {
       isBegin = true;
     }
   } // for i
-  if (isBegin) {
+  if (!isBegin) {
     zipday[field.time] = daydata[daydata.length - 1][field.time];
     out.push(copyArrayOfDeep(zipday));
   }
@@ -684,7 +690,7 @@ export function fromTradeTimeToIndex(ttime, tradetime) { // time_t 返回０－�
 }
 
 // 根据交易时间把0..239 转换为 time_t;  0 表示没有非交易时间
-export function fromIndexToTradeTime(tindex, tradetime, tradedate) {
+export function fromIndexToTradeTime(tindex, tradetime, tradeDate) {
   let index = tindex;
   let offset = 0;
   let nowmin = 0;
@@ -692,7 +698,7 @@ export function fromIndexToTradeTime(tindex, tradetime, tradedate) {
     nowmin = getMinuteGap(tradetime[i].begin, tradetime[i].end);
     if (index < nowmin) {
       offset = getMinuteOffset(tradetime[i].begin, index + 1);
-      const ttime = new Date(Math.floor(tradedate / 10000), Math.floor(tradedate % 10000 / 100) - 1, tradedate % 100,
+      const ttime = new Date(Math.floor(tradeDate / 10000), Math.floor(tradeDate % 10000 / 100) - 1, tradeDate % 100,
         Math.floor(offset / 100), offset % 100, 0);
       return Math.floor(ttime / 1000);
     }

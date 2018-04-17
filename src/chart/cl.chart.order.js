@@ -38,7 +38,7 @@ export default function ClChartOrder(father) {
   initCommonInfo(this, father);
 
   this.linkInfo = father.linkInfo;
-  this.static = this.father.datalayer.static;
+  this.static = this.father.dataLayer.static;
   console.log('ClChartOrder', this.static);
   
     // ////////////////////////////////////////////////////////////////
