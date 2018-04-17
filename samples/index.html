@@ -35,7 +35,7 @@
 				scale: window.devicePixelRatio,
 				context: ctx
 		};
-		if (Chart) Chart.clear();
+		if (Chart && Chart.clear) Chart.clear();
 		var Chart = ClChart.createSingleChart(syscfg);
 		window.onload = function () {
 		};		// 画分钟线
@@ -60,8 +60,7 @@
 					height: mainHeight,
 				}
 			};
-			 var Chart1 = Chart.createChart('MIN', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			 var Chart1 = Chart.createChart('MIN', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(Chart1, 'MIN');
@@ -76,8 +75,7 @@
 					height: canvas.height - mainHeight,
 				}
 			};
-			var Chart2 = Chart.createChart('MINNOW', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			var Chart2 = Chart.createChart('MINNOW', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(Chart2, 'MIN');
@@ -93,8 +91,7 @@
 					height: canvas.height,
 				}
 			};
-			var Chart3 = Chart.createChart('ORDER', 'CHART.ORDER', usercfg, result => 
-			 	{ 
+			var Chart3 = Chart.createChart('ORDER', 'CHART.ORDER', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			// Chart.bindData(Chart3, 'TICK');
@@ -121,8 +118,7 @@
 					height: mainHeight,
 				}
 			};
-			 var KBarChart = Chart.createChart('DAY5', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			 var KBarChart = Chart.createChart('DAY5', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(KBarChart, 'DAY5');
@@ -137,8 +133,7 @@
 					height: canvas.height - mainHeight,
 				}
 			};
-			var KVBarChart = Chart.createChart('VLINE5', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			var KVBarChart = Chart.createChart('VLINE5', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(KVBarChart, 'DAY5');
@@ -173,8 +168,7 @@
 					height: mainHeight,
 				}
 			};
-			 var KBarChart = Chart.createChart('KBAR', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			 var KBarChart = Chart.createChart('KBAR', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(KBarChart, peroid);
@@ -194,8 +188,7 @@
 					height: canvas.height - mainHeight,
 				}
 			};
-			var KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', usercfg, result => 
-			 	{ 
+			var KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', usercfg, function(result) { 
 				//  console.log(result); 
 				});
 			Chart.bindData(KVBarChart, peroid);
