@@ -234,6 +234,10 @@ export default function ClChartLine(father) {
           labelY: 'value'
         };
         if (this.config.lines[i].info !== undefined) line.info = this.config.lines[i].info;
+        if (this.config.axisX.type === 'day5') {
+          // 专用于5日线跨天的连线问题
+          line.info.skips = getMinuteCount(this.father.dataLayer.tradeTime);
+        }
         if (line.info.color === undefined) {
           line.info.color = this.color.line[clr % this.color.line.length];
         }
