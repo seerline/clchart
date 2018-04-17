@@ -58,8 +58,6 @@ html, body, .container {
 }
 
 .action-button:active{
-  outline: none;
-  border: none;
   transform: translate(0px,5px);
   -webkit-transform: translate(0px,5px);
   border-bottom: 1px solid;
