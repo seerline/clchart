@@ -11,7 +11,13 @@ module.exports = merge(common, {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new UglifyJSPlugin({
-      sourceMap: true
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
+      },
+      sourceMap: true,
+      parallel: true
     })
   ]
 });
