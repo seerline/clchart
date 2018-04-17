@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 canvas {
@@ -16,11 +17,12 @@ html, body, .container {
 }
 
 .header-container {
-  height: 100px;
+  margin: 5px 0;
+  height: 40px;
   text-align: center;
 }
 .chart-container {
-  height: calc(100% - 100px);
+  height: calc(100% - 50px);
 }
 
 #myChart {
@@ -29,40 +31,49 @@ html, body, .container {
   height: 100%;
 }
 
-.btn-group {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.animate{
-  transition: all 0.1s;
-  -webkit-transition: all 0.1s;
-}
-
-.action-button{
-  position: relative;
+.menu-container {
   height: 40px;
-  margin: 0 10px;
+  width: 140px;
+  position: relative;
+}
+
+.menu-label {
+  display: block;
+}
+
+.menu-check {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.menu-check:checked + .menus {
+  display: flex;
+}
+
+.menus {
+  width: 140px;
+  height: 280px;
+  display: none;
+  flex-direction: column;
+  width: 140px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: #ccc;
+}
+
+.menu-item{
+  height: 40px;
   padding: 0 14px;
-  float: left;
-  border-radius: 3px;
   font-size: 16px;
   line-height: 40px;
   color: #FFF;
   text-decoration: none;	
-  background-color: #212121;
+  background-color: #232323;
+  z-index: 9999;
 }
 
-.action-button:active{
-  transform: translate(0px,5px);
-  -webkit-transform: translate(0px,5px);
-  border-bottom: 1px solid;
-}
-.action-button:focus{
-  outline: none;
-  border: none;
+.active {
+  background-color: #11b7f4;
 }

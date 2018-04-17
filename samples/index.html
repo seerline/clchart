@@ -13,15 +13,19 @@
 <body>
 	<div class="container">
 		<div class="header-container">
-			<div class="btn-group">
-				<button onclick="handleMin('SH000001')" class="action-button shadow animate">分时(指数)</button>
-				<button onclick="handleFiveDay('SH000001')" class="action-button shadow animate">五日(指数)</button>
-				<button onclick="handleMin('SZ300545')" class="action-button shadow animate">分时</button>
-				<button onclick="handleFiveDay('SZ300545')" class="action-button shadow animate">五日</button>
-				<button onclick="handleKline('DAY')" class="action-button shadow animate">日K</button>
-				<button onclick="handleKline('WEEK')" class="action-button shadow animate">周线</button>
-				<button onclick="handleKline('MON')" class="action-button shadow animate">月线</button>
-				<button onclick="handleKline('M5')" class="action-button shadow animate">5分钟</button>
+			<div class="menu-container">
+				<label class="menu-label menu-item active" for="typeMenusCheck" id="typeLabel">分时(指数)</label>
+				<input class="menu-check" type="checkbox" name="typeMenusCheck" id="typeMenusCheck">
+				<ul class="menus" id="typeMenus">
+					<li data-type="MIN" data-fc="SH000001" class="menu-item">分时(指数)</li>
+					<li data-type="DAY5" data-fc="SH000001" class="menu-item">五日(指数)</li>
+					<li data-type="MIN" data-fc="SZ300545" class="menu-item">分时</li>
+					<li data-type="DAY5" data-fc="SZ300545" class="menu-item">五日</li>
+					<li data-type="DAY" data-fc="SZ300545" class="menu-item">日K</li>
+					<li data-type="WEEK" data-fc="SZ300545" class="menu-item">周线</li>
+					<li data-type="MON" data-fc="SZ300545" class="menu-item">月线</li>
+					<li data-type="M5" data-fc="SZ300545" class="menu-item">5分钟</li>
+				</ul>
 			</div>
 		</div>
 		<div class="chart-container">
@@ -142,7 +146,7 @@
 			Chart.onPaint();
 		}
 		// 画日线
-		function handleKline(peroid) {
+		function handleKline(fullCode, peroid) {
 			let source = peroid;
  			if (peroid ==='WEEK'||peroid==='MON') source = 'DAY';
 			Chart.clear();
@@ -197,10 +201,71 @@
 			Chart.onPaint();
 		}
 
-		window.onload = function () {
-			handleMin('SH000001')
-		};		
 
+		const menuTypes = {
+			MIN: handleMin,
+			DAY5: handleFiveDay,
+			MIN: handleMin,
+			DAY5: handleFiveDay,
+			DAY: handleKline,
+			WEEK: handleKline,
+			MON: handleKline,
+			M5: handleKline
+		}
+
+		function setMenusChecked(id, checked) {
+			var dom = document.getElementById(id);
+			if (dom) {
+				dom.checked = checked;
+			}
+		}
+		function setDomTxt(id, txt) {
+			var dom = document.getElementById(id);
+			if (dom) {
+				dom.innerHTML = txt;
+			}
+		}
+		function setMenusActive(menuId, activeDom) {
+			var dom = document.getElementById(menuId);
+			var menuItems = dom.getElementsByTagName('li');
+			for (let i = 0; i < menuItems.length; i++) {
+				const element = menuItems[i];
+				element.className = element.className.replace(' active', '');
+			}
+			if (activeDom) {
+				activeDom.className = activeDom.className + ' active';
+			}
+		}
+
+		// 画图
+		function drawChart(data) {
+			data = data || {};
+			var drawFunc = menuTypes[data.type];
+			if (typeof drawFunc === 'function') {
+				drawFunc(data.fc, data.type);
+			}
+		}
+
+		var activeData = {
+			type: 'MIN',
+			fc: 'SH000001'
+		};
+		window.onload = function () {
+			drawChart(activeData);
+			var typeMenuDom = document.getElementById('typeMenus');
+			typeMenuDom.addEventListener('click', function(e) {
+				var activeMenu = e.target;
+				if (!activeMenu) {
+					return;
+				}
+				activeData = activeMenu.dataset || {};
+				drawChart(activeData);
+				setMenusChecked('typeMenusCheck', false);
+				setMenusActive('typeMenus', activeMenu);
+				setDomTxt('typeLabel', activeMenu.innerHTML);
+			})
+		};		
+		
 	</script>
 </body>
 
