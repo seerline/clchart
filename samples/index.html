@@ -37,8 +37,7 @@
 		};
 		if (Chart && Chart.clear) Chart.clear();
 		var Chart = ClChart.createSingleChart(syscfg);
-		window.onload = function () {
-		};		// 画分钟线
+		// 画分钟线
 		function handleMin(code) {
 			console.log('Min Line');
 			Chart.clear();
@@ -196,6 +195,9 @@
 			Chart.onPaint();
 		}
 
+		window.onload = function () {
+			handleMin('SH000001')
+		};		
 
 	</script>
 </body>
