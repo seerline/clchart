@@ -1,16 +1,19 @@
 {
   "root": true,
-  "parser": "babel-eslint",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "parser": "babel-eslint"
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "standard"
+  ],
   "env": {
     "browser": true,
     "node": true
   },
   "plugins": ["html"],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "no-eval": "off"
   }
 }

@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-import ClChart from './chart/cl.chart';
-import ClEvent from './event/cl.event';
-import ClData from './data/cl.data';
+import ClChart from './chart/cl.chart'
+import ClEvent from './event/cl.event'
+import ClData from './data/cl.data'
 
-import * as ClChartDef from './cl.chart.def';
-import * as ClDataDef from './cl.data.def';
-
-export const DEF_CHART = ClChartDef;
-export const DEF_DATA = ClDataDef;
+import * as ClChartDef from './cl.chart.def'
+import * as ClDataDef from './cl.data.def'
 
 import {
   initSystem
-} from './chart/cl.chart.init';
+} from './chart/cl.chart.init'
+
+export const DEF_CHART = ClChartDef
+export const DEF_DATA = ClDataDef
 
 // ///////////////////////////
 //  下面是一个接口API函数
@@ -30,14 +30,14 @@ import {
 //   context:  // 画布
 //   canvas:   // 用于接受事件处理的
 // ///////////////////////////////////
-export function createSingleChart(cfg) {
-  initSystem(cfg);
-  const chart = new ClChart(cfg.context);
-  const event = new ClEvent(cfg);
-  const data = new ClData();
-  
-  chart.initChart(data, event);
-  return chart;
+export function createSingleChart (cfg) {
+  initSystem(cfg)
+  const chart = new ClChart(cfg.context)
+  const event = new ClEvent(cfg)
+  const data = new ClData()
+
+  chart.initChart(data, event)
+  return chart
 }
 
 // ///////////////////////////////////
@@ -47,15 +47,15 @@ export function createSingleChart(cfg) {
 //   charts: [name1:{},name2:{},name2:{}...]
 // 返回一组chart，每组chart按名字存在一个json数据结构里，方便使用
 // ///////////////////////////////////
-export function createMulChart(cfg) {
-  initSystem(cfg);
-  const event = new ClEvent(cfg);
-  const chartList = {};
+export function createMulChart (cfg) {
+  initSystem(cfg)
+  const event = new ClEvent(cfg)
+  const chartList = {}
   for (const key in cfg.charts) {
-    const chart = new ClChart(cfg.context);
-    const data = new ClData();
-    chart.initChart(data, event);
-    chartList[key] = chart;
+    const chart = new ClChart(cfg.context)
+    const data = new ClData()
+    chart.initChart(data, event)
+    chartList[key] = chart
   }
-  return chartList;
+  return chartList
 }

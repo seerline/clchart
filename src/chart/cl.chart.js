@@ -8,34 +8,33 @@
 // //////////////////////////////////////////////////
 
 import {
-  copyJsonOfDeep,
+  copyJsonOfDeep
   // formatInfo
-} from '../util/cl.tool';
+} from '../util/cl.tool'
 // import ClChartButton from './cl.chart.button';
-import ClChartLine from './cl.chart.line';
-import ClChartOrder from './cl.chart.order';
+import ClChartLine from './cl.chart.line'
+import ClChartOrder from './cl.chart.order'
 // import ClChartScroll from './cl.chart.scroll';
 // import getValue from '../data/cl.data.tools';
-import { setColor, _systemInfo } from '../chart/cl.chart.init';
-
+import { setColor, _systemInfo } from '../chart/cl.chart.init'
 
 // 必须包含 context，其他初始化信息参考initSystem
-function ClChart(context) {
+function ClChart (context) {
   const DEFAULT_LINKINFO = {
     showMode: 'last',
     // 'last' 以最新数据为定位，maxIndex=-1 表示显示最新的数据
     // ‘move’ 当发生移动就设置该参数，-- 可能不需要
     // fixed 固定显示一定范围的 分时图和5日线这一类固定数量的显示模式
     // locked 指定某条记录放中间位置
-    fixed: {   // 对应fixed模式
+    fixed: { // 对应fixed模式
       min: -1, // 最小记录, 为-1表示最小记录加上left
       max: -1, // 最大记录, 为-1表式最大记录减去right
       left: 20,
       right: 20
     },
-    locked: {  // 只有当showMode==‘locked’模式才有作用
+    locked: { // 只有当showMode==‘locked’模式才有作用
       index: -1, // 当前锁定的记录号，
-      set: 0.5   // 表示锁定在中间，1表示锁定在最后一条记录，当前记录的百分比
+      set: 0.5 // 表示锁定在中间，1表示锁定在最后一条记录，当前记录的百分比
     },
     minIndex: -1, // 当前画面的起始记录号 -1 表示第一次
     maxIndex: -1, // 当前画面的最大记录号 -1 表示第一次
@@ -45,40 +44,39 @@ function ClChart(context) {
     spaceX: 2, // 每个数据的间隔像素，可以根据实际情况变化，但不能系统参数里设定的spaceX小
     unitX: 5, // 每天数据的宽度 默认为5， 可以在1..50之间切换
     rightMode: 'no', // 除权模式
-    hideInfo: false  // 是否显示价格
-  };
-   // 必须设置context
-  this.context = context;
+    hideInfo: false // 是否显示价格
+  }
+  // 必须设置context
+  this.context = context
   // 通过这个来判断是否为根
-  this.father = undefined;
+  this.father = undefined
   // //////////////////////////////////////////////
   // 重新初始化Chart，会清理掉所有的图表和数据
   // //////////////////////////////////////////////
   this.initChart = function (dataLayer, eventLayer) {
     // linkInfo 是所有子chart公用的参数集合，也是dataLayer应用的集合
-    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO);
+    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO)
     // this.checkConfig();
     // 初始化子chart为空
-    this.childCharts = {};
+    this.childCharts = {}
     // 设置数据层，同时对外提供设置接口
-    this.setDataLayer(dataLayer);
+    this.setDataLayer(dataLayer)
     // 设置事件层，同时对外提供设置接口
-    this.setEventLayer(eventLayer);
-    
+    this.setEventLayer(eventLayer)
   }
   this.clear = function () {
-    this.childCharts = {};
-    this.fastDraw = false;
+    this.childCharts = {}
+    this.fastDraw = false
     this.dataLayer.clearData()
     // this.eventLayer.clear();
-    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO);
+    this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO)
   }
   // this.checkConfig = function() { // 检查配置有冲突的修正过来
   //   this.linkInfo.unitX *= _systemInfo.scale;
   //   this.linkInfo.spaceX *= _systemInfo.scale;
   // }
   this.getChart = function (key) {
-    return this.childCharts[key];
+    return this.childCharts[key]
   }
   // //////////////////////////////////////////////
   // 以下是设置chart的事件关联接口，element表示映射的chart类
@@ -86,12 +84,12 @@ function ClChart(context) {
   // eventLayer中有针对html5的鼠标键盘事件处理接口，其他事件处理接口另外再做
   // ////////////////////////////////////////////
   this.getEventLayer = function () {
-    return this.eventLayer;
+    return this.eventLayer
   }
   this.setEventLayer = function (layer) {
-    if (layer === undefined) return;
-    this.eventLayer = layer;
-    this.eventLayer.bindChart(this); // 把chart绑定到事件处理层
+    if (layer === undefined) return
+    this.eventLayer = layer
+    this.eventLayer.bindChart(this) // 把chart绑定到事件处理层
   }
   // this.bindEvent = function (chart) {
   //   this.eventLayer.bindEvent(chart);
@@ -100,57 +98,57 @@ function ClChart(context) {
   // 下面是绑定数据层，engine
   // //////////////////////////////////////////////
   this.getDataLayer = function () {
-    return this.dataLayer;
+    return this.dataLayer
   }
   this.setDataLayer = function (layer) {
-    if (layer === undefined) return;
-    this.dataLayer = layer;
-    layer.father = this; // 告诉数据层
-    this.static = this.dataLayer.static;
+    if (layer === undefined) return
+    this.dataLayer = layer
+    layer.father = this // 告诉数据层
+    this.static = this.dataLayer.static
   }
   // 设置对应的chart基本的数据key
   this.bindData = function (chart, key) {
     // console.log('bindData', chart, key);
     if (chart.hotKey !== key) {
-      this.linkInfo.showMode = 'last'; // 切换数据后需要重新画图
-      this.linkInfo.minIndex = -1;
-      chart.hotKey = key; // hotKey 针对chart的数据都调用该数据源
-      this.fastDrawEnd(); // 热点数据改变，就重新计算
+      this.linkInfo.showMode = 'last' // 切换数据后需要重新画图
+      this.linkInfo.minIndex = -1
+      chart.hotKey = key // hotKey 针对chart的数据都调用该数据源
+      this.fastDrawEnd() // 热点数据改变，就重新计算
     }
   }
   // 以下是客户端设置data中数据的接口
   this.initData = function (tradeDate, tradetime) {
-    this.dataLayer.initData(tradeDate, tradetime);
+    this.dataLayer.initData(tradeDate, tradetime)
   }
   this.setData = function (key, fields, value) {
-    let info = value;
-    if (typeof value === 'string') info = JSON.parse(value);
-    this.dataLayer.setData(key, fields, info);
-    this.fastDrawEnd(); // 新的数据被设置，就重新计算
+    let info = value
+    if (typeof value === 'string') info = JSON.parse(value)
+    this.dataLayer.setData(key, fields, info)
+    this.fastDrawEnd() // 新的数据被设置，就重新计算
   }
   // 按key获取一个数组数据
   this.getData = function (key) {
     if (this.fastDraw) {
       if (this.fastBuffer[key] !== undefined) {
-        return this.fastBuffer[key];
+        return this.fastBuffer[key]
       }
     }
-    const out = this.dataLayer.getData(key, this.linkInfo.rightMode);
+    const out = this.dataLayer.getData(key, this.linkInfo.rightMode)
     if (this.fastDraw) {
-      this.fastBuffer[key] = out;
+      this.fastBuffer[key] = out
     }
-    return out;
+    return out
   }
   this.readyData = function (data, lines) {
     for (let k = 0; k < lines.length; k++) {
-      if (lines[k].formula === undefined) continue;
+      if (lines[k].formula === undefined) continue
       if (!this.fastDraw || (this.fastDraw && this.fastBuffer[lines[k].formula.key] === undefined)) {
         // console.log('readyData', lines[k].formula, this.linkInfo);
         this.dataLayer.makeLineData(
           { data, minIndex: this.linkInfo.minIndex, maxIndex: this.linkInfo.maxIndex },
           lines[k].formula.key,
           lines[k].formula.command
-        );
+        )
       }
     }
   }
@@ -195,35 +193,34 @@ function ClChart(context) {
     // ])) return undefined;
     // const chart = new className(this);
 
-    let chart;
-    switch(className)
-    {
-      case 'CHART.ORDER': chart = new ClChartOrder(this);  break;
-      case 'CHART.LINE': chart = new ClChartLine(this);  break;
-      default : chart = new ClChartLine(this);  break;
+    let chart
+    switch (className) {
+      case 'CHART.ORDER': chart = new ClChartOrder(this); break
+      case 'CHART.LINE': chart = new ClChartLine(this); break
+      default : chart = new ClChartLine(this); break
     }
 
-    chart.name = name;
-    this.childCharts[name] = chart;
+    chart.name = name
+    this.childCharts[name] = chart
 
     // this.bindEvent(chart);
-    chart.init(usercfg, callback); // 根据用户配置初始化信息框
+    chart.init(usercfg, callback) // 根据用户配置初始化信息框
 
-    return chart;
+    return chart
   }
 
   // 以下是chart画图的接口
   this.onPaint = function (chart) { // 需要重画时调用
-    this.fastDrawBegin();
+    this.fastDrawBegin()
     // console.log('paint', this.childCharts);
-    
+
     for (const key in this.childCharts) {
       if (chart !== undefined) {
         if (this.childCharts[key] === chart) {
-          this.childCharts[key].onPaint();
+          this.childCharts[key].onPaint()
         }
       } else {
-        this.childCharts[key].onPaint();
+        this.childCharts[key].onPaint()
       }
     }
     // this.fastDrawEnd();
@@ -231,35 +228,35 @@ function ClChart(context) {
   // 用于同一组多图只取一次数据，这样可以加速显示，程序结构不会乱
   this.fastDrawBegin = function () {
     if (!this.fastDraw) {
-      this.fastBuffer = [];
-      this.fastDraw = true;
+      this.fastBuffer = []
+      this.fastDraw = true
     }
   }
   this.fastDrawEnd = function () {
-    this.fastDraw = false;
+    this.fastDraw = false
   }
 
   // ///////////////////////////////////
   // 设置通用参数API
   // //////////////////////////////////
   this.setHideInfo = function (isHideInfo) {
-    if (isHideInfo === undefined) return;
+    if (isHideInfo === undefined) return
     if (isHideInfo !== this.linkInfo.hideInfo) {
-      this.linkInfo.hideInfo = isHideInfo;
-      this.onPaint();
+      this.linkInfo.hideInfo = isHideInfo
+      this.onPaint()
     }
   }
   // 最多支持多级图层
   this.setColor = function (syscolor, chart) { // 设置背景颜色方案
-    this.color = setColor(syscolor, _systemInfo.standard);
-    if (chart === undefined) chart = this;
+    this.color = setColor(syscolor, _systemInfo.standard)
+    if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
-      chart.childCharts[key].color = this.color;
+      chart.childCharts[key].color = this.color
       if (chart.childCharts[key] !== undefined) {
-        this.setColor(syscolor, chart.childCharts[key]);
+        this.setColor(syscolor, chart.childCharts[key])
       }
     }
-    this.onPaint();
+    this.onPaint()
   }
   // ///////////////////////////////////
   //
@@ -270,4 +267,4 @@ function ClChart(context) {
   // }
 }
 
-export default ClChart;
+export default ClChart

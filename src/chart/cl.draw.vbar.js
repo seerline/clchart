@@ -8,27 +8,27 @@ import {
   _drawBegin,
   _drawEnd,
   _drawVBar
-} from '../util/cl.draw';
-import getValue from '../data/cl.data.tools';
+} from '../util/cl.draw'
+import getValue from '../data/cl.data.tools'
 import {
   initCommonInfo
-} from '../chart/cl.chart.init';
+} from '../chart/cl.chart.init'
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawVBar(father, rectMain) {
-  initCommonInfo(this, father);
-  this.rectMain = rectMain;
+export default function ClDrawVBar (father, rectMain) {
+  initCommonInfo(this, father)
+  this.rectMain = rectMain
 
-  this.linkInfo = father.father.linkInfo;
-  this.source = father.father;
+  this.linkInfo = father.father.linkInfo
+  this.source = father.father
 
-  this.maxmin = father.maxmin;
+  this.maxmin = father.maxmin
 
-  this.onPaint = function(key) {
-    this.data = this.source.getData(key);
+  this.onPaint = function (key) {
+    this.data = this.source.getData(key)
 
-    _drawBegin(this.context, this.color.red);
+    _drawBegin(this.context, this.color.red)
     for (let k = 0, idx = this.linkInfo.minIndex; idx <= this.linkInfo.maxIndex; k++, idx++) {
       if (parseFloat(getValue(this.data, 'open', idx)) <= parseFloat(getValue(this.data, 'close', idx))) {
         _drawVBar(this.context, {
@@ -41,11 +41,11 @@ export default function ClDrawVBar(father, rectMain) {
           rect: this.rectMain,
           fillclr: this.color.red
         },
-          getValue(this.data, 'vol', idx));
+        getValue(this.data, 'vol', idx))
       }
     }
-    _drawEnd(this.context);
-    _drawBegin(this.context, this.color.green);
+    _drawEnd(this.context)
+    _drawBegin(this.context, this.color.green)
     for (let k = 0, idx = this.linkInfo.minIndex; idx <= this.linkInfo.maxIndex; k++, idx++) {
       if (parseFloat(getValue(this.data, 'open', idx)) > parseFloat(getValue(this.data, 'close', idx))) {
         _drawVBar(this.context, {
@@ -58,9 +58,9 @@ export default function ClDrawVBar(father, rectMain) {
           rect: this.rectMain,
           fillclr: this.color.green
         },
-          getValue(this.data, 'vol', idx));
+        getValue(this.data, 'vol', idx))
       }
     }
-    _drawEnd(this.context);
-  };
+    _drawEnd(this.context)
+  }
 }
