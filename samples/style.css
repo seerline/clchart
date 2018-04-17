@@ -20,6 +20,9 @@ html, body, .container {
   margin: 5px 0;
   height: 40px;
   text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .chart-container {
   height: calc(100% - 50px);
@@ -53,7 +56,6 @@ html, body, .container {
 
 .menus {
   width: 140px;
-  height: 280px;
   display: none;
   flex-direction: column;
   width: 140px;
@@ -71,6 +73,7 @@ html, body, .container {
   color: #FFF;
   text-decoration: none;	
   background-color: #232323;
+  list-style: none;
   z-index: 9999;
 }
 
