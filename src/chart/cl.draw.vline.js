@@ -25,8 +25,6 @@ export default function ClDrawVLine (father, rectMain) {
   //   width:rectMain.width,
   //   height:rectMain.height
   // };
-  console.log('---1--', this.rectMain)
-
   this.linkInfo = father.father.linkInfo
   this.source = father.father
 

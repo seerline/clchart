@@ -79,7 +79,6 @@ export function initSystem (cfg) {
     for (const key in _systemInfo) {
       _systemInfo[key] = cfg[key] || _systemInfo[key]
     }
-    console.log(_systemInfo)
   }
   _systemInfo.color = setColor(_systemInfo.sysColor, _systemInfo.standard)
 }
@@ -144,7 +143,6 @@ export function changeCursorStyle (style) {
 }
 
 export function setScale (canvas, scale) {
-  console.log(canvas.clientWidth, canvas.width)
   canvas.width = canvas.clientWidth * scale
   canvas.height = canvas.clientHeight * scale
   return {

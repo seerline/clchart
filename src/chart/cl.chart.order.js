@@ -39,8 +39,6 @@ export default function ClChartOrder (father) {
 
   this.linkInfo = father.linkInfo
   this.static = this.father.dataLayer.static
-  console.log('ClChartOrder', this.static)
-
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
@@ -82,8 +80,6 @@ export default function ClChartOrder (father) {
   }
   // 事件监听
   this.onPaint = function () { // 重画
-    // console.log(this.charttype);
-    console.log('ClChartOrder 1', this.static)
     this.codeInfo = this.father.getData('INFO')
     this.orderData = this.father.getData('NOW')
     this.tickData = this.father.getData('TICK')

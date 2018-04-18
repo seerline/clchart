@@ -597,7 +597,7 @@ export function matchDayToWeek (daydata) {
 
     // 周五 or 下一个日期跨越一周
     const week = getDayWeek(daydata[k][field.time])
-    console.log('week', k, week, daydata[k][field.time])
+    // console.log('week', k, week, daydata[k][field.time])
     if (k >= daydata.length - 1 || week === 5 ||
       (getDayGap(daydata[k][field.time], daydata[k + 1][field.time]) + week > 7)) {
       zipday[field.time] = daydata[k][field.time]

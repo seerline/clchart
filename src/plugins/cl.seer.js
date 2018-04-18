@@ -129,7 +129,6 @@ export default function ClDrawSeer (father, rectMain) {
 
     const period = getValue(this.sourceSeer, 'period', no)
     const surplus = period - (this.linkInfo.maxIndex - idx)
-    console.log('surplus', surplus)
 
     let txt = ' 周期:[' + period + '天]'
     if (surplus > 0) txt += ' 剩余:[' + surplus + '天]'

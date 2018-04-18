@@ -7,7 +7,7 @@
 import {
   _drawBegin,
   _drawEnd,
-  _setTransColor,
+  // _setTransColor,
   _drawKBar
 } from '../util/cl.draw'
 import getValue from '../data/cl.data.tools'

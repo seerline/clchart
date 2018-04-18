@@ -133,8 +133,6 @@ function ClChart (context) {
         return this.fastBuffer[key]
       }
     }
-    console.log(key, this.linkInfo.rightMode);
-    
     const out = this.dataLayer.getData(key, this.linkInfo.rightMode)
     if (this.fastDraw) {
       this.fastBuffer[key] = out

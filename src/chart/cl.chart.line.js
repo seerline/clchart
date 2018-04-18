@@ -759,7 +759,6 @@ export default function ClChartLine (father) {
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
   this.onClick = function (event) {
-    console.log('click', event)
     if (this.axisPlatform !== 'phone1') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine
       if (this.linkInfo.showCursorLine) {
