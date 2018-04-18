@@ -10,10 +10,14 @@
 	<link rel="stylesheet" type="text/css" href="./style.css?v=1" />
 </head>
 
-<body>
+<body class="theme-black">
 	<div class="container">
 		<div class="header-container">
 			<div id="drawMenu">
+			</div>
+			<div id="toggleTheme">
+					<i id="iconSun" class="icon-sun"></i>
+					<i id="iconMoon" class="icon-moon" style="display: none;"></i>
 			</div>
 			<div id="langMenu">
 			</div>
@@ -21,7 +25,9 @@
 		<div class="chart-container">
 			<canvas id="myChart" width="400" height="600"></canvas>
 		</div>
-		<div id="spinner" class="spinner"></div>
+		<div id="spinner" class="spinner">
+			<i class="icon-spin5 animate-spin"></i>
+		</div>
 	</div>
 	<script src="./stockdata.js"></script>
 	<script>
@@ -298,7 +304,30 @@
 			langMenus = new ListMenus('langMenu', langMenusCfg)
 			langMenus.createMenus(function (activeData) {
 				console.log(activeData)
-			})
+			});
+			// 切换主题颜色
+			let theme = 'black';
+			function hanldeToggleTheme() {
+				const sumDom = document.getElementById('iconSun')
+				const moonDom = document.getElementById('iconMoon')
+				if (theme === 'black') {
+					moonDom.style.display = 'block'
+					sumDom.style.display = 'none'
+					theme = 'white'
+				} else {
+					moonDom.style.display = 'none'
+					sumDom.style.display = 'block'
+					theme = 'black'
+				}
+				document.body.className = 'theme-' + theme
+				// let timer = Date.now()
+				Chart.setColor(theme)
+				// 需要手动onPaint一次
+				Chart.onPaint()
+				// console.log('-------', Date.now() - timer)
+			}
+			const toggleThemeDom = document.getElementById('toggleTheme');
+			toggleThemeDom.addEventListener('click', hanldeToggleTheme)
 		}
 		window.onresize = function () {
 			canvas.width = canvas.clientWidth * window.devicePixelRatio

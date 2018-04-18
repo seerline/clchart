@@ -256,7 +256,15 @@ function ClChart (context) {
         this.setColor(syscolor, chart.childCharts[key])
       }
     }
-    this.onPaint()
+    // 需要将其子配置的颜色也一起改掉
+    for (const key in chart.childDraws) {
+      chart.childDraws[key].color = this.color
+      if (chart.childDraws[key] !== undefined) {
+        this.setColor(syscolor, chart.childDraws[key])
+      }
+    }
+    // 修复递归调用问题
+    // this.onPaint()
   }
   // ///////////////////////////////////
   //

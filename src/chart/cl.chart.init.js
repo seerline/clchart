@@ -67,6 +67,8 @@ export function setColor (syscolor, standard) {
     color.red = color.green
     color.green = clr
   }
+  // 更新当前系统的颜色
+  _systemInfo.color = color
   return color
 }
 export function initSystem (cfg) {
