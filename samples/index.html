@@ -38,7 +38,7 @@
 		const syscfg = {
 			canvas,
 			scale: window.devicePixelRatio,
-			context: ctx
+			context: ctx,
 		}
 		const Chart = ClChart.createSingleChart(syscfg)
 		// 画分钟线
@@ -277,33 +277,39 @@
 		}
 
 		const typeMenusCfg = [
-			{ type: 'MIN', fc: 'SH000001', label: '分时(指数)' },
-			{ type: 'DAY5', fc: 'SH000001', label: '五日(指数)' },
-			{ type: 'MIN', fc: 'SZ300545', label: '分时' },
-			{ type: 'DAY5', fc: 'SZ300545', label: '五日' },
-			{ type: 'DAY', fc: 'SZ300545', label: '日K' },
-			{ type: 'WEEK', fc: 'SZ300545', label: '周线' },
-			{ type: 'MON', fc: 'SZ300545', label: '月线' },
-			{ type: 'M5', fc: 'SZ300545', label: '5分钟' },
-			{ type: 'SEER', fc: 'SZ300545', label: '预测' }
+			{ type: 'MIN', fc: 'SH000001', label_en: '1 min(Idx)', label_zh: '分时(指数)' },
+			{ type: 'DAY5', fc: 'SH000001', label_en: '5 days(Idx)', label_zh: '五日(指数)' },
+			{ type: 'MIN', fc: 'SZ300545', label_en: '1 min', label_zh: '分时' },
+			{ type: 'DAY5', fc: 'SZ300545', label_en: '5 days', label_zh: '五日' },
+			{ type: 'DAY', fc: 'SZ300545', label_en: '1 day', label_zh: '日K' },
+			{ type: 'WEEK', fc: 'SZ300545', label_en: '1 week', label_zh: '周线' },
+			{ type: 'MON', fc: 'SZ300545', label_en: '1 month', label_zh: '月线' },
+			{ type: 'M5', fc: 'SZ300545', label_en: '5 min', label_zh: '5分钟' },
+			{ type: 'SEER', fc: 'SZ300545', label_en: 'seer(extend)', label_zh: '预测' }
 		]
 		const langMenusCfg = [
-			{ type: 'zh', label: '中文' },
-			{ type: 'en', label: 'English' }
+			{ lang: 'zh', label: '中文', standard: 'china' },
+			{ lang: 'en', label: 'English', standard: 'usa' }
 		]
 		let drawMenus
 		let langMenus
 		window.onload = function () {
+			let lang = 'zh'
 			const spinner = document.getElementById('spinner')
 			spinner.style.display = 'none'
 			drawChart(typeMenusCfg[0])
-			drawMenus = new ListMenus('drawMenu', typeMenusCfg)
+			drawMenus = new ListMenus('drawMenu', typeMenusCfg, lang)
 			drawMenus.createMenus(function (activeData) {
 				drawChart(activeData)
 			})
-			langMenus = new ListMenus('langMenu', langMenusCfg)
+			langMenus = new ListMenus('langMenu', langMenusCfg, lang)
 			langMenus.createMenus(function (activeData) {
-				console.log(activeData)
+				if (activeData.lang === lang) {
+					return
+				}
+				lang = activeData.lang
+				drawMenus.setLanguage(lang)
+				Chart.setStandard(activeData.standard)
 			});
 			// 切换主题颜色
 			let theme = 'black';

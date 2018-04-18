@@ -54,7 +54,11 @@ export const COLOR_BLACK = {
   code: '#41bfd0'
 }
 
-export function setColor (syscolor, standard) {
+export function setStandard (standard) {
+  _systemInfo.standard = standard || 'china'
+}
+
+export function setColor (syscolor) {
   let color = {}
   if (syscolor === 'white') {
     color = copyJsonOfDeep(COLOR_WHITE)
@@ -62,7 +66,7 @@ export function setColor (syscolor, standard) {
     color = copyJsonOfDeep(COLOR_BLACK)
   }
   // 当发现国别为美国需要修改颜色配对
-  if (standard === 'usa') {
+  if (_systemInfo.standard === 'usa') {
     const clr = color.red
     color.red = color.green
     color.green = clr

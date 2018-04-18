@@ -16,7 +16,7 @@ import ClChartLine from './cl.chart.line'
 import ClChartOrder from './cl.chart.order'
 // import ClChartScroll from './cl.chart.scroll';
 // import getValue from '../data/cl.data.tools';
-import { setColor, _systemInfo } from '../chart/cl.chart.init'
+import { setColor, setStandard, _systemInfo } from '../chart/cl.chart.init'
 
 // 必须包含 context，其他初始化信息参考initSystem
 function ClChart (context) {
@@ -247,24 +247,36 @@ function ClChart (context) {
     }
   }
   // 最多支持多级图层
-  this.setColor = function (syscolor, chart) { // 设置背景颜色方案
-    this.color = setColor(syscolor, _systemInfo.standard)
+  this.setColor = function (sysColor, chart) { // 设置背景颜色方案
+    this.color = setColor(sysColor)
     if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
       chart.childCharts[key].color = this.color
       if (chart.childCharts[key] !== undefined) {
-        this.setColor(syscolor, chart.childCharts[key])
+        this.setColor(sysColor, chart.childCharts[key])
       }
     }
     // 需要将其子配置的颜色也一起改掉
     for (const key in chart.childDraws) {
       chart.childDraws[key].color = this.color
       if (chart.childDraws[key] !== undefined) {
-        this.setColor(syscolor, chart.childDraws[key])
+        this.setColor(sysColor, chart.childDraws[key])
+      }
+    }
+    for (const key in chart.childLines) {
+      chart.childLines[key].color = this.color
+      if (chart.childLines[key] !== undefined) {
+        this.setColor(sysColor, chart.childLines[key])
       }
     }
     // 修复递归调用问题
     // this.onPaint()
+  }
+  // 改变语言
+  this.setStandard = function (standard) {
+    setStandard(standard)
+    this.setColor(_systemInfo.sysColor)
+    this.onPaint()
   }
   // ///////////////////////////////////
   //
