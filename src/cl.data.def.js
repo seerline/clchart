@@ -171,22 +171,6 @@ export const FIELD_FINANCE = {
 // 以上为系统默认定义，用户定义数据类型可以放在下面
 // ////////////////////////////////////////
 
-// 预测信息定义
-export const FIELD_SEER = {
-  code: 0,
-  start: 1, // 开始日期
-  period: 2, // 预期周期
-  buy: 3, // 买入价
-  target: 4, // 目标价
-  stoploss: 5, // 止损价
-  status: 6, // 当前状态
-  stopdate: 7, // 停止日期 正在进行的为0
-  // highdate: 8,  // 最高价格日期
-  // lowdate: 9,    // 最低价格日期
-  surplus: 10, // 剩余天数
-  uid: 11, // 预测的id
-  focused: 12 // 是否热点
-}
 export const FIELD_TRADE = {
   time: 0, // 交易时间
   code: 1, // 股票代码

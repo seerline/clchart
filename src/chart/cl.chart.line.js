@@ -351,15 +351,19 @@ export default function ClChartLine (father) {
     }
     if (this.hasButton('exright', this.buttons)) {
       chart = this.createButton('exright')
-      ww = _getTxtWidth(this.context, '前复权', this.layout.symbol.font, this.layout.symbol.pixel)
-      xx = this.rectMain.left + this.rectMain.width - ww - 2 * this.layout.symbol.spaceX
-      yy = (this.rectMess.height - this.layout.symbol.pixel - 2 * this.layout.symbol.spaceY) / 2
+      ww = _getTxtWidth(this.context, '前复权', this.layout.title.font, this.layout.title.pixel)
+      xx = this.rectMain.left + this.rectMain.width - ww - this.layout.title.spaceX
+      if (this.config.title.display !== 'none') {
+        yy = (this.rectMess.height - this.layout.title.pixel - 2 * this.layout.title.spaceY) / 2
+      } else {
+        yy = this.rectMain.top + this.layout.title.spaceY
+      }
       chart.init({
         rectMain: {
           left: xx,
           top: this.rectMess.top + yy,
-          width: ww + this.layout.symbol.spaceX,
-          height: this.rectMess.height - 2 * yy
+          width: ww + this.layout.title.spaceX,
+          height: this.layout.title.pixel + 2 * this.layout.title.spaceY
         },
         config: {
           shape: 'box'
@@ -453,6 +457,13 @@ export default function ClChartLine (father) {
     }
     if (top) top.onPaint()
   }
+  this.beforeLocation = function () {
+    for (const name in this.childLines) {
+      if (this.childLines[name].beforeLocation) {
+        this.childLines[name].beforeLocation()
+      }
+    }
+  }
   this.drawChildLines = function () {
     for (const name in this.childLines) {
       // console.log('..', this.childLines[name].hotKey);
@@ -512,6 +523,8 @@ export default function ClChartLine (father) {
     }
   }
   this.onPaint = function () {
+    this.beforeLocation() // 数据定位前需要做的事情
+
     this.data = this.father.getData(this.hotKey)
     this.locationData()
     this.father.readyData(this.data, this.config.lines)
@@ -622,7 +635,7 @@ export default function ClChartLine (father) {
       }
       if (mm.min < 0) mm.min = 0
     }
-    console.log('getmaxmin', mm, start, stop)
+    // console.log('getmaxmin', mm, start, stop)
 
     return mm
   }
@@ -746,7 +759,7 @@ export default function ClChartLine (father) {
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
   this.onClick = function (event) {
-    // console.log('click', this.axisPlatform);
+    console.log('click', event)
     if (this.axisPlatform !== 'phone1') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine
       if (this.linkInfo.showCursorLine) {

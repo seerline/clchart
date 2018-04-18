@@ -7,6 +7,7 @@
 import {
   _drawBegin,
   _drawEnd,
+  _setTransColor,
   _drawKBar
 } from '../util/cl.draw'
 import getValue from '../data/cl.data.tools'
@@ -25,11 +26,14 @@ export default function ClDrawKBar (father, rectMain) {
   this.maxmin = father.maxmin
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
     // console.log('ClDrawKBar', this.data, this.linkInfo);
     this.codeInfo = this.source.getData('INFO')
 
     let clr = this.color.red
+    // clr = _setTransColor(clr, 1, 'adjust')
+    // clr = _setTransColor(clr, 0.7)
     _drawBegin(this.context, clr)
     let open, close
     let before = getValue(this.codeInfo, 'before', 0)
@@ -60,6 +64,8 @@ export default function ClDrawKBar (father, rectMain) {
     }
     _drawEnd(this.context)
     clr = this.color.green
+    // clr = _setTransColor(clr, 1, 'adjust')
+    // clr = _setTransColor(clr, 0.7)
     _drawBegin(this.context, clr)
     for (let k = 0, idx = this.linkInfo.minIndex; idx <= this.linkInfo.maxIndex; k++, idx++) {
       if (idx > 0) before = getValue(this.data, 'close', idx - 1)

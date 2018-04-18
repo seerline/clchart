@@ -26,7 +26,8 @@ export default function ClDrawVBar (father, rectMain) {
   this.maxmin = father.maxmin
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
 
     _drawBegin(this.context, this.color.red)
     for (let k = 0, idx = this.linkInfo.minIndex; idx <= this.linkInfo.maxIndex; k++, idx++) {

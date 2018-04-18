@@ -157,7 +157,8 @@ function _getExrightPrice (price, coinunit, rightpara, mode) {
   } else {
     price = price * (1000 / coinunit) * rightpara.gs / 1000 + rightpara.pg + rightpara.px
   }
-  return Math.floor(price / (1000 / coinunit) + 0.5)
+  // return Math.floor(price / (1000 / coinunit) + 0.5)
+  return price / (1000 / coinunit)
 }
 // 得到某个价格的除权价
 export function getExrightPriceRange (start, stop, price, coinunit, rights) {

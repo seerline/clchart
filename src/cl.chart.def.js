@@ -21,6 +21,7 @@ export const CHART_LAYOUT = {
     pixel: 12,
     height: 18,
     spaceX: 10,
+    spaceY: 2,
     font: 'sans-serif'
   }, // 标题文字的定义
   axisX: {
@@ -44,9 +45,8 @@ export const CHART_LAYOUT = {
   }, // 数字的定义
   symbol: {
     pixel: 10,
-    size: 16,
+    size: 18,
     spaceX: 3,
-    spaceY: 2,
     font: 'Arial'
   }// 标记的定义
 }
@@ -59,7 +59,7 @@ export const CHART_BUTTONS = [
 
 // 预定义参数
 export const CHART_ORDER = {
-  showMode: 'normal', // 'tiny'只显示买一卖一 'normal' 5档买卖盘
+  style: 'normal', // 'tiny'只显示买一卖一 'normal' 5档买卖盘
   title: {
     display: 'text' // none 不显示 btn 按钮 text 文字
   }

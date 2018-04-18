@@ -11,9 +11,11 @@ import {
   _drawCircle,
   _setLineWidth,
   _drawTxt,
+  _fillRect,
   _drawBegin,
   _drawSignCircle,
   _drawSignPlot,
+  _setTransColor,
   _drawEnd
 } from '../util/cl.draw'
 import {
@@ -26,9 +28,9 @@ import { updateJsonOfDeep } from '../util/cl.tool'
 export default function ClChartButton (father) {
   const DEFAULT_BUTTON = {
     shape: 'arc', // box range radio checkbox set(位置)
-    maxR: 4,
     hotIdx: 0,
     visible: true,
+    translucent: true, // 是否透明
     status: 'enabled' // disable focused : 热点
   }
   initCommonInfo(this, father)
@@ -45,6 +47,7 @@ export default function ClChartButton (father) {
     }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
     this.config = updateJsonOfDeep(cfg.config, DEFAULT_BUTTON)
+    // console.log(this.config, cfg.config)
 
     this.info = cfg.info || [{
       map: '+'
@@ -56,7 +59,6 @@ export default function ClChartButton (father) {
   }
   this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
-    this.config.maxR *= this.scale
   }
   this.setStatus = function (status) {
     if (this.config.status !== status) {
@@ -67,6 +69,8 @@ export default function ClChartButton (father) {
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
   this.onClick = function (event) {
+    // console.log(event, this.rectMain)
+
     if (!this.config.visible) return
     if (this.info.length > 1) {
       this.config.hotIdx++
@@ -90,9 +94,10 @@ export default function ClChartButton (father) {
     if (!this.config.visible) return
     _setLineWidth(this.context, this.scale)
 
-    if (this.config.status === 'disabled') _drawBegin(this.context, this.color.grid)
-    else _drawBegin(this.context, this.color.button)
+    let clr = this.color.button
+    if (this.config.status === 'disabled') clr = this.color.grid
 
+    _drawBegin(this.context, clr)
     const center = {
       xx: Math.floor(this.rectMain.width / 2),
       yy: Math.floor(this.rectMain.height / 2),
@@ -102,18 +107,23 @@ export default function ClChartButton (father) {
     const info = this.info[this.config.hotIdx]
     switch (this.config.shape) {
       case 'set':
+        // console.log(this.config.status, this.layout.symbol.size)
         if (this.config.status === 'focused') {
+          clr = this.color.red
+          if (this.config.translucent) clr = _setTransColor(clr, 0.95)
           _drawSignPlot(this.context, this.rectMain.left + center.xx,
             this.rectMain.top + center.xx, {
-              r: Math.round(this.config.maxR),
-              clr: this.color.red
+              r: Math.round(this.layout.symbol.size / 2),
+              clr
             }
           )
           center.yy = center.xx
         } else {
+          clr = this.color.vol
+          if (this.config.translucent) clr = _setTransColor(clr, 0.85)
           _drawSignCircle(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.xx, {
-            r: Math.round(this.config.maxR),
-            clr: this.color.vol
+            r: Math.round(this.layout.symbol.size / 2),
+            clr
           })
         }
         break
@@ -121,6 +131,7 @@ export default function ClChartButton (father) {
         _drawCircle(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.xx, center.xx)
         break
       case 'box':
+        _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
         _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
         break
       case 'range':
@@ -176,7 +187,7 @@ export default function ClChartButton (father) {
         break
       default:
         _drawTxt(this.context, this.rectMain.left + center.xx, this.rectMain.top + center.yy, info.map,
-          this.layout.symbol.font, this.layout.symbol.pixel, this.color.button, {
+          this.layout.title.font, this.layout.title.pixel, this.color.button, {
             x: 'center',
             y: 'middle'
           })

@@ -28,7 +28,8 @@ export default function ClDrawRight (father, rectMain) {
   this.symbol = father.layout.symbol
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
     this.rightData = this.source.getData('RIGHT')
     if (getSize(this.rightData) < 1) return
 

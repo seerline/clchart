@@ -6,6 +6,7 @@ import ClData from './data/cl.data'
 
 import * as ClChartDef from './cl.chart.def'
 import * as ClDataDef from './cl.data.def'
+import ClPlugins from './plugins/cl.register'
 
 import {
   initSystem
@@ -13,6 +14,11 @@ import {
 
 export const DEF_CHART = ClChartDef
 export const DEF_DATA = ClDataDef
+export const PLUGINS = ClPlugins
+
+// ///////////////////////////
+//  以下区域用于加载plugins中的定义
+// ///////////////////////////
 
 // ///////////////////////////
 //  下面是一个接口API函数

@@ -57,9 +57,13 @@ export function setMoveLineFlags (info, config) {
   info.spaceX = spaceX < _systemInfo.scale ? _systemInfo.scale : spaceX
   info.maxCount = Math.floor(config.width / (info.unitX + info.spaceX)) // 整个图形区域最大显示记录数
   const offset = info.maxCount > config.size ? config.size : info.maxCount
+  console.log(info.showMode, info)
 
   switch (info.showMode) {
     case 'fixed':
+    // 要根据fixed的最大最小值，合并数据
+      info.maxIndex = config.size - 1
+      info.minIndex = config.size - offset
       break
     case 'locked':
       // info.locked.index = config.index ? config.index : info.locked.index;
