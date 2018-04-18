@@ -33,11 +33,24 @@ html, body, .container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  font-size: 20px;
+  line-height: 40px;
+  -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+      justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.header-logo {
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.theme-toggle {
+  font-size: 24px;
+  margin-right: 10px;
 }
 
 .theme-white .header-container {
@@ -54,14 +67,9 @@ html, body, .container {
   height: 100%;
 }
 
-#toggleTheme {
-  font-size: 20px;
-  line-height: 40px;
-}
-
 .menu-container {
   height: 40px;
-  width: 120px;
+  width: 110px;
   position: relative;
 }
 
@@ -82,7 +90,7 @@ html, body, .container {
 }
 
 .menus {
-  width: 120px;
+  width: 110px;
   padding: 0;
   margin: 0;
   display: none;
