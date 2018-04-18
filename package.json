@@ -2,17 +2,18 @@
   "name": "clchart",
   "version": "0.0.1",
   "description": "A fast, simple, cross-platform, and configurable stock chart library created using canvas.",
-  "main": "src/cl.api.js",
+  "main": "dist/clchart.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/seerline/clchart.git"
   },
   "scripts": {
     "dev": "webpack-dev-server --progress --open --config webpack.dev.js",
-    "lint": "eslint ./ --fix",
+    "lint": "eslint ./",
     "clean": "rm -rf node_modules && npm i",
     "build": "webpack --config webpack.prod.js",
-    "ghpages": "sh ./scripts/deploy.sh"
+    "ghpages": "sh ./scripts/deploy.sh",
+    "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
   "keywords": [],
   "author": "",
