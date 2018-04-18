@@ -1,26 +1,28 @@
-function _makeid () {
-  var text = ''
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+'use strict'
 
-  for (var i = 0; i < 20; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
+function _makeid () {
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (let i = 0; i < 20; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
 
   return text
 }
 function _setMenusChecked (id, checked) {
-  var dom = document.getElementById(id)
+  const dom = document.getElementById(id)
   if (dom) {
     dom.checked = checked
   }
 }
 function _setDomTxt (id, txt) {
-  var dom = document.getElementById(id)
+  const dom = document.getElementById(id)
   if (dom) {
     dom.innerHTML = txt
   }
 }
 function _setMenusActive (menuId, activeDom) {
-  var dom = document.getElementById(menuId)
-  var menuItems = dom.getElementsByTagName('li')
+  const dom = document.getElementById(menuId)
+  const menuItems = dom.getElementsByTagName('li')
   for (let i = 0; i < menuItems.length; i++) {
     const element = menuItems[i]
     element.className = element.className.replace(' active', '')
@@ -40,8 +42,8 @@ function ListMenus (parentId, arr) {
 
   this.createMenus = function (callback) {
     this.callback = callback || function () {}
-    var itemHtml = this.createMenuItems()
-    var html = `
+    const itemHtml = this.createMenuItems()
+    const html = `
       <div class="menu-container">
         <label class="menu-label menu-item active" for="${this.checkId}" id="${this.labeId}">${this.menus[0].label}</label>
         <input class="menu-check" type="checkbox" name="${this.checkId}" id="${this.checkId}">
@@ -55,7 +57,7 @@ function ListMenus (parentId, arr) {
   }
 
   this.createMenuItems = function () {
-    var html = ''
+    let html = ''
     for (let i = 0; i < this.menus.length; i++) {
       const ele = this.menus[i]
       html += `<li data-type="${ele.type}" data-fc="${ele.fc}" class="menu-item">${ele.label}</li>`
@@ -65,9 +67,9 @@ function ListMenus (parentId, arr) {
 
   this.addListenr = function () {
     this.menuDom = document.getElementById(this.menusId)
-    const self = this;
+    const self = this
     this.menuDom.addEventListener('click', function (e) {
-      var activeMenuDom = e.target
+      const activeMenuDom = e.target
       if (!activeMenuDom) {
         return
       }
