@@ -26,7 +26,8 @@ export default function ClDrawLine (father, rectMain) {
   this.maxmin = father.maxmin
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
     // console.log(this.data, key, this.info, this.maxmin);
 
     if (this.info.labelX === undefined) this.info.labelX = 'idx'

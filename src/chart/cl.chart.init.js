@@ -108,9 +108,10 @@ export function checkLayout (layout) {
   layout.title.pixel *= scale
   layout.title.height *= scale
   layout.title.spaceX *= scale
+  layout.title.spaceY *= scale
 
-  if (layout.title.height < (layout.title.pixel + 2 * scale)) {
-    layout.title.height = layout.title.pixel + 2 * scale
+  if (layout.title.height < (layout.title.pixel + layout.title.spaceY + 2 * scale)) {
+    layout.title.height = layout.title.pixel + layout.title.spaceY + 2 * scale
   }
 
   layout.axisX.pixel *= scale
@@ -130,14 +131,9 @@ export function checkLayout (layout) {
     layout.digit.height = layout.digit.pixel + 2 * scale
   }
 
-  layout.symbol.pixel *= scale
   layout.symbol.size *= scale
   layout.symbol.spaceX *= scale
   layout.symbol.spaceY *= scale
-
-  if (layout.symbol.size < (layout.symbol.pixel + 2 * scale)) {
-    layout.symbol.size = layout.symbol.pixel + 2 * scale
-  }
 }
 // 改变鼠标样式
 // default

@@ -33,8 +33,9 @@ export default function ClDrawVLine (father, rectMain) {
   this.maxmin = father.maxmin
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
-    console.log(this.data, key, this.info, this.maxmin, this.rectMain)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
+    // console.log(this.data, key, this.info, this.maxmin, this.rectMain)
 
     if (this.info.labelX === undefined) this.info.labelX = 'time'
     if (this.info.labelY === undefined) this.info.labelY = 'vol'

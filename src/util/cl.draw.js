@@ -380,9 +380,10 @@ export function _drawVBar (context, config, value) {
 
 // ////////////////////////////////////
 // 以下函数为辅助画图的工具函数
+// Adjust 灰度
 // //////////////////////////////////
 // 为传入的16进制颜色增加透明度 ‘#1F1F2F’ -> rgba(...)
-export function _setTransColor (scolor, trans) {
+export function _setTransColor (scolor, trans, style) {
   const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
   let sColor = scolor.toLowerCase()
   if (sColor && reg.test(sColor)) {
@@ -397,6 +398,18 @@ export function _setTransColor (scolor, trans) {
     const sColorChange = []
     for (let i = 1; i < 7; i += 2) {
       sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
+    }
+    // 效果处理
+    // console.log(sColorChange)
+    switch (style) {
+      case 'adjust':
+        const r = sColorChange[0]
+        const g = sColorChange[1]
+        const b = sColorChange[2]
+        sColorChange[0] = (r * 0.272) + (g * 0.534) + (b * 0.131)
+        sColorChange[1] = (r * 0.349) + (g * 0.686) + (b * 0.168)
+        sColorChange[2] = (r * 0.393) + (g * 0.769) + (b * 0.189)
+        break
     }
     sColor = sColorChange.join(',')
     trans = trans || 1

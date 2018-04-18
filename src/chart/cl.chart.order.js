@@ -50,7 +50,7 @@ export default function ClChartOrder (father) {
 
     this.config = updateJsonOfDeep(cfg.config, CHART_ORDER)
 
-    this.showMode = cfg.config.showMode || 'normal'
+    this.style = cfg.config.style || 'normal'
     // 下面对配置做一定的校验
     this.checkConfig()
     // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
@@ -73,10 +73,10 @@ export default function ClChartOrder (father) {
   // ///////////
   this.onClick = function (/* e */) {
     if (this.isIndex) return // 如果是指数就啥也不干
-    if (this.showMode === 'normal') {
-      this.showMode = 'tiny'
+    if (this.style === 'normal') {
+      this.style = 'tiny'
     } else {
-      this.showMode = 'normal'
+      this.style = 'normal'
     }
     this.onPaint()
   }
@@ -118,7 +118,7 @@ export default function ClChartOrder (father) {
       this.orderData = { key: 'NOW', fields: FIELD_NOW, value: [] }
     }
     let yy
-    if (this.showMode === 'normal') {
+    if (this.style === 'normal') {
       yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 10
     } else {
       yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 2
@@ -238,7 +238,7 @@ export default function ClChartOrder (father) {
     const offx = (this.rectOrder.width - xpos - 2 * this.layout.digit.spaceX - this.closeLen - this.volLen) / 2
 
     let mmpCount = 1
-    if (this.showMode === 'normal') {
+    if (this.style === 'normal') {
       mmpCount = 5
     }
     const offy = this.rectOrder.height / (mmpCount * 2)
@@ -359,7 +359,7 @@ export default function ClChartOrder (father) {
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
 
     let mmpCount = 1
-    if (this.showMode === 'normal') {
+    if (this.style === 'normal') {
       mmpCount = 5
     }
     let len = 0
@@ -388,7 +388,7 @@ export default function ClChartOrder (father) {
     if (this.config.title.display !== 'none') {
       _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top)
       _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top + this.rectTitle.height)
-      if (this.showMode === 'normal') {
+      if (this.style === 'normal') {
         value = '分时成交 △'
       } else {
         value = '分时成交 ▽'

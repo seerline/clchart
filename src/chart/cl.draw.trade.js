@@ -29,7 +29,8 @@ export default function ClDrawTrade (father, rectMain) {
   this.maxmin = father.maxmin
 
   this.onPaint = function (key) {
-    this.data = this.source.getData(key)
+    if (key !== undefined) this.hotKey = key
+    this.data = this.source.getData(this.hotKey)
 
     const len = _getTxtWidth(this.context, '▲', this.symbol.font, this.symbol.pixel)
     for (let i = 0; i < this.data.value.length; i++) {

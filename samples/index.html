@@ -146,6 +146,7 @@
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
 			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', source));
 			var mainHeight = canvas.height * 2 / 3;
+			// console.log(getMockData('SZ300545', 'DAY'));
 			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
 			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
 			var usercfg = {
@@ -191,6 +192,62 @@
 
 			Chart.onPaint();
 		}
+		function handleSeer() {
+			Chart.clear();
+			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME);
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'));
+			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'));
+			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'));
+			// console.log(getMockData('SZ300545', 'DAY'));
+			Chart.setData('SEER', ClChart.PLUGINS.FIELD_SEER, getMockData('SZ300545', 'SEER'));
+			Chart.setData('SEERHOT', {}, ['17']);
+			var mainHeight = canvas.height * 2 / 3;
+			// var layout = ClChart.DEF_CHART.CHART_LAYOUT;
+			var usercfg = {
+				layout: {
+					offset : {
+						left: 5,
+						right: 100,
+						top: 20,
+						bottom: 20
+					}
+				},
+ 				buttons: [ { key: 'zoomin' }, { key: 'zoomout' }, ],
+				config: ClChart.PLUGINS.CHART_SEER,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
+					height: mainHeight,
+				}
+			};
+			 var KBarChart = Chart.createChart('SEER', 'CHART.LINE', usercfg, function(result) { 
+				//  console.log(result); 
+				});
+			Chart.bindData(KBarChart, 'DAY');
+
+			var volumncfg = {
+				layout: {
+					offset : {
+						left: 5,
+						right: 50
+					}
+				},
+				config: ClChart.DEF_CHART.CHART_VBAR,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight,
+				}
+			};
+			var KVBarChart = Chart.createChart('VBAR', 'CHART.LINE',	volumncfg, function(result) { 
+				//  console.log(result); 
+				});
+			Chart.bindData(KVBarChart, 'DAY');
+
+			Chart.onPaint();
+		}
 
 
 		const menuTypes = {
@@ -201,7 +258,8 @@
 			DAY: handleKline,
 			WEEK: handleKline,
 			MON: handleKline,
-			M5: handleKline
+			M5: handleKline,
+			SEER: handleSeer
 		}
 
 		// 画图
@@ -221,7 +279,8 @@
 			{ type: "DAY", fc: "SZ300545", label: "日K" },
 			{ type: "WEEK", fc: "SZ300545", label: "周线" },
 			{ type: "MON", fc: "SZ300545", label: "月线" },
-			{ type: "M5", fc: "SZ300545", label: "5分钟" }
+			{ type: "M5", fc: "SZ300545", label: "5分钟" },
+			{ type: "SEER", fc: "SZ300545", label: "预测" }
 		]
 		var langMenusCfg = [
 			{ type: "zh", label: "中文" },
