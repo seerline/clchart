@@ -49,7 +49,7 @@
 			Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, getMockData(code, 'NOW'))
 			// 设置画布尺寸
 			let mainHeight = canvas.height * 2 / 3
-			let mainWidth = canvas.width * 3 / 4
+			let mainWidth = Math.max(canvas.width * 0.65, canvas.width - 400)
 			if (code === 'SH000001') mainWidth = canvas.width
 			// 设置画布区域布局
 			const mainLayoutCfg = {

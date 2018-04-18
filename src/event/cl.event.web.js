@@ -53,40 +53,50 @@ function _getTouchInfo (point, element) {
 export default function ClEventWeb (father) {
   this.father = father
   this.eventCanvas = father.eventCanvas
+  // 如果实在手机端支持touch事件，则不需要绑定click事件以及mouse事件
+  // 在pc端则与之相反
+  this.isSupportTouch = !!('ontouchend' in document)
+
+  // 移除长按弹出菜单按钮
+  this.eventCanvas.addEventListener && this.eventCanvas.addEventListener('contextmenu', e => {
+    e.preventDefault()
+  })
 
   this.bindEvent = function () {
-    this.addHandler('mousemove', this.mousemove.bind(this))
-    // this.addHandler('mousein', this.mousein.bind(this));
-    this.addHandler('mouseout', this.mouseout.bind(this))
-    this.addHandler('mousewheel', this.mousewheel.bind(this))
-    this.addHandler('mouseup', this.mouseup.bind(this))
-    this.addHandler('mousedown', this.mousedown.bind(this))
+    if (this.isSupportTouch) {
+      this.addHandler('touchstart', this.touchstart.bind(this))
+      this.addHandler('touchend', this.touchend.bind(this))
+      this.addHandler('touchmove', this.touchmove.bind(this))
+    } else {
+      this.addHandler('mousemove', this.mousemove.bind(this))
+      // this.addHandler('mousein', this.mousein.bind(this));
+      this.addHandler('mouseout', this.mouseout.bind(this))
+      this.addHandler('mousewheel', this.mousewheel.bind(this))
+      this.addHandler('mouseup', this.mouseup.bind(this))
+      this.addHandler('mousedown', this.mousedown.bind(this))
+      this.addHandler('keyup', this.keyup.bind(this))
+      this.addHandler('keydown', this.keydown.bind(this))
 
-    this.addHandler('keyup', this.keyup.bind(this))
-    this.addHandler('keydown', this.keydown.bind(this))
-
-    this.addHandler('touchstart', this.touchstart.bind(this))
-    this.addHandler('touchend', this.touchend.bind(this))
-    this.addHandler('touchmove', this.touchmove.bind(this))
-
-    this.addHandler('click', this.click.bind(this))
+      this.addHandler('click', this.click.bind(this))
+    }
   }
   this.clearEvent = function () {
-    this.clearHandler('mousemove', this.mousemove.bind(this))
-    // this.clearHandler('mousein', this.mousein.bind(this));
-    this.clearHandler('mouseout', this.mouseout.bind(this))
-    this.clearHandler('mousewheel', this.mousewheel.bind(this))
-    this.clearHandler('mouseup', this.mouseup.bind(this))
-    this.clearHandler('mousedown', this.mousedown.bind(this))
+    if (this.isSupportTouch) {
+      this.clearHandler('touchstart', this.touchstart.bind(this))
+      this.clearHandler('touchend', this.touchend.bind(this))
+      this.clearHandler('touchmove', this.touchmove.bind(this))
+    } else {
+      this.clearHandler('mousemove', this.mousemove.bind(this))
+      // this.clearHandler('mousein', this.mousein.bind(this));
+      this.clearHandler('mouseout', this.mouseout.bind(this))
+      this.clearHandler('mousewheel', this.mousewheel.bind(this))
+      this.clearHandler('mouseup', this.mouseup.bind(this))
+      this.clearHandler('mousedown', this.mousedown.bind(this))
+      this.clearHandler('keyup', this.keyup.bind(this))
+      this.clearHandler('keydown', this.keydown.bind(this))
 
-    this.clearHandler('keyup', this.keyup.bind(this))
-    this.clearHandler('keydown', this.keydown.bind(this))
-
-    this.clearHandler('touchstart', this.touchstart.bind(this))
-    this.clearHandler('touchend', this.touchend.bind(this))
-    this.clearHandler('touchmove', this.touchmove.bind(this))
-
-    this.clearHandler('click', this.click.bind(this))
+      this.clearHandler('click', this.click.bind(this))
+    }
   }
   this.addHandler = function (eventName, handler) {
     if (this.eventCanvas.addEventListener) {

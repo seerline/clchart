@@ -1,6 +1,6 @@
 {
   "name": "clchart",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A fast, simple, cross-platform, and configurable stock chart library created using canvas.",
   "main": "src/cl.api.js",
   "repository": {
