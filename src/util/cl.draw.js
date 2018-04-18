@@ -413,7 +413,7 @@ export function _setTransColor (scolor, trans, style) {
     }
     sColor = sColorChange.join(',')
     trans = trans || 1
-    return 'RGB(' + sColor + ',' + trans + ')'
+    return 'rgba(' + sColor + ',' + trans + ')'
   } else {
     return sColor
   }
