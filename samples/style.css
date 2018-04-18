@@ -16,6 +16,7 @@ canvas {
 html, body, .container {
   height: 100%;
   width: 100%;
+  background-color: #3b3b42;
 }
 
 .header-container {
@@ -98,4 +99,28 @@ html, body, .container {
 
 .active {
   background-color: #006666;
+}
+
+.spinner {
+  padding: 10px;
+  height: 28px;
+  width: 28px;
+  -webkit-animation: rotate 0.8s infinite linear;
+          animation: rotate 0.8s infinite linear;
+  border: 8px solid #494752;
+  border-right-color: transparent;
+  border-radius: 50%;
+  position: fixed;
+  top: calc(50% - 14px);
+  left: calc(50% - 14px);
+}
+
+@-webkit-keyframes rotate {
+  0%    { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100%  { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@keyframes rotate {
+  0%    { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100%  { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }

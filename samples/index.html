@@ -8,7 +8,6 @@
 	<script src="./clchart.js"></script>
 	<script src="./menus.js?v=1"></script>
 	<link rel="stylesheet" type="text/css" href="./style.css?v=1" />
-	<script src="./stockdata.js"></script>
 </head>
 
 <body>
@@ -22,7 +21,9 @@
 		<div class="chart-container">
 			<canvas id="myChart" width="400" height="600"></canvas>
 		</div>
+		<div id="spinner" class="spinner"></div>
 	</div>
+	<script src="./stockdata.js"></script>
 	<script>
 		'use strict'
 		// 开始画图
@@ -287,6 +288,8 @@
 		let drawMenus
 		let langMenus
 		window.onload = function () {
+			const spinner = document.getElementById('spinner')
+			spinner.style.display = 'none'
 			drawChart(typeMenusCfg[0])
 			drawMenus = new ListMenus('drawMenu', typeMenusCfg)
 			drawMenus.createMenus(function (activeData) {
