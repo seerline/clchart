@@ -269,11 +269,15 @@ export const CHART_NOW = {
     },
     info: {
       labelX: 'idx',
-      labelY: 'close'
+      labelY: 'close',
+      showSort: 'idx'
     }
   },
   {
     className: ClDrawLine,
+    info: {
+      showSort: 'idx'
+    },
     formula: {
       key: 'NOWM1', // 获取数据的key，
       command: `out = this.AVGPRC()` // 均价,要根据股票类型做变化
@@ -311,6 +315,7 @@ export const CHART_NOWVOL = {
       minvalue: [0] // 参与计算最小值的标签
     },
     info: {
+      showSort: 'idx',
       labelX: 'idx',
       labelY: 'decvol',
       color: 'vol'

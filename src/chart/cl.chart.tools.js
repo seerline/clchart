@@ -8,7 +8,10 @@ import getValue from '../data/cl.data.tools'
 // ///////////////////////////////////////
 // 和定位相关基本函数
 // //////////////////////////////////////
-
+export function getLineColor (index) {
+  if (index === undefined) index = 0
+  return _systemInfo.color.line[index % _systemInfo.color.line.length]
+}
 // 根据label在data中寻找匹配的记录编号
 export function findLabelToIndex (data, findvalue, label) {
   for (let idx = 0; idx <= data.value.length - 1; idx++) {

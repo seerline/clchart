@@ -15,6 +15,9 @@ import { initCommonInfo } from '../chart/cl.chart.init'
 import {
   inRect
 } from '../util/cl.tool'
+import {
+  getLineColor
+} from './cl.chart.tools'
 
 export default function ClDrawLine (father, rectMain) {
   initCommonInfo(this, father)
@@ -38,8 +41,15 @@ export default function ClDrawLine (father, rectMain) {
     let isBegin = false
     let idx
     let count = 0
-    // console.log(this.rectMain.left, this.rectMain.top);
-    _drawBegin(this.context, this.info.color)
+    let clr
+    if (this.info.color === undefined) {
+      clr = getLineColor(this.info.colorIndex)
+    } else {
+      clr = this.color[this.info.color]
+    }
+    // console.log(this.name, this.color.sys, clr, this.info.color)
+
+    _drawBegin(this.context, clr)
     for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++, index++) {
       if (this.info.showSort === undefined) {
         idx = index

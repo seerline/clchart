@@ -152,30 +152,6 @@ function ClChart (context) {
       }
     }
   }
-  // // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
-  // this.getMoveData = function (lines, index) {
-  //   const out = [];
-  //   if (!Array.isArray(lines)) return out;
-
-  //   index -= this.linkInfo.minIndex;
-  //   let value, info;
-  //   for (let k = 0; k < lines.length; k++) {
-  //     if (lines[k].info === undefined) continue;
-  //     if (lines[k].info.labelY !== undefined) {
-  //       if (lines[k].formula === undefined) {
-  //         console.log(this.data);
-  //         value = getValue(this.data, lines[k].info.labelY, index);
-  //       } else {
-  //         value = getValue(this.getData(lines[k].formula.key), lines[k].info.labelY, index);
-  //       }
-  //       info = formatInfo(value, lines[k].info.format, this.static.decimal);
-  //       out.push({ index: k, txt: lines[k].info.txt, value: info });
-  //     } else {
-  //       out.push({ index: k, txt: lines[k].info.txt });
-  //     }
-  //   }
-  //   return out;
-  // }
   // //////////////////////////////////////////////
   // name是唯一的名字，名字一样会覆盖以前同名的类，
   // className是调用什么类型的图，目前只支持 Line Order Button Scroll
@@ -252,22 +228,16 @@ function ClChart (context) {
     if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
       chart.childCharts[key].color = this.color
-      if (chart.childCharts[key] !== undefined) {
-        this.setColor(sysColor, chart.childCharts[key])
-      }
+      this.setColor(sysColor, chart.childCharts[key])
     }
     // 需要将其子配置的颜色也一起改掉
     for (const key in chart.childDraws) {
       chart.childDraws[key].color = this.color
-      if (chart.childDraws[key] !== undefined) {
-        this.setColor(sysColor, chart.childDraws[key])
-      }
+      this.setColor(sysColor, chart.childDraws[key])
     }
     for (const key in chart.childLines) {
       chart.childLines[key].color = this.color
-      if (chart.childLines[key] !== undefined) {
-        this.setColor(sysColor, chart.childLines[key])
-      }
+      this.setColor(sysColor, chart.childLines[key])
     }
     // 修复递归调用问题
     // this.onPaint()

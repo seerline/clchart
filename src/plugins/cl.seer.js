@@ -387,7 +387,7 @@ export default function ClDrawSeer (father, rectMain) {
   this.drawTransRect = function (left, right) {
     if (right < left) return
     const clr = _setTransColor(this.color.grid, 0.5)
-    _fillRect(this.context, left, this.rectMain.top, right, this.rectMain.height, clr)
+    _fillRect(this.context, left, this.rectMain.top, right - left, this.rectMain.height, clr)
   }
   this.onPaint = function (key) {
     // if (key !== undefined) this.hotKey = key
