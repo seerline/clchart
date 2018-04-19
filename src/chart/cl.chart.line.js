@@ -320,7 +320,7 @@ export default function ClChartLine (father) {
         // const self = result.self.father;
         if (this.config.zoomInfo.index > 0) {
           this.config.zoomInfo.index--
-          this.setZoomInfo(Math.pow(this.config.zoomInfo.index, 2) + 1)
+          this.setZoomInfo()
           this.father.onPaint()
         }
       })
@@ -339,9 +339,11 @@ export default function ClChartLine (father) {
       },
       (/* result */) => {
         // const self = result.self.father;
-        this.config.zoomInfo.index++
-        this.setZoomInfo(Math.pow(this.config.zoomInfo.index, 2) + 1)
-        this.father.onPaint()
+        if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
+          this.config.zoomInfo.index++
+          this.setZoomInfo()
+          this.father.onPaint()
+        }
       })
     }
     if (this.hasButton('exright', this.buttons)) {
@@ -405,25 +407,23 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.setZoomInfo = function (value) {
-    if (typeof value === 'number') {
-      if (value === this.config.zoomInfo.value) return
-      value = value > this.config.zoomInfo.max ? this.config.zoomInfo.max : value
-      value = value < this.config.zoomInfo.min ? this.config.zoomInfo.min : value
-      this.config.zoomInfo.index = Math.floor(Math.sqrt(value - 1))
-      this.config.zoomInfo.value = value
-    }
-    this.linkInfo.unitX = this.config.zoomInfo.value * this.scale
+  this.setZoomInfo = function () {
+    const info = this.config.zoomInfo
+    info.index = info.index > info.list.length - 1 ? info.list.length - 1 : info.index
+    info.index = info.index < 0 ? 0 : info.index
+    const value = info.list[info.index]
+
+    this.linkInfo.unitX = value * this.scale
     if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale
     this.linkInfo.spaceX = this.linkInfo.unitX / 4
     if (this.linkInfo.spaceX < this.scale) this.linkInfo.spaceX = this.scale
 
     if (this.childCharts['zoomin']) {
-      if (this.config.zoomInfo.value === this.config.zoomInfo.min) this.childCharts['zoomin'].setStatus('disabled')
+      if (info.index === 0) this.childCharts['zoomin'].setStatus('disabled')
       else this.childCharts['zoomin'].setStatus('enabled')
     }
     if (this.childCharts['zoomout']) {
-      if (this.config.zoomInfo.value === this.config.zoomInfo.max) this.childCharts['zoomout'].setStatus('disabled')
+      if (info.index === info.list.length - 1) this.childCharts['zoomout'].setStatus('disabled')
       else this.childCharts['zoomout'].setStatus('enabled')
     }
     this.father.fastDrawEnd()
@@ -796,40 +796,12 @@ export default function ClChartLine (father) {
   this.onMouseWheel = function (event) {
     if (this.config.zoomInfo === undefined) return
 
-    let step = Math.floor(event.deltaY / 100)
+    let step = Math.floor(event.deltaY / 10)
     if (step === 0) step = event.deltaY > 0 ? 1 : -1
-    let value = this.config.zoomInfo.value
-
-    value += -1 * step
-
-    this.setZoomInfo(value)
+    if (step > 0) this.config.zoomInfo.index--
+    else this.config.zoomInfo.index++
+    this.setZoomInfo()
     this.father.onPaint()
-
-    // if (step >= 1) {
-    //   if (this.config.zoomInfo.value > this.config.zoomInfo.min) {
-    //     if (this.linkInfo.maxIndex < this.data.value.length - 1) {
-    //       const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
-    //       this.linkInfo.moveDate = getValue(this.data, 'time', mid)
-    //       this.linkInfo.minIndex = -2
-    //     } else {
-    //       this.linkInfo.minIndex = -1
-    //     }
-    //     this.setZoomInfo(this.config.zoomInfo.value - 1)
-    //     this.father.onPaint()
-    //   }
-    // } else if (step <= -1) {
-    //   if (this.config.zoomInfo.value < this.config.zoomInfo.max) {
-    //     if (this.linkInfo.maxIndex < this.data.value.length - 1) {
-    //       const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
-    //       this.linkInfo.moveDate = getValue(this.data, 'time', mid)
-    //       this.linkInfo.minIndex = -2
-    //     } else {
-    //       this.linkInfo.minIndex = -1
-    //     }
-    //     this.setZoomInfo(this.config.zoomInfo.value + 1)
-    //     this.father.onPaint()
-    //   }
-    // }
   }
 
   this.onKeyDown = function (event) {
