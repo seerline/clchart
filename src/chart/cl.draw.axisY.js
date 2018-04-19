@@ -40,14 +40,25 @@ export default function ClDrawAxisY (father, rectMain, align) {
     const offX = this.axisPlatform === 'phone' ? 2 * this.scale : -2 * this.scale
 
     if (this.align === 'left') {
-      posX = this.axisPlatform === 'phone' ? 'start' : 'end'
-      xx = this.rectMain.left + offX
-      yy = this.rectMain.top + this.scale // 画最上面的
+      if (this.axisPlatform === 'phone') {
+        posX = 'start'
+        xx = this.rectMain.left + offX
+      } else {
+        posX = 'end'
+        xx = this.rectMain.left + this.rectMain.width + offX
+      }
     } else {
-      posX = this.axisPlatform === 'phone' ? 'end' : 'start'
-      xx = this.rectMain.left + this.rectMain.width - offX
-      yy = this.rectMain.top + this.scale // 画最上面的
+      if (this.axisPlatform === 'phone') {
+        posX = 'end'
+        xx = this.rectMain.left + this.rectMain.width - offX
+      } else {
+        posX = 'start'
+        xx = this.rectMain.left - offX
+      }
     }
+    yy = this.rectMain.top + this.scale // 画最上面的
+
+    console.log(xx, yy)
     // 画不画最上面的坐标
     if (this.axisY[this.align].display !== 'noupper') {
       yy = this.rectMain.top + this.scale // 画最上面的

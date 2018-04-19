@@ -12,7 +12,7 @@ import * as drawClass from '../util/cl.draw'
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
 export let _systemInfo = {
   runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
-  axisPlatform: 'phone', // 'web' 对坐标显示的区别
+  axisPlatform: 'web', // 'web' 对坐标显示的区别
   eventPlatform: 'html5', // 'react'所有事件
   scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
   standard: 'china', // 画图标准，美国’usa‘，需要调整颜色
