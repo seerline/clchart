@@ -770,7 +770,7 @@ export default function ClChartLine (father) {
   }
   this.onLongPress = function (event) {
     this.linkInfo.showCursorLine = true
-    this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event, this)
+    this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)
   }
   this.onMouseOut = function (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
