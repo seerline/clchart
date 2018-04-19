@@ -212,7 +212,7 @@
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'))
 			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'))
 			Chart.setData('SEER', ClChart.PLUGINS.FIELD_SEER, getMockData('SZ300545', 'SEER'))
-			Chart.setData('SEERHOT', {}, ['17'])
+			Chart.setData('SEERHOT', {}, ['15'])
 			const mainHeight = canvas.height * 2 / 3
 			const mainLayoutCfg = {
 				layout: {
@@ -241,7 +241,9 @@
 				layout: {
 					offset: {
 						left: 5,
-						right: 50
+						right: 100,
+						top: 20,
+						bottom: 20
 					}
 				},
 				config: ClChart.DEF_CHART.CHART_VBAR,

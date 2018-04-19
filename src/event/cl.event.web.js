@@ -242,6 +242,7 @@ export default function ClEventWeb (father) {
         const mouseinfo = _getTouchInfo(point, event.srcElement)
         if ((timestamp - this.startTime) > 90 && this.previousPinchScale) {
           mouseinfo.scale = (pinchScale - this.previousPinchScale) * -10
+          console.log(mouseinfo.scale)
           this.father.emitEvent('onPinch', mouseinfo)
           this.startTime = _getTime()
         }

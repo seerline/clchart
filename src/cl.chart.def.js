@@ -71,7 +71,7 @@ export const CHART_KBAR = {
   // scroll: {display: 'none'},
   zoomInfo: {
     min: 1,
-    max: 26,
+    max: 18,
     index: 2, // value = index*index + 1 [1,2,5,10,17,26]
     value: 7 // 实际的值，如果超过10，就会index=3，如果为4，index=1 index = sqrt（value - 1）
   },

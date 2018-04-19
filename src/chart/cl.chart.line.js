@@ -774,10 +774,17 @@ export default function ClChartLine (father) {
     this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)
   }
   this.onPinch = function (event) {
-    if (this.config.zoomInfo === undefined) return
-    let value = this.config.zoomInfo.value
-    value += -1 * event.scale
-    this.setZoomInfo(value)
+    if (event.scale > 0) {
+      this.config.zoomInfo.index--
+    } else {
+      this.config.zoomInfo.index++
+    }
+    if (this.config.zoomInfo.index < 0) {
+      this.config.zoomInfo.index = 0
+      return
+    }
+    // this.setZoomInfo(Math.pow(2, this.config.zoomInfo.index) + 1)
+    this.setZoomInfo(this.config.zoomInfo.index * 2 + 1)
     this.father.onPaint()
   }
   this.onMouseOut = function (event) {
