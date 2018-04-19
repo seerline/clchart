@@ -62,8 +62,10 @@ export function setColor (syscolor) {
   let color = {}
   if (syscolor === 'white') {
     color = copyJsonOfDeep(COLOR_WHITE)
+    // color.line = copyArrayOfDeep(COLOR_WHITE.line)
   } else {
     color = copyJsonOfDeep(COLOR_BLACK)
+    // color.line = copyArrayOfDeep(COLOR_BLACK.line)
   }
   // 当发现国别为美国需要修改颜色配对
   if (_systemInfo.standard === 'usa') {
@@ -95,6 +97,7 @@ export function initCommonInfo (chart, father) {
   chart.context = father.context
   chart.scale = _systemInfo.scale
   chart.color = _systemInfo.color
+  // console.log(chart.color.sys, _systemInfo.color.sys)
   chart.axisPlatform = _systemInfo.axisPlatform
   chart.eventPlatform = _systemInfo.eventPlatform
 }

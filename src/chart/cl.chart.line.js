@@ -221,6 +221,7 @@ export default function ClChartLine (father) {
       line = new ClassName(this, this.rectChart)
 
       this.childLines['NAME' + i] = line
+      line.name = 'NAME' + i
       line.hotKey = this.getLineDataKey(this.config.lines[i])
       if (inArray(ClassName, [ClDrawLine, ClDrawVLine])) {
         line.info = {
@@ -232,9 +233,7 @@ export default function ClChartLine (father) {
           // 专用于5日线跨天的连线问题
           line.info.skips = getMinuteCount(this.father.dataLayer.tradeTime)
         }
-        if (line.info.color === undefined) {
-          line.info.color = this.color.line[clr % this.color.line.length]
-        }
+        line.info.colorIndex = clr
         clr++
       }
     }

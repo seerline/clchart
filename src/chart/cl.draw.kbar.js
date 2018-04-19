@@ -46,7 +46,7 @@ export default function ClDrawKBar (father, rectMain) {
       // getValue(this.data, 'high', idx),
       // getValue(this.data, 'low', idx));
         _drawKBar(this.context, {
-          filled: false,
+          filled: this.color.sys === 'white',
           index: k,
           spaceX: this.linkInfo.spaceX,
           unitX: this.linkInfo.unitX,

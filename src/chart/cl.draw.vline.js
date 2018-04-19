@@ -15,7 +15,9 @@ import getValue from '../data/cl.data.tools'
 import {
   initCommonInfo
 } from '../chart/cl.chart.init'
-
+import {
+  getLineColor
+} from './cl.chart.tools'
 export default function ClDrawVLine (father, rectMain) {
   initCommonInfo(this, father)
   this.rectMain = rectMain
@@ -40,8 +42,15 @@ export default function ClDrawVLine (father, rectMain) {
 
     let xx, yy, value
     let idx
+    let clr
+    if (this.info.color === undefined) {
+      clr = getLineColor(this.info.colorIndex)
+    } else {
+      clr = this.color[this.info.color]
+    }
+    // console.log(this.name, this.color.sys, clr, this.info.color)
 
-    _drawBegin(this.context, this.color[this.info.color])
+    _drawBegin(this.context, clr)
     for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++, index++) {
       if (this.info.showSort === undefined) {
         idx = index
