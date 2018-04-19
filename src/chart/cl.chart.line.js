@@ -775,9 +775,9 @@ export default function ClChartLine (father) {
   }
   this.onPinch = function (event) {
     if (event.scale > 0) {
-      this.config.zoomInfo.index--
-    } else {
       this.config.zoomInfo.index++
+    } else {
+      this.config.zoomInfo.index--
     }
     if (this.config.zoomInfo.index < 0) {
       this.config.zoomInfo.index = 0
