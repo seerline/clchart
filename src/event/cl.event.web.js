@@ -240,18 +240,11 @@ export default function ClEventWeb (father) {
         const point = event.touches ? event.touches[0] : event
         // this._emitEvent('onPinch', { scale: pinchScale - this.previousPinchScale }); // 缩放
         const mouseinfo = _getTouchInfo(point, event.srcElement)
-        mouseinfo.scale = pinchScale - this.previousPinchScale
-        if (timestamp - this.startTime > 90) {
+        if ((timestamp - this.startTime) > 90 && this.previousPinchScale) {
+          mouseinfo.scale = (pinchScale - this.previousPinchScale) * -10
           this.father.emitEvent('onPinch', mouseinfo)
           this.startTime = _getTime()
         }
-        // mouseinfo.deltaY = pinchScale - this.previousPinchScale;
-        // mouseinfo.deltaY *= -1000;
-        // // console.log('Zoom:', mouseinfo.deltaY);
-        // if (timestamp - this.startTime > 90) {
-        //   this.father.emitEvent('onMouseWheel', mouseinfo);
-        //   this.startTime = _getTime();
-        // }
         this.previousPinchScale = pinchScale
       }
       if (this.touchVector) {
@@ -260,7 +253,10 @@ export default function ClEventWeb (father) {
           y: event.touches[1].pageY - event.touches[0].pageY
         }
         const angle = _getRotateAngle(vector, this.touchVector)
-        this._emitEvent('onRotate', {
+        // this._emitEvent('onRotate', {
+        //   angle
+        // })
+        this.father.emitEvent('onRotate', {
           angle
         })
         this.touchVector.x = vector.x

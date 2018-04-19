@@ -773,6 +773,13 @@ export default function ClChartLine (father) {
     this.linkInfo.showCursorLine = true
     this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)
   }
+  this.onPinch = function (event) {
+    if (this.config.zoomInfo === undefined) return
+    let value = this.config.zoomInfo.value
+    value += -1 * event.scale
+    this.setZoomInfo(value)
+    this.father.onPaint()
+  }
   this.onMouseOut = function (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
