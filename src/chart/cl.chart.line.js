@@ -101,9 +101,7 @@ export default function ClChartLine (father) {
   this.checkConfig = function () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     if (this.config.zoomInfo !== undefined) {
-      this.linkInfo.unitX = this.config.zoomInfo.list[this.config.zoomInfo.index] * this.scale
-      if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale
-      this.linkInfo.spaceX = this.linkInfo.unitX / 4
+      this.setZoomInfo()
     }
   }
   this.setPublicRect = function () { // 计算所有矩形区域
@@ -322,7 +320,7 @@ export default function ClChartLine (father) {
         // const self = result.self.father;
         if (this.config.zoomInfo.index > 0) {
           this.config.zoomInfo.index--
-          this.setZoomInfo(this.config.zoomInfo.index)
+          this.setZoomInfo(Math.pow(this.config.zoomInfo.index, 2) + 1)
           this.father.onPaint()
         }
       })
@@ -341,11 +339,9 @@ export default function ClChartLine (father) {
       },
       (/* result */) => {
         // const self = result.self.father;
-        if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
-          this.config.zoomInfo.index++
-          this.setZoomInfo(this.config.zoomInfo.index)
-          this.father.onPaint()
-        }
+        this.config.zoomInfo.index++
+        this.setZoomInfo(Math.pow(this.config.zoomInfo.index, 2) + 1)
+        this.father.onPaint()
       })
     }
     if (this.hasButton('exright', this.buttons)) {
@@ -409,18 +405,25 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.setZoomInfo = function (index) {
-    this.linkInfo.unitX = this.config.zoomInfo.list[index] * this.scale
+  this.setZoomInfo = function (value) {
+    if (typeof value === 'number') {
+      if (value === this.config.zoomInfo.value) return
+      value = value > this.config.zoomInfo.max ? this.config.zoomInfo.max : value
+      value = value < this.config.zoomInfo.min ? this.config.zoomInfo.min : value
+      this.config.zoomInfo.index = Math.floor(Math.sqrt(value - 1))
+      this.config.zoomInfo.value = value
+    }
+    this.linkInfo.unitX = this.config.zoomInfo.value * this.scale
     if (this.linkInfo.unitX < this.scale) this.linkInfo.unitX = this.scale
     this.linkInfo.spaceX = this.linkInfo.unitX / 4
     if (this.linkInfo.spaceX < this.scale) this.linkInfo.spaceX = this.scale
 
     if (this.childCharts['zoomin']) {
-      if (this.config.zoomInfo.index === 0) this.childCharts['zoomin'].setStatus('disabled')
+      if (this.config.zoomInfo.value === this.config.zoomInfo.min) this.childCharts['zoomin'].setStatus('disabled')
       else this.childCharts['zoomin'].setStatus('enabled')
     }
     if (this.childCharts['zoomout']) {
-      if (this.config.zoomInfo.index === this.config.zoomInfo.list.length - 1) this.childCharts['zoomout'].setStatus('disabled')
+      if (this.config.zoomInfo.value === this.config.zoomInfo.max) this.childCharts['zoomout'].setStatus('disabled')
       else this.childCharts['zoomout'].setStatus('enabled')
     }
     this.father.fastDrawEnd()
@@ -714,8 +717,6 @@ export default function ClChartLine (father) {
           size
         }
       )
-      // if (size < 10) // 临时处理
-      //   this.setZoomInfo(this.config.zoomInfo.list.length - 1);
     }
   }
   this.readyDraw = function () { // 计算最大最小值等
@@ -780,35 +781,43 @@ export default function ClChartLine (father) {
   }
   this.onMouseWheel = function (event) {
     if (this.config.zoomInfo === undefined) return
-    const step = Math.floor(event.deltaY / 10)
-    if (step >= 1) {
-      if (this.config.zoomInfo.index > 0) {
-        if (this.linkInfo.maxIndex < this.data.value.length - 1) {
-          const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
-          this.linkInfo.moveDate = getValue(this.data, 'time', mid)
-          this.linkInfo.minIndex = -2
-        } else {
-          this.linkInfo.minIndex = -1
-        }
-        this.config.zoomInfo.index--
-        this.setZoomInfo(this.config.zoomInfo.index)
-        this.father.onPaint()
-      }
-    } else if (step <= -1) {
-      if (this.config.zoomInfo.index < this.config.zoomInfo.list.length - 1) {
-        if (this.linkInfo.maxIndex < this.data.value.length - 1) {
-          const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
-          this.linkInfo.moveDate = getValue(this.data, 'time', mid)
-          this.linkInfo.minIndex = -2
-        } else {
-          this.linkInfo.minIndex = -1
-        }
-        this.config.zoomInfo.index++
-        this.setZoomInfo(this.config.zoomInfo.index)
-        this.father.onPaint()
-      }
-    }
+
+    let step = Math.floor(event.deltaY / 100)
+    if (step === 0) step = event.deltaY > 0 ? 1 : -1
+    let value = this.config.zoomInfo.value
+
+    value += -1 * step
+
+    this.setZoomInfo(value)
+    this.father.onPaint()
+
+    // if (step >= 1) {
+    //   if (this.config.zoomInfo.value > this.config.zoomInfo.min) {
+    //     if (this.linkInfo.maxIndex < this.data.value.length - 1) {
+    //       const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
+    //       this.linkInfo.moveDate = getValue(this.data, 'time', mid)
+    //       this.linkInfo.minIndex = -2
+    //     } else {
+    //       this.linkInfo.minIndex = -1
+    //     }
+    //     this.setZoomInfo(this.config.zoomInfo.value - 1)
+    //     this.father.onPaint()
+    //   }
+    // } else if (step <= -1) {
+    //   if (this.config.zoomInfo.value < this.config.zoomInfo.max) {
+    //     if (this.linkInfo.maxIndex < this.data.value.length - 1) {
+    //       const mid = Math.floor((this.linkInfo.maxIndex + this.linkInfo.minIndex) / 2 + 1)
+    //       this.linkInfo.moveDate = getValue(this.data, 'time', mid)
+    //       this.linkInfo.minIndex = -2
+    //     } else {
+    //       this.linkInfo.minIndex = -1
+    //     }
+    //     this.setZoomInfo(this.config.zoomInfo.value + 1)
+    //     this.father.onPaint()
+    //   }
+    // }
   }
+
   this.onKeyDown = function (event) {
     switch (event.keyCode) {
       case 38: // up

@@ -72,6 +72,7 @@ export default function ClChartButton (father) {
     // console.log(event, this.rectMain)
 
     if (!this.config.visible) return
+    // if (this.config.status === 'disabled') return
     if (this.info.length > 1) {
       this.config.hotIdx++
       this.config.hotIdx %= this.info.length

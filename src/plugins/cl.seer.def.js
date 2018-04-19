@@ -21,9 +21,15 @@ import ClDrawRight from '../chart/cl.draw.right'
 import ClDrawSeer from './cl.seer'
 
 export const CHART_SEER = {
+  // zoomInfo: {
+  //   index: 3,
+  //   list: [1, 2, 3, 5, 8, 13, 21]
+  // },
   zoomInfo: {
-    index: 3,
-    list: [1, 2, 3, 5, 8, 13, 21]
+    min: 1,
+    max: 26,
+    index: 2, // value = index*index + 1 [1,2,5,10,17,26]
+    value: 7 // 实际的值，如果超过10，就会index=3，如果为4，index=1 index = sqrt（value - 1）
   },
   scroll: {
     display: 'none' // none不显示

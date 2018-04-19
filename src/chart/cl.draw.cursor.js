@@ -25,8 +25,8 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   this.rectMain = rectMain // 画十字线和边界标签
   this.rectChart = rectChart // 鼠标有效区域
 
-  this.static = father.father.static
   this.linkInfo = father.father.linkInfo
+  this.static = father.static
 
   this.axisXInfo = father.config.axisX
   this.axisYInfo = father.config.axisY
@@ -50,7 +50,7 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
       } else {
         yy = (this.maxmin.max - valueY) * this.maxmin.unitY + this.rectChart.top
       }
-      // console.log(mousePos, valueY );
+      // console.log(mousePos, valueY, this.maxmin, this.static.before)
 
       _drawLineAlone(this.context, this.rectMain.left, yy, this.rectMain.left + this.rectMain.width, yy, this.color.grid)
       let posX = this.axisPlatform === 'phone' ? 'start' : 'end'
