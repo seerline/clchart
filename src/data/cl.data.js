@@ -339,7 +339,6 @@ export default function ClData () {
         money
       ])
     }
-    // console.log(out);
     return out
   }
   // source历史分钟线 nowmin当日分钟线

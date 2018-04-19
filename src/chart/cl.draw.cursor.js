@@ -35,7 +35,6 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   this.axisX = father.layout.axisX
 
   this.onPaint = function (mousePos, valueX, valueY) {
-    // console.log(mousePos, this.rectChart);
     if (inRangeX(this.rectChart, mousePos.x) === false) return
 
     let txt
@@ -50,7 +49,6 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
       } else {
         yy = (this.maxmin.max - valueY) * this.maxmin.unitY + this.rectChart.top
       }
-      // console.log(mousePos, valueY, this.maxmin, this.static.before)
 
       _drawLineAlone(this.context, this.rectMain.left, yy, this.rectMain.left + this.rectMain.width, yy, this.color.grid)
       let posX = this.axisPlatform === 'phone' ? 'start' : 'end'

@@ -108,7 +108,6 @@ function ClChart (context) {
   }
   // 设置对应的chart基本的数据key
   this.bindData = function (chart, key) {
-    // console.log('bindData', chart, key);
     if (chart.hotKey !== key) {
       this.linkInfo.showMode = 'last' // 切换数据后需要重新画图
       this.linkInfo.minIndex = -1
@@ -143,7 +142,6 @@ function ClChart (context) {
     for (let k = 0; k < lines.length; k++) {
       if (lines[k].formula === undefined) continue
       if (!this.fastDraw || (this.fastDraw && this.fastBuffer[lines[k].formula.key] === undefined)) {
-        // console.log('readyData', lines[k].formula, this.linkInfo);
         this.dataLayer.makeLineData(
           { data, minIndex: this.linkInfo.minIndex, maxIndex: this.linkInfo.maxIndex },
           lines[k].formula.key,
@@ -159,7 +157,6 @@ function ClChart (context) {
   // callback 表示鼠标移动时返回的当前记录数据
   // //////////////////////////////////////////////
   this.createChart = function (name, className, usercfg, callback) {
-    // console.log(name, className, ClChartLine);
 
     // if (!inArray(className, [
     //   ClChartButton,
@@ -188,7 +185,6 @@ function ClChart (context) {
   // 以下是chart画图的接口
   this.onPaint = function (chart) { // 需要重画时调用
     this.fastDrawBegin()
-    // console.log('paint', this.childCharts);
 
     for (const key in this.childCharts) {
       if (chart !== undefined) {

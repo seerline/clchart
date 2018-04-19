@@ -50,7 +50,6 @@ export default function ClEvent (syscfg) {
   this.eventCanvas = syscfg.canvas // 对web来说就是虚拟接收事件的canvas
   this.eventPlatform = syscfg.eventPlatform || 'html5'
   this.scale = syscfg.scale
-  // console.log(this.eventCanvas, syscfg);
 
   if (this.eventPlatform === 'react') {
     // this.eventSource = new ClEventReact(this);
@@ -87,13 +86,10 @@ export default function ClEvent (syscfg) {
         break
       }
     }
-    // console.log('findEventPath', chartPath);
-    // console.log('chartPath', chartPath);
     if (chartPath.length < 1) return
     // 继承最初始的传入参数,从最顶层开始处理
     const event = copyJsonOfDeep(config)
     for (let k = chartPath.length - 1; k >= 0; k--) {
-      // if (eventName==='onClick') console.log(eventName, k, chartPath[k]);
       if (chartPath[k][eventName] !== undefined) {
         // 这里生成一个相对鼠标位置
         event.mousePos = {
@@ -104,7 +100,6 @@ export default function ClEvent (syscfg) {
         }
         // 执行事件函数
         chartPath[k][eventName](event)
-        // if (eventName==='onClick') console.log(event);
         if (event.break) break // 跳出循环
       }
     }
@@ -131,7 +126,6 @@ export default function ClEvent (syscfg) {
   }
   this.findEventPath = function (path, chart, mousePos) {
     path.push(chart)
-    // console.log('findEventPath', chart, chart.childCharts);
     if (chart.childCharts === undefined) return
 
     for (const name in chart.childCharts) {

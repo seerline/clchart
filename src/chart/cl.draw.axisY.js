@@ -88,7 +88,6 @@ export default function ClDrawAxisY (father, rectMain, align) {
           value = this.axisY[this.align].middle === 'zero' ? 0 : this.static.before
         }
       }
-      // console.log(this.static.before);
 
       value = formatInfo(
         value,

@@ -97,7 +97,6 @@ export function initCommonInfo (chart, father) {
   chart.context = father.context
   chart.scale = _systemInfo.scale
   chart.color = _systemInfo.color
-  // console.log(chart.color.sys, _systemInfo.color.sys)
   chart.axisPlatform = _systemInfo.axisPlatform
   chart.eventPlatform = _systemInfo.eventPlatform
 }

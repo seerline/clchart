@@ -28,7 +28,6 @@ export default function ClDrawKBar (father, rectMain) {
   this.onPaint = function (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
-    // console.log('ClDrawKBar', this.data, this.linkInfo);
     this.codeInfo = this.source.getData('INFO')
 
     let clr = this.color.red
@@ -42,7 +41,6 @@ export default function ClDrawKBar (father, rectMain) {
       open = getValue(this.data, 'open', idx)
       close = getValue(this.data, 'close', idx)
       if (open < close || (open === close && close >= before)) {
-      // console.log('red',k, open, close,
       // getValue(this.data, 'high', idx),
       // getValue(this.data, 'low', idx));
         _drawKBar(this.context, {
@@ -72,7 +70,6 @@ export default function ClDrawKBar (father, rectMain) {
       open = getValue(this.data, 'open', idx)
       close = getValue(this.data, 'close', idx)
       if (open > close || (open === close && close < before)) {
-        // console.log('green',k, open, close,
         // getValue(this.data, 'high', idx),
         // getValue(this.data, 'low', idx));
         _drawKBar(this.context, {

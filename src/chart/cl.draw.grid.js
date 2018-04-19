@@ -26,7 +26,6 @@ export default function ClDrawGrid (father, rectMain) {
   this.onPaint = function () {
     _drawBegin(this.context, this.color.grid)
     _drawHline(this.context, this.rectMain.left, this.rectMain.left + this.rectMain.width, this.rectMain.top)
-    // console.log(this.rectMain);
     if (this.axisY.lines > 0) {
       const offy = this.rectMain.height / (this.axisY.lines + 1)
       for (let i = 0; i < this.axisY.lines; i++) {
@@ -34,7 +33,6 @@ export default function ClDrawGrid (father, rectMain) {
       }
     }
     if (this.axisX.display !== 'none') {
-      // console.log('---', this.rectMain);
       _drawHline(this.context, this.rectMain.left, this.rectMain.left + this.rectMain.width, this.rectMain.top + this.rectMain.height)
     }
     // 画纵坐标

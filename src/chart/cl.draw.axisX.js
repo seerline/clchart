@@ -46,12 +46,10 @@ export default function ClDrawAxisX (father, rectMain) {
         const index = getValue(this.data, 'idx', k)
         if (index < 0) continue
         days = Math.floor(index / daymins)
-        // console.log('value----', days, index, count, this.linkInfo.maxCount);
         if (days > count) {
           count = days
           xx = this.rectMain.left + spaceX / 2 + spaceX * count
           value = getDate(getValue(this.data, 'time', k))
-          // console.log('value', value);
           _drawTxt(this.context, xx, yy, value,
             this.text.font, this.text.pixel, this.color.axis, { y: 'middle', x: 'center' })
         }

@@ -74,7 +74,6 @@ export default function ClChartLine (father) {
       height: 200
     }
 
-    // console.log('---0--',this.rectMain);
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
     this.config = copyJsonOfDeep(cfg.config)
     // 这里直接赋值是因为外部已经设置好了配置才会开始初始化
@@ -292,7 +291,6 @@ export default function ClChartLine (father) {
   }
   this.hasButton = function (key, buttons) {
     for (let k = 0; k < buttons.length; k++) {
-      // console.log(buttons[k].key, key);
       if (key === buttons[k].key) return true
     }
     return false
@@ -449,7 +447,6 @@ export default function ClChartLine (father) {
   }
   this.drawChildCharts = function () {
     let top
-    // console.log('drawChildCharts', this.childCharts);
     for (const name in this.childCharts) {
       if (!this.childCharts[name].focused) {
         this.childCharts[name].onPaint()
@@ -468,7 +465,6 @@ export default function ClChartLine (father) {
   }
   this.drawChildLines = function () {
     for (const name in this.childLines) {
-      // console.log('..', this.childLines[name].hotKey);
 
       if (this.childLines[name].hotKey !== undefined) {
         this.childLines[name].onPaint(this.childLines[name].hotKey)
@@ -489,7 +485,6 @@ export default function ClChartLine (father) {
       if (lines[k].info.labelY !== undefined) {
         if (lines[k].formula === undefined) {
           value = getValue(this.data, lines[k].info.labelY, index)
-          // console.log('getMoveData', this.data, lines[k].info.labelY, index, value);
         } else {
           value = getValue(this.father.getData(lines[k].formula.key), lines[k].info.labelY,
             index - this.linkInfo.minIndex)
@@ -507,7 +502,6 @@ export default function ClChartLine (father) {
         })
       }
     }
-    // console.log('movedata', out);
     return out
   }
   this.drawTitleInfo = function (index) {
@@ -614,7 +608,6 @@ export default function ClChartLine (father) {
         }
       }
     }
-    // console.log(mm, this.getMiddle(extremum.method));
 
     if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
       const middle = this.getMiddle(extremum.method)
@@ -637,7 +630,6 @@ export default function ClChartLine (father) {
       }
       if (mm.min < 0) mm.min = 0
     }
-    // console.log('getmaxmin', mm, start, stop)
 
     return mm
   }
@@ -692,7 +684,6 @@ export default function ClChartLine (father) {
   }
   this.locationData = function () {
     if (this.data === undefined) return
-    // console.log(this.father.dataLayer.tradeTime);
     const size = getSize(this.data)
     if (this.config.axisX.type === 'day1') {
       setFixedLineFlags(
@@ -752,7 +743,6 @@ export default function ClChartLine (father) {
     this.maxmin.min = maxmin.min
     this.maxmin.unitY = (this.rectChart.height - 2) / (this.maxmin.max - this.maxmin.min) // 一个单位价位多少像素
 
-    // console.log('maxmin', this.maxmin);
   }
 
   // ////////////////////////////////////////////////
@@ -815,7 +805,6 @@ export default function ClChartLine (father) {
       case 39: // right
         break
     }
-    // console.log('key:', event.keyCode);
   }
   this.onMouseMove = function (event) {
     if (this.img === undefined) return
@@ -850,7 +839,6 @@ export default function ClChartLine (father) {
         })
       }
     }
-    // console.log('-----',valueX, mouseIndex, this.father.dataLayer.tradeTime);
     this.childDraws['CURSOR'].onPaint(mousePos, valueX, valueY)
   }
 

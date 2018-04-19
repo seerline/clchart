@@ -301,7 +301,6 @@ export default function ClDrawSeer (father, rectMain) {
       const curDate = getValue(this.sourceSeer, 'start', i)
       let index = findNearTimeToIndex(this.data, curDate, 'time', 'forword')
       if (index === -1) index = this.linkInfo.maxIndex
-      // console.log(index, curDate)
       if (out[index] === undefined) {
         out[index] = {
           nos: [],
@@ -318,7 +317,6 @@ export default function ClDrawSeer (father, rectMain) {
         out[index].hotIdx = i
       }
     }
-    // console.log(out)
     return out
   }
   this.beforeLocation = function () {
@@ -368,11 +366,9 @@ export default function ClDrawSeer (father, rectMain) {
       maxmin.max = maxmin.max < this.showSeer[k].date ? this.showSeer[k].date : maxmin.max
       maxmin.min = maxmin.min > this.showSeer[k].date ? this.showSeer[k].date : maxmin.min
     }
-    // console.log(this.sourceSeer.value, size, rights, lastDate)
     // ???
     // 下面开始压缩数据
     // let out = copyArrayOfDeep(this.data.value)
-    // console.log(out)
 
     this.hotKey = 'SEERDAY'
     this.data = {key: 'SEERDAY', fields: FIELD_DAY, value: this.data.value}
@@ -382,7 +378,6 @@ export default function ClDrawSeer (father, rectMain) {
     // this.linkInfo.fixed.right = 20
     this.linkInfo.fixed.min = maxmin.min
     this.linkInfo.fixed.max = maxmin.max
-    // console.log('seer', this.linkInfo)
   }
   this.drawTransRect = function (left, right) {
     if (right < left) return
@@ -434,7 +429,6 @@ export default function ClDrawSeer (father, rectMain) {
       result => {
         // const self = result.self.father
         const hotInfo = intersectArray(this.showSeer[k].uids, this.hotSeer.value)
-        // console.log(arrhot, this.showSeer[k].uids)
         if (hotInfo.length > 0) {
           this.hotSeer.value = []
           this.father.callback({

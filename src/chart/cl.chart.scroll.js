@@ -215,7 +215,6 @@ export default function ClChartScroll (father) {
   }
   this.drawButton = function () {
     if (this.config.direct === 'horizontal') {
-      // console.log('DDD', spaceX, spaceY, start, stop, this.layout.scroll.size);
       const spaceY = (this.rectChart.height - this.layout.scroll.height) / 2
       if (this.config.txt.head !== undefined) {
         _drawTxt(this.context, this.rectChart.left + this.scale, this.rectChart.top + spaceY,
@@ -241,7 +240,6 @@ export default function ClChartScroll (father) {
       }
       _drawEnd(this.context)
       const len = _getTxtWidth(this.context, this.config.txt.left, this.layout.scroll.font, this.layout.scroll.pixel) + 2 * this.scale
-      // console.log('len', len, this.rectMid.width);
       if (this.config.txt.left !== undefined && this.rectMid.width > len) {
         _drawTxt(this.context, this.rectMid.left + this.scale, this.rectMid.top + spaceY,
           this.config.txt.left,

@@ -47,7 +47,6 @@ export default function ClChartButton (father) {
     }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
     this.config = updateJsonOfDeep(cfg.config, DEFAULT_BUTTON)
-    // console.log(this.config, cfg.config)
 
     this.info = cfg.info || [{
       map: '+'
@@ -69,8 +68,6 @@ export default function ClChartButton (father) {
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
   this.onClick = function (event) {
-    // console.log(event, this.rectMain)
-
     if (!this.config.visible) return
     // if (this.config.status === 'disabled') return
     if (this.info.length > 1) {
@@ -108,7 +105,6 @@ export default function ClChartButton (father) {
     const info = this.info[this.config.hotIdx]
     switch (this.config.shape) {
       case 'set':
-        // console.log(this.config.status, this.layout.symbol.size)
         if (this.config.status === 'focused') {
           clr = this.color.red
           if (this.config.translucent) clr = _setTransColor(clr, 0.95)

@@ -31,7 +31,6 @@ export default function ClDrawLine (father, rectMain) {
   this.onPaint = function (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
-    // console.log(this.data, key, this.info, this.maxmin);
 
     if (this.info.labelX === undefined) this.info.labelX = 'idx'
     if (this.info.labelY === undefined) this.info.labelY = 'value'
@@ -47,7 +46,6 @@ export default function ClDrawLine (father, rectMain) {
     } else {
       clr = this.color[this.info.color]
     }
-    // console.log(this.name, this.color.sys, clr, this.info.color)
 
     _drawBegin(this.context, clr)
     for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++, index++) {
@@ -59,7 +57,6 @@ export default function ClDrawLine (father, rectMain) {
       // if (getValue(this.data, this.info.labelX, index) < 0) continue;
       xx = this.rectMain.left + idx * (this.linkInfo.unitX + this.linkInfo.spaceX)
       yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY)
-      // console.log(index, this.data, this.info.labelX, getValue(this.data, this.info.labelY, index));
       if (Math.floor(idx / this.info.skips) > count) {
         count = Math.floor(idx / this.info.skips)
         isBegin = false

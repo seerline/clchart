@@ -25,13 +25,11 @@ export function ClFormula () {
   this.runSingleStock = function (source, formula) {
     const singleValue = []
     this.source = source
-    // console.log('source', source);
     const command = `
     for (this.source.nowIndex = this.source.minIndex;this.source.nowIndex <= this.source.maxIndex;this.source.nowIndex++) {
           const ${formula}
           singleValue.push([this.getValue('idx', 0), out]);
     }`
-    // console.log(command);
     eval(command)
     return singleValue
   }
@@ -65,7 +63,6 @@ export function ClFormula () {
 // fields = getFields('MIN');
 // if (this.InData.MIN === undefined) break;
 // value = this.InData['MIN'].value;
-// // console.log('123-----', value);
 // for (let k = 0; k < value.length; k++) {
 //   if (this.static.stktype === 0) {
 //     if (k === 0) {
@@ -74,7 +71,6 @@ export function ClFormula () {
 //       allmoney += (value[k][fields.vol] - value[k - 1][fields.vol]) * value[k][fields.close] / this.static.coinunit;
 //     }
 //     value[k][fields.allmoney] = allmoney;
-//     // console.log('123', value[k][fields.allmoney] / value[k][fields.allvol]);
 //   } else {
 //     // value[k][fields.allmoney] = value[k][fields.money];
 //   }

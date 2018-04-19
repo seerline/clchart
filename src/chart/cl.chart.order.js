@@ -187,7 +187,6 @@ export default function ClChartOrder (father) {
 
     const inow = { key: 'NOW', fields: FIELD_NOW_IDX, value: this.orderData.value }
     yy = this.rectOrder.top + offy + Math.floor((offy - this.layout.digit.height) / 2) // 画最上面的
-    // console.log('mmp', getValue(inow, 'ups1'));
     value = formatVolume(getValue(inow, 'ups'))
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + (offx - len) / 2
@@ -339,7 +338,6 @@ export default function ClChartOrder (father) {
       xx += offx + this.volLen + this.layout.digit.spaceX
 
       value = getValue(this.tickData, 'decvol', idx)
-      // console.log("nowvol:",value);
       clr = this.color.vol
       _drawTxt(this.context, xx, yy, formatVolume(value, 100),
         this.layout.digit.font, this.layout.digit.pixel, clr, {

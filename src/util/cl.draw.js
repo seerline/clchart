@@ -400,7 +400,6 @@ export function _setTransColor (scolor, trans, style) {
       sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
     }
     // 效果处理
-    // console.log(sColorChange)
     switch (style) {
       case 'adjust':
         const r = sColorChange[0]

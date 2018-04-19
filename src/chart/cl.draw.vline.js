@@ -35,7 +35,6 @@ export default function ClDrawVLine (father, rectMain) {
   this.onPaint = function (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
-    // console.log(this.data, key, this.info, this.maxmin, this.rectMain)
 
     if (this.info.labelX === undefined) this.info.labelX = 'time'
     if (this.info.labelY === undefined) this.info.labelY = 'vol'
@@ -48,7 +47,6 @@ export default function ClDrawVLine (father, rectMain) {
     } else {
       clr = this.color[this.info.color]
     }
-    // console.log(this.name, this.color.sys, clr, this.info.color)
 
     _drawBegin(this.context, clr)
     for (let k = this.linkInfo.minIndex, index = 0; k <= this.linkInfo.maxIndex; k++, index++) {
