@@ -89,7 +89,7 @@ function ClChart (context) {
   this.setEventLayer = function (layer) {
     if (layer === undefined) return
     this.eventLayer = layer
-    this.eventLayer.bindChart(this) // 把chart绑定到事件处理层
+    this.eventLayer.bindChart && this.eventLayer.bindChart(this) // 把chart绑定到事件处理层
   }
   // this.bindEvent = function (chart) {
   //   this.eventLayer.bindEvent(chart);

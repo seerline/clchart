@@ -53,10 +53,10 @@ export default function ClEvent (syscfg) {
 
   if (this.eventPlatform === 'react') {
     // this.eventSource = new ClEventReact(this);
-  } else { // html5
+  } else if (this.eventPlatform === 'html5') {
     this.eventSource = new ClEventWeb(this)
+    this.eventSource.bindEvent()
   }
-  this.eventSource.bindEvent()
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取
   // 每个chart如果自己定义了对应事件就会分发，未定义不分发，分发后以返回值判断是否继续传递到下一个符合条件的chart
   this.bindChart = function (source) {

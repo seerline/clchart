@@ -1,11 +1,16 @@
 'use strict'
 
 export function _getImageData (context, xx, yy, ww, hh) {
-  return context.getImageData(xx, yy, ww, hh)
+  if (context.getImageData) {
+    return context.getImageData(xx, yy, ww, hh)
+  }
+  return undefined
 }
 
 export function _putImageData (context, img, xx, yy) {
-  context.putImageData(img, xx, yy)
+  if (context.putImageData) {
+    context.putImageData(img, xx, yy)
+  }
 }
 
 export function _setLineWidth (context, l) {
@@ -98,13 +103,24 @@ export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {
   context.fillStyle = clr || context.fillStyle
   context.textBaseline = pos ? pos.y || 'top' : 'top' // top（默认）；middle bottom
   context.textAlign = pos ? pos.x || 'start' : 'start' // start（默认）;center end
-  context.fillText(txt, xx, yy)
+  // 需要将txt转为string类型，不然gcanvas会报错
+  context.fillText(txt.toString(), xx, yy)
 }
 
 export function _getTxtWidth (context, txt, font, pixel) {
   _setFontSize(context, font, pixel)
-  return context.measureText(txt).width
+  let width
+  if (context.measureText) {
+    try {
+      width = context.measureText(txt).width
+    } catch (error) {
+      // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
+      width = pixel * txt.length
+    }
+  }
+  return width
 }
+
 // 获取文字显示的最适合的Rect
 function __getTxtRect (context, txt, config) {
   const spaceX = config.spaceX || 2
