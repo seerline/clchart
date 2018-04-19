@@ -465,7 +465,6 @@ export default function ClChartLine (father) {
   }
   this.drawChildLines = function () {
     for (const name in this.childLines) {
-
       if (this.childLines[name].hotKey !== undefined) {
         this.childLines[name].onPaint(this.childLines[name].hotKey)
       } else {
@@ -742,7 +741,6 @@ export default function ClChartLine (father) {
     this.maxmin.max = maxmin.max
     this.maxmin.min = maxmin.min
     this.maxmin.unitY = (this.rectChart.height - 2) / (this.maxmin.max - this.maxmin.min) // 一个单位价位多少像素
-
   }
 
   // ////////////////////////////////////////////////

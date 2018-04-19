@@ -111,15 +111,26 @@ export function _getTxtWidth (context, txt, font, pixel) {
   _setFontSize(context, font, pixel)
   let width
   if (context.measureText) {
-    try {
-      width = context.measureText(txt).width
-    } catch (error) {
-      // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
-      width = pixel * txt.length
-    }
+    width = context.measureText(txt).width
+    // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
+  } else {
+    width = pixel * txt.length
   }
   return width
 }
+// export function _getTxtWidth (context, txt, font, pixel) {
+//   _setFontSize(context, font, pixel)
+//   let width
+//   if (context.measureText) {
+//     try {
+//       width = context.measureText(txt).width
+//     } catch (error) {
+//       // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
+//       width = pixel * txt.length
+//     }
+//   }
+//   return width
+// }
 
 // 获取文字显示的最适合的Rect
 function __getTxtRect (context, txt, config) {

@@ -4,13 +4,14 @@ import {
   copyJsonOfDeep
 } from '../util/cl.tool'
 
+import * as drawClass from '../util/cl.draw'
 // ///////////////////////////
 //  这里是定义的一些公共变量，以及调用方法
 // ///////////////////////////
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
 export let _systemInfo = {
-  runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换
+  runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
   axisPlatform: 'phone', // 'web' 对坐标显示的区别
   eventPlatform: 'html5', // 'react'所有事件
   scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
@@ -77,18 +78,68 @@ export function setColor (syscolor) {
   _systemInfo.color = color
   return color
 }
-export function initSystem (cfg) {
-  if (cfg !== undefined) {
-    if (cfg.canvas !== undefined && cfg.scale !== 1) {
-      setScale(cfg.canvas, cfg.scale)
-      _systemInfo.canvas = cfg.canvas
-    }
-    _systemInfo.context = cfg.context
-    for (const key in _systemInfo) {
-      _systemInfo[key] = cfg[key] || _systemInfo[key]
+
+export function _getOtherTxtWidth (context, txt, font, pixel) {
+  const ww = _systemInfo.other.width
+  const hh = _systemInfo.other.height
+  drawClass._fillRect(0, 0, ww, hh, '#000')
+  drawClass._drawTxt(_systemInfo.other.context, 0, 0, txt, font, pixel, '#fff')
+  const imgData = _systemInfo.other.context.getImageData(0, 0, ww, hh).data
+  let width = 0
+  for (let i = 0; i < imgData.length; /* i += 4 */) {
+    if (imgData.data[i + 0] !== 0 || imgData.data[i + 1] !== 0 ||
+      imgData.data[i + 2] !== 0 || imgData.data[i + 3] !== 255) {
+      i += 4
+      width++
+    } else {
+      i += 4 * ww
     }
   }
+  return width
+}
+export function redirectDrawTool (tools) {
+  // const canvas = document.createComment('canvas')
+  // canvas.width = 300 * _systemInfo.scale
+  // canvas.height = 30 * _systemInfo.scale
+  // _systemInfo.react.context = canvas.getContext('2d')
+  drawClass._getTxtWidth = tools.getTxtWidth
+}
+
+export function setScale (canvas, scale) {
+  canvas.width = canvas.clientWidth * scale
+  canvas.height = canvas.clientHeight * scale
+  return {
+    width: canvas.width,
+    height: canvas.height
+  }
+}
+export function initSystem (cfg) {
+  if (cfg === undefined) return
+
+  for (const key in _systemInfo) {
+    _systemInfo[key] = cfg[key] || _systemInfo[key]
+  }
+  // _systemInfo.runPlatform = cfg.runPlatform
+  // _systemInfo.axisPlatform = cfg.axisPlatform
+  // _systemInfo.eventPlatform = cfg.eventPlatform
+  // _systemInfo.scale = cfg.scale
+  // _systemInfo.standard = cfg.standard
+  // _systemInfo.sysColor = cfg.sysColor
+
+  _systemInfo.canvas = cfg.canvas
+  _systemInfo.context = cfg.context
+  _systemInfo.other = cfg.other // react 没有字体宽度的接口
+  // { context, rectMain }
+
   _systemInfo.color = setColor(_systemInfo.sysColor, _systemInfo.standard)
+
+  if (_systemInfo.runPlatform === 'normal') {
+    if (_systemInfo.canvas !== undefined && _systemInfo.scale !== 1) {
+      setScale(_systemInfo.canvas, _systemInfo.scale)
+    }
+  } else { // 不支持字体宽度
+    redirectDrawTool(cfg.tools)
+  }
 }
 
 // 所有chart都必须调用这个函数，以获取基本的配置
@@ -147,14 +198,5 @@ export function checkLayout (layout) {
 export function changeCursorStyle (style) {
   if (_systemInfo.eventPlatform === 'html5') {
     _systemInfo.canvas.style.cursor = style
-  }
-}
-
-export function setScale (canvas, scale) {
-  canvas.width = canvas.clientWidth * scale
-  canvas.height = canvas.clientHeight * scale
-  return {
-    width: canvas.width,
-    height: canvas.height
   }
 }
