@@ -241,9 +241,10 @@ export default function ClEventWeb (father) {
         // this._emitEvent('onPinch', { scale: pinchScale - this.previousPinchScale }); // 缩放
         const mouseinfo = _getTouchInfo(point, event.srcElement)
         if ((timestamp - this.startTime) > 90 && this.previousPinchScale) {
-          mouseinfo.scale = (pinchScale - this.previousPinchScale) * -10
-          console.log(mouseinfo.scale)
-          this.father.emitEvent('onPinch', mouseinfo)
+          mouseinfo.scale = pinchScale - this.previousPinchScale
+          if (Math.abs(mouseinfo.scale) > 0.01) {
+            this.father.emitEvent('onPinch', mouseinfo)
+          }
           this.startTime = _getTime()
         }
         this.previousPinchScale = pinchScale

@@ -153,20 +153,20 @@
 			Chart.onPaint()
 		}
 		// 画日线
-		function handleKline (fullCode, peroid) {
+		function handleKline (code, peroid) {
 			let source = peroid
 			if (peroid === 'WEEK' || peroid === 'MON') source = 'DAY'
 			Chart.clear()
 			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
-			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'))
-			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'))
-			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', source))
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
+			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData(code, 'RIGHT'))
+			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData(code, source))
 			const mainHeight = canvas.height * 2 / 3
 			const mainLayoutCfg = {
 				layout: {
 					offset: {
 						left: 5,
-						right: 50
+						right: 10
 					}
 				},
 				buttons: ClChart.DEF_CHART.CHART_BUTTONS,
@@ -187,7 +187,7 @@
 				layout: {
 					offset: {
 						left: 5,
-						right: 50
+						right: 10
 					}
 				},
 				config: ClChart.DEF_CHART.CHART_VBAR,
