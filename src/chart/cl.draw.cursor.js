@@ -7,10 +7,11 @@
 import {
   _getTxtWidth,
   _drawTxtRect,
+  _fillRect,
   _drawLineAlone
 } from '../util/cl.draw'
 import {
-  initCommonInfo
+  initCommonInfo, _systemInfo
 } from '../chart/cl.chart.init'
 import {
   inRangeX,
@@ -34,8 +35,14 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   this.maxmin = father.maxmin
   this.axisX = father.layout.axisX
 
+  this.context = _systemInfo.cursorCanvas.context
+
   this.onPaint = function (mousePos, valueX, valueY) {
     if (inRangeX(this.rectChart, mousePos.x) === false) return
+
+    _fillRect(this.context, this.rectMain.left, this.rectMain.top,
+      this.rectMain.left + this.rectMain.width,
+      this.rectMain.top + this.rectMain.height, 'rgba(0, 0, 0, 0)')
 
     let txt
     let xx = mousePos.x

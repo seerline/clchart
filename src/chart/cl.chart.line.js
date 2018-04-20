@@ -7,8 +7,8 @@
 import {
   _fillRect,
   _drawRect,
-  _getImageData,
-  _putImageData,
+  // _getImageData,
+  // _putImageData,
   _setLineWidth,
   _getTxtWidth,
   _drawBegin,
@@ -540,7 +540,7 @@ export default function ClChartLine (father) {
     this.drawChildDraw('TITLE')
     this.drawChildCharts()
 
-    this.img = _getImageData(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
+    // this.img = _getImageData(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
   }
 
   // ///////////////////////////////////////////////////////////
@@ -810,9 +810,9 @@ export default function ClChartLine (father) {
     // this.draw_clear();
     // 找到X坐标对应的数据索引
     const mousePos = event.mousePos
-    if (this.img !== undefined) {
-      _putImageData(this.context, this.img, this.rectMain.left, this.rectMain.top)
-    }
+    // if (this.img !== undefined) {
+    //   _putImageData(this.context, this.img, this.rectMain.left, this.rectMain.top)
+    // }
 
     const mouseIndex = this.getMouseMoveData(mousePos.x)
     let idx, valueY
