@@ -64,16 +64,17 @@ export const CHART_ORDER = {
     display: 'text' // none 不显示 btn 按钮 text 文字
   }
 }
+const ZOOM_INFO_DEF = {
+  index: 3,
+  // list: [1, 2, 4, 5, 7, 9, 12, 15, 19]
+  list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+};
 // 预定义参数
 export const CHART_KBAR = {
   // buttons: ['zoomin', 'exright', 'zoomout'],
   // title: { display: 'none' },
   // scroll: {display: 'none'},
-  zoomInfo: {
-    index: 3,
-    // list: [1, 2, 4, 5, 7, 9, 12, 15, 19]
-    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  },
+  zoomInfo: ZOOM_INFO_DEF,
   // zoomInfo: {
   //   min: 1,
   //   max: 26,
@@ -171,6 +172,7 @@ export const CHART_KBAR = {
 }
 
 export const CHART_VBAR = {
+  zoomInfo: ZOOM_INFO_DEF,
   title: {
     display: 'text', // none 不显示 btn 按钮 text 文字
     label: 'VOL' // 需要显示的文字信息

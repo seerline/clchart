@@ -28,6 +28,7 @@ import {
   inRect
 } from '../util/cl.tool'
 import ClEventWeb from './cl.event.web'
+import ClEventRN from './cl.event.rn'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
@@ -51,8 +52,9 @@ export default function ClEvent (syscfg) {
   this.eventPlatform = syscfg.eventPlatform || 'html5'
   this.scale = syscfg.scale
 
-  if (this.eventPlatform === 'react') {
-    // this.eventSource = new ClEventReact(this);
+  if (this.eventPlatform === 'react-native') {
+    this.eventSource = new ClEventRN(this);
+    this.eventSource.bindEvent()
   } else if (this.eventPlatform === 'html5') {
     this.eventSource = new ClEventWeb(this)
     this.eventSource.bindEvent()
