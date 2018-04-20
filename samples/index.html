@@ -26,7 +26,8 @@
 			</div>
 		</div>
 		<div class="chart-container">
-			<canvas id="myChart" width="400" height="600"></canvas>
+			<canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
+			<canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
 		</div>
 		<div id="spinner" class="spinner">
 			<i class="icon-spin5 animate-spin"></i>
@@ -38,10 +39,20 @@
 		// 开始画图
 		const canvas = document.getElementById('myChart')
 		const ctx = canvas.getContext('2d')
+		const cursorCanvas = document.getElementById('cursorChart')
+		const cursorCtx = cursorCanvas.getContext('2d')
 		const syscfg = {
 			canvas,
 			scale: window.devicePixelRatio,
 			context: ctx,
+			mainCanvas: {
+				canvas: canvas,
+				context: ctx
+			},
+			cursorCanvas: {
+				canvas: cursorCanvas,
+				context: cursorCtx
+			}
 		}
 		const Chart = ClChart.createSingleChart(syscfg)
 		// 画分钟线
