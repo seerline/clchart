@@ -36,15 +36,31 @@
 	<script src="./stockdata.js"></script>
 	<script>
 		'use strict'
+		// 获取浏览器内核版本
+		function getBrowserVersion() {
+			const ua = navigator.userAgent;
+			return {
+				trident: ua.indexOf('Trident') > -1, // IE内核
+				presto: ua.indexOf('Presto') > -1, // opera内核
+				webKit: ua.indexOf('AppleWebKit') > -1, // 苹果、谷歌内核
+				gecko: ua.indexOf('Gecko') > -1 && ua.indexOf('KHTML') === -1, // 火狐内核
+				mobile: !!ua.match(/AppleWebKit.*Mobile.*/), // 是否为移动终端
+				ios: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+				android: ua.indexOf('Android') > -1, // android终端
+				iPad: ua.indexOf('iPad') > -1, // 是否iPad
+				uc: ua.indexOf('UCBrowser') > -1, // 是否UC浏览器
+				qq: ua.indexOf('MQQBrowser') > -1, // 是否QQ浏览器
+				weixin: ua.indexOf('MicroMessenger') > -1 // 是否微信
+			}
+		}
 		// 开始画图
 		const canvas = document.getElementById('myChart')
 		const ctx = canvas.getContext('2d')
 		const cursorCanvas = document.getElementById('cursorChart')
 		const cursorCtx = cursorCanvas.getContext('2d')
 		const syscfg = {
-			canvas,
 			scale: window.devicePixelRatio,
-			context: ctx,
+			axisPlatform: getBrowserVersion().mobile ? 'phone' : 'web',
 			mainCanvas: {
 				canvas: canvas,
 				context: ctx
