@@ -44,6 +44,9 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   }
 
   this.onPaint = function (mousePos, valueX, valueY) {
+    if (typeof this.context._beforePaint === 'function') {
+      this.context._beforePaint()
+    }
     if (inRangeX(this.rectChart, mousePos.x) === false) return
     this.onClear()
 
@@ -122,6 +125,9 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
         x: posX,
         y: 'top'
       })
+    }
+    if (typeof this.context._afterPaint === 'function') {
+      this.context._afterPaint()
     }
   }
 }

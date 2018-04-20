@@ -1,11 +1,5 @@
 'use strict'
 
-export function _beforePaint () {
-}
-
-export function _afterPaint () {
-}
-
 export function _getImageData (context, xx, yy, ww, hh) {
   if (context.getImageData) {
     return context.getImageData(xx, yy, ww, hh)

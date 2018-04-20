@@ -170,10 +170,6 @@ export function _getOtherTxtWidth (context, txt, font, pixel) {
   }
   return width
 }
-export function redirectDrawTool (tools) {
-  if (tools !== undefined && tools.beforePaint) drawClass._beforePaint = tools.beforePaint
-  if (tools !== undefined && tools.afterPaint) drawClass._afterPaint = tools.afterPaint
-}
 
 export function setScale (canvas, scale) {
   canvas.width = canvas.clientWidth * scale
@@ -209,8 +205,6 @@ export function initSystem (cfg) {
       setScale(_systemInfo.mainCanvas.canvas, _systemInfo.scale)
       setScale(_systemInfo.cursorCanvas.canvas, _systemInfo.scale)
     }
-  } else { // 不支持字体宽度
-    redirectDrawTool(cfg.tools)
   }
   return _systemInfo
 }
