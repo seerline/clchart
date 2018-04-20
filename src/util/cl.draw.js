@@ -1,5 +1,11 @@
 'use strict'
 
+export function _beforePaint () {
+}
+
+export function _afterPaint () {
+}
+
 export function _getImageData (context, xx, yy, ww, hh) {
   if (context.getImageData) {
     return context.getImageData(xx, yy, ww, hh)
@@ -107,14 +113,32 @@ export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {
   context.fillText(txt.toString(), xx, yy)
 }
 
+function getTxtWith(charMap, txt, fontSize) {
+  const scale = fontSize / 12
+  let allWidth = 0
+  for (let i = 0; i < txt.length; i++) {
+    const element = txt[i].toString();
+    if (charMap && charMap[element]) {
+      allWidth += charMap[element].width
+    } else {
+      allWidth += 12
+    }
+  }
+  return allWidth * scale
+}
+
 export function _getTxtWidth (context, txt, font, pixel) {
   _setFontSize(context, font, pixel)
   let width
   if (context.measureText) {
-    width = context.measureText(txt).width
+    try {
+      width = context.measureText(txt).width
+    } catch (error) {
+      width = getTxtWith(context.charMap, txt, pixel)
+    }
     // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
   } else {
-    width = pixel * txt.length
+    width = getTxtWith(context.charMap, txt, pixel)
   }
   return width
 }
