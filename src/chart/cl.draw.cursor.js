@@ -7,7 +7,7 @@
 import {
   _getTxtWidth,
   _drawTxtRect,
-  _fillRect,
+  _clearRect,
   _drawLineAlone
 } from '../util/cl.draw'
 import {
@@ -23,6 +23,7 @@ import {
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
 export default function ClDrawCursor (father, rectMain, rectChart) {
   initCommonInfo(this, father)
+  this.rectFather = father.rectMain
   this.rectMain = rectMain // 画十字线和边界标签
   this.rectChart = rectChart // 鼠标有效区域
 
@@ -36,13 +37,15 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   this.axisX = father.layout.axisX
 
   this.context = _systemInfo.cursorCanvas.context
+  this.onClear = function () {
+    _clearRect(this.context, this.rectFather.left, this.rectFather.top,
+      this.rectFather.left + this.rectFather.width,
+      this.rectFather.top + this.rectFather.height)
+  }
 
   this.onPaint = function (mousePos, valueX, valueY) {
     if (inRangeX(this.rectChart, mousePos.x) === false) return
-
-    _fillRect(this.context, this.rectMain.left, this.rectMain.top,
-      this.rectMain.left + this.rectMain.width,
-      this.rectMain.top + this.rectMain.height, 'rgba(0, 0, 0, 0)')
+    this.onClear()
 
     let txt
     let xx = mousePos.x

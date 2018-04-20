@@ -62,7 +62,9 @@ export function _fillRect (context, xx, yy, ww, hh, fillclr) {
   context.fillStyle = fillclr || context.fillStyle
   context.fillRect(xx, yy, ww, hh)
 }
-
+export function _clearRect (context, xx, yy, ww, hh) {
+  context.clearRect(xx, yy, ww, hh)
+}
 // 画实心长方形
 export function _fill (context, fillclr) {
   context.fillStyle = fillclr

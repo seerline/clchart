@@ -780,6 +780,7 @@ export default function ClChartLine (father) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
       this.father.onPaint(this)
     }
+    this.childDraws['CURSOR'].onClear()
   }
   this.onMouseWheel = function (event) {
     if (this.config.zoomInfo === undefined) return

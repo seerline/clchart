@@ -48,8 +48,8 @@ export const EVENT_DEFINE = [
 ]
 
 export default function ClEvent (syscfg) {
-  this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
-  // this.eventCanvas = syscfg.cursorCanvas.canvas
+  // this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
+  this.eventCanvas = syscfg.cursorCanvas.canvas
   this.eventPlatform = syscfg.eventPlatform || 'html5'
   this.scale = syscfg.scale
 
