@@ -12,9 +12,7 @@ import {
   _setLineWidth,
   _getTxtWidth,
   _drawBegin,
-  _drawEnd,
-  _beforePaint,
-  _afterPaint
+  _drawEnd
 } from '../util/cl.draw'
 import {
   findLabelToIndex,
@@ -520,7 +518,6 @@ export default function ClChartLine (father) {
     }
   }
   this.onPaint = function () {
-    _beforePaint && _beforePaint()
     this.beforeLocation() // 数据定位前需要做的事情
 
     this.data = this.father.getData(this.hotKey)
@@ -544,7 +541,6 @@ export default function ClChartLine (father) {
     this.drawChildCharts()
 
     this.img = _getImageData(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
-    _beforePaint && _afterPaint()
   }
 
   // ///////////////////////////////////////////////////////////
@@ -782,7 +778,7 @@ export default function ClChartLine (father) {
   this.onMouseOut = function (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
-      this.onPaint()
+      this.father.onPaint(this)
     }
   }
   this.onMouseWheel = function (event) {
@@ -842,9 +838,7 @@ export default function ClChartLine (father) {
         })
       }
     }
-    _beforePaint && _beforePaint()
     this.childDraws['CURSOR'].onPaint(mousePos, valueX, valueY)
-    _beforePaint && _afterPaint()
   }
 
   // 事件监听

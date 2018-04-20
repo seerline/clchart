@@ -435,14 +435,14 @@ export default function ClDrawSeer (father, rectMain) {
             event: 'seerclick',
             data: []
           })
-          this.father.onPaint()
+          this.source.onPaint()
         } else {
           this.hotSeer.value = this.showSeer[k].uids
           this.father.callback({
             event: 'seerclick',
             data: this.showSeer[k].uids
           })
-          this.father.onPaint()
+          this.source.onPaint()
         }
       })
     }

@@ -123,7 +123,9 @@ export let _systemInfo = {
   scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
   standard: 'china', // 画图标准，美国’usa‘，需要调整颜色
   sysColor: 'black', // 色系，分白色和黑色系
-  charMap: CHART_WIDTH_MAP
+  charMap: CHART_WIDTH_MAP,
+  mainCanvas: {},
+  cursorCanvas: {}
 }
 
 export function setStandard (standard) {

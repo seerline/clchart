@@ -76,7 +76,7 @@ export default function ClChartOrder (father) {
     } else {
       this.style = 'normal'
     }
-    this.onPaint()
+    this.father.onPaint(this)
   }
   // 事件监听
   this.onPaint = function () { // 重画
