@@ -68,7 +68,7 @@ const ZOOM_INFO_DEF = {
   index: 3,
   // list: [1, 2, 4, 5, 7, 9, 12, 15, 19]
   list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-};
+}
 // 预定义参数
 export const CHART_KBAR = {
   // buttons: ['zoomin', 'exright', 'zoomout'],

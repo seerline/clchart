@@ -53,7 +53,7 @@ export default function ClEvent (syscfg) {
   this.scale = syscfg.scale
 
   if (this.eventPlatform === 'react-native') {
-    this.eventSource = new ClEventRN(this);
+    this.eventSource = new ClEventRN(this)
     this.eventSource.bindEvent()
   } else if (this.eventPlatform === 'html5') {
     this.eventSource = new ClEventWeb(this)

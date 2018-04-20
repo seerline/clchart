@@ -158,7 +158,6 @@ function ClChart (context) {
   // callback 表示鼠标移动时返回的当前记录数据
   // //////////////////////////////////////////////
   this.createChart = function (name, className, usercfg, callback) {
-
     // if (!inArray(className, [
     //   ClChartButton,
     //   ClChartLine,

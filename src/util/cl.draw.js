@@ -113,11 +113,11 @@ export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {
   context.fillText(txt.toString(), xx, yy)
 }
 
-function getTxtWith(charMap, txt, fontSize) {
+function getTxtWith (charMap, txt, fontSize) {
   const scale = fontSize / 12
   let allWidth = 0
   for (let i = 0; i < txt.length; i++) {
-    const element = txt[i].toString();
+    const element = txt[i].toString()
     if (charMap && charMap[element]) {
       allWidth += charMap[element].width
     } else {
