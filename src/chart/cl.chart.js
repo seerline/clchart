@@ -20,7 +20,7 @@ import { setColor, setStandard, _systemInfo } from '../chart/cl.chart.init'
 import { _beforePaint, _afterPaint } from '../util/cl.draw'
 
 // 必须包含 context，其他初始化信息参考initSystem
-function ClChart (context) {
+function ClChart (syscfg) {
   const DEFAULT_LINKINFO = {
     showMode: 'last',
     // 'last' 以最新数据为定位，maxIndex=-1 表示显示最新的数据
@@ -48,7 +48,7 @@ function ClChart (context) {
     hideInfo: false // 是否显示价格
   }
   // 必须设置context
-  this.context = context
+  this.context = _systemInfo.mainCanvas.context
   // 通过这个来判断是否为根
   this.father = undefined
   // //////////////////////////////////////////////
@@ -72,10 +72,7 @@ function ClChart (context) {
     // this.eventLayer.clear();
     this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO)
   }
-  // this.checkConfig = function() { // 检查配置有冲突的修正过来
-  //   this.linkInfo.unitX *= _systemInfo.scale;
-  //   this.linkInfo.spaceX *= _systemInfo.scale;
-  // }
+
   this.getChart = function (key) {
     return this.childCharts[key]
   }

@@ -37,9 +37,9 @@ export const PLUGINS = ClPlugins
 //   canvas:   // 用于接受事件处理的
 // ///////////////////////////////////
 export function createSingleChart (cfg) {
-  initSystem(cfg)
-  const chart = new ClChart(cfg.context)
-  const event = new ClEvent(cfg)
+  const sysInfo = initSystem(cfg)
+  const chart = new ClChart(sysInfo)
+  const event = new ClEvent(sysInfo)
   const data = new ClData()
 
   chart.initChart(data, event)
@@ -54,11 +54,11 @@ export function createSingleChart (cfg) {
 // 返回一组chart，每组chart按名字存在一个json数据结构里，方便使用
 // ///////////////////////////////////
 export function createMulChart (cfg) {
-  initSystem(cfg)
-  const event = new ClEvent(cfg)
+  const sysInfo = initSystem(cfg)
+  const event = new ClEvent(sysInfo)
   const chartList = {}
   for (const key in cfg.charts) {
-    const chart = new ClChart(cfg.context)
+    const chart = new ClChart(sysInfo)
     const data = new ClData()
     chart.initChart(data, event)
     chartList[key] = chart

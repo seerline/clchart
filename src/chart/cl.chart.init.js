@@ -171,13 +171,8 @@ export function _getOtherTxtWidth (context, txt, font, pixel) {
   return width
 }
 export function redirectDrawTool (tools) {
-  // const canvas = document.createComment('canvas')
-  // canvas.width = 300 * _systemInfo.scale
-  // canvas.height = 30 * _systemInfo.scale
-  // _systemInfo.react.context = canvas.getContext('2d')
-  // drawClass._getTxtWidth = tools.getTxtWidth
-  drawClass._beforePaint = tools && tools.beforePaint
-  drawClass._afterPaint = tools && tools.afterPaint
+  if (tools !== undefined && tools.beforePaint) drawClass._beforePaint = tools.beforePaint
+  if (tools !== undefined && tools.afterPaint) drawClass._afterPaint = tools.afterPaint
 }
 
 export function setScale (canvas, scale) {
@@ -200,21 +195,24 @@ export function initSystem (cfg) {
   // _systemInfo.standard = cfg.standard
   // _systemInfo.sysColor = cfg.sysColor
 
-  _systemInfo.canvas = cfg.canvas
-  _systemInfo.context = cfg.context
-  _systemInfo.context.charMap = _systemInfo.charMap
-  _systemInfo.other = cfg.other // react 没有字体宽度的接口
-  // { context, rectMain }
+  _systemInfo.mainCanvas.canvas = cfg.mainCanvas.canvas
+  _systemInfo.mainCanvas.context = cfg.mainCanvas.context
+  _systemInfo.mainCanvas.context.charMap = _systemInfo.charMap
+  _systemInfo.cursorCanvas.canvas = cfg.cursorCanvas.canvas
+  _systemInfo.cursorCanvas.context = cfg.cursorCanvas.context
+  _systemInfo.cursorCanvas.context.charMap = _systemInfo.charMap
 
   _systemInfo.color = setColor(_systemInfo.sysColor, _systemInfo.standard)
 
   if (_systemInfo.runPlatform === 'normal') {
-    if (_systemInfo.canvas !== undefined && _systemInfo.scale !== 1) {
-      setScale(_systemInfo.canvas, _systemInfo.scale)
+    if (_systemInfo.mainCanvas.canvas !== undefined && _systemInfo.scale !== 1) {
+      setScale(_systemInfo.mainCanvas.canvas, _systemInfo.scale)
+      setScale(_systemInfo.cursorCanvas.canvas, _systemInfo.scale)
     }
   } else { // 不支持字体宽度
     redirectDrawTool(cfg.tools)
   }
+  return _systemInfo
 }
 
 // 所有chart都必须调用这个函数，以获取基本的配置
@@ -272,6 +270,7 @@ export function checkLayout (layout) {
 // default
 export function changeCursorStyle (style) {
   if (_systemInfo.eventPlatform === 'html5') {
-    _systemInfo.canvas.style.cursor = style
+    _systemInfo.mainCanvas.canvas.style.cursor = style
+    _systemInfo.cursorCanvas.canvas.style.cursor = style
   }
 }
