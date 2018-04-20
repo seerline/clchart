@@ -169,11 +169,6 @@ export function _getOtherTxtWidth (context, txt, font, pixel) {
   return width
 }
 export function redirectDrawTool (tools) {
-  // const canvas = document.createComment('canvas')
-  // canvas.width = 300 * _systemInfo.scale
-  // canvas.height = 30 * _systemInfo.scale
-  // _systemInfo.react.context = canvas.getContext('2d')
-  // drawClass._getTxtWidth = tools.getTxtWidth
   drawClass._beforePaint = tools && tools.beforePaint
   drawClass._afterPaint = tools && tools.afterPaint
 }

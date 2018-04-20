@@ -166,7 +166,7 @@ export default function ClEventWeb (father) {
     const point = event.touches ? event.touches[0] : event
     this.startX = point.pageX
     this.startY = point.pageY
-    window.clearTimeout(this.longTapTimeout)
+    clearTimeout(this.longTapTimeout)
     // 两点接触
     if (event.touches.length > 1) {
       const point2 = event.touches[1]
@@ -204,7 +204,7 @@ export default function ClEventWeb (father) {
      * 在X轴或Y轴发生过移动
      */
     const point = event.changedTouches ? event.changedTouches[0] : event
-    window.clearTimeout(this.longTapTimeout)
+    clearTimeout(this.longTapTimeout)
     const timestamp = _getTime()
     if ((this.moveX !== null && Math.abs(this.moveX - this.startX) > 10) ||
       (this.moveY !== null && Math.abs(this.moveY - this.startY) > 10)) {
@@ -265,7 +265,7 @@ export default function ClEventWeb (father) {
         this.touchVector.y = vector.y
       }
     } else {
-      window.clearTimeout(this.longTapTimeout)
+      clearTimeout(this.longTapTimeout)
       const point = event.touches ? event.touches[0] : event
       const deltaX = this.moveX === null ? 0 : point.pageX - this.moveX
       const deltaY = this.moveY === null ? 0 : point.pageY - this.moveY

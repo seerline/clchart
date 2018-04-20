@@ -805,13 +805,14 @@ export default function ClChartLine (father) {
     }
   }
   this.onMouseMove = function (event) {
-    if (this.img === undefined) return
     if (this.linkInfo.hideInfo) return
     if (!this.linkInfo.showCursorLine) return
     // this.draw_clear();
     // 找到X坐标对应的数据索引
     const mousePos = event.mousePos
-    _putImageData(this.context, this.img, this.rectMain.left, this.rectMain.top)
+    if (this.img !== undefined) {
+      _putImageData(this.context, this.img, this.rectMain.left, this.rectMain.top)
+    }
 
     const mouseIndex = this.getMouseMoveData(mousePos.x)
     let idx, valueY
