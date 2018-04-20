@@ -1,17 +1,11 @@
 'use strict'
 
-import {
-  _systemInfo
-} from '../chart/cl.chart.init'
 import getValue from '../data/cl.data.tools'
 
 // ///////////////////////////////////////
 // 和定位相关基本函数
 // //////////////////////////////////////
-export function getLineColor (index) {
-  if (index === undefined) index = 0
-  return _systemInfo.color.line[index % _systemInfo.color.line.length]
-}
+
 // 根据label在data中寻找匹配的记录编号
 export function findLabelToIndex (data, findvalue, label) {
   for (let idx = 0; idx <= data.value.length - 1; idx++) {
@@ -51,13 +45,13 @@ export function setFixedLineFlags (info, config) {
   info.maxIndex = config.size - 1
   // 5日线时 spaceX初始值设为0
   info.maxCount = config.maxCount > 1 ? config.maxCount : 2
-  info.unitX = _systemInfo.scale
+  info.unitX = config.scale
   info.spaceX = config.width / info.maxCount - info.unitX
 }
 // 此种情况下spaceX最小需要一个像素
 export function setMoveLineFlags (info, config) {
   const spaceX = info.unitX / 4
-  info.spaceX = spaceX < _systemInfo.scale ? _systemInfo.scale : spaceX
+  info.spaceX = spaceX < config.scale ? config.scale : spaceX
   info.maxCount = Math.floor(config.width / (info.unitX + info.spaceX)) // 整个图形区域最大显示记录数
   const offset = info.maxCount > config.size ? config.size : info.maxCount
 

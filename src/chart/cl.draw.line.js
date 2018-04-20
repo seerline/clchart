@@ -11,13 +11,13 @@ import {
   _drawlineTo
 } from '../util/cl.draw'
 import getValue from '../data/cl.data.tools'
-import { initCommonInfo } from '../chart/cl.chart.init'
+import {
+  initCommonInfo,
+  getLineColor
+} from '../chart/cl.chart.init'
 import {
   inRect
 } from '../util/cl.tool'
-import {
-  getLineColor
-} from './cl.chart.tools'
 
 export default function ClDrawLine (father, rectMain) {
   initCommonInfo(this, father)

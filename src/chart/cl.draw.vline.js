@@ -13,11 +13,10 @@ import {
 } from '../util/cl.draw'
 import getValue from '../data/cl.data.tools'
 import {
-  initCommonInfo
-} from '../chart/cl.chart.init'
-import {
+  initCommonInfo,
   getLineColor
-} from './cl.chart.tools'
+} from '../chart/cl.chart.init'
+
 export default function ClDrawVLine (father, rectMain) {
   initCommonInfo(this, father)
   this.rectMain = rectMain
