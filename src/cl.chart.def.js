@@ -41,13 +41,13 @@ export const CHART_LAYOUT = {
     pixel: 12,
     height: 16,
     spaceX: 3,
-    font: 'Arial'
+    font: 'sans-serif'
   }, // 数字的定义
   symbol: {
     pixel: 10,
     size: 18,
     spaceX: 3,
-    font: 'Arial'
+    font: 'sans-serif'
   }// 标记的定义
 }
 // 按钮的预定义

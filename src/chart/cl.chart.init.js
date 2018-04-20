@@ -5,19 +5,6 @@ import {
 } from '../util/cl.tool'
 
 import * as drawClass from '../util/cl.draw'
-// ///////////////////////////
-//  这里是定义的一些公共变量，以及调用方法
-// ///////////////////////////
-
-// 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
-export let _systemInfo = {
-  runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
-  axisPlatform: 'web', // 'web' 对坐标显示的区别
-  eventPlatform: 'html5', // 'react'所有事件
-  scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
-  standard: 'china', // 画图标准，美国’usa‘，需要调整颜色
-  sysColor: 'black' // 色系，分白色和黑色系
-}
 
 export const COLOR_WHITE = {
   sys: 'white',
@@ -53,6 +40,90 @@ export const COLOR_BLACK = {
   colume: '#41bfd0',
   box: '#373737',
   code: '#41bfd0'
+}
+
+export const CHART_WIDTH_MAP = {
+  "0": {
+    "width": 7.1999969482421875
+  },
+  "1": {
+    "width": 4.8119964599609375
+  },
+  "2": {
+    "width": 7.1999969482421875
+  },
+  "3": {
+    "width": 7.1999969482421875
+  },
+  "4": {
+    "width": 7.1999969482421875
+  },
+  "5": {
+    "width": 7.1999969482421875
+  },
+  "6": {
+    "width": 7.1999969482421875
+  },
+  "7": {
+    "width": 6.563995361328125
+  },
+  "8": {
+    "width": 7.1999969482421875
+  },
+  "9": {
+    "width": 7.1999969482421875
+  },
+  ".": {
+    "width": 3.167999267578125
+  },
+  ",": {
+    "width": 3.167999267578125
+  },
+  "%": {
+    "width": 11.639999389648438
+  },
+  ":": {
+    "width": 3.167999267578125
+  },
+  " ": {
+    "width": 3.9959869384765625
+  },
+  "K": {
+    "width": 8.279998779296875
+  },
+  "V": {
+    "width": 7.667999267578125
+  },
+  "O": {
+    "width": 9.203994750976562
+  },
+  "L": {
+    "width": 7.055999755859375
+  },
+  "-": {
+    "width": 7.2599945068359375
+  },
+  "[": {
+    "width": 3.9959869384765625
+  },
+  "]": {
+    "width": 3.9959869384765625
+  },
+}
+
+// ///////////////////////////
+//  这里是定义的一些公共变量，以及调用方法
+// ///////////////////////////
+
+// 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
+export let _systemInfo = {
+  runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
+  axisPlatform: 'web', // 'web' 对坐标显示的区别
+  eventPlatform: 'html5', // 'react'所有事件
+  scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
+  standard: 'china', // 画图标准，美国’usa‘，需要调整颜色
+  sysColor: 'black', // 色系，分白色和黑色系
+  charMap: CHART_WIDTH_MAP
 }
 
 export function setStandard (standard) {
@@ -102,7 +173,9 @@ export function redirectDrawTool (tools) {
   // canvas.width = 300 * _systemInfo.scale
   // canvas.height = 30 * _systemInfo.scale
   // _systemInfo.react.context = canvas.getContext('2d')
-  drawClass._getTxtWidth = tools.getTxtWidth
+  // drawClass._getTxtWidth = tools.getTxtWidth
+  drawClass._beforePaint = tools && tools.beforePaint
+  drawClass._afterPaint = tools && tools.afterPaint
 }
 
 export function setScale (canvas, scale) {
@@ -115,7 +188,6 @@ export function setScale (canvas, scale) {
 }
 export function initSystem (cfg) {
   if (cfg === undefined) return
-
   for (const key in _systemInfo) {
     _systemInfo[key] = cfg[key] || _systemInfo[key]
   }
@@ -128,6 +200,7 @@ export function initSystem (cfg) {
 
   _systemInfo.canvas = cfg.canvas
   _systemInfo.context = cfg.context
+  _systemInfo.context.charMap = _systemInfo.charMap
   _systemInfo.other = cfg.other // react 没有字体宽度的接口
   // { context, rectMain }
 
