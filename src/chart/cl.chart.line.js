@@ -778,7 +778,8 @@ export default function ClChartLine (father) {
   this.onMouseOut = function (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
-      this.father.onPaint(this)
+      this.drawTitleInfo(this.linkInfo.moveIndex)
+      // this.father.onPaint(this)
     }
     this.childDraws['CURSOR'].onClear()
   }
@@ -787,10 +788,14 @@ export default function ClChartLine (father) {
 
     let step = Math.floor(event.deltaY / 10)
     if (step === 0) step = event.deltaY > 0 ? 1 : -1
-    if (step > 0) this.config.zoomInfo.index--
-    else this.config.zoomInfo.index++
-    this.setZoomInfo()
-    this.father.onPaint()
+    let newIndex
+    if (step > 0) newIndex = this.config.zoomInfo.index - 1
+    else newIndex = this.config.zoomInfo.index + 1
+    if (newIndex >= 0 && newIndex <= this.config.zoomInfo.list.length - 1) {
+      this.config.zoomInfo.index = newIndex
+      this.setZoomInfo()
+      this.father.onPaint()
+    }
   }
 
   this.onKeyDown = function (event) {
