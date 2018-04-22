@@ -11,7 +11,7 @@ import {
   _drawLineAlone
 } from '../util/cl.draw'
 import {
-  initCommonInfo, _systemInfo
+  initCommonInfo
 } from '../chart/cl.chart.init'
 import {
   inRangeX,
@@ -36,7 +36,7 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
   this.maxmin = father.maxmin
   this.axisX = father.layout.axisX
 
-  this.context = _systemInfo.cursorCanvas.context
+  this.context = father.father.cursorCanvas.context
   this.onClear = function () {
     _clearRect(this.context, this.rectFather.left, this.rectFather.top,
       this.rectFather.left + this.rectFather.width,

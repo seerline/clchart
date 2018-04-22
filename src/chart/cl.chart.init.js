@@ -116,7 +116,7 @@ export const CHART_WIDTH_MAP = {
 // ///////////////////////////
 
 // 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
-export let _systemInfo = {
+const _systemInfo = {
   runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
   axisPlatform: 'web', // 'web' 对坐标显示的区别
   eventPlatform: 'html5', // 'react'所有事件
@@ -184,13 +184,6 @@ export function initSystem (cfg) {
   for (const key in _systemInfo) {
     _systemInfo[key] = cfg[key] || _systemInfo[key]
   }
-  // _systemInfo.runPlatform = cfg.runPlatform
-  // _systemInfo.axisPlatform = cfg.axisPlatform
-  // _systemInfo.eventPlatform = cfg.eventPlatform
-  // _systemInfo.scale = cfg.scale
-  // _systemInfo.standard = cfg.standard
-  // _systemInfo.sysColor = cfg.sysColor
-
   _systemInfo.mainCanvas.canvas = cfg.mainCanvas.canvas
   _systemInfo.mainCanvas.context = cfg.mainCanvas.context
   _systemInfo.mainCanvas.context.charMap = _systemInfo.charMap
@@ -198,7 +191,7 @@ export function initSystem (cfg) {
   _systemInfo.cursorCanvas.context = cfg.cursorCanvas.context
   _systemInfo.cursorCanvas.context.charMap = _systemInfo.charMap
 
-  _systemInfo.color = setColor(_systemInfo.sysColor, _systemInfo.standard)
+  _systemInfo.color = setColor(_systemInfo.sysColor)
 
   if (_systemInfo.runPlatform === 'normal') {
     if (_systemInfo.mainCanvas.canvas !== undefined && _systemInfo.scale !== 1) {
@@ -267,4 +260,8 @@ export function changeCursorStyle (style) {
     _systemInfo.mainCanvas.canvas.style.cursor = style
     _systemInfo.cursorCanvas.canvas.style.cursor = style
   }
+}
+export function getLineColor (index) {
+  if (index === undefined) index = 0
+  return _systemInfo.color.line[index % _systemInfo.color.line.length]
 }

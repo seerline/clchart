@@ -689,6 +689,7 @@ export default function ClChartLine (father) {
         this.linkInfo, {
           width: this.rectChart.width,
           size,
+          scale: this.scale,
           maxCount: getMinuteCount(this.father.dataLayer.tradeTime)
         }
       )
@@ -697,6 +698,7 @@ export default function ClChartLine (father) {
         this.linkInfo, {
           width: this.rectChart.width,
           size,
+          scale: this.scale,
           maxCount: 5 * getMinuteCount(this.father.dataLayer.tradeTime)
         }
       )
@@ -704,6 +706,7 @@ export default function ClChartLine (father) {
       setMoveLineFlags(
         this.linkInfo, {
           width: this.rectChart.width,
+          scale: this.scale,
           size
         }
       )

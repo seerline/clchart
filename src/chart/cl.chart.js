@@ -16,7 +16,7 @@ import ClChartLine from './cl.chart.line'
 import ClChartOrder from './cl.chart.order'
 // import ClChartScroll from './cl.chart.scroll';
 // import getValue from '../data/cl.data.tools';
-import { setColor, setStandard, _systemInfo } from '../chart/cl.chart.init'
+import { setColor, setStandard } from '../chart/cl.chart.init'
 
 // 必须包含 context，其他初始化信息参考initSystem
 function ClChart (syscfg) {
@@ -47,7 +47,9 @@ function ClChart (syscfg) {
     hideInfo: false // 是否显示价格
   }
   // 必须设置context
-  this.context = _systemInfo.mainCanvas.context
+  this.context = syscfg.mainCanvas.context
+  this.cursorCanvas = syscfg.cursorCanvas
+  this.sysColor = syscfg.sysColor
   // 通过这个来判断是否为根
   this.father = undefined
   // //////////////////////////////////////////////
@@ -222,6 +224,7 @@ function ClChart (syscfg) {
   }
   // 最多支持多级图层
   this.setColor = function (sysColor, chart) { // 设置背景颜色方案
+    if (sysColor === this.sysColor) return
     this.color = setColor(sysColor)
     if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
@@ -243,7 +246,7 @@ function ClChart (syscfg) {
   // 改变语言
   this.setStandard = function (standard) {
     setStandard(standard)
-    this.setColor(_systemInfo.sysColor)
+    this.setColor(this.sysColor)
     this.onPaint()
   }
   // ///////////////////////////////////
