@@ -224,7 +224,6 @@ function ClChart (syscfg) {
   }
   // 最多支持多级图层
   this.setColor = function (sysColor, chart) { // 设置背景颜色方案
-    if (sysColor === this.sysColor) return
     this.color = setColor(sysColor)
     if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
