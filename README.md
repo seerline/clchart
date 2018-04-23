@@ -10,8 +10,6 @@
 
 [React Native Demo](https://seerline.github.io/clchart/)
 
-[WEEX Demo coming soon]()
-
 ## Installation
 
 You can download the latest version of Chart.js from the [GitHub releases](https://github.com/seerline/clchart/releases/latest)
