@@ -8,7 +8,7 @@
 
 [HTML5 Demo](https://seerline.github.io/clchart/)
 
-[React Native Demo](https://seerline.github.io/clchart/)
+[React Native Demo](https://github.com/seerline/react-native-clchart-demo)
 
 ## Installation
 
