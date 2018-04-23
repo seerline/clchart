@@ -4,9 +4,13 @@
 
 [![npm](https://img.shields.io/npm/v/clchart.svg)](https://www.npmjs.com/package/clchart) [![Code Climate](https://img.shields.io/codeclimate/maintainability/seerline/clchart.svg)](https://codeclimate.com/github/seerline/clchart)
 
-*Simple HTML5 Stock Charts using the canvas element*
+*Simple Cross-platform Stock Charts using the canvas element*
 
-[Demo](https://seerline.github.io/clchart/)
+[HTML5 Demo](https://seerline.github.io/clchart/)
+
+[React Native Demo](https://seerline.github.io/clchart/)
+
+[WEEX Demo coming soon]()
 
 ## Installation
 
