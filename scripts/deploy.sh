@@ -2,10 +2,10 @@
 
 npm run build
 
-cp ./dist/clchart.js ./samples
-cp ./dist/clchart.js.map ./samples
+cp ./dist/clchart.js ./samples/web
+cp ./dist/clchart.js.map ./samples/web
 
 node ./scripts/gh-pages.js
 
-rm -rf ./samples/clchart.js
-rm -rf ./samples/clchart.js.map
+rm -rf ./samples/web/clchart.js
+rm -rf ./samples/web/clchart.js.map

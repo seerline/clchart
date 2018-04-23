@@ -1,6 +1,6 @@
 const ghpages = require('gh-pages')
 
-ghpages.publish('samples', {
+ghpages.publish('samples/web', {
   repo: 'seerline.github.com:seerline/clchart.git'
 }, (err) => {
   if (!err) {
