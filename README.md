@@ -6,7 +6,7 @@
 
 *Simple HTML5 Stock Charts using the canvas element*
 
-[See Demo](https://seerline.github.io/clchart/)
+[Demo](https://seerline.github.io/clchart/)
 
 ## Installation
 
