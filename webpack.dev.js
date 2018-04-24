@@ -13,7 +13,7 @@ module.exports = merge(common, {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, './samples/web'),
+        from: path.resolve(__dirname, './samples'),
         to: path.resolve(__dirname, './dist/')
       }
     ])
