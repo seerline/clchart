@@ -25,6 +25,20 @@ html, body, .container {
   color: #232323;
 }
 
+a {
+  color: #fff;
+}
+a:hover {
+  color: #fff;
+}
+
+.theme-white a {
+  color: #232323;
+}
+.theme-white a:hover {
+  color: #232323;
+}
+
 .header-container {
   padding: 5px 0;
   height: 50px;
