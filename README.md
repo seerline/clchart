@@ -36,6 +36,14 @@ npm install
 npm run dev
 ```
 
+## Todos
+
+* [ ] write karma test
+* [ ] more web demo
+* [ ] integrate [GCanvas](https://github.com/alibaba/GCanvas) for `react native android`
+* [ ] [weex](https://github.com/apache/incubator-weex) demo
+* [ ] use es6 class to write class
+
 ## License
 
 ClChart is available under the [Apache License V2](LICENSE).
