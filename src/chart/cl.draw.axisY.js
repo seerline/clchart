@@ -16,20 +16,22 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawAxisY (father, rectMain, align) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  this.linkInfo = father.father.linkInfo
+export default class ClDrawAxisY {
+  constructor (father, rectMain, align) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    this.linkInfo = father.father.linkInfo
 
-  this.static = father.static
+    this.static = father.static
 
-  this.align = align
-  this.axisY = father.config.axisY
+    this.align = align
+    this.axisY = father.config.axisY
 
-  this.maxmin = father.maxmin
-  this.text = father.layout.title
+    this.maxmin = father.maxmin
+    this.text = father.layout.title
+  }
 
-  this.onPaint = function () {
+  onPaint () {
     if (this.axisY[this.align].display === 'none') return
     if (this.linkInfo.hideInfo) return
 

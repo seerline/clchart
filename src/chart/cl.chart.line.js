@@ -54,18 +54,19 @@ import ClDrawInfo from './cl.draw.info'
 import ClDrawLine from './cl.draw.line'
 import ClDrawVLine from './cl.draw.vline'
 
-export default function ClChartLine (father) {
-  initCommonInfo(this, father)
+export default class ClChartLine {
+  constructor (father) {
+    initCommonInfo(this, father)
 
-  this.linkInfo = father.linkInfo
-  this.static = this.father.dataLayer.static
-
-  this.data = {}
-  this.maxmin = {}
+    this.linkInfo = father.linkInfo
+    this.static = this.father.dataLayer.static
+    this.data = {}
+    this.maxmin = {}
+  }
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
-  this.init = function (cfg, callback) {
+  init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || {
       left: 0,
@@ -97,13 +98,13 @@ export default function ClChartLine (father) {
     // 初始化滚动条
     this.setScroll()
   }
-  this.checkConfig = function () { // 检查配置有冲突的修正过来
+  checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     if (this.config.zoomInfo !== undefined) {
       this.setZoomInfo()
     }
   }
-  this.setPublicRect = function () { // 计算所有矩形区域
+  setPublicRect () { // 计算所有矩形区域
     // rectChart 画图区
     // rectTitle rectMess
     // rectAxisX
@@ -205,11 +206,11 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.getLineDataKey = function (line) {
+  getLineDataKey (line) {
     if (line.formula === undefined) return this.hotKey
     return line.formula.key
   }
-  this.setChildLines = function () {
+  setChildLines () {
     // l_kbar，l_line，l_nowvol，l_vbar l_nowline
     let line
     let clr = 0
@@ -235,7 +236,7 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.setChildDraw = function () {
+  setChildDraw () {
     let draw
     draw = new ClDrawCursor(this, this.rectGridLine, this.rectChart)
     this.childDraws['CURSOR'] = draw
@@ -260,7 +261,7 @@ export default function ClChartLine (father) {
     this.childDraws['GRID'] = draw
     // 下面是line的定义
   }
-  this.setScroll = function () {
+  setScroll () {
     if (this.scroll.display === 'none') return
     const chart = new ClChartScroll(this)
     chart.name = 'HSCROLL'
@@ -281,7 +282,7 @@ export default function ClChartLine (father) {
       }
     })
   }
-  this.createButton = function (name) {
+  createButton (name) {
     if (this.childCharts[name] !== undefined) return this.childCharts[name]
     const chart = new ClChartButton(this)
     chart.name = name
@@ -289,13 +290,13 @@ export default function ClChartLine (father) {
     this.childCharts[name] = chart
     return chart
   }
-  this.hasButton = function (key, buttons) {
+  hasButton (key, buttons) {
     for (let k = 0; k < buttons.length; k++) {
       if (key === buttons[k].key) return true
     }
     return false
   }
-  this.setButtons = function () {
+  setButtons () {
     let chart
     let xx, yy
     let ww = 25 * this.scale
@@ -389,15 +390,15 @@ export default function ClChartLine (father) {
   // //////////////////////////////////////
   // 下面开始是功能性函数 主要用于简化主函数的结构
   // //////////////////////////////////////
-  this.getDecimal = function (label) {
+  getDecimal (label) {
     if (label === 'vol' || label === 'decvol') return 0
     return this.static.decimal
   }
-  this.addLine = function (line) {
+  addLine (line) {
     // this.removeLine(line.name);
     this.config.lines.push(line)
   }
-  this.removeLine = function (name) {
+  removeLine (name) {
     for (let i = 0; i < this.config.lines.length; i++) {
       if (this.config.lines[i].name === undefined) continue
       if (this.config.lines[i].name === name) {
@@ -405,7 +406,7 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.setZoomInfo = function () {
+  setZoomInfo () {
     const info = this.config.zoomInfo
     info.index = info.index > info.list.length - 1 ? info.list.length - 1 : info.index
     info.index = info.index < 0 ? 0 : info.index
@@ -426,7 +427,7 @@ export default function ClChartLine (father) {
     }
     this.father.fastDrawEnd()
   }
-  this.setHotButton = function (chart) {
+  setHotButton (chart) {
     for (const name in this.childCharts) {
       if (this.childCharts[name] === chart) {
         this.childCharts[name].focused = true
@@ -439,13 +440,13 @@ export default function ClChartLine (father) {
   // 下面的函数为绘图函数，
   // ////////////////////////////////////////////////
 
-  this.drawClear = function () {
+  drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
     _drawEnd(this.context)
   }
-  this.drawChildCharts = function () {
+  drawChildCharts () {
     let top
     for (const name in this.childCharts) {
       if (!this.childCharts[name].focused) {
@@ -456,14 +457,14 @@ export default function ClChartLine (father) {
     }
     if (top) top.onPaint()
   }
-  this.beforeLocation = function () {
+  beforeLocation () {
     for (const name in this.childLines) {
       if (this.childLines[name].beforeLocation) {
         this.childLines[name].beforeLocation()
       }
     }
   }
-  this.drawChildLines = function () {
+  drawChildLines () {
     for (const name in this.childLines) {
       if (this.childLines[name].hotKey !== undefined) {
         this.childLines[name].onPaint(this.childLines[name].hotKey)
@@ -473,7 +474,7 @@ export default function ClChartLine (father) {
     }
   }
   // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
-  this.getMoveData = function (index) {
+  getMoveData (index) {
     let lines = this.config.lines
     const out = []
     if (!Array.isArray(lines)) return out
@@ -503,12 +504,12 @@ export default function ClChartLine (father) {
     }
     return out
   }
-  this.drawTitleInfo = function (index) {
+  drawTitleInfo (index) {
     if (this.config.title.display === 'none') return
     if (index === undefined || index < 0 || index > this.linkInfo.maxIndex) index = this.linkInfo.maxIndex
     this.childDraws['TITLE'].onPaint(this.getMoveData(index))
   }
-  this.drawChildDraw = function (name) {
+  drawChildDraw (name) {
     if (this.childDraws[name] !== undefined) {
       if (name === 'TITLE') {
         this.drawTitleInfo(this.linkInfo.moveIndex)
@@ -517,7 +518,7 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.onPaint = function () {
+  onPaint () {
     this.beforeLocation() // 数据定位前需要做的事情
 
     this.data = this.father.getData(this.hotKey)
@@ -546,14 +547,14 @@ export default function ClChartLine (father) {
   // ///////////////////////////////////////////////////////////
   // 画图前的准备工作
   // ////////////////////////////////////////////////////////////
-  this.getMiddle = function (method) {
+  getMiddle (method) {
     let middle = this.config.axisY.left.middle
     if (method === 'fixedRight') middle = this.config.axisY.right.middle
     if (middle === 'before') return this.static.before
     if (middle === 'zero') return 0
     return 0
   }
-  this.calcMaxMin = function (data, extremum, start, stop) {
+  calcMaxMin (data, extremum, start, stop) {
     const mm = {
       max: 0.0,
       min: 0.0
@@ -632,7 +633,7 @@ export default function ClChartLine (father) {
 
     return mm
   }
-  this.readyScroll = function () { // 计算最大最小值等
+  readyScroll () { // 计算最大最小值等
     if (this.scroll.display === 'none') return
     if (this.childCharts['HSCROLL'] !== undefined) {
       let left = getValue(this.data, 'time', this.linkInfo.minIndex)
@@ -657,7 +658,7 @@ export default function ClChartLine (father) {
       })
     }
   }
-  this.getDataRange = function (data) {
+  getDataRange (data) {
     const out = {
       minIndex: -1,
       maxIndex: -1
@@ -681,7 +682,7 @@ export default function ClChartLine (father) {
     }
     return out
   }
-  this.locationData = function () {
+  locationData () {
     if (this.data === undefined) return
     const size = getSize(this.data)
     if (this.config.axisX.type === 'day1') {
@@ -712,7 +713,7 @@ export default function ClChartLine (father) {
       )
     }
   }
-  this.readyDraw = function () { // 计算最大最小值等
+  readyDraw () { // 计算最大最小值等
     // 画滚动块
     this.readyScroll()
 
@@ -749,7 +750,7 @@ export default function ClChartLine (father) {
   // ////////////////////////////////////////////////
   // 下面的函数为事件处理函数，
   // ////////////////////////////////////////////////
-  this.onClick = function (event) {
+  onClick (event) {
     if (this.axisPlatform !== 'phone1') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine
       if (this.linkInfo.showCursorLine) {
@@ -760,11 +761,11 @@ export default function ClChartLine (father) {
       }
     }
   }
-  this.onLongPress = function (event) {
+  onLongPress (event) {
     this.linkInfo.showCursorLine = true
     this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)
   }
-  this.onPinch = function (event) {
+  onPinch (event) {
     if (event.scale > 0) {
       this.config.zoomInfo.index++
     } else {
@@ -778,7 +779,7 @@ export default function ClChartLine (father) {
     this.setZoomInfo(this.config.zoomInfo.index * 2 + 1)
     this.father.onPaint()
   }
-  this.onMouseOut = function (event) {
+  onMouseOut (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
       this.drawTitleInfo(this.linkInfo.moveIndex)
@@ -786,7 +787,7 @@ export default function ClChartLine (father) {
     }
     this.childDraws['CURSOR'].onClear()
   }
-  this.onMouseWheel = function (event) {
+  onMouseWheel (event) {
     if (this.config.zoomInfo === undefined) return
 
     let step = Math.floor(event.deltaY / 10)
@@ -801,7 +802,7 @@ export default function ClChartLine (father) {
     }
   }
 
-  this.onKeyDown = function (event) {
+  onKeyDown (event) {
     switch (event.keyCode) {
       case 38: // up
         break
@@ -813,7 +814,7 @@ export default function ClChartLine (father) {
         break
     }
   }
-  this.onMouseMove = function (event) {
+  onMouseMove (event) {
     if (this.linkInfo.hideInfo) return
     if (!this.linkInfo.showCursorLine) return
     // this.draw_clear();
@@ -854,7 +855,7 @@ export default function ClChartLine (father) {
   // ////////////////////////////////////////////////////////////////
   //   处理数据的函数集合
   // ///////////////////////////////////////////////////////////////
-  this.getMouseMoveData = function (xpos) {
+  getMouseMoveData (xpos) {
     const idx = Math.round((xpos - this.rectChart.left) / (this.linkInfo.unitX + this.linkInfo.spaceX) - 0.5)
     if (this.config.axisX.type === 'day1') {
       return idx

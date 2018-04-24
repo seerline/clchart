@@ -6,14 +6,16 @@
 // ////////////////////////////////////////
 import getValue from '../data/cl.data.tools'
 
-export function ClFormula () {
-  this.source = {
-    data: {},
-    minIndex: 0,
-    maxIndex: 0,
-    nowIndex: 0
+export class ClFormula {
+  constructor () {
+    this.source = {
+      data: {},
+      minIndex: 0,
+      maxIndex: 0,
+      nowIndex: 0
+    }
   }
-  this.getValue = function (label, offIndex) { // offIndex 向前偏移offIndex条记录
+  getValue (label, offIndex) { // offIndex 向前偏移offIndex条记录
     if (label === undefined) return 0
     if (this.source.data === undefined || this.source.data.value === undefined) return 0
 
@@ -22,7 +24,7 @@ export function ClFormula () {
 
     return getValue(this.source.data, label, index)
   }
-  this.runSingleStock = function (source, formula) {
+  runSingleStock (source, formula) {
     const singleValue = []
     this.source = source
     const command = `
@@ -36,7 +38,7 @@ export function ClFormula () {
   // ///////////////////
   //  自定义公式
   // /////////////////
-  this.MA = function (label, period) {
+  MA (label, period) {
     let off = 0
     let value = 0
     for (let m = 0; m < period; m++) {
@@ -48,7 +50,7 @@ export function ClFormula () {
     }
     return off === 0 ? 0 : value / off
   }
-  this.AVGPRC = function () {
+  AVGPRC () {
     let value = 0
     value = this.getValue('allmoney', 0) / this.getValue('allvol', 0)
     return value

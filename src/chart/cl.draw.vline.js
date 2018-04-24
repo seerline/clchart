@@ -17,21 +17,22 @@ import {
   getLineColor
 } from '../chart/cl.chart.init'
 
-export default function ClDrawVLine (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  // this.rectMain = {
-  //   left:rectMain.left,
-  //   top:rectMain.top,
-  //   width:rectMain.width,
-  //   height:rectMain.height
-  // };
-  this.linkInfo = father.father.linkInfo
-  this.source = father.father
+export default class ClDrawVLine {
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    // this.rectMain = {
+    //   left:rectMain.left,
+    //   top:rectMain.top,
+    //   width:rectMain.width,
+    //   height:rectMain.height
+    // };
+    this.linkInfo = father.father.linkInfo
+    this.source = father.father
+    this.maxmin = father.maxmin
+  }
 
-  this.maxmin = father.maxmin
-
-  this.onPaint = function (key) {
+  onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
 

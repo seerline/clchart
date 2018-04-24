@@ -26,22 +26,23 @@ import {
   inRect
 } from '../util/cl.tool'
 
-export default function ClChartScroll (father) {
-  const DEFAULT_SCROLL = {
-    // display: 'none', // true
-    shape: 'fixed', // fixed 为固定宽度 free有边界
-    direct: 'horizontal', // ver 竖立 和横
-    range: 100,
-    select: { min: 40, max: 60 }, // min == beginIdx max = pageCount
-    status: 'enabled',
-    txt: {}
+const DEFAULT_SCROLL = {
+  // display: 'none', // true
+  shape: 'fixed', // fixed 为固定宽度 free有边界
+  direct: 'horizontal', // ver 竖立 和横
+  range: 100,
+  select: { min: 40, max: 60 }, // min == beginIdx max = pageCount
+  status: 'enabled',
+  txt: {}
+}
+export default class ClChartScroll {
+  constructor (father) {
+    initCommonInfo(this, father)
   }
-  initCommonInfo(this, father)
-
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
-  this.init = function (cfg, callback) {
+  init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 25 }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
@@ -52,10 +53,10 @@ export default function ClChartScroll (father) {
     // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
     this.setPublicRect()
   }
-  this.checkConfig = function () { // 检查配置有冲突的修正过来
+  checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
   }
-  this.setPublicRect = function () { // 计算所有矩形区域
+  setPublicRect () { // 计算所有矩形区域
     const count = this.config.range
     let spaceX
 
@@ -104,7 +105,7 @@ export default function ClChartScroll (father) {
   // ////////////////////////////////////////////////////////////////
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
-  this.onPaint = function () { // 重画
+  onPaint () { // 重画
     _setLineWidth(this.context, this.scale)
 
     this.drawClear()
@@ -115,35 +116,35 @@ export default function ClChartScroll (father) {
   // ////////////////////////////////////////////////////////////////
   // 事件监听
   // ///////////////////////////////////////////////////////////////
-  this.onChange = function (info) {
+  onChange (info) {
     this.config = updateJsonOfDeep(info, this.config)
     if (this.config.select.max > this.config.range) this.config.select.max = this.config.range - 1
     if (info.iscall) {
       this.callback({ self: this, minIndex: this.config.select.min })
     }
   }
-  this.findMouseIndex = function (xpos) {
+  findMouseIndex (xpos) {
     const count = this.config.range
     const spaceX = this.rectMain.width / (count - 1)
     const idx = Math.round((xpos - this.rectMain.left) / spaceX)
     return idx
   }
-  this.checkMin = function (min) {
+  checkMin (min) {
     if (min < 0) return 0
     if (min > this.config.range - (this.config.select.max - this.config.select.min + 1)) {
       return this.config.range - (this.config.select.max - this.config.select.min + 1)
     }
     return min
   }
-  this.onInit = function () {
+  onInit () {
     changeCursorStyle('default')
     this.who = undefined
   }
-  this.onMouseOut = function () {
+  onMouseOut () {
     changeCursorStyle('default')
     this.who = undefined
   }
-  this.onMouseDown = function (event) {
+  onMouseDown (event) {
     const mousePos = event.mousePos
     if (inRect(this.rectMin, mousePos)) {
       this.who = 'min'
@@ -157,7 +158,7 @@ export default function ClChartScroll (father) {
     }
   }
 
-  this.onMouseUp = function (event) {
+  onMouseUp (event) {
     if (this.config.shape !== 'free' && this.who === undefined) {
       const mousePos = event.mousePos
       const curIndex = this.findMouseIndex(mousePos.x)
@@ -167,7 +168,7 @@ export default function ClChartScroll (father) {
     }
     this.who = undefined
   }
-  this.onMouseMove = function (event) {
+  onMouseMove (event) {
     const mousePos = event.mousePos
     if (inRect(this.rectMin, mousePos) || inRect(this.rectMax, mousePos)) {
       changeCursorStyle('col-resize')
@@ -205,15 +206,15 @@ export default function ClChartScroll (father) {
     }
   }
 
-  this.drawClear = function () {
+  drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
-  this.drawGridline = function () {
+  drawGridline () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height)
     _drawEnd(this.context)
   }
-  this.drawButton = function () {
+  drawButton () {
     if (this.config.direct === 'horizontal') {
       const spaceY = (this.rectChart.height - this.layout.scroll.height) / 2
       if (this.config.txt.head !== undefined) {

@@ -25,19 +25,21 @@ import {
 import { CHART_LAYOUT } from '../cl.chart.def'
 import { updateJsonOfDeep } from '../util/cl.tool'
 
-export default function ClChartButton (father) {
-  const DEFAULT_BUTTON = {
-    shape: 'arc', // box range radio checkbox set(位置)
-    hotIdx: 0,
-    visible: true,
-    translucent: true, // 是否透明
-    status: 'enabled' // disable focused : 热点
+const DEFAULT_BUTTON = {
+  shape: 'arc', // box range radio checkbox set(位置)
+  hotIdx: 0,
+  visible: true,
+  translucent: true, // 是否透明
+  status: 'enabled' // disable focused : 热点
+}
+export default class ClChartButton {
+  constructor (father) {
+    initCommonInfo(this, father)
   }
-  initCommonInfo(this, father)
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
-  this.init = function (cfg, callback) {
+  init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || {
       left: 0,
@@ -56,10 +58,10 @@ export default function ClChartButton (father) {
     // 下面对配置做一定的校验
     this.checkConfig()
   }
-  this.checkConfig = function () { // 检查配置有冲突的修正过来
+  checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
   }
-  this.setStatus = function (status) {
+  setStatus (status) {
     if (this.config.status !== status) {
       this.config.status = status
     }
@@ -67,7 +69,7 @@ export default function ClChartButton (father) {
   // ////////////////////////////////////////////////////////////////
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
-  this.onClick = function (event) {
+  onClick (event) {
     if (!this.config.visible) return
     // if (this.config.status === 'disabled') return
     if (this.info.length > 1) {
@@ -88,7 +90,7 @@ export default function ClChartButton (father) {
     event.break = true
   }
   // 事件监听
-  this.onPaint = function () { // 重画
+  onPaint () { // 重画
     if (!this.config.visible) return
     _setLineWidth(this.context, this.scale)
 
