@@ -22,7 +22,9 @@ npm install clchart --save
 
 ## Documentation
 
-You can find documentation at [github](https://seerline.github.io).
+[English docs](https://seerline.github.io) (writting)
+
+[中文文档](https://seerline.github.io/zh-cn) (编写中)
 
 ## Contributing
 
