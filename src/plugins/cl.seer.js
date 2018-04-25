@@ -43,9 +43,27 @@ import {
 import {
   FIELD_DAY
 } from '../cl.data.def'
-import {
-  FIELD_SEER
-} from './cl.seer.def'
+
+// 预测信息定义
+export const FIELD_SEER = {
+  // code: 0,
+  start: 1, // 开始日期
+  period: 2, // 预期周期
+  buy: 3, // 买入价
+  target: 4, // 目标价
+  stoploss: 5, // 止损价
+  status: 6, // 当前状态
+  // stopdate: 7, // 停止日期 正在进行的为0
+  // highdate: 8,  // 最高价格日期
+  // lowdate: 9,    // 最低价格日期
+  // surplus: 10, // 剩余天数
+  uid: 11, // 预测的id
+  focused: 12 // 是否热点
+}
+
+export const FIELD_SEER_HOT = {
+  uid: 0
+}
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来

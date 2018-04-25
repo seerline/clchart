@@ -97,7 +97,7 @@ export function _drawDashLine (context, x1, y1, x2, y2, dashLen) {
 // ///////////////////////////
 
 export function _setFontSize (context, font, pixel) {
-  context.font = ' ' + pixel + 'px ' + font
+  context.font = pixel + 'px ' + font
 }
 
 export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {

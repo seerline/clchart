@@ -25,6 +25,23 @@ export class ClFormula {
     return getValue(this.source.data, label, index)
   }
   runSingleStock (source, formula) {
+    // fix for Wechat mina not support eval
+    if (!eval) {
+      const singleValue = []
+      const matchData = formula.match(/\.(\w+)(\(.+)/)
+      const funcName = matchData[1]
+      if (typeof this[funcName] !== 'function') {
+        return singleValue
+      }
+      let argStr = matchData[2] || ''
+      argStr = argStr.replace(/\(|\)/g, '').split(',')
+      this.source = source
+      for (this.source.nowIndex = this.source.minIndex; this.source.nowIndex <= this.source.maxIndex; this.source.nowIndex++) {
+        const out = this[funcName](...argStr)
+        singleValue.push([this.getValue('idx', 0), out])
+      }
+      return singleValue
+    }
     const singleValue = []
     this.source = source
     const command = `
