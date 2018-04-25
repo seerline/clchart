@@ -49,20 +49,22 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawSeer (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+export default class ClDrawSeer {
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.linkInfo = father.father.linkInfo
+    this.linkInfo = father.father.linkInfo
 
-  this.source = father.father
+    this.source = father.father
 
-  this.static = father.father.static
+    this.static = father.father.static
 
-  this.maxmin = father.maxmin
-  this.layout = father.layout
+    this.maxmin = father.maxmin
+    this.layout = father.layout
+  }
 
-  this.getSeerPos = function (index, nowprice) {
+  getSeerPos (index, nowprice) {
     const offset = index - this.linkInfo.minIndex
     if (offset < 0 || index > this.linkInfo.maxIndex) {
       return {
@@ -83,7 +85,7 @@ export default function ClDrawSeer (father, rectMain) {
     }
   }
 
-  this.drawHotSeer = function (no) {
+  drawHotSeer (no) {
     let idx = findNearTimeToIndex(this.data, getValue(this.sourceSeer, 'start', no), 'time', 'forword')
     if (idx === -1) idx = this.linkInfo.maxIndex
     const offset = idx - this.linkInfo.minIndex
@@ -295,7 +297,7 @@ export default function ClDrawSeer (father, rectMain) {
     }
   }
 
-  this.filterSeer = function () {
+  filterSeer () {
     const out = {}
     for (let i = 0; i < this.sourceSeer.value.length; i++) {
       const curDate = getValue(this.sourceSeer, 'start', i)
@@ -319,7 +321,7 @@ export default function ClDrawSeer (father, rectMain) {
     }
     return out
   }
-  this.beforeLocation = function () {
+  beforeLocation () {
     this.linkInfo.rightMode = 'forword'
     this.data = this.source.getData(this.father.hotKey)
     const lastDate = this.data.value[this.data.value.length - 1][this.data.fields.time]
@@ -379,12 +381,12 @@ export default function ClDrawSeer (father, rectMain) {
     this.linkInfo.fixed.min = maxmin.min
     this.linkInfo.fixed.max = maxmin.max
   }
-  this.drawTransRect = function (left, right) {
+  drawTransRect (left, right) {
     if (right < left) return
     const clr = _setTransColor(this.color.grid, 0.5)
     _fillRect(this.context, left, this.rectMain.top, right - left, this.rectMain.height, clr)
   }
-  this.onPaint = function (key) {
+  onPaint (key) {
     // if (key !== undefined) this.hotKey = key
     // this.data = this.source.getData(this.hotKey)
     // 设置可见

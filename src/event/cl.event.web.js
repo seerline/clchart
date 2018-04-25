@@ -50,19 +50,21 @@ function _getTouchInfo (point, element) {
 // 定义事件监听接口
 // ////////////////////////////////////////////////
 
-export default function ClEventWeb (father) {
-  this.father = father
-  this.eventCanvas = father.eventCanvas
-  // 如果实在手机端支持touch事件，则不需要绑定click事件以及mouse事件
-  // 在pc端则与之相反
-  this.isSupportTouch = !!('ontouchend' in document)
+export default class ClEventWeb {
+  constructor (father) {
+    this.father = father
+    this.eventCanvas = father.eventCanvas
+    // 如果实在手机端支持touch事件，则不需要绑定click事件以及mouse事件
+    // 在pc端则与之相反
+    this.isSupportTouch = !!('ontouchend' in document)
 
-  // 移除长按弹出菜单按钮
-  this.eventCanvas.addEventListener && this.eventCanvas.addEventListener('contextmenu', e => {
-    e.preventDefault()
-  })
+    // 移除长按弹出菜单按钮
+    this.eventCanvas.addEventListener && this.eventCanvas.addEventListener('contextmenu', e => {
+      e.preventDefault()
+    })
+  }
 
-  this.bindEvent = function () {
+  bindEvent () {
     if (this.isSupportTouch) {
       this.addHandler('touchstart', this.touchstart.bind(this))
       this.addHandler('touchend', this.touchend.bind(this))
@@ -80,7 +82,7 @@ export default function ClEventWeb (father) {
       this.addHandler('click', this.click.bind(this))
     }
   }
-  this.clearEvent = function () {
+  clearEvent () {
     if (this.isSupportTouch) {
       this.clearHandler('touchstart', this.touchstart.bind(this))
       this.clearHandler('touchend', this.touchend.bind(this))
@@ -98,7 +100,7 @@ export default function ClEventWeb (father) {
       this.clearHandler('click', this.click.bind(this))
     }
   }
-  this.addHandler = function (eventName, handler) {
+  addHandler (eventName, handler) {
     if (this.eventCanvas.addEventListener) {
       this.eventCanvas.addEventListener(eventName, handler, false)
     } else if (this.eventCanvas.attachEvent) {
@@ -108,7 +110,7 @@ export default function ClEventWeb (father) {
     }
   }
   /* 清理所有的绑定事件 */
-  this.clearHandler = function (eventName, handler) { /* Chrome */
+  clearHandler (eventName, handler) { /* Chrome */
     if (this.eventCanvas.removeEventListener) {
       this.eventCanvas.removeEventListener(eventName, handler, false)
     } else if (this.eventCanvas.deattachEvent) {
@@ -120,48 +122,48 @@ export default function ClEventWeb (father) {
   // /////////////////////
   // 下面时对事件的处理
   // /////////////////////
-  this.getEventInfo = function (event) {
+  getEventInfo (event) {
     return {
       offsetX: event.offsetX,
       offsetY: event.offsetY
     }
   }
-  this.mousemove = function (event) {
+  mousemove (event) {
     this.father.emitEvent('onMouseMove', this.getEventInfo(event))
   }
-  this.mousein = function (event) {
+  mousein (event) {
     this.father.emitEvent('onMouseIn', this.getEventInfo(event))
   }
-  this.mouseout = function (event) {
+  mouseout (event) {
     this.father.emitEvent('onMouseOut', this.getEventInfo(event))
   }
-  this.mousewheel = function (event) {
+  mousewheel (event) {
     const info = this.getEventInfo(event)
     info.deltaY = event.deltaY
     this.father.emitEvent('onMouseWheel', info)
   }
-  this.mouseup = function (event) {
+  mouseup (event) {
     this.father.emitEvent('onMouseUp', this.getEventInfo(event))
   }
-  this.mousedown = function (event) {
+  mousedown (event) {
     this.father.emitEvent('onMouseDown', this.getEventInfo(event))
   }
   // 键盘
-  this.keyup = function (event) {
+  keyup (event) {
     const info = this.getEventInfo(event)
     info.keyCode = event.keyCode
     this.father.emitEvent('onKeyUp', info)
   }
-  this.keydown = function (event) {
+  keydown (event) {
     const info = this.getEventInfo(event)
     info.keyCode = event.keyCode
     this.father.emitEvent('onKeyDown', info)
   }
-  this.click = function (event) {
+  click (event) {
     this.father.emitEvent('onClick', this.getEventInfo(event))
   }
   // 触摸
-  this.touchstart = function (event) {
+  touchstart (event) {
     this.__timestamp = new Date()
     const point = event.touches ? event.touches[0] : event
     this.startX = point.pageX
@@ -199,7 +201,7 @@ export default function ClEventWeb (father) {
       }
     }
   }
-  this.touchend = function (event) {
+  touchend (event) {
     /**
      * 在X轴或Y轴发生过移动
      */
@@ -226,7 +228,7 @@ export default function ClEventWeb (father) {
     this.previousPinchScale = 1
     this.father.emitEvent('onMouseOut', _getTouchInfo(point, event.srcElement))
   }
-  this.touchmove = function (event) {
+  touchmove (event) {
     if (new Date() - this.__timestamp < 150) {
       return event
     }

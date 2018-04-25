@@ -43,20 +43,22 @@ import {
 } from '../formula/cl.formula'
 // 只保存一只股票的信息，当前日期，开收市时间
 
-export default function ClData () {
-  // this.formula = new ClFormula();
-  this.static = {
-    stktype: 1,
-    volunit: 100,
-    coinunit: 100,
-    decimal: 2,
-    before: 1000,
-    stophigh: 1100,
-    stoplow: 900
+export default class ClData {
+  constructor () {
+    // this.formula = new ClFormula();
+    this.static = {
+      stktype: 1,
+      volunit: 100,
+      coinunit: 100,
+      decimal: 2,
+      before: 1000,
+      stophigh: 1100,
+      stoplow: 900
+    }
   }
 
   // 只保存一只股票的信息，当前日期，开收市时间
-  this.initData = function (tradeDate, tradetime) {
+  initData (tradeDate, tradetime) {
     this.formula = new ClFormula()
     this.clearData()
     if (tradetime === undefined) {
@@ -80,14 +82,14 @@ export default function ClData () {
     }
   }
   // 包含一个股票所有的数据,以便于以后做公式系统也使用这个数据定义
-  this.clearData = function () {
+  clearData () {
     this.InData = [] // 数据 json格式数据 {key:..,fields:.., value:[[],[]...]}
     this.OutData = [] // 专门用于获取数据时临时产生的数据
   }
   // //////////////////////
   // 下面是设置数据的方法
   // ////////////////////
-  this.setData = function (key, fields, value) {
+  setData (key, fields, value) {
     if (value === undefined) value = []
     if (this.InData[key] === undefined) this.InData[key] = {}
     switch (key) {
@@ -118,7 +120,7 @@ export default function ClData () {
     this.InData[key].value = copyArrayOfDeep(value)
   }
 
-  this.flushTick = function (nowdata, fields) {
+  flushTick (nowdata, fields) {
     // if (this.static.stktype == 0) return ;
     if (getSize(this.InData['TICK']) < 1) {
       if (nowdata[fields.vol] > 0) {
@@ -136,7 +138,7 @@ export default function ClData () {
       }
     }
   }
-  this.flushMin = function (nowdata, fields) {
+  flushMin (nowdata, fields) {
     if (this.InData['MIN'] === undefined) {
       this.InData['MIN'] = {
         key: 'MIN',
@@ -172,7 +174,7 @@ export default function ClData () {
     }
   }
   // 当有新的NOW进来时，需要对TICK和当日MIN线进行更新，
-  this.flushNowData = function (key, nowdata) {
+  flushNowData (key, nowdata) {
     if (nowdata.length < 1) return
     let fields = FIELD_NOW
     if (key === 'ENOW') fields = FIELD_ENOW
@@ -188,7 +190,7 @@ export default function ClData () {
   // //////////////////////
   // 下面是获取数据的方法,先从OutData获取，没有数据就从InData数据中获取
   // ////////////////////
-  this.getData = function (key, rightMode) {
+  getData (key, rightMode) {
     switch (key) {
       case 'DAY':
         this.OutData['DAY'] = {
@@ -243,7 +245,7 @@ export default function ClData () {
     // 先找Out中的数据，没有就找In的数据
     return this.OutData[key] ? this.OutData[key] : this.InData[key]
   }
-  this.updateMinute = function (source) {
+  updateMinute (source) {
     let out = copyArrayOfDeep(source.value)
 
     let allmoney
@@ -261,7 +263,7 @@ export default function ClData () {
     }
     return out
   }
-  this.mergeDay = function (source, now, rightMode) {
+  mergeDay (source, now, rightMode) {
     let out = copyArrayOfDeep(source.value)
     if (now !== undefined && !checkZero(now.value, now.fields)) {
       const checked = findDateInDay(source, getDate(now.value[now.fields.time]))
@@ -295,17 +297,17 @@ export default function ClData () {
 
     return out
   }
-  this.mergeWeek = function (source, now, rightmode) {
+  mergeWeek (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToWeek(out)
     // 合并周线
   }
-  this.mergeMon = function (source, now, rightmode) {
+  mergeMon (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToMon(out)
     // 合并月线
   }
-  this.mergeDay5 = function (source, min) {
+  mergeDay5 (source, min) {
     let out = []
 
     if (source !== undefined && !isEmptyArray(source.value)) {
@@ -342,7 +344,7 @@ export default function ClData () {
     return out
   }
   // source历史分钟线 nowmin当日分钟线
-  this.makeMinute = function (outkey, source, nowmin, rightMode) {
+  makeMinute (outkey, source, nowmin, rightMode) {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value)
@@ -368,7 +370,7 @@ export default function ClData () {
     return out
   }
 
-  this.mergeNowMinToMin = function (source, min, offset) {
+  mergeNowMinToMin (source, min, offset) {
     const curMin = []
     let sumVol = 0
     let sumMoney = 0
@@ -424,7 +426,7 @@ export default function ClData () {
   // /////////////////////////////////////////
   //  以下为公司系统，自由计算的定义
   // /////////////////////////////////////////
-  this.makeLineData = function (source, outkey, formula) {
+  makeLineData (source, outkey, formula) {
     const value = this.formula.runSingleStock(source, formula)
     if (this.OutData[outkey] === undefined) {
       this.OutData[outkey] = {

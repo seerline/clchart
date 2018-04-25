@@ -19,15 +19,17 @@ import {
 } from '../chart/cl.chart.init'
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawRight (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+export default class ClDrawRight {
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.linkInfo = father.father.linkInfo
-  this.source = father.father
-  this.symbol = father.layout.symbol
+    this.linkInfo = father.father.linkInfo
+    this.source = father.father
+    this.symbol = father.layout.symbol
+  }
 
-  this.onPaint = function (key) {
+  onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
     this.rightData = this.source.getData('RIGHT')

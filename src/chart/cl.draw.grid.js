@@ -16,14 +16,16 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawGrid (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+export default class ClDrawGrid {
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.axisX = father.config.axisX
-  this.axisY = father.config.axisY
+    this.axisX = father.config.axisX
+    this.axisY = father.config.axisY
+  }
 
-  this.onPaint = function () {
+  onPaint () {
     _drawBegin(this.context, this.color.grid)
     _drawHline(this.context, this.rectMain.left, this.rectMain.left + this.rectMain.width, this.rectMain.top)
     if (this.axisY.lines > 0) {

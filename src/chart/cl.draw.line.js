@@ -19,16 +19,18 @@ import {
   inRect
 } from '../util/cl.tool'
 
-export default function ClDrawLine (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+export default class ClDrawLine {
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.linkInfo = father.father.linkInfo
-  this.source = father.father
+    this.linkInfo = father.father.linkInfo
+    this.source = father.father
 
-  this.maxmin = father.maxmin
+    this.maxmin = father.maxmin
+  }
 
-  this.onPaint = function (key) {
+  onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
 

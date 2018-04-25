@@ -49,38 +49,40 @@ function _getTouchInfo (point) {
 // 定义事件监听接口
 // ////////////////////////////////////////////////
 
-export default function ClEventWeb (father) {
-  this.father = father
-  this.eventCanvas = father.eventCanvas
+export default class ClEventWeb {
+  constructor (father) {
+    this.father = father
+    this.eventCanvas = father.eventCanvas
+  }
 
-  this.bindEvent = function () {
+  bindEvent () {
     this.addHandler('touchstart', this.touchstart.bind(this))
     this.addHandler('touchend', this.touchend.bind(this))
     this.addHandler('touchmove', this.touchmove.bind(this))
   }
-  this.clearEvent = function () {
+  clearEvent () {
     this.clearHandler('touchstart', this.touchstart.bind(this))
     this.clearHandler('touchend', this.touchend.bind(this))
     this.clearHandler('touchmove', this.touchmove.bind(this))
   }
-  this.addHandler = function (eventName, handler) {
+  addHandler (eventName, handler) {
     this.eventCanvas.on(eventName, handler)
   }
   /* 清理所有的绑定事件 */
-  this.clearHandler = function (eventName, handler) { /* Chrome */
+  clearHandler (eventName, handler) { /* Chrome */
     this.eventCanvas.removeListener(eventName, handler)
   }
   // /////////////////////
   // 下面时对事件的处理
   // /////////////////////
-  this.getEventInfo = function (event) {
+  getEventInfo (event) {
     return {
       offsetX: event.offsetX,
       offsetY: event.offsetY
     }
   }
   // 触摸
-  this.touchstart = function (event) {
+  touchstart (event) {
     this.__timestamp = new Date()
     const point = event.touches ? event.touches[0] : event
     this.startX = point.pageX
@@ -118,7 +120,7 @@ export default function ClEventWeb (father) {
       }
     }
   }
-  this.touchend = function (event) {
+  touchend (event) {
     /**
      * 在X轴或Y轴发生过移动
      */
@@ -145,7 +147,7 @@ export default function ClEventWeb (father) {
     this.previousPinchScale = 1
     this.father.emitEvent('onMouseOut', _getTouchInfo(point))
   }
-  this.touchmove = function (event) {
+  touchmove (event) {
     if (new Date() - this.__timestamp < 150) {
       return event
     }

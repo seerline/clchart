@@ -34,15 +34,16 @@ import {
   FIELD_TICK
 } from '../data/../cl.data.def'
 
-export default function ClChartOrder (father) {
-  initCommonInfo(this, father)
-
-  this.linkInfo = father.linkInfo
-  this.static = this.father.dataLayer.static
+export default class ClChartOrder {
+  constructor (father) {
+    initCommonInfo(this, father)
+    this.linkInfo = father.linkInfo
+    this.static = this.father.dataLayer.static
+  }
   // ////////////////////////////////////////////////////////////////
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
-  this.init = function (cfg) {
+  init (cfg) {
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
 
@@ -55,21 +56,21 @@ export default function ClChartOrder (father) {
     this.setPublicRect()
   }
 
-  this.checkConfig = function () { // 检查配置有冲突的修正过来
+  checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     this.txtLen = _getTxtWidth(this.context, '涨', this.layout.digit.font, this.layout.digit.pixel)
     this.timeLen = _getTxtWidth(this.context, '15:30', this.layout.digit.font, this.layout.digit.pixel)
     this.volLen = _getTxtWidth(this.context, '888888', this.layout.digit.font, this.layout.digit.pixel)
     this.closeLen = _getTxtWidth(this.context, '888.88', this.layout.digit.font, this.layout.digit.pixel)
   }
-  this.setPublicRect = function () { // 计算所有矩形区域
+  setPublicRect () { // 计算所有矩形区域
     this.rectChart = offsetRect(this.rectMain, this.layout.margin)
   }
 
   // //////////
   //
   // ///////////
-  this.onClick = function (/* e */) {
+  onClick (/* e */) {
     if (this.isIndex) return // 如果是指数就啥也不干
     if (this.style === 'normal') {
       this.style = 'tiny'
@@ -79,7 +80,7 @@ export default function ClChartOrder (father) {
     this.father.onPaint(this)
   }
   // 事件监听
-  this.onPaint = function () { // 重画
+  onPaint () { // 重画
     this.codeInfo = this.father.getData('INFO')
     this.orderData = this.father.getData('NOW')
     this.tickData = this.father.getData('TICK')
@@ -103,10 +104,10 @@ export default function ClChartOrder (father) {
   // ////////////////////////////////////////////////////////////////
   //   绘图函数
   // ///////////////////////////////////////////////////////////////
-  this.drawClear = function () {
+  drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
-  this.drawReady = function () {
+  drawReady () {
     if (this.tickData === undefined) {
       this.tickData = { key: 'TICK', fields: FIELD_TICK, value: [] }
     }
@@ -158,7 +159,7 @@ export default function ClChartOrder (father) {
       height: this.rectChart.height - yy - this.layout.digit.height / 2
     }
   }
-  this.getColor = function (close, before) {
+  getColor (close, before) {
     if (close > before) {
       return this.color.red
     } else if (close < before) {
@@ -167,7 +168,7 @@ export default function ClChartOrder (father) {
       return this.color.white
     }
   }
-  this.drawIndex = function () {
+  drawIndex () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
 
@@ -225,7 +226,7 @@ export default function ClChartOrder (father) {
     }
     _drawEnd(this.context)
   }
-  this.drawOrder = function () {
+  drawOrder () {
     const xpos = this.drawGridLine() // 先画线格
     if (this.orderData === undefined || this.orderData.value.length < 1) {
       return
@@ -284,7 +285,7 @@ export default function ClChartOrder (father) {
       yy += offy
     }
   }
-  this.drawTick = function () {
+  drawTick () {
     if (this.tickData === undefined || this.tickData.value.length < 1) return
     const maxlines = Math.floor(this.rectTick.height / this.layout.digit.height) - 1 // 屏幕最大能显示多少条记录
     const recs = this.tickData.value.length
@@ -348,7 +349,7 @@ export default function ClChartOrder (father) {
     }
   }
 
-  this.drawGridLine = function () {
+  drawGridLine () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
 

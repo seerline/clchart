@@ -15,17 +15,19 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawInfo (father, rectMain, rectMess) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  this.rectMess = rectMess
+export default class ClDrawInfo {
+  constructor (father, rectMain, rectMess) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    this.rectMess = rectMess
 
-  this.linkInfo = father.father.linkInfo
+    this.linkInfo = father.father.linkInfo
 
-  this.title = father.layout.title
-  this.titleInfo = father.config.title
+    this.title = father.layout.title
+    this.titleInfo = father.config.title
+  }
 
-  this.onPaint = function (message) {
+  onPaint (message) {
     if (this.titleInfo.display === 'none' || this.linkInfo.hideInfo) return
 
     _fillRect(this.context, this.rectMain.left + this.scale, this.rectMain.top + this.scale,

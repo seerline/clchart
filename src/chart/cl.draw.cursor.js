@@ -21,29 +21,31 @@ import {
 } from '../util/cl.tool'
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawCursor (father, rectMain, rectChart) {
-  initCommonInfo(this, father)
-  this.rectFather = father.rectMain
-  this.rectMain = rectMain // 画十字线和边界标签
-  this.rectChart = rectChart // 鼠标有效区域
+export default class ClDrawCursor {
+  constructor (father, rectMain, rectChart) {
+    initCommonInfo(this, father)
+    this.rectFather = father.rectMain
+    this.rectMain = rectMain // 画十字线和边界标签
+    this.rectChart = rectChart // 鼠标有效区域
 
-  this.linkInfo = father.father.linkInfo
-  this.static = father.static
+    this.linkInfo = father.father.linkInfo
+    this.static = father.static
 
-  this.axisXInfo = father.config.axisX
-  this.axisYInfo = father.config.axisY
+    this.axisXInfo = father.config.axisX
+    this.axisYInfo = father.config.axisY
 
-  this.maxmin = father.maxmin
-  this.axisX = father.layout.axisX
+    this.maxmin = father.maxmin
+    this.axisX = father.layout.axisX
 
-  this.context = father.father.cursorCanvas.context
-  this.onClear = function () {
+    this.context = father.father.cursorCanvas.context
+  }
+  onClear () {
     _clearRect(this.context, this.rectFather.left, this.rectFather.top,
       this.rectFather.left + this.rectFather.width,
       this.rectFather.top + this.rectFather.height)
   }
 
-  this.onPaint = function (mousePos, valueX, valueY) {
+  onPaint (mousePos, valueX, valueY) {
     if (typeof this.context._beforePaint === 'function') {
       this.context._beforePaint()
     }

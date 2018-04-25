@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --progress --open --config webpack.dev.js",
-    "lint": "eslint ./",
+    "lint": "eslint ./ --fix",
     "clean": "rm -rf node_modules && npm i",
     "build": "webpack --config webpack.prod.js",
     "ghpages": "sh ./scripts/deploy.sh",
