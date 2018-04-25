@@ -12,9 +12,15 @@ import {
   initSystem
 } from './chart/cl.chart.init'
 
+import EV from './util/cl.ev'
+
 export const DEF_CHART = ClChartDef
 export const DEF_DATA = ClDataDef
 export const PLUGINS = ClPlugins
+
+export const util = {
+  EV
+}
 
 // ///////////////////////////
 //  以下区域用于加载plugins中的定义

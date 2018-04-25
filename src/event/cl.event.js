@@ -29,6 +29,7 @@ import {
 } from '../util/cl.tool'
 import ClEventWeb from './cl.event.web'
 import ClEventRN from './cl.event.rn'
+import ClEventMina from './cl.event.mina'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
@@ -59,6 +60,9 @@ export default class ClEvent {
       this.eventSource.bindEvent()
     } else if (this.eventPlatform === 'html5') {
       this.eventSource = new ClEventWeb(this)
+      this.eventSource.bindEvent()
+    } else if (this.eventPlatform === 'mina') {
+      this.eventSource = new ClEventMina(this)
       this.eventSource.bindEvent()
     }
   }

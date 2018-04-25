@@ -60,7 +60,6 @@ export default class ClDrawAxisY {
     }
     yy = this.rectMain.top + this.scale // 画最上面的
 
-    // console.log(xx, yy)
     // 画不画最上面的坐标
     if (this.axisY[this.align].display !== 'noupper') {
       yy = this.rectMain.top + this.scale // 画最上面的

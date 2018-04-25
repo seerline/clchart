@@ -73,4 +73,3 @@ export const CHART_SEER = {
     className: ClDrawSeer
   }]
 }
-

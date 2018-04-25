@@ -40,8 +40,8 @@ function _getTouchInfo (point) {
     left: 0,
     top: 0
   }
-  mouseInfo.offsetX = point.offsetX - srcRect.left
-  mouseInfo.offsetY = point.offsetY - srcRect.top
+  mouseInfo.offsetX = point.x - srcRect.left
+  mouseInfo.offsetY = point.y - srcRect.top
   return mouseInfo
 }
 
@@ -49,7 +49,7 @@ function _getTouchInfo (point) {
 // 定义事件监听接口
 // ////////////////////////////////////////////////
 
-export default class ClEventReactNative {
+export default class ClEventMina {
   constructor (father) {
     this.father = father
     this.eventCanvas = father.eventCanvas
@@ -85,18 +85,18 @@ export default class ClEventReactNative {
   touchstart (event) {
     this.__timestamp = new Date()
     const point = event.touches ? event.touches[0] : event
-    this.startX = point.pageX
-    this.startY = point.pageY
+    this.startX = point.x
+    this.startY = point.y
     clearTimeout(this.longTapTimeout)
     // 两点接触
     if (event.touches.length > 1) {
       const point2 = event.touches[1]
-      const xLen = Math.abs(point2.pageX - this.startX)
-      const yLen = Math.abs(point2.pageY - this.startY)
+      const xLen = Math.abs(point2.x - this.startX)
+      const yLen = Math.abs(point2.y - this.startY)
       this.touchDistance = _getDistance(xLen, yLen)
       this.touchVector = {
-        x: point2.pageX - this.startX,
-        y: point2.pageY - this.startY
+        x: point2.x - this.startX,
+        y: point2.y - this.startY
       }
       this.startTime = _getTime()
     } else {
@@ -153,8 +153,8 @@ export default class ClEventReactNative {
     }
     const timestamp = _getTime()
     if (event.touches.length > 1) {
-      const xLen = Math.abs(event.touches[0].pageX - event.touches[1].pageX)
-      const yLen = Math.abs(event.touches[1].pageY - event.touches[1].pageY)
+      const xLen = Math.abs(event.touches[0].x - event.touches[1].x)
+      const yLen = Math.abs(event.touches[1].y - event.touches[1].y)
       const touchDistance = _getDistance(xLen, yLen)
       if (this.touchDistance) {
         const pinchScale = touchDistance / this.touchDistance
@@ -172,8 +172,8 @@ export default class ClEventReactNative {
       }
       if (this.touchVector) {
         const vector = {
-          x: event.touches[1].pageX - event.touches[0].pageX,
-          y: event.touches[1].pageY - event.touches[0].pageY
+          x: event.touches[1].x - event.touches[0].x,
+          y: event.touches[1].y - event.touches[0].y
         }
         const angle = _getRotateAngle(vector, this.touchVector)
         // this._emitEvent('onRotate', {
@@ -188,15 +188,15 @@ export default class ClEventReactNative {
     } else {
       clearTimeout(this.longTapTimeout)
       const point = event.touches ? event.touches[0] : event
-      const deltaX = this.moveX === null ? 0 : point.pageX - this.moveX
-      const deltaY = this.moveY === null ? 0 : point.pageY - this.moveY
+      const deltaX = this.moveX === null ? 0 : point.x - this.moveX
+      const deltaY = this.moveY === null ? 0 : point.y - this.moveY
       // this._emitEvent('onMove', { deltaX, deltaY });
       const config = _getTouchInfo(point)
       config.deltaX = deltaX
       config.deltaY = deltaY
       this.father.emitEvent('onMouseMove', config)
-      this.moveX = point.pageX
-      this.moveY = point.pageY
+      this.moveX = point.x
+      this.moveY = point.y
     }
   }
 }
