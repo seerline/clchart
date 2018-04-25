@@ -333,7 +333,7 @@
 			drawMenus.createMenus(function (activeData) {
 				drawChart(activeData)
 			})
-			langMenus = new ListMenus('langMenu', langMenusCfg, lang)
+			langMenus = new ListMenus('langMenu', langMenusCfg, lang, 'icon-language')
 			langMenus.createMenus(function (activeData) {
 				if (activeData.lang === lang) {
 					return

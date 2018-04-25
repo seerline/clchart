@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Use es6 class instead of the definition of various drawing line classes
-- 
+
 ## [0.0.3] - 2018-04-23
 
 ### Added
