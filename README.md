@@ -23,7 +23,7 @@ npm install clchart --save
 
 ## Documentation
 
-[English docs](https://seerline.github.io) (writting)
+[English docs](https://seerline.github.io) (processing)
 
 [中文文档](https://seerline.github.io/zh-cn) (编写中)
 
@@ -43,8 +43,8 @@ npm run dev
 * [ ] more web demo
 * [ ] integrate [GCanvas](https://github.com/alibaba/GCanvas) for `react native android`
 * [ ] [weex](https://github.com/apache/incubator-weex) demo
-* [ ] use es6 class to write class
+* [ ] integrate wechat mina app
 
 ## License
 
-ClChart is available under the [Apache License V2](LICENSE).
+ClChart is available under the [MIT license](https://opensource.org/licenses/MIT).

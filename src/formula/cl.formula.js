@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // /////////////////////////////////////////
 // 预先定义好的公式，比如MA等，可在这里扩展公式定义

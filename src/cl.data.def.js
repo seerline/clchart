@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // 数据类型和数据名称分开；根据数据类型生成
 // 在comm中定义几个函数，用户可以自己定义数据类型，自己定义按钮，自己定义画线的方式，
