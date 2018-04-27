@@ -11,6 +11,8 @@
 
 [React Native Demo](https://github.com/seerline/react-native-clchart-demo)
 
+[Wechat Applet Demo](https://github.com/seerline/wechat-applet-clchart-demo)
+
 ## Installation
 
 You can download the latest version of Chart.js from the [GitHub releases](https://github.com/seerline/clchart/releases/latest)
@@ -43,7 +45,7 @@ npm run dev
 * [ ] more web demo
 * [ ] integrate [GCanvas](https://github.com/alibaba/GCanvas) for `react native android`
 * [ ] [weex](https://github.com/apache/incubator-weex) demo
-* [ ] integrate wechat mina app
+* [x] integrate wechat mina app
 
 ## License
 
