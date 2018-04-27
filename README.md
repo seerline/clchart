@@ -2,6 +2,7 @@
 
 # clchart
 
+[![apm](https://img.shields.io/apm/l/vim-mode.svg?style=plastic)](https://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![npm](https://img.shields.io/npm/v/clchart.svg)](https://www.npmjs.com/package/clchart) [![Code Climate](https://img.shields.io/codeclimate/maintainability/seerline/clchart.svg)](https://codeclimate.com/github/seerline/clchart)
 
