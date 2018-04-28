@@ -1,0 +1,27 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "opts": {
+        "destination": "./docs/api",
+        "encoding": "utf8",
+        "private": false,
+        "recurse": true,
+        "template": "node_modules/docdash"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        },
+        "path": "ink-docstrap",
+        "theme": "cerulean",
+        "navType": "vertical",
+        "linenums": true,
+        "dateFormat": "MMMM Do YYYY, h:mm:ss a"
+    }
+}
