@@ -20,10 +20,28 @@ import {
 
 import EV from './util/cl.ev'
 
+/** @module ClChart */
+
+/**
+ * chart default defined
+ * @export
+ */
 export const DEF_CHART = ClChartDef
+/**
+ * data default defined
+ * @export
+ */
 export const DEF_DATA = ClDataDef
+/**
+ * plugins
+ * @export
+ */
 export const PLUGINS = ClPlugins
 
+/**
+ * utils
+ * @export
+ */
 export const util = {
   EV
 }

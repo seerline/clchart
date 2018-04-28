@@ -12,9 +12,10 @@ import ClDrawRight from './chart/cl.draw.right'
 import ClDrawVBar from './chart/cl.draw.vbar'
 import ClDrawVLine from './chart/cl.draw.vline'
 
+/** @module ClChartDef */
+
 /**
- * chart layout config
- * margin offset title axisX scroll digit symbol
+ * chart main layout config
  */
 export const CHART_LAYOUT = {
   margin: {
@@ -81,11 +82,15 @@ export const CHART_ORDER = {
     display: 'text' // 'text' or 'none','none' does not display btn button text
   }
 }
+
 const ZOOM_INFO_DEF = {
   index: 3,
   list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
-// 预定义参数
+
+/**
+ * chart kbar layout config
+ */
 export const CHART_KBAR = {
   // buttons: ['zoomin', 'exright', 'zoomout'],
   // title: { display: 'none' },
@@ -180,6 +185,9 @@ export const CHART_KBAR = {
   }]
 }
 
+/**
+ * chart vbar layout config
+ */
 export const CHART_VBAR = {
   zoomInfo: ZOOM_INFO_DEF,
   title: {
@@ -255,6 +263,9 @@ export const CHART_VBAR = {
   }]
 }
 
+/**
+ * chart now config
+ */
 export const CHART_NOW = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -302,6 +313,10 @@ export const CHART_NOW = {
     }
   }]
 }
+
+/**
+ * min chart volume config
+ */
 export const CHART_NOWVOL = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -340,7 +355,9 @@ export const CHART_NOWVOL = {
     }
   }]
 }
-
+/**
+ * 5day chart config
+ */
 export const CHART_DAY5 = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -389,6 +406,9 @@ export const CHART_DAY5 = {
   }]
 }
 
+/**
+ * 5 days chart volume config
+ */
 export const CHART_DAY5VOL = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
