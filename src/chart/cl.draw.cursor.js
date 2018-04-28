@@ -27,7 +27,19 @@ import {
 } from '../util/cl.tool'
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
+/**
+ * Class representing ClDrawCursor
+ * @export
+ * @class ClDrawCursor
+ */
 export default class ClDrawCursor {
+  /**
+
+   * Creates an instance of ClDrawCursor.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @param {Object} rectChart
+   */
   constructor (father, rectMain, rectChart) {
     initCommonInfo(this, father)
     this.rectFather = father.rectMain
@@ -45,12 +57,22 @@ export default class ClDrawCursor {
 
     this.context = father.father.cursorCanvas.context
   }
+  /**
+   * handle clear
+   * @memberof ClDrawCursor
+   */
   onClear () {
     _clearRect(this.context, this.rectFather.left, this.rectFather.top,
       this.rectFather.left + this.rectFather.width,
       this.rectFather.top + this.rectFather.height)
   }
-
+  /**
+   * paint
+   * @param {Object} mousePos
+   * @param {Number} valueX
+   * @param {Number} valueY
+   * @memberof ClDrawCursor
+   */
   onPaint (mousePos, valueX, valueY) {
     if (typeof this.context._beforePaint === 'function') {
       this.context._beforePaint()

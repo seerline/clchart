@@ -25,7 +25,21 @@ import {
   getMinuteOffset
 } from '../util/cl.tool'
 
+/** @module GetValue */
+
 // 按fields定义从数组value中获取，第index条标记为label的数据
+/**
+ * get value
+ * @export
+ * @param {Object} {
+ *   fields,
+ *   value,
+ *   coinunit
+ * }
+ * @param {String} label
+ * @param {Number} [index=0]
+ * @return {Number}
+ */
 export default function getValue ({
   fields,
   value,
@@ -116,6 +130,14 @@ export default function getValue ({
 //   return idx;
 // }
 
+/**
+ * get max value
+ * @export
+ * @param {Array} data
+ * @param {String} label
+ * @param {Number} value
+ * @return {Number}
+ */
 export function getValueMax (data, label, value) {
   let out = value
   if (!Array.isArray(data.value)) return out
@@ -125,6 +147,14 @@ export function getValueMax (data, label, value) {
   }
   return out
 }
+/**
+ * get min value
+ * @export
+ * @param {Array} data
+ * @param {String} label
+ * @param {Number} value
+ * @return {Number}
+ */
 export function getValueMin (data, label, value) {
   let out = value
   if (!Array.isArray(data.value)) return out
@@ -138,7 +168,11 @@ export function getValueMin (data, label, value) {
 // /////////////////////////////////////////
 // 日线除权的函数集合
 // /////////////////////////////////////////
-
+/**
+ * get exright para
+ * @param {String} rightdata
+ * @return {Object}
+ */
 function _getExrightPara (rightdata) {
   let exrightGs = 1000 // 送股数
   let exrightPg = 0 // 配股数
@@ -155,6 +189,14 @@ function _getExrightPara (rightdata) {
   }
 }
 // 传入的价格和传出的价格都是放大coinunit倍的整形
+/**
+ * Both the incoming price and the outgoing price are magnified by the coinunit times
+ * @param {Number} price
+ * @param {Number} coinunit
+ * @param {Object} rightpara
+ * @param {String} mode
+ * @return {Number}
+ */
 function _getExrightPrice (price, coinunit, rightpara, mode) {
   if (coinunit === undefined) coinunit = 100
   if (mode === 'forword') {
@@ -166,6 +208,16 @@ function _getExrightPrice (price, coinunit, rightpara, mode) {
   return price / (1000 / coinunit)
 }
 // 得到某个价格的除权价
+/**
+ * Get an exemption price for a price
+ * @export
+ * @param {Number} start
+ * @param {Number} stop
+ * @param {Number} price
+ * @param {Number} coinunit
+ * @param {Array} rights
+ * @return {Number}
+ */
 export function getExrightPriceRange (start, stop, price, coinunit, rights) {
   if (rights === undefined || rights.length < 1) return price
   let rightpara

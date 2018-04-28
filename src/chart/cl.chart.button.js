@@ -6,10 +6,6 @@
  *
  */
 
-// ////////////////////////////////////////////////////////////////
-//   按钮定义
-// ▲▼※★☆○●◎☉√↑←→↓↖↗↘↙‰℃∧∨△□▽♂♀﹡
-// ///////////////////////////////////////////////////////////////
 import {
   _drawRect,
   _drawVline,
@@ -38,13 +34,22 @@ const DEFAULT_BUTTON = {
   translucent: true, // 是否透明
   status: 'enabled' // disable focused : 热点
 }
+
+// ▲▼※★☆○●◎☉√↑←→↓↖↗↘↙‰℃∧∨△□▽♂♀﹡
+/**
+ * Class representing ClChartButton
+ * @export
+ * @class ClChartButton
+ */
 export default class ClChartButton {
+  /**
+
+   * Creates an instance of ClChartButton.
+   * @param {Object} father
+   */
   constructor (father) {
     initCommonInfo(this, father)
   }
-  // ////////////////////////////////////////////////////////////////
-  //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
-  // ///////////////////////////////////////////////////////////////
   init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || {
@@ -56,15 +61,19 @@ export default class ClChartButton {
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
     this.config = updateJsonOfDeep(cfg.config, DEFAULT_BUTTON)
 
+    // If it is not below '+' '-' 'left' 'right', it means to directly display the string
     this.info = cfg.info || [{
       map: '+'
     }]
-    // map: 如果不在以下 '+' '-' 'left' 'right'就表示直接显示字符串
 
-    // 下面对配置做一定的校验
+    // Make some checks on the configuration
     this.checkConfig()
   }
-  checkConfig () { // 检查配置有冲突的修正过来
+  /**
+   * Check for conflicting configuration changes
+   * @memberof ClChartButton
+   */
+  checkConfig () {
     checkLayout(this.layout)
   }
   setStatus (status) {
@@ -72,9 +81,12 @@ export default class ClChartButton {
       this.config.status = status
     }
   }
-  // ////////////////////////////////////////////////////////////////
-  //   绘图函数
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * handle click event
+   *
+   * @param {Object} event
+   * @memberof ClChartButton
+   */
   onClick (event) {
     if (!this.config.visible) return
     // if (this.config.status === 'disabled') return
@@ -95,8 +107,11 @@ export default class ClChartButton {
     }
     event.break = true
   }
-  // 事件监听
-  onPaint () { // 重画
+  /**
+   * paint buttons
+   * @memberof ClChartButton
+   */
+  onPaint () {
     if (!this.config.visible) return
     _setLineWidth(this.context, this.scale)
 

@@ -49,7 +49,17 @@ import {
 } from '../formula/cl.formula'
 // 只保存一只股票的信息，当前日期，开收市时间
 
+/**
+ * Class representing ClData
+ * data layer
+ * @export
+ * @class ClData
+ */
 export default class ClData {
+  /**
+   * Creates an instance of ClData.
+
+   */
   constructor () {
     // this.formula = new ClFormula();
     this.static = {
@@ -64,6 +74,12 @@ export default class ClData {
   }
 
   // 只保存一只股票的信息，当前日期，开收市时间
+  /**
+   * init data
+   * @param {Number} tradeDate
+   * @param {Number} tradetime
+   * @memberof ClData
+   */
   initData (tradeDate, tradetime) {
     this.formula = new ClFormula()
     this.clearData()
@@ -88,6 +104,10 @@ export default class ClData {
     }
   }
   // 包含一个股票所有的数据,以便于以后做公式系统也使用这个数据定义
+  /**
+   * clear data
+   * @memberof ClData
+   */
   clearData () {
     this.InData = [] // 数据 json格式数据 {key:..,fields:.., value:[[],[]...]}
     this.OutData = [] // 专门用于获取数据时临时产生的数据
@@ -95,6 +115,13 @@ export default class ClData {
   // //////////////////////
   // 下面是设置数据的方法
   // ////////////////////
+  /**
+   * set data
+   * @param {String} key
+   * @param {Object} fields
+   * @param {Array} value
+   * @memberof ClData
+   */
   setData (key, fields, value) {
     if (value === undefined) value = []
     if (this.InData[key] === undefined) this.InData[key] = {}
@@ -125,7 +152,12 @@ export default class ClData {
     }
     this.InData[key].value = copyArrayOfDeep(value)
   }
-
+  /**
+   * flush tick
+   * @param {Array} nowdata
+   * @param {Array} fields
+   * @memberof ClData
+   */
   flushTick (nowdata, fields) {
     // if (this.static.stktype == 0) return ;
     if (getSize(this.InData['TICK']) < 1) {
@@ -144,6 +176,12 @@ export default class ClData {
       }
     }
   }
+  /**
+   * flush min data
+   * @param {Array} nowdata
+   * @param {Array} fields
+   * @memberof ClData
+   */
   flushMin (nowdata, fields) {
     if (this.InData['MIN'] === undefined) {
       this.InData['MIN'] = {
@@ -180,6 +218,12 @@ export default class ClData {
     }
   }
   // 当有新的NOW进来时，需要对TICK和当日MIN线进行更新，
+  /**
+   * flush now data
+   * @param {String} key
+   * @param {Array} nowdata
+   * @memberof ClData
+   */
   flushNowData (key, nowdata) {
     if (nowdata.length < 1) return
     let fields = FIELD_NOW
@@ -196,6 +240,13 @@ export default class ClData {
   // //////////////////////
   // 下面是获取数据的方法,先从OutData获取，没有数据就从InData数据中获取
   // ////////////////////
+  /**
+   * get data
+   * @param {String} key
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
   getData (key, rightMode) {
     switch (key) {
       case 'DAY':
@@ -251,6 +302,12 @@ export default class ClData {
     // 先找Out中的数据，没有就找In的数据
     return this.OutData[key] ? this.OutData[key] : this.InData[key]
   }
+  /**
+   * update minute
+   * @param {Object} source
+   * @return {Array}
+   * @memberof ClData
+   */
   updateMinute (source) {
     let out = copyArrayOfDeep(source.value)
 
@@ -269,6 +326,14 @@ export default class ClData {
     }
     return out
   }
+  /**
+   * merge day
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
   mergeDay (source, now, rightMode) {
     let out = copyArrayOfDeep(source.value)
     if (now !== undefined && !checkZero(now.value, now.fields)) {
@@ -303,16 +368,39 @@ export default class ClData {
 
     return out
   }
+  /**
+   * merge week data
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightmode
+   * @return {Array}
+   * @memberof ClData
+   */
   mergeWeek (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToWeek(out)
     // 合并周线
   }
+  /**
+   * merge month data
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightmode
+   * @return {Array}
+   * @memberof ClData
+   */
   mergeMon (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToMon(out)
     // 合并月线
   }
+  /**
+   * merge 5 day data
+   * @param {Object} source
+   * @param {Array} min
+   * @return {Array}
+   * @memberof ClData
+   */
   mergeDay5 (source, min) {
     let out = []
 
@@ -350,6 +438,15 @@ export default class ClData {
     return out
   }
   // source历史分钟线 nowmin当日分钟线
+  /**
+   * make minute data
+   * @param {String} outkey
+   * @param {Object} source
+   * @param {Array} nowmin
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
   makeMinute (outkey, source, nowmin, rightMode) {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
@@ -375,7 +472,14 @@ export default class ClData {
     // out = matchMinToMinute(out, outkey);
     return out
   }
-
+  /**
+   * merge now's min data to min data
+   * @param {Object} source
+   * @param {Array} min
+   * @param {Number} offset
+   * @return {Array}
+   * @memberof ClData
+   */
   mergeNowMinToMin (source, min, offset) {
     const curMin = []
     let sumVol = 0
@@ -430,8 +534,16 @@ export default class ClData {
   }
 
   // /////////////////////////////////////////
-  //  以下为公司系统，自由计算的定义
+  //  以下为公式系统，自由计算的定义
   // /////////////////////////////////////////
+  /**
+   * make lien data
+   * @param {Object} source
+   * @param {String} outkey
+   * @param {String} formula
+   * @return {Array}
+   * @memberof ClData
+   */
   makeLineData (source, outkey, formula) {
     const value = this.formula.runSingleStock(source, formula)
     if (this.OutData[outkey] === undefined) {

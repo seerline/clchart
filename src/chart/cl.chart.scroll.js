@@ -41,13 +41,26 @@ const DEFAULT_SCROLL = {
   status: 'enabled',
   txt: {}
 }
+/**
+ * Class representing ClChartScroll
+ * @export
+ * @class ClChartScroll
+ */
 export default class ClChartScroll {
+  /**
+
+   * Creates an instance of ClChartScroll.
+   * @param {Object} father order chart's parent context
+   */
   constructor (father) {
     initCommonInfo(this, father)
   }
-  // ////////////////////////////////////////////////////////////////
-  //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * init
+   * @param {Object} cfg
+   * @param {any} callback initialized callback
+   * @memberof ClChartScroll
+   */
   init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 25 }
@@ -59,9 +72,17 @@ export default class ClChartScroll {
     // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
     this.setPublicRect()
   }
-  checkConfig () { // 检查配置有冲突的修正过来
+  /**
+   * check config
+   * @memberof ClChartScroll
+   */
+  checkConfig () {
     checkLayout(this.layout)
   }
+  /**
+   * Calculate all rectangular areas
+   * @memberof ClChartScroll
+   */
   setPublicRect () { // 计算所有矩形区域
     const count = this.config.range
     let spaceX
@@ -108,10 +129,11 @@ export default class ClChartScroll {
       // stop = this.rectMain.top + spaceX * this.config.select;
     }
   }
-  // ////////////////////////////////////////////////////////////////
-  //   绘图函数
-  // ///////////////////////////////////////////////////////////////
-  onPaint () { // 重画
+  /**
+   * paint scroll chart
+   * @memberof ClChartScroll
+   */
+  onPaint () {
     _setLineWidth(this.context, this.scale)
 
     this.drawClear()
@@ -119,9 +141,11 @@ export default class ClChartScroll {
     this.setPublicRect()
     this.drawButton()
   }
-  // ////////////////////////////////////////////////////////////////
-  // 事件监听
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * handle change info
+   * @param {Object} info
+   * @memberof ClChartScroll
+   */
   onChange (info) {
     this.config = updateJsonOfDeep(info, this.config)
     if (this.config.select.max > this.config.range) this.config.select.max = this.config.range - 1
@@ -129,12 +153,24 @@ export default class ClChartScroll {
       this.callback({ self: this, minIndex: this.config.select.min })
     }
   }
+  /**
+   * find mouse index
+   * @param {Number} xpos
+   * @return {Number} index
+   * @memberof ClChartScroll
+   */
   findMouseIndex (xpos) {
     const count = this.config.range
     const spaceX = this.rectMain.width / (count - 1)
     const idx = Math.round((xpos - this.rectMain.left) / spaceX)
     return idx
   }
+  /**
+   * check min
+   * @param {Number} min
+   * @return {Number}
+   * @memberof ClChartScroll
+   */
   checkMin (min) {
     if (min < 0) return 0
     if (min > this.config.range - (this.config.select.max - this.config.select.min + 1)) {
@@ -142,14 +178,27 @@ export default class ClChartScroll {
     }
     return min
   }
+  /**
+   * on init
+   * @memberof ClChartScroll
+   */
   onInit () {
     changeCursorStyle('default')
     this.who = undefined
   }
+  /**
+   * handle mouse out
+   * @memberof ClChartScroll
+   */
   onMouseOut () {
     changeCursorStyle('default')
     this.who = undefined
   }
+  /**
+   * hanlde mouse down
+   * @param {Object} event
+   * @memberof ClChartScroll
+   */
   onMouseDown (event) {
     const mousePos = event.mousePos
     if (inRect(this.rectMin, mousePos)) {
@@ -163,7 +212,11 @@ export default class ClChartScroll {
       this.who = undefined
     }
   }
-
+  /**
+   * handle mouse up
+   * @param {Object} event
+   * @memberof ClChartScroll
+   */
   onMouseUp (event) {
     if (this.config.shape !== 'free' && this.who === undefined) {
       const mousePos = event.mousePos
@@ -174,6 +227,11 @@ export default class ClChartScroll {
     }
     this.who = undefined
   }
+  /**
+   * handle mouse move
+   * @param {Object} event
+   * @memberof ClChartScroll
+   */
   onMouseMove (event) {
     const mousePos = event.mousePos
     if (inRect(this.rectMin, mousePos) || inRect(this.rectMax, mousePos)) {
@@ -211,10 +269,17 @@ export default class ClChartScroll {
       }
     }
   }
-
+  /**
+   * clear chart
+   * @memberof ClChartScroll
+   */
   drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
+  /**
+   * draw grid line
+   * @memberof ClChartScroll
+   */
   drawGridline () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width + this.scale / 2, this.rectMain.height)
@@ -258,8 +323,5 @@ export default class ClChartScroll {
           this.layout.scroll.font, this.layout.scroll.pixel, this.color.axis, { x: 'end' })
       }
     }
-    // else {
-
-    // }
   }
 }

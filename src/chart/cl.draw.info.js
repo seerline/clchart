@@ -21,7 +21,19 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
+/**
+ * Class representing ClDrawInfo
+ * @export
+ * @class ClDrawInfo
+ */
 export default class ClDrawInfo {
+  /**
+
+   * Creates an instance of ClDrawInfo.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @param {Object} rectMess
+   */
   constructor (father, rectMain, rectMess) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -32,7 +44,11 @@ export default class ClDrawInfo {
     this.title = father.layout.title
     this.titleInfo = father.config.title
   }
-
+  /**
+   * paint
+   * @param {Object} message
+   * @memberof ClDrawInfo
+   */
   onPaint (message) {
     if (this.titleInfo.display === 'none' || this.linkInfo.hideInfo) return
 

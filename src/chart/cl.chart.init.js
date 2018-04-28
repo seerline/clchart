@@ -6,12 +6,17 @@
  *
  */
 
+/** @module SystemConfig */
+
 import {
   copyJsonOfDeep
 } from '../util/cl.tool'
 
 import * as drawClass from '../util/cl.draw'
 
+/**
+ * @constant
+ */
 export const COLOR_WHITE = {
   sys: 'white',
   line: ['#4048cc', '#dd8d2d', '#168ee0', '#ad7eac', '#ff8290', '#ba1215'],
@@ -29,7 +34,9 @@ export const COLOR_WHITE = {
   box: '#ddf4df',
   code: '#3f3f3f'
 }
-
+/**
+ * @constant
+ */
 export const COLOR_BLACK = {
   sys: 'black',
   line: ['#efefef', '#fdc104', '#5bbccf', '#ad7eac', '#bf2f2f', '#cfcfcf'],
@@ -47,7 +54,9 @@ export const COLOR_BLACK = {
   box: '#373737',
   code: '#41bfd0'
 }
-
+/**
+ * @constant
+ */
 export const CHART_WIDTH_MAP = {
   '0': {
     'width': 7.1999969482421875
@@ -117,27 +126,34 @@ export const CHART_WIDTH_MAP = {
   }
 }
 
-// ///////////////////////////
-//  这里是定义的一些公共变量，以及调用方法
-// ///////////////////////////
-
-// 以下的几个变量都是系统确立时就必须确立的，属于大家通用的配置
+/**
+ * The following several variables must be established when the system is established, which is a common configuration for everyone.
+ */
 const _systemInfo = {
-  runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换 react
-  axisPlatform: 'web', // 'web' 对坐标显示的区别
-  eventPlatform: 'html5', // 'react'所有事件
-  scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
-  standard: 'china', // 画图标准，美国’usa‘，需要调整颜色
-  sysColor: 'black', // 色系，分白色和黑色系
-  charMap: CHART_WIDTH_MAP,
-  mainCanvas: {},
-  cursorCanvas: {}
+  runPlatform: 'normal', // 'react-native' | 'mina' | 'html5'
+  axisPlatform: 'web', // 'web' | 'phone'
+  eventPlatform: 'html5', // 'react-native' | 'mina' | 'html5'
+  scale: 1, // Set the zoom ratio according to the dpi of different display devices
+  standard: 'china', // 'usa' | 'china' Drawing standards to support the United States and China
+  sysColor: 'black', // 'white' | 'black'
+  charMap: CHART_WIDTH_MAP, // Used to help degrade font width calculations for some platforms that do not support context measures
+  mainCanvas: {}, // Main canvas
+  cursorCanvas: {} // Cursor canvas
 }
-
+/**
+ * set paint standard
+ * @export
+ * @param {any} standard
+ */
 export function setStandard (standard) {
   _systemInfo.standard = standard || 'china'
 }
-
+/**
+ * set system color
+ * @export
+ * @param {String} syscolor drawing theme
+ * @returns system color
+ */
 export function setColor (syscolor) {
   let color = {}
   if (syscolor === 'white') {
@@ -157,7 +173,15 @@ export function setColor (syscolor) {
   _systemInfo.color = color
   return color
 }
-
+/**
+ * Used to help those platforms that don't support measureText, degraded calculation font span
+ * @export
+ * @param {Object} context canvas context
+ * @param {String} txt text
+ * @param {String} font font family
+ * @param {Number} pixel font size
+ * @return {Number} text width
+ */
 export function _getOtherTxtWidth (context, txt, font, pixel) {
   const ww = _systemInfo.other.width
   const hh = _systemInfo.other.height
@@ -176,7 +200,13 @@ export function _getOtherTxtWidth (context, txt, font, pixel) {
   }
   return width
 }
-
+/**
+ * set system scale
+ * @export
+ * @param {Object} canvas
+ * @param {Number} scale
+ * @return {Object}
+ */
 export function setScale (canvas, scale) {
   canvas.width = canvas.clientWidth * scale
   canvas.height = canvas.clientHeight * scale
@@ -185,6 +215,12 @@ export function setScale (canvas, scale) {
     height: canvas.height
   }
 }
+/**
+ * init system
+ * @export
+ * @param {Object} cfg system config
+ * @return {Object} all system config
+ */
 export function initSystem (cfg) {
   if (cfg === undefined) return
   for (const key in _systemInfo) {
@@ -208,7 +244,12 @@ export function initSystem (cfg) {
   return _systemInfo
 }
 
-// 所有chart都必须调用这个函数，以获取基本的配置
+/**
+ * Bind some basic properties when some chart objects are initialized
+ * @export
+ * @param {Object} chart
+ * @param {Object} father
+ */
 export function initCommonInfo (chart, father) {
   chart.father = father
   chart.context = father.context
@@ -217,6 +258,11 @@ export function initCommonInfo (chart, father) {
   chart.axisPlatform = _systemInfo.axisPlatform
   chart.eventPlatform = _systemInfo.eventPlatform
 }
+/**
+ * checkout layout
+ * @export
+ * @param {Object} layout
+ */
 export function checkLayout (layout) {
   const scale = _systemInfo.scale
   layout.margin.top *= scale
@@ -259,14 +305,23 @@ export function checkLayout (layout) {
   layout.symbol.spaceX *= scale
   layout.symbol.spaceY *= scale
 }
-// 改变鼠标样式
-// default
+/**
+ * Change mouse style
+ * @export
+ * @param {String} style
+ */
 export function changeCursorStyle (style) {
   if (_systemInfo.eventPlatform === 'html5') {
     _systemInfo.mainCanvas.canvas.style.cursor = style
     _systemInfo.cursorCanvas.canvas.style.cursor = style
   }
 }
+/**
+ * Get system line color
+ * @export
+ * @param {Number} index
+ * @return {String}
+ */
 export function getLineColor (index) {
   if (index === undefined) index = 0
   return _systemInfo.color.line[index % _systemInfo.color.line.length]

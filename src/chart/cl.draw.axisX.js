@@ -25,7 +25,18 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
+/**
+ * Class representing ClDrawAxisX
+ * @export
+ * @class ClDrawAxisX
+ */
 export default class ClDrawAxisX {
+  /**
+
+   * Creates an instance of ClDrawAxisX.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
   constructor (father, rectMain) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -34,7 +45,10 @@ export default class ClDrawAxisX {
     this.maxmin = father.maxmin
     this.text = father.layout.axisX
   }
-
+  /**
+   * pain axisx
+   * @memberof ClDrawAxisX
+   */
   onPaint () {
     this.data = this.father.data
     if (this.axisX.display === 'none') return

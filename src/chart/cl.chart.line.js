@@ -62,18 +62,30 @@ import ClDrawInfo from './cl.draw.info'
 import ClDrawLine from './cl.draw.line'
 import ClDrawVLine from './cl.draw.vline'
 
+/**
+ * Class representing ClChartLine
+ * @export
+ * @class ClChartLine
+ */
 export default class ClChartLine {
+  /**
+
+   * Creates an instance of ClChartLine.
+   * @param {Object} father line chart's parent context
+   */
   constructor (father) {
     initCommonInfo(this, father)
-
     this.linkInfo = father.linkInfo
     this.static = this.father.dataLayer.static
     this.data = {}
     this.maxmin = {}
   }
-  // ////////////////////////////////////////////////////////////////
-  //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * init line
+   * @param {Object} cfg line's config
+   * @param {any} callback initialized callback
+   * @memberof ClChartLine
+   */
   init (cfg, callback) {
     this.callback = callback
     this.rectMain = cfg.rectMain || {
@@ -106,12 +118,20 @@ export default class ClChartLine {
     // 初始化滚动条
     this.setScroll()
   }
+  /**
+   * check config
+   * @memberof ClChartLine
+   */
   checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     if (this.config.zoomInfo !== undefined) {
       this.setZoomInfo()
     }
   }
+  /**
+   * set public rect
+   * @memberof ClChartLine
+   */
   setPublicRect () { // 计算所有矩形区域
     // rectChart 画图区
     // rectTitle rectMess
@@ -214,10 +234,20 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * get line by data key
+   * @param {String} line
+   * @return {Object} line instance
+   * @memberof ClChartLine
+   */
   getLineDataKey (line) {
     if (line.formula === undefined) return this.hotKey
     return line.formula.key
   }
+  /**
+   * set child line instance
+   * @memberof ClChartLine
+   */
   setChildLines () {
     // l_kbar，l_line，l_nowvol，l_vbar l_nowline
     let line
@@ -244,6 +274,10 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * set child draw instance
+   * @memberof ClChartLine
+   */
   setChildDraw () {
     let draw
     draw = new ClDrawCursor(this, this.rectGridLine, this.rectChart)
@@ -269,6 +303,10 @@ export default class ClChartLine {
     this.childDraws['GRID'] = draw
     // 下面是line的定义
   }
+  /**
+   * set scroll instance
+   * @memberof ClChartLine
+   */
   setScroll () {
     if (this.scroll.display === 'none') return
     const chart = new ClChartScroll(this)
@@ -290,6 +328,12 @@ export default class ClChartLine {
       }
     })
   }
+  /**
+   * create button
+   * @param {String} name button name
+   * @return {Object} button instacne
+   * @memberof ClChartLine
+   */
   createButton (name) {
     if (this.childCharts[name] !== undefined) return this.childCharts[name]
     const chart = new ClChartButton(this)
@@ -298,12 +342,23 @@ export default class ClChartLine {
     this.childCharts[name] = chart
     return chart
   }
+  /**
+   * check has button by key
+   * @param {String} key button key
+   * @param {Array} buttons buttons array
+   * @return {Boolean}
+   * @memberof ClChartLine
+   */
   hasButton (key, buttons) {
     for (let k = 0; k < buttons.length; k++) {
       if (key === buttons[k].key) return true
     }
     return false
   }
+  /**
+   * set buttons
+   * @memberof ClChartLine
+   */
   setButtons () {
     let chart
     let xx, yy
@@ -395,17 +450,30 @@ export default class ClChartLine {
       chart.hotIdx = 0
     }
   }
-  // //////////////////////////////////////
-  // 下面开始是功能性函数 主要用于简化主函数的结构
-  // //////////////////////////////////////
+  /**
+   * get decimal
+   * @param {String} label label
+   * @return {Number}
+   * @memberof ClChartLine
+   */
   getDecimal (label) {
     if (label === 'vol' || label === 'decvol') return 0
     return this.static.decimal
   }
+  /**
+   * add line
+   * @param {Object} line line instance
+   * @memberof ClChartLine
+   */
   addLine (line) {
     // this.removeLine(line.name);
     this.config.lines.push(line)
   }
+  /**
+   * remove line by name
+   * @param {String} name line name
+   * @memberof ClChartLine
+   */
   removeLine (name) {
     for (let i = 0; i < this.config.lines.length; i++) {
       if (this.config.lines[i].name === undefined) continue
@@ -414,6 +482,10 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * set zoom info
+   * @memberof ClChartLine
+   */
   setZoomInfo () {
     const info = this.config.zoomInfo
     info.index = info.index > info.list.length - 1 ? info.list.length - 1 : info.index
@@ -435,6 +507,11 @@ export default class ClChartLine {
     }
     this.father.fastDrawEnd()
   }
+  /**
+   * set hot button
+   * @param {Object} chart chart instance
+   * @memberof ClChartLine
+   */
   setHotButton (chart) {
     for (const name in this.childCharts) {
       if (this.childCharts[name] === chart) {
@@ -444,16 +521,20 @@ export default class ClChartLine {
       }
     }
   }
-  // ////////////////////////////////////////////////
-  // 下面的函数为绘图函数，
-  // ////////////////////////////////////////////////
-
+  /**
+   * clear chart
+   * @memberof ClChartLine
+   */
   drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
     _drawEnd(this.context)
   }
+  /**
+   * draw child charts
+   * @memberof ClChartLine
+   */
   drawChildCharts () {
     let top
     for (const name in this.childCharts) {
@@ -465,6 +546,10 @@ export default class ClChartLine {
     }
     if (top) top.onPaint()
   }
+  /**
+   * before location
+   * @memberof ClChartLine
+   */
   beforeLocation () {
     for (const name in this.childLines) {
       if (this.childLines[name].beforeLocation) {
@@ -472,6 +557,10 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * draw child lines
+   * @memberof ClChartLine
+   */
   drawChildLines () {
     for (const name in this.childLines) {
       if (this.childLines[name].hotKey !== undefined) {
@@ -481,7 +570,12 @@ export default class ClChartLine {
       }
     }
   }
-  // 按记录索引根据keys获取一组数据，数据为{MA:[]...} 主要提供给鼠标移动
+  /**
+   * According to the record index to obtain a set of data according to the keys, the data is {MA:[]...} is mainly provided for mouse movement
+   * @param {Number} index
+   * @return {Array}
+   * @memberof ClChartLine
+   */
   getMoveData (index) {
     let lines = this.config.lines
     const out = []
@@ -512,11 +606,21 @@ export default class ClChartLine {
     }
     return out
   }
+  /**
+   * draw title info
+   * @param {Number} index title index
+   * @memberof ClChartLine
+   */
   drawTitleInfo (index) {
     if (this.config.title.display === 'none') return
     if (index === undefined || index < 0 || index > this.linkInfo.maxIndex) index = this.linkInfo.maxIndex
     this.childDraws['TITLE'].onPaint(this.getMoveData(index))
   }
+  /**
+   * draw child
+   * @param {String} name child draw's name
+   * @memberof ClChartLine
+   */
   drawChildDraw (name) {
     if (this.childDraws[name] !== undefined) {
       if (name === 'TITLE') {
@@ -526,6 +630,10 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * draw all the layers contained in this area
+   * @memberof ClChartLine
+   */
   onPaint () {
     this.beforeLocation() // 数据定位前需要做的事情
 
@@ -555,6 +663,12 @@ export default class ClChartLine {
   // ///////////////////////////////////////////////////////////
   // 画图前的准备工作
   // ////////////////////////////////////////////////////////////
+  /**
+   * get middle
+   * @param {String} method
+   * @return {Number}
+   * @memberof ClChartLine
+   */
   getMiddle (method) {
     let middle = this.config.axisY.left.middle
     if (method === 'fixedRight') middle = this.config.axisY.right.middle
@@ -562,6 +676,15 @@ export default class ClChartLine {
     if (middle === 'zero') return 0
     return 0
   }
+  /**
+   * calc max and min data
+   * @param {Array} data
+   * @param {Object} extremum
+   * @param {Number} start
+   * @param {Number} stop
+   * @return {Object}
+   * @memberof ClChartLine
+   */
   calcMaxMin (data, extremum, start, stop) {
     const mm = {
       max: 0.0,
@@ -641,7 +764,11 @@ export default class ClChartLine {
 
     return mm
   }
-  readyScroll () { // 计算最大最小值等
+  /**
+   * ready for draw scroll
+   * @memberof ClChartLine
+   */
+  readyScroll () {
     if (this.scroll.display === 'none') return
     if (this.childCharts['HSCROLL'] !== undefined) {
       let left = getValue(this.data, 'time', this.linkInfo.minIndex)
@@ -666,6 +793,12 @@ export default class ClChartLine {
       })
     }
   }
+  /**
+   * get data range
+   * @param {Array} data
+   * @return {Object}
+   * @memberof ClChartLine
+   */
   getDataRange (data) {
     const out = {
       minIndex: -1,
@@ -690,6 +823,10 @@ export default class ClChartLine {
     }
     return out
   }
+  /**
+   * location data
+   * @memberof ClChartLine
+   */
   locationData () {
     if (this.data === undefined) return
     const size = getSize(this.data)
@@ -721,6 +858,10 @@ export default class ClChartLine {
       )
     }
   }
+  /**
+   * set ready for draw
+   * @memberof ClChartLine
+   */
   readyDraw () { // 计算最大最小值等
     // 画滚动块
     this.readyScroll()
@@ -755,9 +896,11 @@ export default class ClChartLine {
     this.maxmin.unitY = (this.rectChart.height - 2) / (this.maxmin.max - this.maxmin.min) // 一个单位价位多少像素
   }
 
-  // ////////////////////////////////////////////////
-  // 下面的函数为事件处理函数，
-  // ////////////////////////////////////////////////
+  /**
+   * handle click event
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onClick (event) {
     if (this.axisPlatform !== 'phone1') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine
@@ -769,10 +912,20 @@ export default class ClChartLine {
       }
     }
   }
+  /**
+   * handle long press
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onLongPress (event) {
     this.linkInfo.showCursorLine = true
     this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)
   }
+  /**
+   * handle pinch
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onPinch (event) {
     if (event.scale > 0) {
       this.config.zoomInfo.index++
@@ -787,6 +940,11 @@ export default class ClChartLine {
     this.setZoomInfo(this.config.zoomInfo.index * 2 + 1)
     this.father.onPaint()
   }
+  /**
+   * handle mouse out
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onMouseOut (event) {
     if (this.linkInfo.showCursorLine || event.reDraw) {
       this.linkInfo.moveIndex = this.linkInfo.maxIndex
@@ -795,6 +953,11 @@ export default class ClChartLine {
     }
     this.childDraws['CURSOR'].onClear()
   }
+  /**
+   * handle mouse wheel
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onMouseWheel (event) {
     if (this.config.zoomInfo === undefined) return
 
@@ -809,7 +972,11 @@ export default class ClChartLine {
       this.father.onPaint()
     }
   }
-
+  /**
+   * handle key down
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onKeyDown (event) {
     switch (event.keyCode) {
       case 38: // up
@@ -822,6 +989,11 @@ export default class ClChartLine {
         break
     }
   }
+  /**
+   * handle mouse move
+   * @param {Object} event
+   * @memberof ClChartLine
+   */
   onMouseMove (event) {
     if (this.linkInfo.hideInfo) return
     if (!this.linkInfo.showCursorLine) return
@@ -858,11 +1030,12 @@ export default class ClChartLine {
     }
     this.childDraws['CURSOR'].onPaint(mousePos, valueX, valueY)
   }
-
-  // 事件监听
-  // ////////////////////////////////////////////////////////////////
-  //   处理数据的函数集合
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * get mouse move data
+   * @param {Number} xpos
+   * @return {Number}
+   * @memberof ClChartLine
+   */
   getMouseMoveData (xpos) {
     const idx = Math.round((xpos - this.rectChart.left) / (this.linkInfo.unitX + this.linkInfo.spaceX) - 0.5)
     if (this.config.axisX.type === 'day1') {

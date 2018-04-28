@@ -22,8 +22,18 @@ import {
   initCommonInfo,
   getLineColor
 } from '../chart/cl.chart.init'
-
+/**
+ * Class representing ClDrawVLine
+ * @export
+ * @class ClDrawVLine
+ */
 export default class ClDrawVLine {
+  /**
+
+   * Creates an instance of ClDrawVLine.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
   constructor (father, rectMain) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -37,7 +47,11 @@ export default class ClDrawVLine {
     this.source = father.father
     this.maxmin = father.maxmin
   }
-
+  /**
+   * paint
+   * @param {String} key
+   * @memberof ClDrawVLine
+   */
   onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)

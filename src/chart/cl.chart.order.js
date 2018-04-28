@@ -40,15 +40,27 @@ import {
   FIELD_TICK
 } from '../data/../cl.data.def'
 
+/**
+ * Class representing ClChartOrder
+ * @export
+ * @class ClChartOrder
+ */
 export default class ClChartOrder {
+  /**
+
+   * Creates an instance of ClChartOrder.
+   * @param {Object} father order chart's parent context
+   */
   constructor (father) {
     initCommonInfo(this, father)
     this.linkInfo = father.linkInfo
     this.static = this.father.dataLayer.static
   }
-  // ////////////////////////////////////////////////////////////////
-  //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * init order chart
+   * @param {Object} cfg
+   * @memberof ClChartOrder
+   */
   init (cfg) {
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
@@ -61,7 +73,10 @@ export default class ClChartOrder {
     // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
     this.setPublicRect()
   }
-
+  /**
+   * check config
+   * @memberof ClChartOrder
+   */
   checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     this.txtLen = _getTxtWidth(this.context, '涨', this.layout.digit.font, this.layout.digit.pixel)
@@ -69,13 +84,17 @@ export default class ClChartOrder {
     this.volLen = _getTxtWidth(this.context, '888888', this.layout.digit.font, this.layout.digit.pixel)
     this.closeLen = _getTxtWidth(this.context, '888.88', this.layout.digit.font, this.layout.digit.pixel)
   }
-  setPublicRect () { // 计算所有矩形区域
+  /**
+   * Calculate all rectangular areas
+   * @memberof ClChartOrder
+   */
+  setPublicRect () {
     this.rectChart = offsetRect(this.rectMain, this.layout.margin)
   }
-
-  // //////////
-  //
-  // ///////////
+  /**
+   * handle click event
+   * @memberof ClChartOrder
+   */
   onClick (/* e */) {
     if (this.isIndex) return // 如果是指数就啥也不干
     if (this.style === 'normal') {
@@ -85,8 +104,11 @@ export default class ClChartOrder {
     }
     this.father.onPaint(this)
   }
-  // 事件监听
-  onPaint () { // 重画
+  /**
+   * paint order chart
+   * @memberof ClChartOrder
+   */
+  onPaint () {
     this.codeInfo = this.father.getData('INFO')
     this.orderData = this.father.getData('NOW')
     this.tickData = this.father.getData('TICK')
@@ -106,13 +128,17 @@ export default class ClChartOrder {
     }
     this.drawTick()
   }
-
-  // ////////////////////////////////////////////////////////////////
-  //   绘图函数
-  // ///////////////////////////////////////////////////////////////
+  /**
+   * clear chart
+   * @memberof ClChartOrder
+   */
   drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
+  /**
+   * set ready for draw
+   * @memberof ClChartOrder
+   */
   drawReady () {
     if (this.tickData === undefined) {
       this.tickData = { key: 'TICK', fields: FIELD_TICK, value: [] }
@@ -165,6 +191,13 @@ export default class ClChartOrder {
       height: this.rectChart.height - yy - this.layout.digit.height / 2
     }
   }
+  /**
+   * get color by close and before data
+   * @param {Number} close
+   * @param {Number} before
+   * @return {String} color
+   * @memberof ClChartOrder
+   */
   getColor (close, before) {
     if (close > before) {
       return this.color.red
@@ -174,6 +207,10 @@ export default class ClChartOrder {
       return this.color.white
     }
   }
+  /**
+   * draw index
+   * @memberof ClChartOrder
+   */
   drawIndex () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
@@ -232,6 +269,10 @@ export default class ClChartOrder {
     }
     _drawEnd(this.context)
   }
+  /**
+   * draw order
+   * @memberof ClChartOrder
+   */
   drawOrder () {
     const xpos = this.drawGridLine() // 先画线格
     if (this.orderData === undefined || this.orderData.value.length < 1) {
@@ -291,6 +332,10 @@ export default class ClChartOrder {
       yy += offy
     }
   }
+  /**
+   * draw tick
+   * @memberof ClChartOrder
+   */
   drawTick () {
     if (this.tickData === undefined || this.tickData.value.length < 1) return
     const maxlines = Math.floor(this.rectTick.height / this.layout.digit.height) - 1 // 屏幕最大能显示多少条记录
@@ -354,7 +399,11 @@ export default class ClChartOrder {
       yy += offy
     }
   }
-
+  /**
+   * draw grid line
+   * @return {Number}
+   * @memberof ClChartOrder
+   */
   drawGridLine () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)

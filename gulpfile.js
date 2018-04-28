@@ -12,5 +12,5 @@ function genDocs (cb) {
 gulp.task('doc', genDocs)
 
 gulp.task('watch', function () {
-  gulp.watch(srcCode, gulp.parallel('doc'))
+  gulp.watch(srcCode, gulp.series('doc'))
 })

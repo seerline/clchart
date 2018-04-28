@@ -25,7 +25,18 @@ import {
   inRect
 } from '../util/cl.tool'
 
+/**
+ * Class representing ClDrawLine
+ * @export
+ * @class ClDrawLine
+ */
 export default class ClDrawLine {
+  /**
+
+   * Creates an instance of ClDrawLine.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
   constructor (father, rectMain) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -35,7 +46,11 @@ export default class ClDrawLine {
 
     this.maxmin = father.maxmin
   }
-
+  /**
+   * paint
+   * @param {String} key
+   * @memberof ClDrawLine
+   */
   onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)

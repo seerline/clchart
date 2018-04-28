@@ -6,31 +6,24 @@
  *
  */
 
-// //////////////////////////////////////////////////
-// 以下是ClChart的实体定义
-// 一般只用操作这个类就可以实现功能了
-// 一个ClChart类只是调度框架下所属的Chart的画图，鼠标键盘事件，并不存储数据
-// 多图联动时，子图都到这里来获取相关信息。
-// //////////////////////////////////////////////////
+// Following is the entity definition of ClChart
+// generally only use this class to implement the function
+// A ClChart class is just a drawing of the chart belonging to the dispatch framework, mouse and keyboard events, and does not store data
+// When multiple maps are linked, the subgraphs are all here to get relevant information.
 
 import {
   copyJsonOfDeep
-  // formatInfo
 } from '../util/cl.tool'
-// import ClChartButton from './cl.chart.button';
 import ClChartLine from './cl.chart.line'
 import ClChartOrder from './cl.chart.order'
-// import ClChartScroll from './cl.chart.scroll';
-// import getValue from '../data/cl.data.tools';
 import { setColor, setStandard } from '../chart/cl.chart.init'
 
-// 必须包含 context，其他初始化信息参考initSystem
 const DEFAULT_LINKINFO = {
   showMode: 'last',
-  // 'last' 以最新数据为定位，maxIndex=-1 表示显示最新的数据
-  // ‘move’ 当发生移动就设置该参数，-- 可能不需要
-  // fixed 固定显示一定范围的 分时图和5日线这一类固定数量的显示模式
-  // locked 指定某条记录放中间位置
+  // 'last' Targeted by the latest data, maxIndex=-1 shows the latest data
+  // 'move' Set this parameter when the move occurs, -- may not be required
+  // 'fixed' Fixed display of a certain range of time-shared charts and 5-day lines.
+  // 'locked' Specify a record in the middle
   fixed: { // 对应fixed模式
     min: -1, // 最小记录, 为-1表示最小记录加上left
     max: -1, // 最大记录, 为-1表式最大记录减去right
@@ -51,18 +44,30 @@ const DEFAULT_LINKINFO = {
   rightMode: 'no', // 除权模式
   hideInfo: false // 是否显示价格
 }
+/**
+ * Class representing ClChart
+ * @export
+ * @class ClChart
+ */
 export default class ClChart {
+  /**
+
+   * Creates an instance of ClChart.
+   * @param {Object} syscfg
+   */
   constructor (syscfg) {
-    // 必须设置context
     this.context = syscfg.mainCanvas.context
     this.cursorCanvas = syscfg.cursorCanvas
     this.sysColor = syscfg.sysColor
-    // 通过这个来判断是否为根
+    // Use this to determine if it is the root element
     this.father = undefined
   }
-  // //////////////////////////////////////////////
-  // 重新初始化Chart，会清理掉所有的图表和数据
-  // //////////////////////////////////////////////
+  /**
+   * Re-initialize Chart to clean up all charts and data
+   * @param {any} dataLayer data layer
+   * @param {any} eventLayer event layer
+   * @memberof ClChart
+   */
   initChart (dataLayer, eventLayer) {
     // linkInfo 是所有子chart公用的参数集合，也是dataLayer应用的集合
     this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO)
@@ -74,6 +79,11 @@ export default class ClChart {
     // 设置事件层，同时对外提供设置接口
     this.setEventLayer(eventLayer)
   }
+  /**
+   * clear current data and recharge linkinfo
+   *
+   * @memberof ClChart
+   */
   clear () {
     this.childCharts = {}
     this.fastDraw = false
@@ -81,7 +91,12 @@ export default class ClChart {
     // this.eventLayer.clear();
     this.linkInfo = copyJsonOfDeep(DEFAULT_LINKINFO)
   }
-
+  /**
+   * get child chart by key
+   * @param {String} key child chart key
+   * @return {Object} child chart
+   * @memberof ClChart
+   */
   getChart (key) {
     return this.childCharts[key]
   }
@@ -90,6 +105,11 @@ export default class ClChart {
   // 所有事件由外部获取事件后传递到eventLayer后，再统一分发给相应的图表
   // eventLayer中有针对html5的鼠标键盘事件处理接口，其他事件处理接口另外再做
   // ////////////////////////////////////////////
+  /**
+   * get event layer
+   * @return {Object} event layer
+   * @memberof ClChart
+   */
   getEventLayer () {
     return this.eventLayer
   }
@@ -101,19 +121,32 @@ export default class ClChart {
   // bindEvent (chart) {
   //   this.eventLayer.bindEvent(chart);
   // }
-  // //////////////////////////////////////////////
-  // 下面是绑定数据层，engine
-  // //////////////////////////////////////////////
+
+  /**
+   * get data layer
+   * @return {Object} data layer
+   * @memberof ClChart
+   */
   getDataLayer () {
     return this.dataLayer
   }
+  /**
+   * set data layer
+   * @param {Object} layer
+   * @memberof ClChart
+   */
   setDataLayer (layer) {
     if (layer === undefined) return
     this.dataLayer = layer
-    layer.father = this // 告诉数据层
+    layer.father = this
     this.static = this.dataLayer.static
   }
-  // 设置对应的chart基本的数据key
+  /**
+   * Set the corresponding basic data key of the chart
+   * @param {Object} chart
+   * @param {String} key
+   * @memberof ClChart
+   */
   bindData (chart, key) {
     if (chart.hotKey !== key) {
       this.linkInfo.showMode = 'last' // 切换数据后需要重新画图
@@ -122,17 +155,34 @@ export default class ClChart {
       this.fastDrawEnd() // 热点数据改变，就重新计算
     }
   }
-  // 以下是客户端设置data中数据的接口
+  /**
+   * init data
+   * @param {Number} tradeDate trade date
+   * @param {Number} tradetime  trade time
+   * @memberof ClChart
+   */
   initData (tradeDate, tradetime) {
     this.dataLayer.initData(tradeDate, tradetime)
   }
+  /**
+   * set data
+   * @param {String} key data key
+   * @param {Object} fields data field definition
+   * @param {any} value
+   * @memberof ClChart
+   */
   setData (key, fields, value) {
     let info = value
     if (typeof value === 'string') info = JSON.parse(value)
     this.dataLayer.setData(key, fields, info)
     this.fastDrawEnd() // 新的数据被设置，就重新计算
   }
-  // 按key获取一个数组数据
+  /**
+   * get data from datalayer by key
+   * @param {String} key
+   * @return {Array}
+   * @memberof ClChart
+   */
   getData (key) {
     if (this.fastDraw) {
       if (this.fastBuffer[key] !== undefined) {
@@ -145,6 +195,12 @@ export default class ClChart {
     }
     return out
   }
+  /**
+   * init line data
+   * @param {Array} data
+   * @param {Array} lines
+   * @memberof ClChart
+   */
   readyData (data, lines) {
     for (let k = 0; k < lines.length; k++) {
       if (lines[k].formula === undefined) continue
@@ -157,21 +213,16 @@ export default class ClChart {
       }
     }
   }
-  // //////////////////////////////////////////////
-  // name是唯一的名字，名字一样会覆盖以前同名的类，
-  // className是调用什么类型的图，目前只支持 Line Order Button Scroll
-  // usercfg指该图特殊的配置
-  // callback 表示鼠标移动时返回的当前记录数据
-  // //////////////////////////////////////////////
+  /**
+   * create chart
+   * @param {String} name name is a unique name, the same name will override the previous class with the same name
+   * @param {String} className class name
+   * @param {Object} usercfg user custom config
+   * @param {Function} callback callback
+   * @return {Object} chart instance
+   * @memberof ClChart
+   */
   createChart (name, className, usercfg, callback) {
-    // if (!inArray(className, [
-    //   ClChartButton,
-    //   ClChartLine,
-    //   ClChartOrder,
-    //   ClChartScroll
-    // ])) return undefined;
-    // const chart = new className(this);
-
     let chart
     switch (className) {
       case 'CHART.ORDER': chart = new ClChartOrder(this); break
@@ -188,8 +239,12 @@ export default class ClChart {
     return chart
   }
 
-  // 以下是chart画图的接口
-  onPaint (chart) { // 需要重画时调用
+  /**
+   * draw all the layers contained in this area
+   * @param {Object} chart
+   * @memberof ClChart
+   */
+  onPaint (chart) {
     if (typeof this.context._beforePaint === 'function') {
       this.context._beforePaint()
     }
@@ -209,20 +264,29 @@ export default class ClChart {
       this.context._afterPaint()
     }
   }
-  // 用于同一组多图只取一次数据，这样可以加速显示，程序结构不会乱
+  /**
+   * Used for the same group of multi-graph only take data once, this can speed up the display, the program structure will not be chaotic
+   * @memberof ClChart
+   */
   fastDrawBegin () {
     if (!this.fastDraw) {
       this.fastBuffer = []
       this.fastDraw = true
     }
   }
+  /**
+   * set whether to turn on quick drawing
+   * @memberof ClChart
+   */
   fastDrawEnd () {
     this.fastDraw = false
   }
 
-  // ///////////////////////////////////
-  // 设置通用参数API
-  // //////////////////////////////////
+  /**
+   * Set whether to hide the information bar
+   * @param {String} isHideInfo
+   * @memberof ClChart
+   */
   setHideInfo (isHideInfo) {
     if (isHideInfo === undefined) return
     if (isHideInfo !== this.linkInfo.hideInfo) {
@@ -230,8 +294,13 @@ export default class ClChart {
       this.onPaint()
     }
   }
-  // 最多支持多级图层
-  setColor (sysColor, chart) { // 设置背景颜色方案
+  /**
+   * Set the background color
+   * @param {String} sysColor
+   * @param {Object | null} chart
+   * @memberof ClChart
+   */
+  setColor (sysColor, chart) {
     this.color = setColor(sysColor)
     if (chart === undefined) chart = this
     for (const key in chart.childCharts) {
@@ -247,19 +316,17 @@ export default class ClChart {
       chart.childLines[key].color = this.color
       this.setColor(sysColor, chart.childLines[key])
     }
-    // 修复递归调用问题
-    // this.onPaint()
   }
-  // 改变语言
+  /**
+   * setting drafting standards
+   * @param {String} standard
+   * @memberof ClChart
+   */
   setStandard (standard) {
     setStandard(standard)
     this.setColor(this.sysColor)
     this.onPaint()
   }
-  // ///////////////////////////////////
-  //
-  // //////////////////////////////////
-
   // this.makeLineData = function(data, key, formula, punit) {
   //   return this.dataLayer.makeLineData(data, key, this.linkInfo.minIndex, this.linkInfo.maxIndex, formula);
   // }

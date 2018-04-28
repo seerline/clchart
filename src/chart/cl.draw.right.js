@@ -25,7 +25,18 @@ import {
 } from '../chart/cl.chart.init'
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
+/**
+ * Class representing ClDrawRight
+ * @export
+ * @class ClDrawRight
+ */
 export default class ClDrawRight {
+  /**
+
+   * Creates an instance of ClDrawRight.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
   constructor (father, rectMain) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -34,7 +45,11 @@ export default class ClDrawRight {
     this.source = father.father
     this.symbol = father.layout.symbol
   }
-
+  /**
+   * paint
+   * @param {String} key
+   * @memberof ClDrawRight
+   */
   onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
