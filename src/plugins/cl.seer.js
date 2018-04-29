@@ -73,7 +73,18 @@ export const FIELD_SEER_HOT = {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
+/**
+ * Class representing ClDrawSeer
+ * @export
+ * @class ClDrawSeer
+ */
 export default class ClDrawSeer {
+  /**
+   * Creates an instance of ClDrawSeer.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @constructor
+   */
   constructor (father, rectMain) {
     initCommonInfo(this, father)
     this.rectMain = rectMain
@@ -88,6 +99,13 @@ export default class ClDrawSeer {
     this.layout = father.layout
   }
 
+  /**
+   * get seer position
+   * @param {Number} index
+   * @param {Number} nowprice
+   * @return {Object}
+   * @memberof ClDrawSeer
+   */
   getSeerPos (index, nowprice) {
     const offset = index - this.linkInfo.minIndex
     if (offset < 0 || index > this.linkInfo.maxIndex) {
@@ -108,7 +126,11 @@ export default class ClDrawSeer {
       yy
     }
   }
-
+  /**
+   * draw hot seer
+   * @param {Number} no
+   * @memberof ClDrawSeer
+   */
   drawHotSeer (no) {
     let idx = findNearTimeToIndex(this.data, getValue(this.sourceSeer, 'start', no), 'time', 'forword')
     if (idx === -1) idx = this.linkInfo.maxIndex
@@ -320,7 +342,11 @@ export default class ClDrawSeer {
       }
     }
   }
-
+  /**
+   * filter seer
+   * @return {Array}
+   * @memberof ClDrawSeer
+   */
   filterSeer () {
     const out = {}
     for (let i = 0; i < this.sourceSeer.value.length; i++) {
@@ -345,6 +371,11 @@ export default class ClDrawSeer {
     }
     return out
   }
+  /**
+   * before location
+   * @return {Number}
+   * @memberof ClDrawSeer
+   */
   beforeLocation () {
     this.linkInfo.rightMode = 'forword'
     this.data = this.source.getData(this.father.hotKey)
@@ -405,11 +436,22 @@ export default class ClDrawSeer {
     this.linkInfo.fixed.min = maxmin.min
     this.linkInfo.fixed.max = maxmin.max
   }
+  /**
+   * draw transfer react
+   * @param {Number} left
+   * @param {Number} right
+   * @memberof ClDrawSeer
+   */
   drawTransRect (left, right) {
     if (right < left) return
     const clr = _setTransColor(this.color.grid, 0.5)
     _fillRect(this.context, left, this.rectMain.top, right - left, this.rectMain.height, clr)
   }
+  /**
+   * paint seer chart
+   * @param {Number} key
+   * @memberof ClDrawSeer
+   */
   onPaint (key) {
     // if (key !== undefined) this.hotKey = key
     // this.data = this.source.getData(this.hotKey)

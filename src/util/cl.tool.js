@@ -10,6 +10,8 @@
 //   时间处理函数
 // ////////////////////////////////////////
 
+/** @module ClTool */
+
 export function addPreZero (v, n) { // n表示总共几位  (9,2) ---09
   n = n > 9 ? 9 : n
   const s = '000000000' + v

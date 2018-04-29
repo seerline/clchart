@@ -26,6 +26,8 @@ import ClDrawKBar from '../chart/cl.draw.kbar'
 import ClDrawRight from '../chart/cl.draw.right'
 import ClDrawSeer from './cl.seer'
 
+/** @module SeerConfig */
+
 export const CHART_SEER = {
   zoomInfo: {
     index: 3,

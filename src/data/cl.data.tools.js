@@ -268,8 +268,8 @@ function _isRight (dateBegin, dateEnd, rightdate) {
 }
 // 对日线进行除权，周年线不能除权，,days传入时就是一个可修改的数组
 /**
- * 
- * 
+ *
+ *
  * @export
  * @param {Array} days
  * @param {Number} coinunit
@@ -884,7 +884,7 @@ export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
 }
 /**
  * out put 5 day
- * 
+ *
  * @export
  * @param {Object} source
  * @param {Number} coinunit
