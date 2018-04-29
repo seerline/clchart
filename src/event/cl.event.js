@@ -54,7 +54,17 @@ export const EVENT_DEFINE = [
   'onSwipe'
 ]
 
+/**
+ * Class representing ClEvent
+ * @export
+ * @class ClEvent
+ */
 export default class ClEvent {
+  /**
+   * Creates an instance of ClEvent.
+   * @param {Object} syscfg
+   * @constructor
+   */
   constructor (syscfg) {
     // this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
     this.eventCanvas = syscfg.cursorCanvas.canvas
@@ -74,15 +84,30 @@ export default class ClEvent {
   }
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取
   // 每个chart如果自己定义了对应事件就会分发，未定义不分发，分发后以返回值判断是否继续传递到下一个符合条件的chart
+  /**
+   * bind event
+   * @param {Object} source
+   * @memberof ClEvent
+   */
   bindChart (source) {
     this.firstChart = source
     this.HotWin = undefined
   }
+  /**
+   * clear event
+   * @memberof ClEvent
+   */
   clearEvent () {
     this.eventSource.clearEvent()
   }
   // 下面是接收事件后,根据热点位置来判断归属于哪一个chart,并分发事件;
   // config 必须包含鼠标位置 {offsetX:offsetY:}
+  /**
+   * emit event
+   * @param {String} eventName
+   * @param {Object} config
+   * @memberof ClEvent
+   */
   emitEvent (eventName, config) {
     // .....这里需要特殊分解处理Out的事件
     if (eventName === 'onMouseOut' || eventName === 'onMouseMove') {
@@ -121,6 +146,14 @@ export default class ClEvent {
   }
   // 用于鼠标联动时，向childCharts同一级别画图区域广播事件
   //
+  /**
+   * board event
+   * @param {Object} chart
+   * @param {String} eventName
+   * @param {Object} config
+   * @param {Object} ignore
+   * @memberof ClEvent
+   */
   boardEvent (chart, eventName, config, ignore) {
     const event = copyJsonOfDeep(config)
     const mousePos = this.getMousePos(config)
@@ -139,6 +172,13 @@ export default class ClEvent {
       if (event.break) break
     }
   }
+  /**
+   * find event path
+   * @param {Array} path
+   * @param {Object} chart
+   * @param {Object} mousePos
+   * @memberof ClEvent
+   */
   findEventPath (path, chart, mousePos) {
     path.push(chart)
     if (chart.childCharts === undefined) return
@@ -149,6 +189,12 @@ export default class ClEvent {
       }
     }
   }
+  /**
+   * get mouse position info
+   * @param {Object} event
+   * @return {Object} mouse position info
+   * @memberof ClEvent
+   */
   getMousePos (event) {
     const mouseX = event.offsetX * this.scale
     const mouseY = event.offsetY * this.scale

@@ -230,7 +230,16 @@ export function getExrightPriceRange (start, stop, price, coinunit, rights) {
   }
   return price
 }
-
+/**
+ * transfer exright
+ * @private
+ * @param {Array} days
+ * @param {Array} coinunit
+ * @param {Array} rightdata
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ */
 function _transExright (days, coinunit, rightdata, mode, start, end) {
   const rightpara = _getExrightPara(rightdata)
   if (mode === 'forword') {
@@ -245,12 +254,31 @@ function _transExright (days, coinunit, rightdata, mode, start, end) {
 }
 
 // 判断是否有除权
+/**
+ * check is right
+ * @param {Date} dateBegin
+ * @param {Date} dateEnd
+ * @param {Date} rightdate
+ * @return {Boolean}
+ */
 function _isRight (dateBegin, dateEnd, rightdate) {
   if (rightdate > dateBegin && rightdate <= dateEnd) {
     return true
   } else return false
 }
 // 对日线进行除权，周年线不能除权，,days传入时就是一个可修改的数组
+/**
+ * 
+ * 
+ * @export
+ * @param {Array} days
+ * @param {Number} coinunit
+ * @param {Array} rights
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ * @return {Array}
+ */
 export function transExrightDay (days, coinunit, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
@@ -273,6 +301,17 @@ export function transExrightDay (days, coinunit, rights, mode, start, end) {
 }
 
 // 对分钟线除权,days传入时就是一个可修改的数组
+/**
+ * transfer exrigth min data
+ * @export
+ * @param {Array} days
+ * @param {Number} coinunit
+ * @param {Array} rights
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ * @return {Array}
+ */
 export function transExrightMin (days, coinunit, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
@@ -300,6 +339,13 @@ export function transExrightMin (days, coinunit, rights, mode, start, end) {
 // 检索数据函数集
 // /////////////////
 // 从分钟线查找对应记录
+/**
+ * find index in min
+ * @export
+ * @param {Object} source
+ * @param {Number} index
+ * @return {Object}
+ */
 export function findIndexInMin (source, index) {
   if (source.value.length < 1) {
     return {
@@ -326,6 +372,13 @@ export function findIndexInMin (source, index) {
   }
 }
 // 从日线查找对应记录
+/**
+ * find date in day
+ * @export
+ * @param {Object} source
+ * @param {Number} today
+ * @return {Object}
+ */
 export function findDateInDay (source, today) {
   if (source === undefined || source.value === undefined || source.value.length < 1) {
     return {
@@ -402,12 +455,25 @@ export function findDateInDay (source, today) {
 // /////////////////
 // 检查数据完整性
 // /////////////////
+/**
+ * get size
+ * @export
+ * @param {Object} source
+ * @return {Boolean}
+ */
 export function getSize (source) {
   if (source === undefined || isEmptyArray(source.value)) {
     return 0
   }
   return source.value.length
 }
+/**
+ * check zero
+ * @export
+ * @param {Array} value
+ * @param {Object} fields
+ * @return {Boolean}
+ */
 export function checkZero (value, fields) {
   if (Array.isArray(value) &&
     value[fields.open] > 0 &&
@@ -421,6 +487,12 @@ export function checkZero (value, fields) {
     return true
   }
 }
+/**
+ * check day zero
+ * @export
+ * @param {Object} source
+ * @return {Array}
+ */
 export function checkDayZero (source) {
   const out = []
   if (!Array.isArray(source)) return out
@@ -432,7 +504,15 @@ export function checkDayZero (source) {
   }
   return out
 }
-
+/**
+ * check 5 day
+ * @export
+ * @param {Object} source
+ * @param {Number} coinunit
+ * @param {Number} tradeDate
+ * @param {Number} tradetime
+ * @return {Array}
+ */
 export function checkDay5 (source, coinunit, tradeDate, tradetime) {
   const out = []
   if (source.length < 1) return out
@@ -479,7 +559,13 @@ export function checkDay5 (source, coinunit, tradeDate, tradetime) {
   }
   return out
 }
-
+/**
+ * update static
+ * @export
+ * @param {Object} fields
+ * @param {Array} value
+ * @return {Array}
+ */
 export function updateStatic (fields, value) {
   const coinunit = getValue({
     fields,
@@ -584,6 +670,13 @@ export function updateStatic (fields, value) {
 // }
 
 // 按rate率压缩日线和分钟数据，因为界面显示原因，可能会存在2日...7日等合并的线
+/**
+ * get zip day
+ * @export
+ * @param {Array} daydata
+ * @param {Number} rate
+ * @return {Array}
+ */
 export function getZipDay (daydata, rate) {
   if (rate < 1) return daydata
   const out = []
@@ -623,6 +716,12 @@ export function getZipDay (daydata, rate) {
   return out
 }
 // 日线到周线
+/**
+ * convert day data to week data
+ * @export
+ * @param {Array} daydata
+ * @return {Array}
+ */
 export function matchDayToWeek (daydata) {
   const out = []
   const zipday = []
@@ -662,6 +761,12 @@ export function matchDayToWeek (daydata) {
 }
 
 // 日线到月线
+/**
+ * convert day data to month data
+ * @export
+ * @param {Array} daydata
+ * @return {Array}
+ */
 export function matchDayToMon (daydata) {
   let month
   const out = []
@@ -700,6 +805,12 @@ export function matchDayToMon (daydata) {
 }
 
 // 求交易时间的总共分钟数 [{begin:930,end:1130},{...}]
+/**
+ * get minute count
+ * @export
+ * @param {Number} tradetime
+ * @return {Number}
+ */
 export function getMinuteCount (tradetime) { // time_t
   let mincount = 0
   for (let i = 0; i < tradetime.length; i++) {
@@ -709,6 +820,13 @@ export function getMinuteCount (tradetime) { // time_t
 }
 
 // 根据交易时间把time_t返回一个顺序值 time_t --> 0..239 -1表示没有非交易时间
+/**
+ * convert time t to trade time
+ * @export
+ * @param {Number} ttime
+ * @param {Number} tradetime
+ * @return {Number}
+ */
 export function fromTradeTimeToIndex (ttime, tradetime) { // time_t 返回０－２３９
   const minute = getMinute(ttime)
 
@@ -740,6 +858,14 @@ export function fromTradeTimeToIndex (ttime, tradetime) { // time_t 返回０－
 }
 
 // 根据交易时间把0..239 转换为 time_t;  0 表示没有非交易时间
+/**
+ * convert index to trade time
+ * @export
+ * @param {Number} tindex
+ * @param {Number} tradetime
+ * @param {Number} tradeDate
+ * @return {Number}
+ */
 export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
   let index = tindex
   let offset = 0
@@ -756,7 +882,15 @@ export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
   }
   return 0
 }
-
+/**
+ * out put 5 day
+ * 
+ * @export
+ * @param {Object} source
+ * @param {Number} coinunit
+ * @param {Number} tradetime
+ * @return {Array}
+ */
 export function outputDay5 (source, coinunit, tradetime) {
   const out = {
     key: 'DAY5',
