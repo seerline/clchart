@@ -12,12 +12,25 @@
 
 /** @module ClTool */
 
+/**
+ * add prefix with 0
+ * @export
+ * @param {Number} v
+ * @param {Number} n
+ * @return {String}
+ */
 export function addPreZero (v, n) { // n表示总共几位  (9,2) ---09
   n = n > 9 ? 9 : n
   const s = '000000000' + v
   return s.slice(-1 * n)
 }
 
+/**
+ * get time's millseconds
+ * @export
+ * @param {any} ttime
+ * @return {Number}
+ */
 export function getMTime (ttime) { // 得到1970-1-1开始的毫秒数
   let mtime, seconds
   if (ttime === undefined) {
@@ -38,6 +51,13 @@ export function getMTime (ttime) { // 得到1970-1-1开始的毫秒数
 }
 
 // time_t转换成20180101格式
+/**
+ * format time_t to 20180101
+ * 
+ * @export
+ * @param {any} ttime
+ * @return {Number}
+ */
 export function getDate (ttime) {
   const mtime = getMTime(ttime)
   return mtime.getFullYear() * 10000 + (mtime.getMonth() + 1) * 100 + mtime.getDate()

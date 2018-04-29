@@ -8,85 +8,212 @@
 
 /** @module DrawUtils */
 
+/**
+ * get image data
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {Number} ww
+ * @param {Number} hh
+ * @return {Object}
+ */
 export function _getImageData (context, xx, yy, ww, hh) {
   if (context.getImageData) {
     return context.getImageData(xx, yy, ww, hh)
   }
   return undefined
 }
-
+/**
+ * put image data
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} img
+ * @param {Number} xx
+ * @param {Number} yy
+ */
 export function _putImageData (context, img, xx, yy) {
   if (context.putImageData) {
     context.putImageData(img, xx, yy)
   }
 }
 
+/**
+ * set line width
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} l line width
+ */
 export function _setLineWidth (context, l) {
   context.lineWidth = l
 }
 
+/**
+ * get line width
+ * @export
+ * @param {Object} context canvas's context
+ * @return {Number} line width
+ */
 export function _getLineWidth (context) {
   return context.lineWidth
 }
 
 // 画竖线
+/**
+ * draw vertical line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy1
+ * @param {Number} yy2
+ */
 export function _drawVline (context, xx, yy1, yy2) {
   context.moveTo(xx, yy1)
   context.lineTo(xx, yy2)
 }
 // 画横线
+/**
+ * draw horizontal line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx1
+ * @param {Number} xx2
+ * @param {Number} yy
+ */
 export function _drawHline (context, xx1, xx2, yy) {
   context.moveTo(xx1, yy)
   context.lineTo(xx2, yy)
 }
 // 画斜线
+/**
+ * draw line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx1
+ * @param {Number} yy1
+ * @param {Number} xx2
+ * @param {Number} yy2
+ */
 export function _drawline (context, xx1, yy1, xx2, yy2) {
   context.moveTo(xx1, yy1)
   context.lineTo(xx2, yy2)
 }
 
-// 画线
+/**
+ * move to position
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ */
 export function _drawmoveTo (context, xx, yy) {
   context.moveTo(xx, yy)
 }
 
-// 画线
+/**
+ * draw line to
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ */
 export function _drawlineTo (context, xx, yy) {
   context.lineTo(xx, yy)
 }
 
 // 画空心长方形
+/**
+ * draw empty rect
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {Number} ww
+ * @param {Number} hh
+ */
 export function _drawRect (context, xx, yy, ww, hh) {
   context.strokeRect(xx, yy, ww, hh) // 这里的宽度是指不算xx的起始点的宽度，所以你写宽5，实际出来图形是6个像素，
 }
 // 画实心长方形
+/**
+ * draw fill rect
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {Number} ww
+ * @param {Number} hh
+ * @param {String} fillclr
+ */
 export function _fillRect (context, xx, yy, ww, hh, fillclr) {
   context.fillStyle = fillclr || context.fillStyle
   context.fillRect(xx, yy, ww, hh)
 }
+/**
+ * clear rect
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {Number} ww
+ * @param {Number} hh
+ */
 export function _clearRect (context, xx, yy, ww, hh) {
   context.clearRect(xx, yy, ww, hh)
 }
 // 画实心长方形
+/**
+ * fill by color
+ * @export
+ * @param {Object} context canvas's context
+ * @param {String} fillclr
+ */
 export function _fill (context, fillclr) {
   context.fillStyle = fillclr
   context.fill()
 }
 // 开始画线
+/**
+ * start draw line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {String} clr
+ */
 export function _drawBegin (context, clr) {
   context.beginPath()
   context.strokeStyle = clr || context.strokeStyle
 }
 
 // 结束画线
+/**
+ * end draw
+ * @export
+ * @param {Object} context canvas's context
+ */
 export function _drawEnd (context) {
   context.stroke()
 }
 
-// 画一条虚线
+/**
+ * get beveling
+ * @private
+ * @param {Number} x
+ * @param {Number} y
+ * @return {Number}
+ */
 function __getBeveling (x, y) {
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
 }
+/**
+ * draw dash line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} x1
+ * @param {Number} y1
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {Number} dashLen
+ */
 export function _drawDashLine (context, x1, y1, x2, y2, dashLen) {
   dashLen = dashLen === undefined ? 5 : dashLen
   // 得到斜边的总长度
@@ -103,11 +230,28 @@ export function _drawDashLine (context, x1, y1, x2, y2, dashLen) {
 // ////////////////////////////
 // 以下显示文字
 // ///////////////////////////
-
+/**
+ * set font size
+ * @export
+ * @param {Object} context canvas's context
+ * @param {String} font
+ * @param {Number} pixel
+ */
 export function _setFontSize (context, font, pixel) {
   context.font = pixel + 'px ' + font
 }
-
+/**
+ * draw text
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {String} txt
+ * @param {String} font
+ * @param {Number} pixel
+ * @param {String} clr
+ * @param {Object} pos
+ */
 export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {
   _setFontSize(context, font, pixel)
   context.fillStyle = clr || context.fillStyle
@@ -117,6 +261,13 @@ export function _drawTxt (context, xx, yy, txt, font, pixel, clr, pos) {
   context.fillText(txt.toString(), xx, yy)
 }
 
+/**
+ * get text width from charmap by fontsize
+ * @param {Object} charMap
+ * @param {String} txt
+ * @param {Number} fontSize
+ * @return {Number}
+ */
 function getTxtWith (charMap, txt, fontSize) {
   const scale = fontSize / 12
   let allWidth = 0
@@ -130,7 +281,15 @@ function getTxtWith (charMap, txt, fontSize) {
   }
   return allWidth * scale
 }
-
+/**
+ * get text width
+ * @export
+ * @param {Object} context canvas's context
+ * @param {String} txt
+ * @param {String} font
+ * @param {Number} pixel
+ * @return {Number} string width
+ */
 export function _getTxtWidth (context, txt, font, pixel) {
   _setFontSize(context, font, pixel)
   let width
@@ -161,6 +320,13 @@ export function _getTxtWidth (context, txt, font, pixel) {
 // }
 
 // 获取文字显示的最适合的Rect
+/**
+ * get text bound rect
+ * @param {Object} context canvas's context
+ * @param {String} txt
+ * @param {Object} config
+ * @return {Object}
+ */
 function __getTxtRect (context, txt, config) {
   const spaceX = config.spaceX || 2
   const spaceY = config.spaceY || 2
@@ -168,6 +334,15 @@ function __getTxtRect (context, txt, config) {
   return { width: len + 2 * spaceX, height: config.pixel + spaceY * 2 }
 }
 // 把文本画在矩形内
+/**
+ * draw text rect
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {String} txt
+ * @param {Object} config
+ */
 export function _drawTxtRect (context, xx, yy, txt, config) {
   const spaceX = config.spaceX || 2
   const spaceY = config.spaceY || 2
@@ -196,12 +371,28 @@ export function _drawTxtRect (context, xx, yy, txt, config) {
 }
 
 // 画空心圆
+/**
+ * draw circle
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} r
+ */
 export function _drawCircle (context, x, y, r) {
   context.moveTo(x + r, y)
   context.arc(x, y, r, 0, Math.PI * 2, true)
 }
 
 // 画实心圆
+/**
+ * draw circle center point
+ * @param {Object} context canvas's context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} r
+ * @param {String} clr
+ */
 function _drawCircleAndFilled (context, x, y, r, clr) {
   context.moveTo(x + r, y)
   context.arc(x, y, r, 0, Math.PI * 2, true)
@@ -210,6 +401,16 @@ function _drawCircleAndFilled (context, x, y, r, clr) {
 }
 
 // 画一根独立的线，不影响后面的画线颜色
+/**
+ * draw a alone lien
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} xx
+ * @param {Number} yy
+ * @param {Number} xx1
+ * @param {Number} yy1
+ * @param {String} clr
+ */
 export function _drawLineAlone (context, xx, yy, xx1, yy1, clr) {
   const oldclr = context.strokeStyle
   _drawBegin(context, clr)
@@ -220,6 +421,16 @@ export function _drawLineAlone (context, xx, yy, xx1, yy1, clr) {
 }
 
 // 画一个椭圆
+/**
+ * draw a ellipse
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} a
+ * @param {Number} b
+ * @param {Number} h
+ */
 export function _BezierEllipse (context, x, y, a, b, h) {
   const k = 0.5522848
   const ox = a * k // 水平控制点偏移量
@@ -243,6 +454,14 @@ export function _BezierEllipse (context, x, y, a, b, h) {
 }
 
 // 画一个LOGO
+/**
+ * draw logo
+ * @export
+ * @param {any} context 
+ * @param {any} xx 
+ * @param {any} yy 
+ * @param {any} size 
+ */
 export function _drawLogo (context, xx, yy, size) {
   context.beginPath()
   const lw = size
@@ -274,6 +493,15 @@ export function _drawLogo (context, xx, yy, size) {
 // //////////////////////////////////
 
 // data {o,h,l,c}
+/**
+ * draw sign plot
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Object} Arc1
+ * @param {Object} Arc2
+ */
 export function _drawSignPlot (context, x, y, Arc1, Arc2) {
   if (Arc1 !== undefined && Arc1.r > 0) {
     _drawBegin(context, Arc1.clr)
@@ -291,6 +519,16 @@ export function _drawSignPlot (context, x, y, Arc1, Arc2) {
     _drawEnd(context)
   }
 }
+/**
+ * draw sign circle
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Object} Arc1
+ * @param {Object} Arc2
+ * @param {Object} Arc3
+ */
 export function _drawSignCircle (context, x, y, Arc1, Arc2, Arc3) {
   if (Arc1 !== undefined && Arc1.r > 0) {
     _drawBegin(context, Arc1.clr)
@@ -308,7 +546,13 @@ export function _drawSignCircle (context, x, y, Arc1, Arc2, Arc3) {
     _drawEnd(context)
   }
 }
-
+/**
+ * draw sing horizontal line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} config
+ * @param {Object} item
+ */
 export function _drawSignHLine (context, config, item) {
   _drawBegin(context, config.clr)
   _drawDashLine(context, config.xx, config.yy, config.right - config.pixel / 2, config.yy, 7)
@@ -352,7 +596,13 @@ export function _drawSignHLine (context, config, item) {
     }
   }
 }
-
+/**
+ * draw sign vertical line
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} config
+ * @param {Object} item
+ */
 export function _drawSignVLine (context, config, item) {
   _drawBegin(context, config.clr)
   _drawDashLine(context, config.xx, config.yy, config.xx, config.bottom - config.pixel / 2, 7)
@@ -395,6 +645,13 @@ export function _drawSignVLine (context, config, item) {
 }
 // { index:k, unitX: unitX, spaceX:spaceX, unitY:unitY,maxmin:mm},
 // data {o,h,l,c}
+/**
+ * draw kbar
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} config
+ * @param {Object} item
+ */
 export function _drawKBar (context, config, item) {
   const xx = config.rect.left + config.index * (config.unitX + config.spaceX)
   const xxm = xx + Math.floor(config.unitX / 2)
@@ -422,6 +679,13 @@ export function _drawKBar (context, config, item) {
   }
 }
 // data {o,h,l,c}
+/**
+ * draw volume bar
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} config
+ * @param {Object} value
+ */
 export function _drawVBar (context, config, value) {
   const xx = config.rect.left + config.index * (config.unitX + config.spaceX)
   const yy = config.rect.top + Math.round((config.maxmin.max - value) * config.unitY)
@@ -438,6 +702,14 @@ export function _drawVBar (context, config, value) {
 // Adjust 灰度
 // //////////////////////////////////
 // 为传入的16进制颜色增加透明度 ‘#1F1F2F’ -> rgba(...)
+/**
+ * transfer color to rgba
+ * @export
+ * @param {String} scolor
+ * @param {Number} trans
+ * @param {String} style
+ * @return {String}
+ */
 export function _setTransColor (scolor, trans, style) {
   const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
   let sColor = scolor.toLowerCase()

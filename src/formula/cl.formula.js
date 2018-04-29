@@ -12,7 +12,16 @@
 // ////////////////////////////////////////
 import getValue from '../data/cl.data.tools'
 
+/**
+ * Class representing ClFormula
+ * @export
+ * @class ClFormula
+ */
 export class ClFormula {
+  /**
+   * Creates an instance of ClFormula.
+   * @constructor
+   */
   constructor () {
     this.source = {
       data: {},
@@ -21,6 +30,13 @@ export class ClFormula {
       nowIndex: 0
     }
   }
+  /**
+   * get value from data layer
+   * @param {String} label
+   * @param {Number} offIndex
+   * @return {Array}
+   * @memberof ClFormula
+   */
   getValue (label, offIndex) { // offIndex 向前偏移offIndex条记录
     if (label === undefined) return 0
     if (this.source.data === undefined || this.source.data.value === undefined) return 0
@@ -30,6 +46,13 @@ export class ClFormula {
 
     return getValue(this.source.data, label, index)
   }
+  /**
+   * calculate single stock data by formula
+   * @param {Object} source
+   * @param {String} formula
+   * @return {Array}
+   * @memberof ClFormula
+   */
   runSingleStock (source, formula) {
     // fix for Wechat mina not support eval
     if (!eval) {
@@ -61,6 +84,13 @@ export class ClFormula {
   // ///////////////////
   //  自定义公式
   // /////////////////
+  /**
+   * calculate move averge data
+   * @param {String} label
+   * @param {Number} period
+   * @return {Array}
+   * @memberof ClFormula
+   */
   MA (label, period) {
     let off = 0
     let value = 0
