@@ -40,9 +40,27 @@ npm install
 npm run dev
 ```
 
+## Screenshot
+
+### pc demo
+
+![pc demo](./screenshot/pc.png)
+
+### web demo
+
+![web demo](./screenshot/web.png)
+
+### mina demo
+
+![web demo](./screenshot/mina.png)
+
+### react native demo
+
+![web demo](./screenshot/reactnative.png)
+
 ## Todos
 
-* [ ] write karma test
+* [ ] karma test
 * [ ] more web demo
 * [ ] integrate [GCanvas](https://github.com/alibaba/GCanvas) for `react native android`
 * [ ] [weex](https://github.com/apache/incubator-weex) demo
