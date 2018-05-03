@@ -33,7 +33,7 @@ import {
   copyJsonOfDeep,
   inRect
 } from '../util/cl.tool'
-import ClEventWeb from './cl.event.web'
+import ClEventHandler from './cl.event.handler'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
@@ -109,7 +109,7 @@ export default class ClEvent {
       eventCfg.isTouch = true
       eventCfg.eventBuild = buildMinaTouchEvent
     }
-    this.eventSource = new ClEventWeb(eventCfg)
+    this.eventSource = new ClEventHandler(eventCfg)
     this.eventSource.bindEvent()
   }
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取

@@ -88,11 +88,20 @@ function _getEventInfo (event) {
 }
 
 /**
- * Class representing ClEventWeb
+ * Class representing ClEventHandler
  * @export
- * @class ClEventWeb
+ * @class ClEventHandler
  */
-export default class ClEventWeb {
+export default class ClEventHandler {
+  /**
+   * Creates an instance of ClEventHandler.
+   * @param {Object} {
+   * father,
+   * eventBuild,
+   * isTouch
+   * }
+   * @constructor
+   */
   constructor ({father, eventBuild, isTouch}) {
     this.father = father
     this.eventCanvas = father.eventCanvas
@@ -109,7 +118,10 @@ export default class ClEventWeb {
       e.preventDefault()
     })
   }
-
+  /**
+   * bind evnet
+   * @memberof ClEventHandler
+   */
   bindEvent () {
     if (this.isTouch) {
       this.addHandler('touchstart', this.touchstart.bind(this))
@@ -128,6 +140,10 @@ export default class ClEventWeb {
       this.addHandler('click', this.click.bind(this))
     }
   }
+  /**
+   * clear event listener
+   * @memberof ClEventHandler
+   */
   clearEvent () {
     if (this.isTouch) {
       this.clearHandler('touchstart', this.touchstart.bind(this))
@@ -146,6 +162,12 @@ export default class ClEventWeb {
       this.clearHandler('click', this.click.bind(this))
     }
   }
+  /**
+   * add handle for events
+   * @param {String} eventName
+   * @param {Function} handler
+   * @memberof ClEventHandler
+   */
   addHandler (eventName, handler) {
     if (this.eventCanvas.addEventListener) {
       this.eventCanvas.addEventListener(eventName, handler, false)
@@ -159,7 +181,7 @@ export default class ClEventWeb {
    * Clean up all binding events
    * @param {String} eventName
    * @param {Function} handler
-   * @memberof ClEventWeb
+   * @memberof ClEventHandler
    */
   clearHandler (eventName, handler) {
     if (this.eventCanvas.removeEventListener) {
@@ -171,40 +193,90 @@ export default class ClEventWeb {
     }
   }
   // The following is an event handler
+  /**
+   * mouse move
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mousemove (event) {
     this.father.emitEvent('onMouseMove', _getEventInfo(event))
   }
+  /**
+   * mouse in
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mousein (event) {
     this.father.emitEvent('onMouseIn', _getEventInfo(event))
   }
+  /**
+   * mouse out
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mouseout (event) {
     this.father.emitEvent('onMouseOut', _getEventInfo(event))
   }
+  /**
+   * mouse whell
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mousewheel (event) {
     const info = _getEventInfo(event)
     info.deltaY = event.deltaY
     this.father.emitEvent('onMouseWheel', info)
   }
+  /**
+   * mouse up
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mouseup (event) {
     this.father.emitEvent('onMouseUp', _getEventInfo(event))
   }
+  /**
+   * mouse down
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   mousedown (event) {
     this.father.emitEvent('onMouseDown', _getEventInfo(event))
   }
   // keyboard event
+  /**
+   * key up
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   keyup (event) {
     const info = _getEventInfo(event)
     info.keyCode = event.keyCode
     this.father.emitEvent('onKeyUp', info)
   }
+  /**
+   * key down
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   keydown (event) {
     const info = _getEventInfo(event)
     info.keyCode = event.keyCode
     this.father.emitEvent('onKeyDown', info)
   }
+  /**
+   * click event
+   * @param {Object} event
+   * @memberof ClEventHandler
+   */
   click (event) {
     this.father.emitEvent('onClick', _getEventInfo(event))
   }
+  /**
+   * touchstart
+   * @param {Object} e
+   * @memberof ClEventHandler
+   */
   touchstart (e) {
     const event = this.eventBuild(e)
     this.__timestamp = new Date()
@@ -241,6 +313,11 @@ export default class ClEventWeb {
       }
     }
   }
+  /**
+   * touchedn
+   * @param {Object} e
+   * @memberof ClEventHandler
+   */
   touchend (e) {
     const event = this.eventBuild(e)
     clearTimeout(this.longTapTimeout)
@@ -263,6 +340,11 @@ export default class ClEventWeb {
     this.previousPinchScale = 1
     this.father.emitEvent('onMouseOut', _getTouchInfo(point, event.target))
   }
+  /**
+   * touchmove
+   * @param {Object} e
+   * @memberof ClEventHandler
+   */
   touchmove (e) {
     const event = this.eventBuild(e)
     if (new Date() - this.__timestamp < 150) {
