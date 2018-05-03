@@ -457,10 +457,10 @@ export function _BezierEllipse (context, x, y, a, b, h) {
 /**
  * draw logo
  * @export
- * @param {any} context 
- * @param {any} xx 
- * @param {any} yy 
- * @param {any} size 
+ * @param {any} context
+ * @param {any} xx
+ * @param {any} yy
+ * @param {any} size
  */
 export function _drawLogo (context, xx, yy, size) {
   context.beginPath()

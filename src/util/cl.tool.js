@@ -53,7 +53,7 @@ export function getMTime (ttime) { // 得到1970-1-1开始的毫秒数
 // time_t转换成20180101格式
 /**
  * format time_t to 20180101
- * 
+ *
  * @export
  * @param {any} ttime
  * @return {Number}

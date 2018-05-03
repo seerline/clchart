@@ -34,8 +34,6 @@ import {
   inRect
 } from '../util/cl.tool'
 import ClEventWeb from './cl.event.web'
-import ClEventRN from './cl.event.rn'
-import ClEventMina from './cl.event.mina'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
@@ -53,6 +51,35 @@ export const EVENT_DEFINE = [
   'onRotate',
   'onSwipe'
 ]
+
+export function buildMinaTouchEvent (e) {
+  const eventObj = {}
+  if (e && Array.isArray(e.touches)) {
+    eventObj.touches = []
+    for (let i = 0; i < e.touches.length; i++) {
+      const point = e.touches[i]
+      eventObj.touches.push({
+        pageX: point.x,
+        pageY: point.y,
+        offsetX: point.x,
+        offsetY: point.y
+      })
+    }
+  }
+  if (e && Array.isArray(e.changedTouches)) {
+    eventObj.changedTouches = []
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      const point = e.changedTouches[i]
+      eventObj.changedTouches.push({
+        pageX: point.x,
+        pageY: point.y,
+        offsetX: point.x,
+        offsetY: point.y
+      })
+    }
+  }
+  return eventObj
+}
 
 /**
  * Class representing ClEvent
@@ -72,15 +99,13 @@ export default class ClEvent {
     this.scale = syscfg.scale
 
     if (this.eventPlatform === 'react-native') {
-      this.eventSource = new ClEventRN(this)
-      this.eventSource.bindEvent()
+      this.eventSource = new ClEventWeb(this)
     } else if (this.eventPlatform === 'web') {
       this.eventSource = new ClEventWeb(this)
-      this.eventSource.bindEvent()
     } else if (this.eventPlatform === 'mina') {
-      this.eventSource = new ClEventMina(this)
-      this.eventSource.bindEvent()
+      this.eventSource = new ClEventWeb(this, buildMinaTouchEvent)
     }
+    this.eventSource.bindEvent()
   }
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取
   // 每个chart如果自己定义了对应事件就会分发，未定义不分发，分发后以返回值判断是否继续传递到下一个符合条件的chart

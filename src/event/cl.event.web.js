@@ -65,13 +65,18 @@ function _getTouchInfo (point, element) {
   const mouseInfo = {
     name: 'touch'
   }
-  let srcRect = {
-    left: 0,
-    top: 0
+  if (point.offsetX && point.offsetX === 0) {
+    mouseInfo.offsetX = point.offsetX
+    mouseInfo.offsetY = point.offsetY
+  } else {
+    let srcRect = {
+      left: 0,
+      top: 0
+    }
+    if (element && typeof element.getBoundingClientRect === 'function') srcRect = element.getBoundingClientRect()
+    mouseInfo.offsetX = point.pageX - srcRect.left
+    mouseInfo.offsetY = point.pageY - srcRect.top
   }
-  if (element && typeof element.getBoundingClientRect === 'function') srcRect = element.getBoundingClientRect()
-  mouseInfo.offsetX = point.pageX - srcRect.left
-  mouseInfo.offsetY = point.pageY - srcRect.top
   return mouseInfo
 }
 
@@ -88,9 +93,14 @@ function _getEventInfo (event) {
  * @class ClEventWeb
  */
 export default class ClEventWeb {
-  constructor (father) {
+  constructor (father, eventBuild) {
     this.father = father
     this.eventCanvas = father.eventCanvas
+    if (typeof eventBuild === 'function') {
+      this.eventBuild = eventBuild
+    } else {
+      this.eventBuild = (e) => e
+    }
     // Determine whether touch event is supported
     this.isSupportTouch = !document || 'ontouchend' in document
 
@@ -195,7 +205,8 @@ export default class ClEventWeb {
   click (event) {
     this.father.emitEvent('onClick', _getEventInfo(event))
   }
-  touchstart (event) {
+  touchstart (e) {
+    const event = this.eventBuild(e)
     this.__timestamp = new Date()
     const point = event.touches ? event.touches[0] : event
     this.startX = point.pageX
@@ -230,10 +241,8 @@ export default class ClEventWeb {
       }
     }
   }
-  touchend (event) {
-    /**
-     * Moved on the X or Y axis
-     */
+  touchend (e) {
+    const event = this.eventBuild(e)
     clearTimeout(this.longTapTimeout)
     const point = event.changedTouches ? event.changedTouches[0] : event
     const timestamp = Date.now()
@@ -254,7 +263,8 @@ export default class ClEventWeb {
     this.previousPinchScale = 1
     this.father.emitEvent('onMouseOut', _getTouchInfo(point, event.target))
   }
-  touchmove (event) {
+  touchmove (e) {
+    const event = this.eventBuild(e)
     if (new Date() - this.__timestamp < 150) {
       return event
     }
