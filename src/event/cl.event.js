@@ -98,13 +98,18 @@ export default class ClEvent {
     this.eventPlatform = syscfg.eventPlatform || 'web'
     this.scale = syscfg.scale
 
-    if (this.eventPlatform === 'react-native') {
-      this.eventSource = new ClEventWeb(this)
-    } else if (this.eventPlatform === 'web') {
-      this.eventSource = new ClEventWeb(this)
-    } else if (this.eventPlatform === 'mina') {
-      this.eventSource = new ClEventWeb(this, buildMinaTouchEvent)
+    const eventCfg = {
+      father: this
     }
+    if (this.eventPlatform === 'react-native') {
+      eventCfg.isTouch = true
+    } else if (this.eventPlatform === 'web') {
+      eventCfg.isTouch = 'ontouchend' in document
+    } else if (this.eventPlatform === 'mina') {
+      eventCfg.isTouch = true
+      eventCfg.eventBuild = buildMinaTouchEvent
+    }
+    this.eventSource = new ClEventWeb(eventCfg)
     this.eventSource.bindEvent()
   }
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取

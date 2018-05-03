@@ -93,7 +93,7 @@ function _getEventInfo (event) {
  * @class ClEventWeb
  */
 export default class ClEventWeb {
-  constructor (father, eventBuild) {
+  constructor ({father, eventBuild, isTouch}) {
     this.father = father
     this.eventCanvas = father.eventCanvas
     if (typeof eventBuild === 'function') {
@@ -102,7 +102,7 @@ export default class ClEventWeb {
       this.eventBuild = (e) => e
     }
     // Determine whether touch event is supported
-    this.isSupportTouch = !document || 'ontouchend' in document
+    this.isTouch = !!isTouch
 
     // Remove long press popup button
     this.eventCanvas.addEventListener && this.eventCanvas.addEventListener('contextmenu', e => {
@@ -111,7 +111,7 @@ export default class ClEventWeb {
   }
 
   bindEvent () {
-    if (this.isSupportTouch) {
+    if (this.isTouch) {
       this.addHandler('touchstart', this.touchstart.bind(this))
       this.addHandler('touchend', this.touchend.bind(this))
       this.addHandler('touchmove', this.touchmove.bind(this))
@@ -129,7 +129,7 @@ export default class ClEventWeb {
     }
   }
   clearEvent () {
-    if (this.isSupportTouch) {
+    if (this.isTouch) {
       this.clearHandler('touchstart', this.touchstart.bind(this))
       this.clearHandler('touchend', this.touchend.bind(this))
       this.clearHandler('touchmove', this.touchmove.bind(this))
