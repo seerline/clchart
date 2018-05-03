@@ -50,7 +50,7 @@ export default class EV {
    * @param {any} callback listen callback
    * @memberof EV
    */
-  on (event, callback) {
+  addEventListener (event, callback) {
     if (!this.handlers[event]) {
       this.handlers[event] = []
     }
@@ -77,7 +77,7 @@ export default class EV {
    * @param {any} callback event listener callback function
    * @memberof EV
    */
-  removeListener (event, callback) {
+  removeEventListener (event, callback) {
     if (this.handlers[event]) {
       const index = this
         .handlers[event]

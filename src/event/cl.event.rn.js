@@ -72,11 +72,11 @@ export default class ClEventReactNative {
     this.clearHandler('touchmove', this.touchmove.bind(this))
   }
   addHandler (eventName, handler) {
-    this.eventCanvas.on(eventName, handler)
+    this.eventCanvas.addEventListener(eventName, handler)
   }
   /* 清理所有的绑定事件 */
   clearHandler (eventName, handler) { /* Chrome */
-    this.eventCanvas.removeListener(eventName, handler)
+    this.eventCanvas.removeEventListener(eventName, handler)
   }
   // /////////////////////
   // 下面时对事件的处理

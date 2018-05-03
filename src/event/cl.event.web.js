@@ -20,6 +20,8 @@
     touches: [
       pageX: 0,
       pageY: 0,
+      offsetX: 0,
+      offsetY: 0,
     ],
     changedTouches: [],
     target: {
@@ -67,7 +69,7 @@ function _getTouchInfo (point, element) {
     left: 0,
     top: 0
   }
-  if (element !== undefined) srcRect = element.getBoundingClientRect()
+  if (element && typeof element.getBoundingClientRect === 'function') srcRect = element.getBoundingClientRect()
   mouseInfo.offsetX = point.pageX - srcRect.left
   mouseInfo.offsetY = point.pageY - srcRect.top
   return mouseInfo
@@ -90,7 +92,7 @@ export default class ClEventWeb {
     this.father = father
     this.eventCanvas = father.eventCanvas
     // Determine whether touch event is supported
-    this.isSupportTouch = !!('ontouchend' in document)
+    this.isSupportTouch = !document || 'ontouchend' in document
 
     // Remove long press popup button
     this.eventCanvas.addEventListener && this.eventCanvas.addEventListener('contextmenu', e => {
