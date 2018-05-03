@@ -47,7 +47,7 @@ export const EVENT_DEFINE = [
   'onKeyUp',
   'onKeyDown',
   'onClick',
-  'onDBClick',
+  'onDoubleClick',
   'onLongPress',
   'onPinch',
   'onRotate',
@@ -68,13 +68,13 @@ export default class ClEvent {
   constructor (syscfg) {
     // this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
     this.eventCanvas = syscfg.cursorCanvas.canvas
-    this.eventPlatform = syscfg.eventPlatform || 'html5'
+    this.eventPlatform = syscfg.eventPlatform || 'web'
     this.scale = syscfg.scale
 
     if (this.eventPlatform === 'react-native') {
       this.eventSource = new ClEventRN(this)
       this.eventSource.bindEvent()
-    } else if (this.eventPlatform === 'html5') {
+    } else if (this.eventPlatform === 'web') {
       this.eventSource = new ClEventWeb(this)
       this.eventSource.bindEvent()
     } else if (this.eventPlatform === 'mina') {

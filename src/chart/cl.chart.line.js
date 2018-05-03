@@ -927,6 +927,9 @@ export default class ClChartLine {
    * @memberof ClChartLine
    */
   onPinch (event) {
+    if (!this.config.zoomInfo) {
+      return
+    }
     if (event.scale > 0) {
       this.config.zoomInfo.index++
     } else {

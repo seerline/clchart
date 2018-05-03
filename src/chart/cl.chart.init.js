@@ -130,9 +130,9 @@ export const CHART_WIDTH_MAP = {
  * The following several variables must be established when the system is established, which is a common configuration for everyone.
  */
 const _systemInfo = {
-  runPlatform: 'normal', // 'react-native' | 'mina' | 'html5'
+  runPlatform: 'normal', // 'react-native' | 'mina' | 'web'
   axisPlatform: 'web', // 'web' | 'phone'
-  eventPlatform: 'html5', // 'react-native' | 'mina' | 'html5'
+  eventPlatform: 'web', // 'react-native' | 'mina' | 'web'
   scale: 1, // Set the zoom ratio according to the dpi of different display devices
   standard: 'china', // 'usa' | 'china' Drawing standards to support the United States and China
   sysColor: 'black', // 'white' | 'black'
@@ -158,18 +158,16 @@ export function setColor (syscolor) {
   let color = {}
   if (syscolor === 'white') {
     color = copyJsonOfDeep(COLOR_WHITE)
-    // color.line = copyArrayOfDeep(COLOR_WHITE.line)
   } else {
     color = copyJsonOfDeep(COLOR_BLACK)
-    // color.line = copyArrayOfDeep(COLOR_BLACK.line)
   }
-  // 当发现国别为美国需要修改颜色配对
+  // The contrast between the rise and fall of the US market and the Chinese market is opposite
   if (_systemInfo.standard === 'usa') {
     const clr = color.red
     color.red = color.green
     color.green = clr
   }
-  // 更新当前系统的颜色
+  // Update the current system color
   _systemInfo.color = color
   return color
 }

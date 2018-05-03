@@ -116,7 +116,7 @@ export default class ClEventMina {
           Math.abs(this.startY - this.previousTouchPoint.startY) < 10 &&
           Math.abs(this.startTime - this.previousTouchTime) < 300) {
           // this._emitEvent('onDoubleTap');
-          this.father.emitEvent('onDBClick', _getTouchInfo(point))
+          this.father.emitEvent('onDoubleClick', _getTouchInfo(point))
         }
       }
       this.previousTouchTime = this.startTime
