@@ -16,9 +16,11 @@
 
 ## Installation
 
-You can download the latest version of Chart.js from the [GitHub releases](https://github.com/seerline/clchart/releases/latest)
+### Manual Download
 
-To install via npm:
+You can download the latest version of `clchart` from the [GitHub releases](https://github.com/seerline/clchart/releases/latest)
+
+### npm
 
 ```bash
 npm install clchart --save
