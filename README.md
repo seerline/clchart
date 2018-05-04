@@ -26,6 +26,19 @@ You can download the latest version of `clchart` from the [GitHub releases](http
 npm install clchart --save
 ```
 
+### Build From Source
+
+Cloning and building the base project:
+
+```shell
+git clone git@github.com:seerline/clchart.git
+cd clchart
+npm install
+
+# Then to build
+npm run build
+```
+
 ## Documentation
 
 [English docs](https://seerline.github.io) (processing)
