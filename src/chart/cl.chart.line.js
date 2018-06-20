@@ -389,10 +389,7 @@ export default function ClChartLine (father) {
   // //////////////////////////////////////
   // 下面开始是功能性函数 主要用于简化主函数的结构
   // //////////////////////////////////////
-  this.getDecimal = function (label) {
-    if (label === 'vol' || label === 'decvol') return 0
-    return this.static.decimal
-  }
+
   this.addLine = function (line) {
     // this.removeLine(line.name);
     this.config.lines.push(line)
@@ -488,7 +485,7 @@ export default function ClChartLine (father) {
           value = getValue(this.father.getData(lines[k].formula.key), lines[k].info.labelY,
             index - this.linkInfo.minIndex)
         }
-        info = formatInfo(value, lines[k].info.format, this.static.decimal)
+        info = formatInfo(value, lines[k].info.format, this.static.coinunit, this.static.volzoom)
         out.push({
           index: k,
           txt: lines[k].info.txt,
@@ -622,7 +619,8 @@ export default function ClChartLine (father) {
         mm.max = middle * (1 + 0.01)
       } else {
         if (maxrate > minrate) {
-          mm.min = middle / (1 + maxrate)
+          // mm.min = middle / (1 + maxrate)
+          mm.min = middle * (1 - maxrate)
         } else {
           mm.max = middle * (1 + minrate)
         }

@@ -61,7 +61,7 @@
 			// 清除画布，及数据
 			Chart.clear()
 			// 初始化数据
-			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
 			// 设置相应的数据
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
@@ -126,7 +126,7 @@
 		function handleFiveDay (code) {
 			console.log('Five Day Line')
 			Chart.clear()
-			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'))
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
@@ -168,7 +168,7 @@
 			let source = peroid
 			if (peroid === 'WEEK' || peroid === 'MON') source = 'DAY'
 			Chart.clear()
-			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData(code, 'RIGHT'))
 			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData(code, source))
@@ -218,7 +218,7 @@
 		}
 		function handleSeer () {
 			Chart.clear()
-			Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'))
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'))
 			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'))

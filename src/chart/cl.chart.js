@@ -9,13 +9,11 @@
 
 import {
   copyJsonOfDeep
-  // formatInfo
 } from '../util/cl.tool'
 // import ClChartButton from './cl.chart.button';
 import ClChartLine from './cl.chart.line'
 import ClChartOrder from './cl.chart.order'
 // import ClChartScroll from './cl.chart.scroll';
-// import getValue from '../data/cl.data.tools';
 import { setColor, setStandard } from '../chart/cl.chart.init'
 import { _beforePaint, _afterPaint } from '../util/cl.draw'
 

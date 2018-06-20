@@ -24,7 +24,6 @@ import {
 } from './cl.data.tools'
 import {
   FIELD_INFO,
-  FIELD_CODE,
   FIELD_DAY,
   FIELD_MIN,
   FIELD_TICK,
@@ -47,12 +46,13 @@ export default function ClData () {
   // this.formula = new ClFormula();
   this.static = {
     stktype: 1,
-    volunit: 100,
-    coinunit: 100,
-    decimal: 2,
-    before: 1000,
-    stophigh: 1100,
-    stoplow: 900
+    volunit: 2,
+    volzoom: 100,
+    coinunit: 2,
+    coinzoom: 100,
+    before: 10.00,
+    stophigh: 11.00,
+    stoplow: 9.00
   }
 
   // 只保存一只股票的信息，当前日期，开收市时间
@@ -92,7 +92,7 @@ export default function ClData () {
     if (this.InData[key] === undefined) this.InData[key] = {}
     switch (key) {
       case 'DAY5':
-        value = checkDay5(value, this.static.coinunit, this.tradeDate, this.tradeTime)
+        value = checkDay5(value, this.static.coinzoom, this.tradeDate, this.tradeTime)
         break
       case 'NOW':
       case 'ENOW':
@@ -104,9 +104,6 @@ export default function ClData () {
         break
       case 'INFO':
         this.static = updateStatic(FIELD_INFO, value)
-        break
-      case 'CODE':
-        this.static = updateStatic(FIELD_CODE, value)
         break
     }
     // // 设置了CODE或者INFO后，把一些常用的数取出来放到static中
@@ -250,9 +247,9 @@ export default function ClData () {
     for (let k = 0; k < out.length; k++) {
       if (this.static.stktype === 0) {
         if (k === 0) {
-          allmoney = out[k][FIELD_MIN.vol] * out[k][FIELD_MIN.close] / this.static.coinunit
+          allmoney = out[k][FIELD_MIN.vol] * out[k][FIELD_MIN.close]
         } else {
-          allmoney += (out[k][FIELD_MIN.vol] - out[k - 1][FIELD_MIN.vol]) * out[k][FIELD_MIN.close] / this.static.coinunit
+          allmoney += (out[k][FIELD_MIN.vol] - out[k - 1][FIELD_MIN.vol]) * out[k][FIELD_MIN.close]
         }
         out[k][FIELD_MIN.allmoney] = allmoney
       } else {
@@ -288,7 +285,7 @@ export default function ClData () {
       }
     }
     if (this.InData['RIGHT'] && rightMode !== 'none') {
-      out = transExrightDay(out, this.static.coinunit, this.InData['RIGHT'].value, rightMode,
+      out = transExrightDay(out, this.static.coinzoom, this.InData['RIGHT'].value, rightMode,
         0, out.length - 1)
     }
     // this.config.start,this.config.stop);
@@ -323,9 +320,9 @@ export default function ClData () {
     for (let k = 0; k < min.value.length; k++) {
       if (this.static.stktype === 0) {
         if (k === 0) {
-          money = min.value[k][min.fields.vol] * min.value[k][min.fields.close] / this.static.coinunit
+          money = min.value[k][min.fields.vol] * min.value[k][min.fields.close]
         } else {
-          money += (min.value[k][min.fields.vol] - min.value[k - 1][min.fields.vol]) * min.value[k][min.fields.close] / this.static.coinunit
+          money += (min.value[k][min.fields.vol] - min.value[k - 1][min.fields.vol]) * min.value[k][min.fields.close]
         }
       } else {
         money = min.value[k][min.fields.money]
@@ -346,7 +343,7 @@ export default function ClData () {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value)
-      out = transExrightMin(out, this.static.coinunit, this.InData['RIGHT'].value, rightMode,
+      out = transExrightMin(out, this.static.coinzoom, this.InData['RIGHT'].value, rightMode,
         // this.config.start,this.config.stop);
         0, out.length - 1)
 

@@ -26,7 +26,10 @@ import {
   initCommonInfo,
   checkLayout
 } from '../chart/cl.chart.init'
-import { CHART_LAYOUT, CHART_ORDER } from '../cl.chart.def'
+import {
+  CHART_LAYOUT,
+  CHART_ORDER
+} from '../cl.chart.def'
 import getValue from '../data/cl.data.tools'
 import {
   FIELD_NOW,
@@ -34,7 +37,7 @@ import {
   FIELD_TICK
 } from '../data/../cl.data.def'
 
-export default function ClChartOrder (father) {
+export default function ClChartOrder(father) {
   initCommonInfo(this, father)
 
   this.linkInfo = father.linkInfo
@@ -43,7 +46,12 @@ export default function ClChartOrder (father) {
   //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
   // ///////////////////////////////////////////////////////////////
   this.init = function (cfg) {
-    this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
+    this.rectMain = cfg.rectMain || {
+      left: 0,
+      top: 0,
+      width: 200,
+      height: 300
+    }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
 
     this.config = updateJsonOfDeep(cfg.config, CHART_ORDER)
@@ -108,10 +116,18 @@ export default function ClChartOrder (father) {
   }
   this.drawReady = function () {
     if (this.tickData === undefined) {
-      this.tickData = { key: 'TICK', fields: FIELD_TICK, value: [] }
+      this.tickData = {
+        key: 'TICK',
+        fields: FIELD_TICK,
+        value: []
+      }
     }
     if (this.orderData === undefined) {
-      this.orderData = { key: 'NOW', fields: FIELD_NOW, value: [] }
+      this.orderData = {
+        key: 'NOW',
+        fields: FIELD_NOW,
+        value: []
+      }
     }
     let yy
     if (this.style === 'normal') {
@@ -185,31 +201,35 @@ export default function ClChartOrder (father) {
     xx = this.rectOrder.left + 2 * offx + (offx - this.txtLen) / 2
     _drawTxt(this.context, xx, yy, '平', this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
 
-    const inow = { key: 'NOW', fields: FIELD_NOW_IDX, value: this.orderData.value }
+    const inow = {
+      key: 'NOW',
+      fields: FIELD_NOW_IDX,
+      value: this.orderData.value
+    }
     yy = this.rectOrder.top + offy + Math.floor((offy - this.layout.digit.height) / 2) // 画最上面的
-    value = formatVolume(getValue(inow, 'ups'))
+    value = formatVolume(getValue(inow, 'ups'), 1)
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + (offx - len) / 2
     _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
 
-    value = formatVolume(getValue(inow, 'downs'))
+    value = formatVolume(getValue(inow, 'downs'), 1)
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + offx + (offx - len) / 2
     _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
 
-    value = formatVolume(getValue(inow, 'mids'))
+    value = formatVolume(getValue(inow, 'mids'), 1)
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + 2 * offx + (offx - len) / 2
     _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
 
     yy = this.rectOrder.top + 2 * offy + Math.floor((offy - this.layout.digit.height) / 2)
 
-    value = formatVolume(getValue(inow, 'upvol'))
+    value = formatVolume(getValue(inow, 'upvol'), 1)
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + (offx - len) / 2
     _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
 
-    value = formatVolume(getValue(inow, 'downvol'))
+    value = formatVolume(getValue(inow, 'downvol'), 1)
     len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
     xx = this.rectOrder.left + offx + (offx - len) / 2
     _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
@@ -247,7 +267,7 @@ export default function ClChartOrder (father) {
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.orderData, 'sell' + idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
@@ -256,7 +276,7 @@ export default function ClChartOrder (father) {
       xx += offx + this.volLen + this.layout.digit.spaceX
       value = getValue(this.orderData, 'sellvol' + idx)
       clr = this.color.vol
-      _drawTxt(this.context, xx, yy, formatVolume(value, 100),
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
         this.layout.digit.font, this.layout.digit.pixel, clr, {
           x: 'end'
         })
@@ -268,7 +288,7 @@ export default function ClChartOrder (father) {
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.orderData, 'buy' + idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
@@ -276,7 +296,7 @@ export default function ClChartOrder (father) {
       xx += offx + this.volLen + this.layout.digit.spaceX
       value = getValue(this.orderData, 'buyvol' + idx)
       clr = this.color.vol
-      _drawTxt(this.context, xx, yy, formatVolume(value, 100),
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
         this.layout.digit.font, this.layout.digit.pixel, clr, {
           x: 'end'
         })
@@ -298,7 +318,7 @@ export default function ClChartOrder (father) {
 
     yy = this.rectTick.top + 2 + Math.floor((offy - this.layout.digit.pixel) / 2) // 画最上面的
     for (let idx = recs - 1; idx >= beginIndex; idx--) {
-    // for (let idx = beginIndex; idx < recs; idx++) {
+      // for (let idx = beginIndex; idx < recs; idx++) {
       xx = this.rectTick.left + this.layout.digit.spaceX + this.timeLen
       value = getValue(this.tickData, 'time', idx)
       clr = this.color.txt
@@ -318,7 +338,7 @@ export default function ClChartOrder (father) {
 
         value = getValue(this.tickData, 'close', idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
@@ -330,7 +350,7 @@ export default function ClChartOrder (father) {
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.tickData, 'close', idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.decimal),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
@@ -339,7 +359,7 @@ export default function ClChartOrder (father) {
 
       value = getValue(this.tickData, 'decvol', idx)
       clr = this.color.vol
-      _drawTxt(this.context, xx, yy, formatVolume(value, 100),
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
         this.layout.digit.font, this.layout.digit.pixel, clr, {
           x: 'end'
         })

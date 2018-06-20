@@ -67,7 +67,8 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
         txt = formatInfo(
           valueY,
           this.axisYInfo.left.format,
-          this.static.decimal,
+          this.static.coinunit,
+          this.static.volzoom,
           this.static.before)
         xx = this.rectMain.left + offX
         _drawTxtRect(this.context, xx, yy, txt, {
@@ -84,7 +85,8 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
         txt = formatInfo(
           valueY,
           this.axisYInfo.right.format,
-          this.static.decimal,
+          this.static.coinunit,
+          this.static.volzoom,
           this.static.before)
         posX = this.axisPlatform === 'phone' ? 'end' : 'start'
         xx = this.rectMain.left + this.rectMain.width - offX

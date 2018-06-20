@@ -55,24 +55,3 @@ export function ClFormula () {
   }
 }
 
-//
-// 求均价时，需要考虑指数的均价问题
-// case 'MIN':
-// // 处理指数的均线问题
-// allmoney = 0;
-// fields = getFields('MIN');
-// if (this.InData.MIN === undefined) break;
-// value = this.InData['MIN'].value;
-// for (let k = 0; k < value.length; k++) {
-//   if (this.static.stktype === 0) {
-//     if (k === 0) {
-//       allmoney = value[k][fields.vol] * value[k][fields.close] / this.static.coinunit;
-//     } else {
-//       allmoney += (value[k][fields.vol] - value[k - 1][fields.vol]) * value[k][fields.close] / this.static.coinunit;
-//     }
-//     value[k][fields.allmoney] = allmoney;
-//   } else {
-//     // value[k][fields.allmoney] = value[k][fields.money];
-//   }
-// }
-// break;

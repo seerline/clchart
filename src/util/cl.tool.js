@@ -266,31 +266,31 @@ export function formatVolume (value, unit) {
   if (value === undefined || isNaN(value)) return '--'
   if (typeof value === 'string') value = parseFloat(value)
 
-  if (unit === undefined) unit = 1
+  if (unit === undefined) unit = 100
   let result = value / unit
 
-  if (value > 100000000000) result = (value / 100000000).toFixed(0) + '亿'
-  else if (value > 10000000000) result = (value / 100000000).toFixed(1) + '亿'
-  else if (value > 1000000000) result = (value / 100000000).toFixed(2) + '亿'
-  else if (value > 100000000) result = (value / 100000000).toFixed(3) + '亿'
-  else if (value > 10000000) result = (value / 10000).toFixed(0) + '万'
-  else if (value > 1000000) result = (value / 10000).toFixed(1) + '万'
-  else if (value > -0.000000001 && value < 0.000000001) result = '--'
-  else result = value.toFixed(0)
+  if (result > 100000000000) result = (result / 100000000).toFixed(0) + '亿'
+  else if (result > 10000000000) result = (result / 100000000).toFixed(1) + '亿'
+  else if (result > 1000000000) result = (result / 100000000).toFixed(2) + '亿'
+  else if (result > 100000000) result = (result / 100000000).toFixed(3) + '亿'
+  else if (result > 10000000) result = (result / 10000).toFixed(0) + '万'
+  else if (result > 1000000) result = (result / 10000).toFixed(1) + '万'
+  else if (result > -0.000000001 && result < 0.000000001) result = '--'
+  else result = result.toFixed(0)
   return String(result)
 }
 // 格式化价格 decimal为小数点，limit为最大长度[4,10]，
-export function formatPrice (value, decimal, limit, isopen) {
+export function formatPrice (value, coinunit, limit, isopen) {
   if (value === undefined || isNaN(value)) return '--'
   // if (typeof value === 'string') value = parseFloat(value);
 
   let result = value
-  if (decimal === undefined || decimal < 0 || decimal > 10) decimal = 0
+  if (coinunit === undefined || coinunit < 0 || coinunit > 10) coinunit = 0
 
   if (value > -0.000000001 && value < 0.000000001 && !isopen) {
     return '--'
   }
-  result = result.toFixed(decimal)
+  result = result.toFixed(coinunit)
 
   if (limit === undefined || limit < 4) return result
   return result.substr(0, limit)
@@ -319,16 +319,17 @@ export function formatShowTime (key, value, minute) {
   return out
 }
 
-export function formatInfo (value, format, decimal, middle) {
+export function formatInfo (value, format, coinunit, volzoom, middle) {
   let out
   if (format === 'rate') {
     out = formatRate(value, middle)
   } else {
     if (format === 'price') {
-      if (decimal === undefined) decimal = 2
-      out = formatPrice(value, decimal, 7)
+      if (coinunit === undefined) coinunit = 2
+      out = formatPrice(value, coinunit, 7)
     } else {
-      out = formatVolume(value, 100)
+      if (volzoom === undefined) volzoom = 100
+      out = formatVolume(value, volzoom)
     }
   }
   return out

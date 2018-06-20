@@ -66,7 +66,8 @@ export default function ClDrawAxisY (father, rectMain, align) {
       value = formatInfo(
         this.maxmin.max,
         this.axisY[this.align].format,
-        this.static.decimal,
+        this.static.coinunit,
+        this.static.volzoom,
         this.static.before)
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, clr,
@@ -79,7 +80,8 @@ export default function ClDrawAxisY (father, rectMain, align) {
       value = formatInfo(
         this.maxmin.min,
         this.axisY[this.align].format,
-        this.static.decimal,
+        this.static.coinunit,
+        this.static.volzoom,
         this.static.before)
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, clr,
@@ -103,7 +105,8 @@ export default function ClDrawAxisY (father, rectMain, align) {
       value = formatInfo(
         value,
         this.axisY[this.align].format,
-        this.static.decimal,
+        this.static.coinunit,
+        this.static.volzoom,
         this.static.before)
 
       _drawTxt(this.context, xx, yy, value,
