@@ -48,17 +48,28 @@ import {
 } from '../formula/cl.formula'
 // 只保存一只股票的信息，当前日期，开收市时间
 
-export default function ClData () {
-  // this.formula = new ClFormula();
-  this.static = {
-    stktype: 1,
-    volunit: 2,
-    volzoom: 100,
-    coinunit: 2,
-    coinzoom: 100,
-    before: 10.00,
-    stophigh: 11.00,
-    stoplow: 9.00
+/**
+ * Class representing ClData
+ * data layer
+ * @export
+ * @class ClData
+ */
+export default class ClData {
+  /**
+   * Creates an instance of ClData.
+
+   */
+  constructor () {
+    // this.formula = new ClFormula();
+    this.static = {
+      stktype: 1,
+      volunit: 100,
+      coinunit: 100,
+      decimal: 2,
+      before: 1000,
+      stophigh: 1100,
+      stoplow: 900
+    }
   }
 
   // 只保存一只股票的信息，当前日期，开收市时间

@@ -48,21 +48,24 @@ import {
  * @export
  * @class ClChartOrder
  */
-export default function ClChartOrder(father) {
-  initCommonInfo(this, father)
+export default class ClChartOrder {
+  /**
 
-  this.linkInfo = father.linkInfo
-  this.static = this.father.dataLayer.static
-  // ////////////////////////////////////////////////////////////////
-  //   程序入口程序，以下都是属于设置类函数，基本不需要修改，
-  // ///////////////////////////////////////////////////////////////
-  this.init = function (cfg) {
-    this.rectMain = cfg.rectMain || {
-      left: 0,
-      top: 0,
-      width: 200,
-      height: 300
-    }
+   * Creates an instance of ClChartOrder.
+   * @param {Object} father order chart's parent context
+   */
+  constructor (father) {
+    initCommonInfo(this, father)
+    this.linkInfo = father.linkInfo
+    this.static = this.father.dataLayer.static
+  }
+  /**
+   * init order chart
+   * @param {Object} cfg
+   * @memberof ClChartOrder
+   */
+  init (cfg) {
+    this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
     this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
 
     this.config = updateJsonOfDeep(cfg.config, CHART_ORDER)
