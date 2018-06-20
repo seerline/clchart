@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineKBar 的实体定义
@@ -19,16 +25,33 @@ import {
   inRect
 } from '../util/cl.tool'
 
-export default function ClDrawLine (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+/**
+ * Class representing ClDrawLine
+ * @export
+ * @class ClDrawLine
+ */
+export default class ClDrawLine {
+  /**
 
-  this.linkInfo = father.father.linkInfo
-  this.source = father.father
+   * Creates an instance of ClDrawLine.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.maxmin = father.maxmin
+    this.linkInfo = father.father.linkInfo
+    this.source = father.father
 
-  this.onPaint = function (key) {
+    this.maxmin = father.maxmin
+  }
+  /**
+   * paint
+   * @param {String} key
+   * @memberof ClDrawLine
+   */
+  onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
 

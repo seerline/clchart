@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineKBar 的实体定义
@@ -16,22 +22,37 @@ import {
   initCommonInfo,
   getLineColor
 } from '../chart/cl.chart.init'
+/**
+ * Class representing ClDrawVLine
+ * @export
+ * @class ClDrawVLine
+ */
+export default class ClDrawVLine {
+  /**
 
-export default function ClDrawVLine (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  // this.rectMain = {
-  //   left:rectMain.left,
-  //   top:rectMain.top,
-  //   width:rectMain.width,
-  //   height:rectMain.height
-  // };
-  this.linkInfo = father.father.linkInfo
-  this.source = father.father
-
-  this.maxmin = father.maxmin
-
-  this.onPaint = function (key) {
+   * Creates an instance of ClDrawVLine.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    // this.rectMain = {
+    //   left:rectMain.left,
+    //   top:rectMain.top,
+    //   width:rectMain.width,
+    //   height:rectMain.height
+    // };
+    this.linkInfo = father.father.linkInfo
+    this.source = father.father
+    this.maxmin = father.maxmin
+  }
+  /**
+   * paint
+   * @param {String} key
+   * @memberof ClDrawVLine
+   */
+  onPaint (key) {
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
 

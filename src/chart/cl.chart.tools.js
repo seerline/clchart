@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 import getValue from '../data/cl.data.tools'
 
@@ -6,7 +12,16 @@ import getValue from '../data/cl.data.tools'
 // 和定位相关基本函数
 // //////////////////////////////////////
 
-// 根据label在data中寻找匹配的记录编号
+/** @module ChartTools */
+
+/**
+ * According to the label in the data to find a matching record number
+ * @export
+ * @param {Object} data
+ * @param {Number} findvalue
+ * @param {String} label
+ * @return {Number}
+ */
 export function findLabelToIndex (data, findvalue, label) {
   for (let idx = 0; idx <= data.value.length - 1; idx++) {
     if (findvalue === getValue(data, label, idx)) {
@@ -16,6 +31,15 @@ export function findLabelToIndex (data, findvalue, label) {
   return -1
 }
 // 查找最匹配time的记录号，direction为forword的时候表示从后面向前开始寻找，
+/**
+ * Find the record number that matches the time. When the direction is forword, it means to start looking from behind.
+ * @export
+ * @param {Object} data
+ * @param {Number} findvalue
+ * @param {String} label
+ * @param {String} direction
+ * @return {Number}
+ */
 export function findNearTimeToIndex (data, findvalue, label, direction) {
   if (label === undefined) label = 'time'
   if (direction && direction === 'forword') {
@@ -31,8 +55,12 @@ export function findNearTimeToIndex (data, findvalue, label, direction) {
   }
   return -1
 }
-// 专门处理分时图和5日图这种所有数据都会小于界面的情况
-// 此种情况下elementW一般就只有一个像素
+/**
+ * Specifically dealing with the time-sharing map and the 5-day map all this data will be smaller than the interface, in this case elementW is generally only one pixel
+ * @export
+ * @param {Object} info
+ * @param {Object} config
+ */
 export function setFixedLineFlags (info, config) {
   info.showMode = 'fixed'
   info.fixed = {
@@ -48,7 +76,12 @@ export function setFixedLineFlags (info, config) {
   info.unitX = config.scale
   info.spaceX = config.width / info.maxCount - info.unitX
 }
-// 此种情况下spaceX最小需要一个像素
+/**
+ * In this case spaceX requires a minimum of one pixel
+ * @export
+ * @param {Object} info
+ * @param {Object} config
+ */
 export function setMoveLineFlags (info, config) {
   const spaceX = info.unitX / 4
   info.spaceX = spaceX < config.scale ? config.scale : spaceX

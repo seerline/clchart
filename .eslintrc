@@ -11,7 +11,12 @@
     "browser": true,
     "node": true
   },
-  "plugins": ["html"],
+  "plugins": [
+    "html",
+    "import",
+    "node",
+    "promise"
+  ],
   "rules": {
     "no-console": "off",
     "no-eval": "off"

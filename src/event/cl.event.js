@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // /////////////////////////////////////////////////
 // 定义事件监听接口
@@ -27,8 +33,7 @@ import {
   copyJsonOfDeep,
   inRect
 } from '../util/cl.tool'
-import ClEventWeb from './cl.event.web'
-import ClEventRN from './cl.event.rn'
+import ClEventHandler from './cl.event.handler'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
@@ -40,38 +45,100 @@ export const EVENT_DEFINE = [
   'onKeyUp',
   'onKeyDown',
   'onClick',
-  'onDBClick',
+  'onDoubleClick',
   'onLongPress',
   'onPinch',
   'onRotate',
   'onSwipe'
 ]
 
-export default function ClEvent (syscfg) {
-  // this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
-  this.eventCanvas = syscfg.cursorCanvas.canvas
-  this.eventPlatform = syscfg.eventPlatform || 'html5'
-  this.scale = syscfg.scale
+export function buildMinaTouchEvent (e) {
+  const eventObj = {}
+  if (e && Array.isArray(e.touches)) {
+    eventObj.touches = []
+    for (let i = 0; i < e.touches.length; i++) {
+      const point = e.touches[i]
+      eventObj.touches.push({
+        pageX: point.x,
+        pageY: point.y,
+        offsetX: point.x,
+        offsetY: point.y
+      })
+    }
+  }
+  if (e && Array.isArray(e.changedTouches)) {
+    eventObj.changedTouches = []
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      const point = e.changedTouches[i]
+      eventObj.changedTouches.push({
+        pageX: point.x,
+        pageY: point.y,
+        offsetX: point.x,
+        offsetY: point.y
+      })
+    }
+  }
+  return eventObj
+}
 
-  if (this.eventPlatform === 'react-native') {
-    this.eventSource = new ClEventRN(this)
-    this.eventSource.bindEvent()
-  } else if (this.eventPlatform === 'html5') {
-    this.eventSource = new ClEventWeb(this)
+/**
+ * Class representing ClEvent
+ * @export
+ * @class ClEvent
+ */
+export default class ClEvent {
+  /**
+   * Creates an instance of ClEvent.
+   * @param {Object} syscfg
+   * @constructor
+   */
+  constructor (syscfg) {
+    // this.eventCanvas = syscfg.mainCanvas.canvas // 对web来说就是虚拟接收事件的canvas
+    this.eventCanvas = syscfg.cursorCanvas.canvas
+    this.eventPlatform = syscfg.eventPlatform || 'web'
+    this.scale = syscfg.scale
+
+    const eventCfg = {
+      father: this
+    }
+    if (this.eventPlatform === 'react-native') {
+      eventCfg.isTouch = true
+    } else if (this.eventPlatform === 'web') {
+      eventCfg.isTouch = 'ontouchend' in document
+    } else if (this.eventPlatform === 'mina') {
+      eventCfg.isTouch = true
+      eventCfg.eventBuild = buildMinaTouchEvent
+    }
+    this.eventSource = new ClEventHandler(eventCfg)
     this.eventSource.bindEvent()
   }
   // 只需要绑定一个原始ClChart就可以了，子图的事件通过childCharts来判断获取
   // 每个chart如果自己定义了对应事件就会分发，未定义不分发，分发后以返回值判断是否继续传递到下一个符合条件的chart
-  this.bindChart = function (source) {
+  /**
+   * bind event
+   * @param {Object} source
+   * @memberof ClEvent
+   */
+  bindChart (source) {
     this.firstChart = source
     this.HotWin = undefined
   }
-  this.clearEvent = function () {
+  /**
+   * clear event
+   * @memberof ClEvent
+   */
+  clearEvent () {
     this.eventSource.clearEvent()
   }
   // 下面是接收事件后,根据热点位置来判断归属于哪一个chart,并分发事件;
   // config 必须包含鼠标位置 {offsetX:offsetY:}
-  this.emitEvent = function (eventName, config) {
+  /**
+   * emit event
+   * @param {String} eventName
+   * @param {Object} config
+   * @memberof ClEvent
+   */
+  emitEvent (eventName, config) {
     // .....这里需要特殊分解处理Out的事件
     if (eventName === 'onMouseOut' || eventName === 'onMouseMove') {
       this.boardEvent(this.firstChart, eventName, config)
@@ -109,7 +176,15 @@ export default function ClEvent (syscfg) {
   }
   // 用于鼠标联动时，向childCharts同一级别画图区域广播事件
   //
-  this.boardEvent = function (chart, eventName, config, ignore) {
+  /**
+   * board event
+   * @param {Object} chart
+   * @param {String} eventName
+   * @param {Object} config
+   * @param {Object} ignore
+   * @memberof ClEvent
+   */
+  boardEvent (chart, eventName, config, ignore) {
     const event = copyJsonOfDeep(config)
     const mousePos = this.getMousePos(config)
 
@@ -127,7 +202,14 @@ export default function ClEvent (syscfg) {
       if (event.break) break
     }
   }
-  this.findEventPath = function (path, chart, mousePos) {
+  /**
+   * find event path
+   * @param {Array} path
+   * @param {Object} chart
+   * @param {Object} mousePos
+   * @memberof ClEvent
+   */
+  findEventPath (path, chart, mousePos) {
     path.push(chart)
     if (chart.childCharts === undefined) return
 
@@ -137,7 +219,13 @@ export default function ClEvent (syscfg) {
       }
     }
   }
-  this.getMousePos = function (event) {
+  /**
+   * get mouse position info
+   * @param {Object} event
+   * @return {Object} mouse position info
+   * @memberof ClEvent
+   */
+  getMousePos (event) {
     const mouseX = event.offsetX * this.scale
     const mouseY = event.offsetY * this.scale
     return {

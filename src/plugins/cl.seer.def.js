@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClDrawSeer 的实体定义
@@ -19,6 +25,8 @@
 import ClDrawKBar from '../chart/cl.draw.kbar'
 import ClDrawRight from '../chart/cl.draw.right'
 import ClDrawSeer from './cl.seer'
+
+/** @module SeerConfig */
 
 export const CHART_SEER = {
   zoomInfo: {
@@ -72,25 +80,4 @@ export const CHART_SEER = {
   {
     className: ClDrawSeer
   }]
-}
-
-export const FIELD_SEER_HOT = {
-  uid: 0
-}
-
-// 预测信息定义
-export const FIELD_SEER = {
-  // code: 0,
-  start: 1, // 开始日期
-  period: 2, // 预期周期
-  buy: 3, // 买入价
-  target: 4, // 目标价
-  stoploss: 5, // 止损价
-  status: 6, // 当前状态
-  // stopdate: 7, // 停止日期 正在进行的为0
-  // highdate: 8,  // 最高价格日期
-  // lowdate: 9,    // 最低价格日期
-  // surplus: 10, // 剩余天数
-  uid: 11, // 预测的id
-  focused: 12 // 是否热点
 }

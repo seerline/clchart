@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 import ClChart from './chart/cl.chart'
 import ClEvent from './event/cl.event'
@@ -12,30 +18,40 @@ import {
   initSystem
 } from './chart/cl.chart.init'
 
+import EV from './util/cl.ev'
+
+/** @module ClChart */
+
+/**
+ * chart default defined
+ * @export
+ */
 export const DEF_CHART = ClChartDef
+/**
+ * data default defined
+ * @export
+ */
 export const DEF_DATA = ClDataDef
+/**
+ * plugins
+ * @export
+ */
 export const PLUGINS = ClPlugins
 
-// ///////////////////////////
-//  以下区域用于加载plugins中的定义
-// ///////////////////////////
+/**
+ * utils
+ * @export
+ */
+export const util = {
+  EV
+}
 
-// ///////////////////////////
-//  下面是一个接口API函数
-// ///////////////////////////
-// 针对单一的Chart（一个股票对应一组数据图表）
-// 多个股票对应多图需要各自设定对应关系
-// cfg 为以下区域
-//   runPlatform: 'normal', // 支持其他平台，其他平台（如微信）可能需要做函数替代和转换
-//   axisPlatform: 'phone', // 'web' 对坐标显示的区别
-//   eventPlatform: 'html5', // 'react'所有事件
-//   scale: 1, // 屏幕的放大倍数，该常量会经常性使用，并且是必须的
-//   standard: 'china',  // 画图标准，美国’usa‘，需要调整颜色
-//   sysColor: 'black'  // 色系，分白色和黑色系
-// ///////////////////////////////////
-//   context:  // 画布
-//   canvas:   // 用于接受事件处理的
-// ///////////////////////////////////
+/**
+ * create single stock chart
+ * @export
+ * @param {Object} cfg SystemConfig
+ * @returns chart instance
+ */
 export function createSingleChart (cfg) {
   const sysInfo = initSystem(cfg)
   const chart = new ClChart(sysInfo)
@@ -45,14 +61,13 @@ export function createSingleChart (cfg) {
   chart.initChart(data, event)
   return chart
 }
-
-// ///////////////////////////////////
-//   多股票同列的处理
-//   context:  // 画布
-//   canvas:   // 用于接受事件处理的
-//   charts: [name1:{},name2:{},name2:{}...]
-// 返回一组chart，每组chart按名字存在一个json数据结构里，方便使用
-// ///////////////////////////////////
+/**
+ * create mulit stocks chart
+ * processing
+ * @export
+ * @param {any} cfg SystemConfig
+ * @returns charts instance
+ */
 export function createMulChart (cfg) {
   const sysInfo = initSystem(cfg)
   const event = new ClEvent(sysInfo)

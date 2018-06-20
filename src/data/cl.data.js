@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是ClData的实体定义
@@ -56,7 +62,13 @@ export default function ClData () {
   }
 
   // 只保存一只股票的信息，当前日期，开收市时间
-  this.initData = function (tradeDate, tradetime) {
+  /**
+   * init data
+   * @param {Number} tradeDate
+   * @param {Number} tradetime
+   * @memberof ClData
+   */
+  initData (tradeDate, tradetime) {
     this.formula = new ClFormula()
     this.clearData()
     if (tradetime === undefined) {
@@ -80,14 +92,25 @@ export default function ClData () {
     }
   }
   // 包含一个股票所有的数据,以便于以后做公式系统也使用这个数据定义
-  this.clearData = function () {
+  /**
+   * clear data
+   * @memberof ClData
+   */
+  clearData () {
     this.InData = [] // 数据 json格式数据 {key:..,fields:.., value:[[],[]...]}
     this.OutData = [] // 专门用于获取数据时临时产生的数据
   }
   // //////////////////////
   // 下面是设置数据的方法
   // ////////////////////
-  this.setData = function (key, fields, value) {
+  /**
+   * set data
+   * @param {String} key
+   * @param {Object} fields
+   * @param {Array} value
+   * @memberof ClData
+   */
+  setData (key, fields, value) {
     if (value === undefined) value = []
     if (this.InData[key] === undefined) this.InData[key] = {}
     switch (key) {
@@ -114,8 +137,13 @@ export default function ClData () {
     }
     this.InData[key].value = copyArrayOfDeep(value)
   }
-
-  this.flushTick = function (nowdata, fields) {
+  /**
+   * flush tick
+   * @param {Array} nowdata
+   * @param {Array} fields
+   * @memberof ClData
+   */
+  flushTick (nowdata, fields) {
     // if (this.static.stktype == 0) return ;
     if (getSize(this.InData['TICK']) < 1) {
       if (nowdata[fields.vol] > 0) {
@@ -133,7 +161,13 @@ export default function ClData () {
       }
     }
   }
-  this.flushMin = function (nowdata, fields) {
+  /**
+   * flush min data
+   * @param {Array} nowdata
+   * @param {Array} fields
+   * @memberof ClData
+   */
+  flushMin (nowdata, fields) {
     if (this.InData['MIN'] === undefined) {
       this.InData['MIN'] = {
         key: 'MIN',
@@ -169,7 +203,13 @@ export default function ClData () {
     }
   }
   // 当有新的NOW进来时，需要对TICK和当日MIN线进行更新，
-  this.flushNowData = function (key, nowdata) {
+  /**
+   * flush now data
+   * @param {String} key
+   * @param {Array} nowdata
+   * @memberof ClData
+   */
+  flushNowData (key, nowdata) {
     if (nowdata.length < 1) return
     let fields = FIELD_NOW
     if (key === 'ENOW') fields = FIELD_ENOW
@@ -185,7 +225,14 @@ export default function ClData () {
   // //////////////////////
   // 下面是获取数据的方法,先从OutData获取，没有数据就从InData数据中获取
   // ////////////////////
-  this.getData = function (key, rightMode) {
+  /**
+   * get data
+   * @param {String} key
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
+  getData (key, rightMode) {
     switch (key) {
       case 'DAY':
         this.OutData['DAY'] = {
@@ -240,7 +287,13 @@ export default function ClData () {
     // 先找Out中的数据，没有就找In的数据
     return this.OutData[key] ? this.OutData[key] : this.InData[key]
   }
-  this.updateMinute = function (source) {
+  /**
+   * update minute
+   * @param {Object} source
+   * @return {Array}
+   * @memberof ClData
+   */
+  updateMinute (source) {
     let out = copyArrayOfDeep(source.value)
 
     let allmoney
@@ -258,7 +311,15 @@ export default function ClData () {
     }
     return out
   }
-  this.mergeDay = function (source, now, rightMode) {
+  /**
+   * merge day
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
+  mergeDay (source, now, rightMode) {
     let out = copyArrayOfDeep(source.value)
     if (now !== undefined && !checkZero(now.value, now.fields)) {
       const checked = findDateInDay(source, getDate(now.value[now.fields.time]))
@@ -292,17 +353,40 @@ export default function ClData () {
 
     return out
   }
-  this.mergeWeek = function (source, now, rightmode) {
+  /**
+   * merge week data
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightmode
+   * @return {Array}
+   * @memberof ClData
+   */
+  mergeWeek (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToWeek(out)
     // 合并周线
   }
-  this.mergeMon = function (source, now, rightmode) {
+  /**
+   * merge month data
+   * @param {Object} source
+   * @param {Array} now
+   * @param {String} rightmode
+   * @return {Array}
+   * @memberof ClData
+   */
+  mergeMon (source, now, rightmode) {
     const out = this.mergeDay(source, now, rightmode)
     return matchDayToMon(out)
     // 合并月线
   }
-  this.mergeDay5 = function (source, min) {
+  /**
+   * merge 5 day data
+   * @param {Object} source
+   * @param {Array} min
+   * @return {Array}
+   * @memberof ClData
+   */
+  mergeDay5 (source, min) {
     let out = []
 
     if (source !== undefined && !isEmptyArray(source.value)) {
@@ -339,7 +423,16 @@ export default function ClData () {
     return out
   }
   // source历史分钟线 nowmin当日分钟线
-  this.makeMinute = function (outkey, source, nowmin, rightMode) {
+  /**
+   * make minute data
+   * @param {String} outkey
+   * @param {Object} source
+   * @param {Array} nowmin
+   * @param {String} rightMode
+   * @return {Array}
+   * @memberof ClData
+   */
+  makeMinute (outkey, source, nowmin, rightMode) {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value)
@@ -364,8 +457,15 @@ export default function ClData () {
     // out = matchMinToMinute(out, outkey);
     return out
   }
-
-  this.mergeNowMinToMin = function (source, min, offset) {
+  /**
+   * merge now's min data to min data
+   * @param {Object} source
+   * @param {Array} min
+   * @param {Number} offset
+   * @return {Array}
+   * @memberof ClData
+   */
+  mergeNowMinToMin (source, min, offset) {
     const curMin = []
     let sumVol = 0
     let sumMoney = 0
@@ -419,9 +519,17 @@ export default function ClData () {
   }
 
   // /////////////////////////////////////////
-  //  以下为公司系统，自由计算的定义
+  //  以下为公式系统，自由计算的定义
   // /////////////////////////////////////////
-  this.makeLineData = function (source, outkey, formula) {
+  /**
+   * make lien data
+   * @param {Object} source
+   * @param {String} outkey
+   * @param {String} formula
+   * @return {Array}
+   * @memberof ClData
+   */
+  makeLineData (source, outkey, formula) {
     const value = this.formula.runSingleStock(source, formula)
     if (this.OutData[outkey] === undefined) {
       this.OutData[outkey] = {

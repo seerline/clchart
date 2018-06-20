@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineAxisY 的实体定义
@@ -16,20 +22,37 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawAxisY (father, rectMain, align) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  this.linkInfo = father.father.linkInfo
+/**
+ * Class representing ClDrawAxisY
+ * @export
+ * @class ClDrawAxisY
+ */
+export default class ClDrawAxisY {
+  /**
 
-  this.static = father.static
+   * Creates an instance of ClDrawAxisY.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @param {Object} align
+   */
+  constructor (father, rectMain, align) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    this.linkInfo = father.father.linkInfo
 
-  this.align = align
-  this.axisY = father.config.axisY
+    this.static = father.static
 
-  this.maxmin = father.maxmin
-  this.text = father.layout.title
+    this.align = align
+    this.axisY = father.config.axisY
 
-  this.onPaint = function () {
+    this.maxmin = father.maxmin
+    this.text = father.layout.title
+  }
+  /**
+   * paint
+   * @memberof ClDrawAxisY
+   */
+  onPaint () {
     if (this.axisY[this.align].display === 'none') return
     if (this.linkInfo.hideInfo) return
 
@@ -58,7 +81,6 @@ export default function ClDrawAxisY (father, rectMain, align) {
     }
     yy = this.rectMain.top + this.scale // 画最上面的
 
-    // console.log(xx, yy)
     // 画不画最上面的坐标
     if (this.axisY[this.align].display !== 'noupper') {
       yy = this.rectMain.top + this.scale // 画最上面的

@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineKBar 的实体定义
@@ -16,14 +22,30 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawGrid (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+/**
+ * Class representing ClDrawGrid
+ * @export
+ * @class ClDrawGrid
+ */
+export default class ClDrawGrid {
+  /**
 
-  this.axisX = father.config.axisX
-  this.axisY = father.config.axisY
+   * Creates an instance of ClDrawGrid.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.onPaint = function () {
+    this.axisX = father.config.axisX
+    this.axisY = father.config.axisY
+  }
+  /**
+   * paint
+   * @memberof ClDrawGrid
+   */
+  onPaint () {
     _drawBegin(this.context, this.color.grid)
     _drawHline(this.context, this.rectMain.left, this.rectMain.left + this.rectMain.width, this.rectMain.top)
     if (this.axisY.lines > 0) {

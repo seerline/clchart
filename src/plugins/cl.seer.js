@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClDrawSeer 的实体定义
@@ -43,26 +49,64 @@ import {
 import {
   FIELD_DAY
 } from '../cl.data.def'
-import {
-  FIELD_SEER
-} from './cl.seer.def'
+
+// 预测信息定义
+export const FIELD_SEER = {
+  // code: 0,
+  start: 1, // 开始日期
+  period: 2, // 预期周期
+  buy: 3, // 买入价
+  target: 4, // 目标价
+  stoploss: 5, // 止损价
+  status: 6, // 当前状态
+  // stopdate: 7, // 停止日期 正在进行的为0
+  // highdate: 8,  // 最高价格日期
+  // lowdate: 9,    // 最低价格日期
+  // surplus: 10, // 剩余天数
+  uid: 11, // 预测的id
+  focused: 12 // 是否热点
+}
+
+export const FIELD_SEER_HOT = {
+  uid: 0
+}
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawSeer (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+/**
+ * Class representing ClDrawSeer
+ * @export
+ * @class ClDrawSeer
+ */
+export default class ClDrawSeer {
+  /**
+   * Creates an instance of ClDrawSeer.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @constructor
+   */
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
 
-  this.linkInfo = father.father.linkInfo
+    this.linkInfo = father.father.linkInfo
 
-  this.source = father.father
+    this.source = father.father
 
-  this.static = father.father.static
+    this.static = father.father.static
 
-  this.maxmin = father.maxmin
-  this.layout = father.layout
+    this.maxmin = father.maxmin
+    this.layout = father.layout
+  }
 
-  this.getSeerPos = function (index, nowprice) {
+  /**
+   * get seer position
+   * @param {Number} index
+   * @param {Number} nowprice
+   * @return {Object}
+   * @memberof ClDrawSeer
+   */
+  getSeerPos (index, nowprice) {
     const offset = index - this.linkInfo.minIndex
     if (offset < 0 || index > this.linkInfo.maxIndex) {
       return {
@@ -82,8 +126,12 @@ export default function ClDrawSeer (father, rectMain) {
       yy
     }
   }
-
-  this.drawHotSeer = function (no) {
+  /**
+   * draw hot seer
+   * @param {Number} no
+   * @memberof ClDrawSeer
+   */
+  drawHotSeer (no) {
     let idx = findNearTimeToIndex(this.data, getValue(this.sourceSeer, 'start', no), 'time', 'forword')
     if (idx === -1) idx = this.linkInfo.maxIndex
     const offset = idx - this.linkInfo.minIndex
@@ -294,8 +342,12 @@ export default function ClDrawSeer (father, rectMain) {
       }
     }
   }
-
-  this.filterSeer = function () {
+  /**
+   * filter seer
+   * @return {Array}
+   * @memberof ClDrawSeer
+   */
+  filterSeer () {
     const out = {}
     for (let i = 0; i < this.sourceSeer.value.length; i++) {
       const curDate = getValue(this.sourceSeer, 'start', i)
@@ -319,7 +371,12 @@ export default function ClDrawSeer (father, rectMain) {
     }
     return out
   }
-  this.beforeLocation = function () {
+  /**
+   * before location
+   * @return {Number}
+   * @memberof ClDrawSeer
+   */
+  beforeLocation () {
     this.linkInfo.rightMode = 'forword'
     this.data = this.source.getData(this.father.hotKey)
     const lastDate = this.data.value[this.data.value.length - 1][this.data.fields.time]
@@ -379,12 +436,23 @@ export default function ClDrawSeer (father, rectMain) {
     this.linkInfo.fixed.min = maxmin.min
     this.linkInfo.fixed.max = maxmin.max
   }
-  this.drawTransRect = function (left, right) {
+  /**
+   * draw transfer react
+   * @param {Number} left
+   * @param {Number} right
+   * @memberof ClDrawSeer
+   */
+  drawTransRect (left, right) {
     if (right < left) return
     const clr = _setTransColor(this.color.grid, 0.5)
     _fillRect(this.context, left, this.rectMain.top, right - left, this.rectMain.height, clr)
   }
-  this.onPaint = function (key) {
+  /**
+   * paint seer chart
+   * @param {Number} key
+   * @memberof ClDrawSeer
+   */
+  onPaint (key) {
     // if (key !== undefined) this.hotKey = key
     // this.data = this.source.getData(this.hotKey)
     // 设置可见

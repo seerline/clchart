@@ -2,8 +2,8 @@
 
 npm run build
 
-cp ./dist/clchart.js ./samples
-cp ./dist/clchart.js.map ./samples
+cp ./dist/clchart.js ./samples/clchart.js
+cp ./dist/clchart.js.map ./samples/clchart.js.map
 
 node ./scripts/gh-pages.js
 

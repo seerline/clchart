@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineKBar 的实体定义
@@ -15,17 +21,35 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawInfo (father, rectMain, rectMess) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
-  this.rectMess = rectMess
+/**
+ * Class representing ClDrawInfo
+ * @export
+ * @class ClDrawInfo
+ */
+export default class ClDrawInfo {
+  /**
 
-  this.linkInfo = father.father.linkInfo
+   * Creates an instance of ClDrawInfo.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @param {Object} rectMess
+   */
+  constructor (father, rectMain, rectMess) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    this.rectMess = rectMess
 
-  this.title = father.layout.title
-  this.titleInfo = father.config.title
+    this.linkInfo = father.father.linkInfo
 
-  this.onPaint = function (message) {
+    this.title = father.layout.title
+    this.titleInfo = father.config.title
+  }
+  /**
+   * paint
+   * @param {Object} message
+   * @memberof ClDrawInfo
+   */
+  onPaint (message) {
     if (this.titleInfo.display === 'none' || this.linkInfo.hideInfo) return
 
     _fillRect(this.context, this.rectMain.left + this.scale, this.rectMain.top + this.scale,

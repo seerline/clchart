@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // ////////////////////////////////////////////////////////////////
 //   画买卖盘
@@ -37,6 +43,11 @@ import {
   FIELD_TICK
 } from '../data/../cl.data.def'
 
+/**
+ * Class representing ClChartOrder
+ * @export
+ * @class ClChartOrder
+ */
 export default function ClChartOrder(father) {
   initCommonInfo(this, father)
 
@@ -62,22 +73,29 @@ export default function ClChartOrder(father) {
     // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
     this.setPublicRect()
   }
-
-  this.checkConfig = function () { // 检查配置有冲突的修正过来
+  /**
+   * check config
+   * @memberof ClChartOrder
+   */
+  checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
     this.txtLen = _getTxtWidth(this.context, '涨', this.layout.digit.font, this.layout.digit.pixel)
     this.timeLen = _getTxtWidth(this.context, '15:30', this.layout.digit.font, this.layout.digit.pixel)
     this.volLen = _getTxtWidth(this.context, '888888', this.layout.digit.font, this.layout.digit.pixel)
     this.closeLen = _getTxtWidth(this.context, '888.88', this.layout.digit.font, this.layout.digit.pixel)
   }
-  this.setPublicRect = function () { // 计算所有矩形区域
+  /**
+   * Calculate all rectangular areas
+   * @memberof ClChartOrder
+   */
+  setPublicRect () {
     this.rectChart = offsetRect(this.rectMain, this.layout.margin)
   }
-
-  // //////////
-  //
-  // ///////////
-  this.onClick = function (/* e */) {
+  /**
+   * handle click event
+   * @memberof ClChartOrder
+   */
+  onClick (/* e */) {
     if (this.isIndex) return // 如果是指数就啥也不干
     if (this.style === 'normal') {
       this.style = 'tiny'
@@ -86,8 +104,11 @@ export default function ClChartOrder(father) {
     }
     this.father.onPaint(this)
   }
-  // 事件监听
-  this.onPaint = function () { // 重画
+  /**
+   * paint order chart
+   * @memberof ClChartOrder
+   */
+  onPaint () {
     this.codeInfo = this.father.getData('INFO')
     this.orderData = this.father.getData('NOW')
     this.tickData = this.father.getData('TICK')
@@ -107,14 +128,18 @@ export default function ClChartOrder(father) {
     }
     this.drawTick()
   }
-
-  // ////////////////////////////////////////////////////////////////
-  //   绘图函数
-  // ///////////////////////////////////////////////////////////////
-  this.drawClear = function () {
+  /**
+   * clear chart
+   * @memberof ClChartOrder
+   */
+  drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
-  this.drawReady = function () {
+  /**
+   * set ready for draw
+   * @memberof ClChartOrder
+   */
+  drawReady () {
     if (this.tickData === undefined) {
       this.tickData = {
         key: 'TICK',
@@ -174,7 +199,14 @@ export default function ClChartOrder(father) {
       height: this.rectChart.height - yy - this.layout.digit.height / 2
     }
   }
-  this.getColor = function (close, before) {
+  /**
+   * get color by close and before data
+   * @param {Number} close
+   * @param {Number} before
+   * @return {String} color
+   * @memberof ClChartOrder
+   */
+  getColor (close, before) {
     if (close > before) {
       return this.color.red
     } else if (close < before) {
@@ -183,7 +215,11 @@ export default function ClChartOrder(father) {
       return this.color.white
     }
   }
-  this.drawIndex = function () {
+  /**
+   * draw index
+   * @memberof ClChartOrder
+   */
+  drawIndex () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
 
@@ -245,7 +281,11 @@ export default function ClChartOrder(father) {
     }
     _drawEnd(this.context)
   }
-  this.drawOrder = function () {
+  /**
+   * draw order
+   * @memberof ClChartOrder
+   */
+  drawOrder () {
     const xpos = this.drawGridLine() // 先画线格
     if (this.orderData === undefined || this.orderData.value.length < 1) {
       return
@@ -304,7 +344,11 @@ export default function ClChartOrder(father) {
       yy += offy
     }
   }
-  this.drawTick = function () {
+  /**
+   * draw tick
+   * @memberof ClChartOrder
+   */
+  drawTick () {
     if (this.tickData === undefined || this.tickData.value.length < 1) return
     const maxlines = Math.floor(this.rectTick.height / this.layout.digit.height) - 1 // 屏幕最大能显示多少条记录
     const recs = this.tickData.value.length
@@ -367,8 +411,12 @@ export default function ClChartOrder(father) {
       yy += offy
     }
   }
-
-  this.drawGridLine = function () {
+  /**
+   * draw grid line
+   * @return {Number}
+   * @memberof ClChartOrder
+   */
+  drawGridLine () {
     _drawBegin(this.context, this.color.grid)
     _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
 

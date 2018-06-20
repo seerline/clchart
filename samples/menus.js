@@ -31,9 +31,10 @@ function _setMenusActive (menuId, activeDom) {
     activeDom.className = activeDom.className + ' active'
   }
 }
-function ListMenus (parentId, arr, lang) {
+function ListMenus (parentId, arr, lang, icon) {
   this.menus = arr
   this.lang = lang
+  this.icon = icon
   this.parentDom = document.getElementById(parentId)
   this.labeId = _makeid()
   this.checkId = _makeid()
@@ -48,7 +49,10 @@ function ListMenus (parentId, arr, lang) {
     const dataStr = this.createDataSet(ele)
     const html = `
       <div class="menu-container">
-        <label ${dataStr} class="menu-label menu-item active" for="${this.checkId}" id="${this.labeId}">${this.getLabelByLanguage(ele, this.lang)}</label>
+        <label ${dataStr} class="menu-label menu-item active" for="${this.checkId}" id="${this.labeId}">
+          ${this.getLabelByLanguage(ele, this.lang)}
+          ${this.getIcon()}
+        </label>
         <input class="menu-check" type="checkbox" name="${this.checkId}" id="${this.checkId}">
         <ul class="menus" id="${this.menusId}">
           ${itemHtml}
@@ -57,6 +61,13 @@ function ListMenus (parentId, arr, lang) {
     `
     this.parentDom.innerHTML = html
     this.addListenr()
+  }
+
+  this.getIcon = function () {
+    if (this.icon) {
+      return `<i class="${this.icon}"></i>`
+    }
+    return ''
   }
 
   this.createMenuItems = function () {

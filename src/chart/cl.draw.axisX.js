@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClLineAxisX 的实体定义
@@ -19,18 +25,32 @@ import {
 
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawAxisX (father, rectMain) {
-  initCommonInfo(this, father)
-  this.rectMain = rectMain
+/**
+ * Class representing ClDrawAxisX
+ * @export
+ * @class ClDrawAxisX
+ */
+export default class ClDrawAxisX {
+  /**
 
-  this.linkInfo = father.father.linkInfo
-  this.axisX = father.config.axisX
-
-  this.maxmin = father.maxmin
-  this.text = father.layout.axisX
-
-  this.onPaint = function () {
-    this.data = father.data
+   * Creates an instance of ClDrawAxisX.
+   * @param {Object} father
+   * @param {Object} rectMain
+   */
+  constructor (father, rectMain) {
+    initCommonInfo(this, father)
+    this.rectMain = rectMain
+    this.linkInfo = father.father.linkInfo
+    this.axisX = father.config.axisX
+    this.maxmin = father.maxmin
+    this.text = father.layout.axisX
+  }
+  /**
+   * pain axisx
+   * @memberof ClDrawAxisX
+   */
+  onPaint () {
+    this.data = this.father.data
     if (this.axisX.display === 'none') return
 
     let xx, value, spaceX

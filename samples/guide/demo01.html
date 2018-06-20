@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ClChat Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+    }
+
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    html, body, .container {
+      height: 100%;
+      width: 100%;
+      background-color: #3b3b42;
+      color: #f5f5f5;
+    }
+    .container {
+      position: relative;
+    }
+    .chart-canvas {
+      height: 100%;
+      width: 100%;
+    }
+    #cursorChart {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
+    <canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
+  </div>
+
+  <script src="../stockdata.js"></script>
+  <script src="../clchart.js"></script>
+
+  <script>
+    // 获取页面中的main canvas以及cursor canvas
+    // mainCanvas 用来绘制主图
+    // cursorCanvas 用来绘制十字光标
+    const mainCanvas = document.getElementById('myChart')
+    const mainCtx = mainCanvas.getContext('2d')
+    const cursorCanvas = document.getElementById('cursorChart')
+    const cursorCtx = cursorCanvas.getContext('2d')
+  
+    // 定于绘图的配置，并且把mainCanvas及cursorCanvas传入做初始化
+    const syscfg = {
+      scale: window.devicePixelRatio,
+      axisPlatform: 'phone', // 'phone' | 'web'
+      mainCanvas: {
+        canvas: mainCanvas,
+        context: mainCtx
+      },
+      cursorCanvas: {
+        canvas: cursorCanvas,
+        context: cursorCtx
+      }
+    }
+    // 创建单一股票Chart实例
+    const Chart = ClChart.createSingleChart(syscfg)
+  
+    // 清除画布，及数据
+    Chart.clear()
+    const code = 'SH000001'
+    // 数据初始化
+    // 初始化当前交易日期
+    Chart.initData(20180413, ClChart.DEF_DATA.STOCK_TRADETIME)
+    // 初始化股票信息，具体字段配置可以查看关于数据层，各种数据结构的定义
+    Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
+    Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
+    Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, getMockData(code, 'TICK'))
+    Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, getMockData(code, 'NOW'))
+    // 配置画布各个区域的大小
+    // 主图高度
+    let mainHeight = mainCanvas.height * 2 / 3
+    let mainWidth = mainCanvas.width
+    // 设置画布区域布局
+    const mainLayoutCfg = {
+      layout: ClChart.DEF_CHART.CHART_LAYOUT,
+      config: ClChart.DEF_CHART.CHART_NOW,
+      rectMain: {
+        left: 0,
+        top: 0,
+        width: mainWidth,
+        height: mainHeight
+      }
+    }
+    const mainChart = Chart.createChart('MIN', 'CHART.LINE', mainLayoutCfg, function (result) {})
+    Chart.bindData(mainChart, 'MIN')
+  
+    const volumeLoyoutCfg = {
+      layout: ClChart.DEF_CHART.CHART_LAYOUT,
+      config: ClChart.DEF_CHART.CHART_NOWVOL,
+      rectMain: {
+        left: 0,
+        top: mainHeight,
+        width: mainWidth,
+        height: mainCanvas.height - mainHeight
+      }
+    }
+    const volumeChart = Chart.createChart('MINNOW', 'CHART.LINE', volumeLoyoutCfg, function (result) {})
+    Chart.bindData(volumeChart, 'MIN')
+    // 执行绘图
+    Chart.onPaint()
+  </script>
+</body>
+</html>

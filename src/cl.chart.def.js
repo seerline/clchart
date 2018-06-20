@@ -1,29 +1,42 @@
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import ClDrawKBar from './chart/cl.draw.kbar'
 import ClDrawLine from './chart/cl.draw.line'
 import ClDrawRight from './chart/cl.draw.right'
 import ClDrawVBar from './chart/cl.draw.vbar'
 import ClDrawVLine from './chart/cl.draw.vline'
 
+/** @module ClChartDef */
+
+/**
+ * chart main layout config
+ */
 export const CHART_LAYOUT = {
   margin: {
     left: 0,
     top: 0,
     right: 0,
     bottom: 0
-  }, // 边界偏移值
+  },
   offset: {
     left: 2,
     top: 2,
     right: 2,
     bottom: 0
-  }, // 实际画图区域的偏移值
+  },
   title: {
     pixel: 12,
     height: 18,
     spaceX: 10,
     spaceY: 2,
     font: 'sans-serif'
-  }, // 标题文字的定义
+  },
   axisX: {
     pixel: 12,
     height: 18,
@@ -42,58 +55,59 @@ export const CHART_LAYOUT = {
     height: 16,
     spaceX: 3,
     font: 'sans-serif'
-  }, // 数字的定义
+  },
   symbol: {
     pixel: 10,
     size: 18,
     spaceX: 3,
     font: 'sans-serif'
-  }// 标记的定义
+  }
 }
-// 按钮的预定义
+
+/**
+ * chart buttons config
+ */
 export const CHART_BUTTONS = [
   { key: 'zoomin' },
   { key: 'zoomout' },
   { key: 'exright' }
 ]
 
-// 预定义参数
+/**
+ * chart order config
+ */
 export const CHART_ORDER = {
-  style: 'normal', // 'tiny'只显示买一卖一 'normal' 5档买卖盘
+  style: 'normal', // 'tiny' only shows buy one sell one 'normal' 5 orders
   title: {
-    display: 'text' // none 不显示 btn 按钮 text 文字
+    display: 'text' // 'text' or 'none','none' does not display btn button text
   }
 }
+
 const ZOOM_INFO_DEF = {
   index: 3,
-  // list: [1, 2, 4, 5, 7, 9, 12, 15, 19]
   list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
-// 预定义参数
+
+/**
+ * chart kbar layout config
+ */
 export const CHART_KBAR = {
   // buttons: ['zoomin', 'exright', 'zoomout'],
   // title: { display: 'none' },
   // scroll: {display: 'none'},
   zoomInfo: ZOOM_INFO_DEF,
-  // zoomInfo: {
-  //   min: 1,
-  //   max: 26,
-  //   index: 2, // value = index*index + 1 [1,2,5,10,17,26]
-  //   value: 7 // 实际的值，如果超过10，就会index=3，如果为4，index=1 index = sqrt（value - 1）
-  // },
   scroll: {
-    display: 'none' // none不显示
+    display: 'none' // 'none' does not show
   },
   title: {
-    display: 'text', // none 不显示 btn 按钮 text 文字
-    label: 'K线' // 需要显示的文字信息
+    display: 'text', // none does not show btn button text
+    label: 'K线' // label information to be displayed
   },
   axisX: {
     lines: 0,
-    display: 'none', // none不显示， both 两边各一个值, block ：根据lines每个块显示一个值 = 显示坐标
-    type: 'normal', // 有 day1 当日 day5 5日线 和 normal:日线 三种模式
-    // ??? 是否把这三种统一起来
-    format: 'date' // date time datetime normal tradetime(9:30) 根据交易时间此时 = 输出的信息格式    width: 50       // 显示宽度，web下
+    display: 'none', // 'none' | 'both' | 'block', 'none' does not show, 'both': show both, 'block': displays a value for each block based on lines = display coordinates
+    type: 'normal', // 'normal' | 'day1' | 'day5'
+    format: 'date' // date time datetime normal tradetime(9:30)
   },
   axisY: {
     lines: 3,
@@ -171,6 +185,9 @@ export const CHART_KBAR = {
   }]
 }
 
+/**
+ * chart vbar layout config
+ */
 export const CHART_VBAR = {
   zoomInfo: ZOOM_INFO_DEF,
   title: {
@@ -246,6 +263,9 @@ export const CHART_VBAR = {
   }]
 }
 
+/**
+ * chart now config
+ */
 export const CHART_NOW = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -293,6 +313,10 @@ export const CHART_NOW = {
     }
   }]
 }
+
+/**
+ * min chart volume config
+ */
 export const CHART_NOWVOL = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -331,7 +355,9 @@ export const CHART_NOWVOL = {
     }
   }]
 }
-
+/**
+ * 5day chart config
+ */
 export const CHART_DAY5 = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
@@ -380,6 +406,9 @@ export const CHART_DAY5 = {
   }]
 }
 
+/**
+ * 5 days chart volume config
+ */
 export const CHART_DAY5VOL = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字

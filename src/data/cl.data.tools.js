@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 import {
   FIELD_DAY,
@@ -19,7 +25,20 @@ import {
   getMinuteOffset
 } from '../util/cl.tool'
 
+/** @module GetValue */
+
 // 按fields定义从数组value中获取，第index条标记为label的数据
+/**
+ * get value
+ * @export
+ * @param {Object} {
+ *   fields,
+ *   value,
+ * }
+ * @param {String} label
+ * @param {Number} [index=0]
+ * @return {Number}
+ */
 export default function getValue({
   fields,
   value
@@ -42,7 +61,7 @@ export default function getValue({
         val = Math.pow(10, getValue({
           fields,
           value
-        }, 'coinunit', 0))
+        }, 'coinzoom', 0))
         break
       case 'volzoom':
         val = Math.pow(10, getValue({
@@ -114,7 +133,15 @@ export default function getValue({
 //   return idx;
 // }
 
-export function getValueMax(data, label, value) {
+/**
+ * get max value
+ * @export
+ * @param {Array} data
+ * @param {String} label
+ * @param {Number} value
+ * @return {Number}
+ */
+export function getValueMax (data, label, value) {
   let out = value
   if (!Array.isArray(data.value)) return out
   for (let k = 0; k < data.value.length; k++) {
@@ -123,7 +150,15 @@ export function getValueMax(data, label, value) {
   }
   return out
 }
-export function getValueMin(data, label, value) {
+/**
+ * get min value
+ * @export
+ * @param {Array} data
+ * @param {String} label
+ * @param {Number} value
+ * @return {Number}
+ */
+export function getValueMin (data, label, value) {
   let out = value
   if (!Array.isArray(data.value)) return out
   for (let k = 0; k < data.value.length; k++) {
@@ -136,8 +171,12 @@ export function getValueMin(data, label, value) {
 // /////////////////////////////////////////
 // 日线除权的函数集合
 // /////////////////////////////////////////
-
-function _getExrightPara(rightdata) {
+/**
+ * get exright para
+ * @param {String} rightdata
+ * @return {Object}
+ */
+function _getExrightPara (rightdata) {
   let exrightGs = 1000 // 送股数
   let exrightPg = 0 // 配股数
   let exrightPx = 0 // 利息
@@ -153,6 +192,14 @@ function _getExrightPara(rightdata) {
   }
 }
 // 传入的价格和传出的价格都是放大coinzoom倍的整形
+/**
+ * Both the incoming price and the outgoing price are magnified by the coinzoom times
+ * @param {Number} price
+ * @param {Number} coinzoom
+ * @param {Object} rightpara
+ * @param {String} mode
+ * @return {Number}
+ */
 function _getExrightPrice(price, coinzoom, rightpara, mode) {
   if (coinzoom === undefined) coinzoom = 100
   if (mode === 'forword') {
@@ -164,7 +211,17 @@ function _getExrightPrice(price, coinzoom, rightpara, mode) {
   return price / (1000 / coinzoom)
 }
 // 得到某个价格的除权价
-export function getExrightPriceRange(start, stop, price, coinzoom, rights) {
+/**
+ * Get an exemption price for a price
+ * @export
+ * @param {Number} start
+ * @param {Number} stop
+ * @param {Number} price
+ * @param {Number} coinzoom
+ * @param {Array} rights
+ * @return {Number}
+ */
+export function getExrightPriceRange (start, stop, price, coinzoom, rights) {
   if (rights === undefined || rights.length < 1) return price
   let rightpara
   for (let j = 0; j < rights.length; j++) {
@@ -176,8 +233,17 @@ export function getExrightPriceRange(start, stop, price, coinzoom, rights) {
   }
   return price
 }
-
-function _transExright(days, coinzoom, rightdata, mode, start, end) {
+/**
+ * transfer exright
+ * @private
+ * @param {Array} days
+ * @param {Array} coinzoom
+ * @param {Array} rightdata
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ */
+function _transExright (days, coinzoom, rightdata, mode, start, end) {
   const rightpara = _getExrightPara(rightdata)
   if (mode === 'forword') {
     for (let i = start; i < end; i++) {
@@ -191,13 +257,32 @@ function _transExright(days, coinzoom, rightdata, mode, start, end) {
 }
 
 // 判断是否有除权
-function _isRight(dateBegin, dateEnd, rightdate) {
+/**
+ * check is right
+ * @param {Date} dateBegin
+ * @param {Date} dateEnd
+ * @param {Date} rightdate
+ * @return {Boolean}
+ */
+function _isRight (dateBegin, dateEnd, rightdate) {
   if (rightdate > dateBegin && rightdate <= dateEnd) {
     return true
   } else return false
 }
 // 对日线进行除权，周年线不能除权，,days传入时就是一个可修改的数组
-export function transExrightDay(days, coinzoom, rights, mode, start, end) {
+/**
+ *
+ *
+ * @export
+ * @param {Array} days
+ * @param {Number} coinzoom
+ * @param {Array} rights
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ * @return {Array}
+ */
+export function transExrightDay (days, coinzoom, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
   if (start === undefined || start < 0 || start > days.length - 1) start = 0
@@ -218,7 +303,18 @@ export function transExrightDay(days, coinzoom, rights, mode, start, end) {
 }
 
 // 对分钟线除权,days传入时就是一个可修改的数组
-export function transExrightMin(days, coinzoom, rights, mode, start, end) {
+/**
+ * transfer exrigth min data
+ * @export
+ * @param {Array} days
+ * @param {Number} coinzoom
+ * @param {Array} rights
+ * @param {String} mode
+ * @param {Number} start
+ * @param {Number} end
+ * @return {Array}
+ */
+export function transExrightMin (days, coinzoom, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
   if (start === undefined || start < 0 || start > days.length - 1) start = 0
@@ -244,7 +340,14 @@ export function transExrightMin(days, coinzoom, rights, mode, start, end) {
 // 检索数据函数集
 // /////////////////
 // 从分钟线查找对应记录
-export function findIndexInMin(source, index) {
+/**
+ * find index in min
+ * @export
+ * @param {Object} source
+ * @param {Number} index
+ * @return {Object}
+ */
+export function findIndexInMin (source, index) {
   if (source.value.length < 1) {
     return {
       status: 'new',
@@ -270,7 +373,14 @@ export function findIndexInMin(source, index) {
   }
 }
 // 从日线查找对应记录
-export function findDateInDay(source, today) {
+/**
+ * find date in day
+ * @export
+ * @param {Object} source
+ * @param {Number} today
+ * @return {Object}
+ */
+export function findDateInDay (source, today) {
   if (source === undefined || source.value === undefined || source.value.length < 1) {
     return {
       finded: false,
@@ -346,13 +456,26 @@ export function findDateInDay(source, today) {
 // /////////////////
 // 检查数据完整性
 // /////////////////
-export function getSize(source) {
+/**
+ * get size
+ * @export
+ * @param {Object} source
+ * @return {Boolean}
+ */
+export function getSize (source) {
   if (source === undefined || isEmptyArray(source.value)) {
     return 0
   }
   return source.value.length
 }
-export function checkZero(value, fields) {
+/**
+ * check zero
+ * @export
+ * @param {Array} value
+ * @param {Object} fields
+ * @return {Boolean}
+ */
+export function checkZero (value, fields) {
   if (Array.isArray(value) &&
     value[fields.open] > 0 &&
     value[fields.high] > 0 &&
@@ -365,7 +488,13 @@ export function checkZero(value, fields) {
     return true
   }
 }
-export function checkDayZero(source) {
+/**
+ * check day zero
+ * @export
+ * @param {Object} source
+ * @return {Array}
+ */
+export function checkDayZero (source) {
   const out = []
   if (!Array.isArray(source)) return out
 
@@ -376,8 +505,16 @@ export function checkDayZero(source) {
   }
   return out
 }
-
-export function checkDay5(source, coinzoom, tradeDate, tradetime) {
+/**
+ * check 5 day
+ * @export
+ * @param {Object} source
+ * @param {Number} coinzoom
+ * @param {Number} tradeDate
+ * @param {Number} tradetime
+ * @return {Array}
+ */
+export function checkDay5 (source, coinzoom, tradeDate, tradetime) {
   const out = []
   if (source.length < 1) return out
   
@@ -423,8 +560,14 @@ export function checkDay5(source, coinzoom, tradeDate, tradetime) {
   }
   return out
 }
-
-export function updateStatic(fields, value) {
+/**
+ * update static
+ * @export
+ * @param {Object} fields
+ * @param {Array} value
+ * @return {Array}
+ */
+export function updateStatic (fields, value) {
   const coinzoom = getValue({
     fields,
     value
@@ -444,10 +587,10 @@ export function updateStatic(fields, value) {
       value
     }, 'volunit'),
     coinzoom,
-    coinunit: getValue({
+    coinzoom: getValue({
       fields,
       value
-    }, 'coinunit'),
+    }, 'coinzoom'),
     before: getValue({
       fields,
       value
@@ -530,7 +673,14 @@ export function updateStatic(fields, value) {
 // }
 
 // 按rate率压缩日线和分钟数据，因为界面显示原因，可能会存在2日...7日等合并的线
-export function getZipDay(daydata, rate) {
+/**
+ * get zip day
+ * @export
+ * @param {Array} daydata
+ * @param {Number} rate
+ * @return {Array}
+ */
+export function getZipDay (daydata, rate) {
   if (rate < 1) return daydata
   const out = []
   const zipday = []
@@ -569,7 +719,13 @@ export function getZipDay(daydata, rate) {
   return out
 }
 // 日线到周线
-export function matchDayToWeek(daydata) {
+/**
+ * convert day data to week data
+ * @export
+ * @param {Array} daydata
+ * @return {Array}
+ */
+export function matchDayToWeek (daydata) {
   const out = []
   const zipday = []
 
@@ -608,7 +764,13 @@ export function matchDayToWeek(daydata) {
 }
 
 // 日线到月线
-export function matchDayToMon(daydata) {
+/**
+ * convert day data to month data
+ * @export
+ * @param {Array} daydata
+ * @return {Array}
+ */
+export function matchDayToMon (daydata) {
   let month
   const out = []
   const zipday = []
@@ -646,7 +808,13 @@ export function matchDayToMon(daydata) {
 }
 
 // 求交易时间的总共分钟数 [{begin:930,end:1130},{...}]
-export function getMinuteCount(tradetime) { // time_t
+/**
+ * get minute count
+ * @export
+ * @param {Number} tradetime
+ * @return {Number}
+ */
+export function getMinuteCount (tradetime) { // time_t
   let mincount = 0
   for (let i = 0; i < tradetime.length; i++) {
     mincount += getMinuteGap(tradetime[i].begin, tradetime[i].end)
@@ -655,7 +823,14 @@ export function getMinuteCount(tradetime) { // time_t
 }
 
 // 根据交易时间把time_t返回一个顺序值 time_t --> 0..239 -1表示没有非交易时间
-export function fromTradeTimeToIndex(ttime, tradetime) { // time_t 返回０－２３９
+/**
+ * convert time t to trade time
+ * @export
+ * @param {Number} ttime
+ * @param {Number} tradetime
+ * @return {Number}
+ */
+export function fromTradeTimeToIndex (ttime, tradetime) { // time_t 返回０－２３９
   const minute = getMinute(ttime)
 
   let nowmin = 0
@@ -686,7 +861,15 @@ export function fromTradeTimeToIndex(ttime, tradetime) { // time_t 返回０－�
 }
 
 // 根据交易时间把0..239 转换为 time_t;  0 表示没有非交易时间
-export function fromIndexToTradeTime(tindex, tradetime, tradeDate) {
+/**
+ * convert index to trade time
+ * @export
+ * @param {Number} tindex
+ * @param {Number} tradetime
+ * @param {Number} tradeDate
+ * @return {Number}
+ */
+export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
   let index = tindex
   let offset = 0
   let nowmin = 0
@@ -702,8 +885,16 @@ export function fromIndexToTradeTime(tindex, tradetime, tradeDate) {
   }
   return 0
 }
-
-export function outputDay5(source, coinzoom, tradetime) {
+/**
+ * out put 5 day
+ *
+ * @export
+ * @param {Object} source
+ * @param {Number} coinzoom
+ * @param {Number} tradetime
+ * @return {Array}
+ */
+export function outputDay5 (source, coinzoom, tradetime) {
   const out = {
     key: 'DAY5',
     fields: FIELD_DAY5,

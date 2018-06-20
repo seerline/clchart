@@ -7,14 +7,15 @@
 	<meta name="keywords" content="chart, canvas, stock chart, fast, simple, cross-platform, configurable">
 	<script src="./clchart.js"></script>
 	<script src="./menus.js?v=1"></script>
+	<script src="./debounce.js"></script>
 	<link rel="stylesheet" type="text/css" href="./style.css?v=1" />
 </head>
 
 <body class="theme-black">
 	<div class="container">
 		<div class="header-container">
-			<div class="header-logo ">
-				<i class="icon-seer-white"></i>
+			<div class="header-logo">
+				<a href="https://github.com/seerline/clchart"><i class="icon-seer-white"></i></a>
 			</div>
 			<div id="drawMenu">
 			</div>
@@ -36,15 +37,31 @@
 	<script src="./stockdata.js"></script>
 	<script>
 		'use strict'
+		// 获取浏览器内核版本
+		function getBrowserVersion() {
+			const ua = navigator.userAgent;
+			return {
+				trident: ua.indexOf('Trident') > -1, // IE内核
+				presto: ua.indexOf('Presto') > -1, // opera内核
+				webKit: ua.indexOf('AppleWebKit') > -1, // 苹果、谷歌内核
+				gecko: ua.indexOf('Gecko') > -1 && ua.indexOf('KHTML') === -1, // 火狐内核
+				mobile: !!ua.match(/AppleWebKit.*Mobile.*/), // 是否为移动终端
+				ios: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+				android: ua.indexOf('Android') > -1, // android终端
+				iPad: ua.indexOf('iPad') > -1, // 是否iPad
+				uc: ua.indexOf('UCBrowser') > -1, // 是否UC浏览器
+				qq: ua.indexOf('MQQBrowser') > -1, // 是否QQ浏览器
+				weixin: ua.indexOf('MicroMessenger') > -1 // 是否微信
+			}
+		}
 		// 开始画图
 		const canvas = document.getElementById('myChart')
 		const ctx = canvas.getContext('2d')
 		const cursorCanvas = document.getElementById('cursorChart')
 		const cursorCtx = cursorCanvas.getContext('2d')
 		const syscfg = {
-			canvas,
 			scale: window.devicePixelRatio,
-			context: ctx,
+			axisPlatform: getBrowserVersion().mobile ? 'phone' : 'web',
 			mainCanvas: {
 				canvas: canvas,
 				context: ctx
@@ -116,7 +133,6 @@
 				const orderChart = Chart.createChart('ORDER', 'CHART.ORDER', orderLayoutCfg, function (result) {
 					//  console.log(result)
 				})
-				// ??? 为什么可以不绑定数据
 				// Chart.bindData(orderChart, 'TICK')
 			}
 
@@ -318,7 +334,7 @@
 			drawMenus.createMenus(function (activeData) {
 				drawChart(activeData)
 			})
-			langMenus = new ListMenus('langMenu', langMenusCfg, lang)
+			langMenus = new ListMenus('langMenu', langMenusCfg, lang, 'icon-language')
 			langMenus.createMenus(function (activeData) {
 				if (activeData.lang === lang) {
 					return
@@ -351,11 +367,11 @@
 			const toggleThemeDom = document.getElementById('toggleTheme');
 			toggleThemeDom.addEventListener('click', hanldeToggleTheme)
 		}
-		window.onresize = function () {
+		window.onresize = window._debounce(function () {
 			canvas.width = canvas.clientWidth * window.devicePixelRatio
 			canvas.height = canvas.clientHeight * window.devicePixelRatio
 			drawChart(drawMenus.active)
-		}
+		}, 100)
 	</script>
 </body>
 

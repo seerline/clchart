@@ -1,4 +1,10 @@
-'use strict'
+/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
 
 // //////////////////////////////////////////////////
 // 以下是 ClDrawCursor 的实体定义
@@ -21,29 +27,56 @@ import {
 } from '../util/cl.tool'
 // 创建时必须带入父类，后面的运算定位都会基于父节点进行；
 // 这个类仅仅是画图, 因此需要把可以控制的rect传入进来
-export default function ClDrawCursor (father, rectMain, rectChart) {
-  initCommonInfo(this, father)
-  this.rectFather = father.rectMain
-  this.rectMain = rectMain // 画十字线和边界标签
-  this.rectChart = rectChart // 鼠标有效区域
+/**
+ * Class representing ClDrawCursor
+ * @export
+ * @class ClDrawCursor
+ */
+export default class ClDrawCursor {
+  /**
 
-  this.linkInfo = father.father.linkInfo
-  this.static = father.static
+   * Creates an instance of ClDrawCursor.
+   * @param {Object} father
+   * @param {Object} rectMain
+   * @param {Object} rectChart
+   */
+  constructor (father, rectMain, rectChart) {
+    initCommonInfo(this, father)
+    this.rectFather = father.rectMain
+    this.rectMain = rectMain // 画十字线和边界标签
+    this.rectChart = rectChart // 鼠标有效区域
 
-  this.axisXInfo = father.config.axisX
-  this.axisYInfo = father.config.axisY
+    this.linkInfo = father.father.linkInfo
+    this.static = father.static
 
-  this.maxmin = father.maxmin
-  this.axisX = father.layout.axisX
+    this.axisXInfo = father.config.axisX
+    this.axisYInfo = father.config.axisY
 
-  this.context = father.father.cursorCanvas.context
-  this.onClear = function () {
+    this.maxmin = father.maxmin
+    this.axisX = father.layout.axisX
+
+    this.context = father.father.cursorCanvas.context
+  }
+  /**
+   * handle clear
+   * @memberof ClDrawCursor
+   */
+  onClear () {
     _clearRect(this.context, this.rectFather.left, this.rectFather.top,
       this.rectFather.left + this.rectFather.width,
       this.rectFather.top + this.rectFather.height)
   }
-
-  this.onPaint = function (mousePos, valueX, valueY) {
+  /**
+   * paint
+   * @param {Object} mousePos
+   * @param {Number} valueX
+   * @param {Number} valueY
+   * @memberof ClDrawCursor
+   */
+  onPaint (mousePos, valueX, valueY) {
+    if (typeof this.context._beforePaint === 'function') {
+      this.context._beforePaint()
+    }
     if (inRangeX(this.rectChart, mousePos.x) === false) return
     this.onClear()
 
@@ -124,6 +157,9 @@ export default function ClDrawCursor (father, rectMain, rectChart) {
         x: posX,
         y: 'top'
       })
+    }
+    if (typeof this.context._afterPaint === 'function') {
+      this.context._afterPaint()
     }
   }
 }
