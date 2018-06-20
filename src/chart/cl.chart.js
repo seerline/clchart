@@ -316,6 +316,7 @@ export default class ClChart {
       chart.childLines[key].color = this.color
       this.setColor(sysColor, chart.childLines[key])
     }
+    this.sysColor = sysColor
   }
   /**
    * setting drafting standards
