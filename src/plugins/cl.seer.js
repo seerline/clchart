@@ -482,7 +482,7 @@ export default class ClDrawSeer {
           left: seerPos.xx - acrR,
           top: this.showSeer[k].focused ? seerPos.yy - acrR - 2 * acrR : seerPos.yy - acrR,
           width: 2 * acrR,
-          height: this.showSeer[k].focused ? 2 * acrR + 2 * acrR : 2 * acrR
+          height: this.showSeer[k].focused ?  2 * acrR + 2 * acrR : 2 * acrR
         },
         config: {
           translucent: true,
