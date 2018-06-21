@@ -142,6 +142,8 @@ export default class ClDrawSeer {
     const status = getValue(this.sourceSeer, 'status', no)
     const startPrice = getValue(this.sourceSeer, 'buy', no)
     let price = startPrice
+    console.log('this.maxmin', this.maxmin, price, startPrice);
+    
     let yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY)
 
     let startTxt = this.linkInfo.hideInfo ? '买点' : '买点:' + formatPrice(price, this.static.coinunit)
@@ -402,11 +404,11 @@ export default class ClDrawSeer {
       const lastval = copyArrayOfDeep(this.sourceSeer.value)
       for (let i = 0; i < lastval.length; i++) {
         lastval[i][FIELD_SEER.buy] =
-          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.buy], 1, rights.value)
+          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.buy], rights.value)
         lastval[i][FIELD_SEER.target] =
-          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.target], 1, rights.value)
+          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.target], rights.value)
         lastval[i][FIELD_SEER.stoploss] =
-          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.stoploss], 1, rights.value)
+          getExrightPriceRange(maxmin.min, lastDate, lastval[i][FIELD_SEER.stoploss], rights.value)
       }
       // 这里必须重新指向，否则会重复除权
       this.sourceSeer = {

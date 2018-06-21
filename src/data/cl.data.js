@@ -357,7 +357,7 @@ export default class ClData {
       }
     }
     if (this.InData['RIGHT'] && rightMode !== 'none') {
-      out = transExrightDay(out, this.static.coinzoom, this.InData['RIGHT'].value, rightMode,
+      out = transExrightDay(out, this.InData['RIGHT'].value, rightMode,
         0, out.length - 1)
     }
     // this.config.start,this.config.stop);

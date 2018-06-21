@@ -191,24 +191,20 @@ function _getExrightPara (rightdata) {
     px: exrightPx
   }
 }
-// 传入的价格和传出的价格都是放大coinzoom倍的整形
+
 /**
- * Both the incoming price and the outgoing price are magnified by the coinzoom times
  * @param {Number} price
- * @param {Number} coinzoom
  * @param {Object} rightpara
  * @param {String} mode
  * @return {Number}
  */
-function _getExrightPrice(price, coinzoom, rightpara, mode) {
-  if (coinzoom === undefined) coinzoom = 100
+function _getExrightPrice(price, rightpara, mode) {
   if (mode === 'forword') {
-    price = (price * (1000 / coinzoom) - rightpara.pg - rightpara.px) * 1000 / rightpara.gs
+    price = (price * 1000 - rightpara.pg - rightpara.px) * 1000 / rightpara.gs
   } else {
-    price = price * (1000 / coinzoom) * rightpara.gs / 1000 + rightpara.pg + rightpara.px
+    price = price * 1000 * rightpara.gs / 1000 + rightpara.pg + rightpara.px
   }
-  // return Math.floor(price / (1000 / coinzoom) + 0.5)
-  return price / (1000 / coinzoom)
+  return price / 1000
 }
 // 得到某个价格的除权价
 /**
@@ -217,17 +213,16 @@ function _getExrightPrice(price, coinzoom, rightpara, mode) {
  * @param {Number} start
  * @param {Number} stop
  * @param {Number} price
- * @param {Number} coinzoom
- * @param {Array} rights
+  * @param {Array} rights
  * @return {Number}
  */
-export function getExrightPriceRange (start, stop, price, coinzoom, rights) {
+export function getExrightPriceRange (start, stop, price, rights) {
   if (rights === undefined || rights.length < 1) return price
   let rightpara
   for (let j = 0; j < rights.length; j++) {
     if (rights[j][0] > start && rights[j][0] <= stop) {
       rightpara = _getExrightPara(rights[j])
-      price = _getExrightPrice(price, coinzoom, rightpara, 'forword')
+      price = _getExrightPrice(price, rightpara, 'forword')
       break
     }
   }
@@ -237,20 +232,19 @@ export function getExrightPriceRange (start, stop, price, coinzoom, rights) {
  * transfer exright
  * @private
  * @param {Array} days
- * @param {Array} coinzoom
  * @param {Array} rightdata
  * @param {String} mode
  * @param {Number} start
  * @param {Number} end
  */
-function _transExright (days, coinzoom, rightdata, mode, start, end) {
+function _transExright (days, rightdata, mode, start, end) {
   const rightpara = _getExrightPara(rightdata)
   if (mode === 'forword') {
     for (let i = start; i < end; i++) {
-      days[i][FIELD_DAY.open] = _getExrightPrice(days[i][FIELD_DAY.open], coinzoom, rightpara, mode) // open
-      days[i][FIELD_DAY.high] = _getExrightPrice(days[i][FIELD_DAY.high], coinzoom, rightpara, mode) // high
-      days[i][FIELD_DAY.low] = _getExrightPrice(days[i][FIELD_DAY.low], coinzoom, rightpara, mode) // low
-      days[i][FIELD_DAY.close] = _getExrightPrice(days[i][FIELD_DAY.close], coinzoom, rightpara, mode) // new
+      days[i][FIELD_DAY.open] = _getExrightPrice(days[i][FIELD_DAY.open], rightpara, mode) // open
+      days[i][FIELD_DAY.high] = _getExrightPrice(days[i][FIELD_DAY.high], rightpara, mode) // high
+      days[i][FIELD_DAY.low] = _getExrightPrice(days[i][FIELD_DAY.low], rightpara, mode) // low
+      days[i][FIELD_DAY.close] = _getExrightPrice(days[i][FIELD_DAY.close], rightpara, mode) // new
       days[i][FIELD_DAY.vol] = days[i][FIELD_DAY.vol] * rightpara.gs / 1000
     }
   }
@@ -275,14 +269,13 @@ function _isRight (dateBegin, dateEnd, rightdate) {
  *
  * @export
  * @param {Array} days
- * @param {Number} coinzoom
  * @param {Array} rights
  * @param {String} mode
  * @param {Number} start
  * @param {Number} end
  * @return {Array}
  */
-export function transExrightDay (days, coinzoom, rights, mode, start, end) {
+export function transExrightDay (days, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
   if (start === undefined || start < 0 || start > days.length - 1) start = 0
@@ -293,7 +286,7 @@ export function transExrightDay (days, coinzoom, rights, mode, start, end) {
       for (let j = 0; j < rights.length; j++) {
         if (i < 1) continue
         if (_isRight(days[i - 1][FIELD_DAY.time], days[i][FIELD_DAY.time], rights[j][FIELD_RIGHT.time])) {
-          _transExright(days, coinzoom, rights[j], mode, start, i)
+          _transExright(days, rights[j], mode, start, i)
           break
         }
       }
@@ -307,14 +300,13 @@ export function transExrightDay (days, coinzoom, rights, mode, start, end) {
  * transfer exrigth min data
  * @export
  * @param {Array} days
- * @param {Number} coinzoom
  * @param {Array} rights
  * @param {String} mode
  * @param {Number} start
  * @param {Number} end
  * @return {Array}
  */
-export function transExrightMin (days, coinzoom, rights, mode, start, end) {
+export function transExrightMin (days, rights, mode, start, end) {
   if (rights.length < 1 || days.length < 1) return days
   if (mode === undefined) mode = 'forword' // 以最近的价格为基准,修正以前的价格;
   if (start === undefined || start < 0 || start > days.length - 1) start = 0
@@ -328,7 +320,7 @@ export function transExrightMin (days, coinzoom, rights, mode, start, end) {
             getDate(days[i - 1][FIELD_DAY.time]),
             getDate(days[i][FIELD_DAY.time]),
             rights[j][FIELD_RIGHT.time])) {
-          _transExright(days, coinzoom, rights[j], mode, start, i)
+          _transExright(days, rights[j], mode, start, i)
           break
         }
       }
@@ -509,15 +501,14 @@ export function checkDayZero (source) {
  * check 5 day
  * @export
  * @param {Object} source
- * @param {Number} coinzoom
  * @param {Number} tradeDate
  * @param {Number} tradetime
  * @return {Array}
  */
-export function checkDay5 (source, coinzoom, tradeDate, tradetime) {
+export function checkDay5 (source, tradeDate, tradetime) {
   const out = []
   if (source.length < 1) return out
-  
+
   const lastDate = getDate(source[source.length - 1][FIELD_DAY5.time])
   // 判断是否已经有收盘数据了
   let maxDays = 5
@@ -551,7 +542,7 @@ export function checkDay5 (source, coinzoom, tradeDate, tradetime) {
       money = 0
     }
     vol += out[idx][FIELD_DAY5.vol]
-    money += out[idx][FIELD_DAY5.close] * out[idx][FIELD_DAY5.vol] / coinzoom
+    money += out[idx][FIELD_DAY5.close] * out[idx][FIELD_DAY5.vol]
     let index = fromTradeTimeToIndex(out[idx][FIELD_DAY5.time], tradetime)
     index += (count - 1) * daymins
     out[idx][FIELD_DAY5.idx] = index
@@ -587,10 +578,10 @@ export function updateStatic (fields, value) {
       value
     }, 'volunit'),
     coinzoom,
-    coinzoom: getValue({
+    coinunit: getValue({
       fields,
       value
-    }, 'coinzoom'),
+    }, 'coinunit'),
     before: getValue({
       fields,
       value
@@ -890,11 +881,10 @@ export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
  *
  * @export
  * @param {Object} source
- * @param {Number} coinzoom
  * @param {Number} tradetime
  * @return {Array}
  */
-export function outputDay5 (source, coinzoom, tradetime) {
+export function outputDay5 (source, tradetime) {
   const out = {
     key: 'DAY5',
     fields: FIELD_DAY5,
@@ -916,7 +906,7 @@ export function outputDay5 (source, coinzoom, tradetime) {
       money = 0
     }
     vol += source[idx][FIELD_TICK.vol]
-    money += source[idx][FIELD_TICK.close] * source[idx][FIELD_TICK.vol] / coinzoom
+    money += source[idx][FIELD_TICK.close] * source[idx][FIELD_TICK.vol]
     let index = fromTradeTimeToIndex(source[idx][FIELD_TICK.time], tradetime)
     index += (count - 1) * daymins
     out.value.push([index, source[idx][FIELD_TICK.close], source[idx][FIELD_TICK.vol], money / vol])
