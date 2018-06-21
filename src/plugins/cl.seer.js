@@ -142,7 +142,6 @@ export default class ClDrawSeer {
     const status = getValue(this.sourceSeer, 'status', no)
     const startPrice = getValue(this.sourceSeer, 'buy', no)
     let price = startPrice
-    console.log('this.maxmin', this.maxmin, price, startPrice);
     
     let yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY)
 
