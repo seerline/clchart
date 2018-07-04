@@ -16,7 +16,7 @@
     "ghpages": "sh ./scripts/deploy.sh",
     "release": "npm run build && ./node_modules/.bin/gh-release -a ./dist/clchart.js",
     "docs:api": "gulp doc && gulp watch",
-    "docs:dev": "vuepress dev docs",
+    "docs:dev": "open http://localhost:8080/ && vuepress dev docs",
     "docs:build": "vuepress build docs",
     "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
