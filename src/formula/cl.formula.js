@@ -109,4 +109,3 @@ export class ClFormula {
     return value
   }
 }
-

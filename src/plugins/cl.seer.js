@@ -142,7 +142,7 @@ export default class ClDrawSeer {
     const status = getValue(this.sourceSeer, 'status', no)
     const startPrice = getValue(this.sourceSeer, 'buy', no)
     let price = startPrice
-    
+
     let yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY)
 
     let startTxt = this.linkInfo.hideInfo ? '买点' : '买点:' + formatPrice(price, this.static.coinunit)
@@ -483,7 +483,7 @@ export default class ClDrawSeer {
           left: seerPos.xx - acrR,
           top: this.showSeer[k].focused ? seerPos.yy - acrR - 2 * acrR : seerPos.yy - acrR,
           width: 2 * acrR,
-          height: this.showSeer[k].focused ?  2 * acrR + 2 * acrR : 2 * acrR
+          height: this.showSeer[k].focused ? 2 * acrR + 2 * acrR : 2 * acrR
         },
         config: {
           translucent: true,

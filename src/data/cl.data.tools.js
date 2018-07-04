@@ -39,7 +39,7 @@ import {
  * @param {Number} [index=0]
  * @return {Number}
  */
-export default function getValue({
+export default function getValue ({
   fields,
   value
 }, label, index = 0) {
@@ -198,7 +198,7 @@ function _getExrightPara (rightdata) {
  * @param {String} mode
  * @return {Number}
  */
-function _getExrightPrice(price, rightpara, mode) {
+function _getExrightPrice (price, rightpara, mode) {
   if (mode === 'forword') {
     price = (price * 1000 - rightpara.pg - rightpara.px) * 1000 / rightpara.gs
   } else {
@@ -317,9 +317,9 @@ export function transExrightMin (days, rights, mode, start, end) {
       for (let j = 0; j < rights.length; j++) {
         if (i < 1) continue
         if (_isRight(
-            getDate(days[i - 1][FIELD_DAY.time]),
-            getDate(days[i][FIELD_DAY.time]),
-            rights[j][FIELD_RIGHT.time])) {
+          getDate(days[i - 1][FIELD_DAY.time]),
+          getDate(days[i][FIELD_DAY.time]),
+          rights[j][FIELD_RIGHT.time])) {
           _transExright(days, rights[j], mode, start, i)
           break
         }
@@ -688,10 +688,10 @@ export function getZipDay (daydata, rate) {
       zipday[field.money] = daydata[k][field.money]
       count = 1
     } else {
-      zipday[field.high] = zipday[field.high] > daydata[k][field.high] ?
-        zipday[field.high] : daydata[k][field.high]
-      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0 ?
-        zipday[field.low] : daydata[k][field.low]
+      zipday[field.high] = zipday[field.high] > daydata[k][field.high]
+        ? zipday[field.high] : daydata[k][field.high]
+      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0
+        ? zipday[field.low] : daydata[k][field.low]
       zipday[field.close] = daydata[k][field.close]
       zipday[field.vol] += daydata[k][field.vol]
       zipday[field.money] += daydata[k][field.money]
@@ -729,10 +729,10 @@ export function matchDayToWeek (daydata) {
       zipday[field.low] = daydata[k][field.low]
       isBegin = false
     } else {
-      zipday[field.high] = zipday[field.high] > daydata[k][field.high] ?
-        zipday[field.high] : daydata[k][field.high]
-      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0 ?
-        zipday[field.low] : daydata[k][field.low]
+      zipday[field.high] = zipday[field.high] > daydata[k][field.high]
+        ? zipday[field.high] : daydata[k][field.high]
+      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0
+        ? zipday[field.low] : daydata[k][field.low]
     }
     zipday[field.close] = daydata[k][field.close]
     zipday[field.vol] = daydata[k][field.vol]
@@ -776,10 +776,10 @@ export function matchDayToMon (daydata) {
       month = getDayMon(daydata[k][field.time])
       isBegin = false
     } else {
-      zipday[field.high] = zipday[field.high] > daydata[k][field.high] ?
-        zipday[field.high] : daydata[k][field.high]
-      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0 ?
-        zipday[field.low] : daydata[k][field.low]
+      zipday[field.high] = zipday[field.high] > daydata[k][field.high]
+        ? zipday[field.high] : daydata[k][field.high]
+      zipday[field.low] = zipday[field.low] < daydata[k][field.low] || daydata[k][field.low] === 0
+        ? zipday[field.low] : daydata[k][field.low]
     }
     zipday[field.close] = daydata[k][field.close]
     zipday[field.vol] = daydata[k][field.vol]
