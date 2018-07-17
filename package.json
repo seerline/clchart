@@ -20,9 +20,9 @@
     "docs:build": "vuepress build docs",
     "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
-  "keywords": [],
+  "keywords": ["canvas", "stock chart", "candle chart"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "clean-webpack-plugin": "^0.1.19",
