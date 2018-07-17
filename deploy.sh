@@ -3,6 +3,8 @@
 # 确保脚本抛出遇到的错误
 set -e
 
+rm -rf vuepress
+
 # 生成静态文件
 npm run docs:build
 
@@ -31,3 +33,5 @@ git commit -m 'deploy'
 git push -f git@github.com:seerline/clchart.git master:gh-pages
 
 cd -
+
+rm -rf ./samples/clchart.js ./samples/clchart.js.map
