@@ -46,6 +46,10 @@ module.exports = {
             link: '/config/'
           },
           {
+            text: 'Samples',
+            link: 'https://seerline.github.io/clchart/samples/'
+          },
+          {
             text: 'Changelog',
             link: 'https://github.com/seerline/clchart/blob/master/CHANGELOG.md'
           }
@@ -67,6 +71,10 @@ module.exports = {
           {
             text: '配置',
             link: '/zh/config/'
+          },
+          {
+            text: '示例',
+            link: 'https://seerline.github.io/clchart/samples/'
           },
           {
             text: 'Changelog',
