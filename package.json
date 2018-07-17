@@ -9,8 +9,8 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --progress --open --config webpack.dev.js",
-    "lint": "eslint ./",
-    "fixcode": "eslint ./ --fix",
+    "lint": "eslint ./src",
+    "fixcode": "eslint ./src --fix",
     "clean": "rm -rf node_modules && npm i",
     "build": "webpack --config webpack.prod.js",
     "deploy": "sh ./deploy.sh",
