@@ -13,14 +13,18 @@
     "fixcode": "eslint ./ --fix",
     "clean": "rm -rf node_modules && npm i",
     "build": "webpack --config webpack.prod.js",
-    "ghpages": "sh ./scripts/deploy.sh",
+    "deploy": "sh ./deploy.sh",
     "release": "npm run build && ./node_modules/.bin/gh-release -a ./dist/clchart.js",
     "docs:api": "gulp doc && gulp watch",
     "docs:dev": "open http://localhost:8080/ && vuepress dev docs",
     "docs:build": "vuepress build docs",
     "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
-  "keywords": ["canvas", "stock chart", "candle chart"],
+  "keywords": [
+    "canvas",
+    "stock chart",
+    "candle chart"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
@@ -36,7 +40,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "gh-pages": "^1.1.0",
     "gh-release": "^3.2.0",
     "gulp": "^4.0.0",
     "gulp-jsdoc3": "^2.0.0",

@@ -1,5 +1,6 @@
 module.exports = {
   dest: 'vuepress',
+  base: '/clchart/',
   locales: {
     '/': {
       lang: 'en-US',

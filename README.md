@@ -8,7 +8,7 @@
 
 *Simple Cross-platform Stock Charts using the canvas element*
 
-[HTML5 Demo](https://seerline.github.io/clchart/)
+[HTML5 Demo](https://seerline.github.io/clchart/samples/)
 
 [React Native Demo](https://github.com/seerline/react-native-clchart-demo)
 
