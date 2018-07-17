@@ -26,7 +26,7 @@ module.exports = {
   serviceWorker: true,
   // theme: 'vue',
   themeConfig: {
-    repo: 'vuejs/vuepress',
+    repo: 'seerline/clchart',
     editLinks: true,
     docsDir: 'docs',
     locales: {
