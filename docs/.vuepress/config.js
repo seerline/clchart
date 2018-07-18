@@ -47,11 +47,11 @@ module.exports = {
           },
           {
             text: 'API',
-            link: '/api/'
+            link: 'https://github.com/seerline/clchart/api/'
           },
           {
             text: 'Samples',
-            link: '/samples/'
+            link: 'https://github.com/seerline/clchart/samples/'
           },
           {
             text: 'Changelog',
@@ -78,11 +78,11 @@ module.exports = {
           },
           {
             text: 'API',
-            link: '/api/'
+            link: 'https://github.com/seerline/clchart/api/'
           },
           {
             text: '示例',
-            link: '/samples/'
+            link: 'https://github.com/seerline/clchart/samples/'
           },
           {
             text: 'Changelog',
