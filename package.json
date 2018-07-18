@@ -8,11 +8,11 @@
     "url": "https://github.com/seerline/clchart.git"
   },
   "scripts": {
-    "dev": "webpack-dev-server --progress --open --config webpack.dev.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open --config webpack.config.js",
     "lint": "eslint ./src",
     "fixcode": "eslint ./src --fix",
     "clean": "rm -rf node_modules && npm i",
-    "build": "webpack --config webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "deploy": "sh ./deploy.sh",
     "release": "npm run build && ./node_modules/.bin/gh-release -a ./dist/clchart.js",
     "docs:api": "gulp doc && gulp watch",
