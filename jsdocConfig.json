@@ -3,7 +3,7 @@
         "allowUnknownTags": true
     },
     "opts": {
-        "destination": "./docs/api",
+        "destination": "./vuepress/api",
         "encoding": "utf8",
         "private": false,
         "recurse": true,

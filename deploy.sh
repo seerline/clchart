@@ -8,6 +8,9 @@ rm -rf vuepress
 # 生成静态文件
 npm run docs:build
 
+gulp doc
+
+cp -r ./screenshot ./vuepress/api/
 
 npm run build
 

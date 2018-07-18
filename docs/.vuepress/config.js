@@ -46,8 +46,12 @@ module.exports = {
             link: '/config/'
           },
           {
+            text: 'API',
+            link: '/api/'
+          },
+          {
             text: 'Samples',
-            link: 'https://seerline.github.io/clchart/samples/'
+            link: '/samples/'
           },
           {
             text: 'Changelog',
@@ -73,8 +77,12 @@ module.exports = {
             link: '/zh/config/'
           },
           {
+            text: 'API',
+            link: '/api/'
+          },
+          {
             text: '示例',
-            link: 'https://seerline.github.io/clchart/samples/'
+            link: '/samples/'
           },
           {
             text: 'Changelog',

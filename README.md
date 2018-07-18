@@ -41,9 +41,9 @@ npm run build
 
 ## Documentation
 
-[English docs](https://seerline.github.io) (processing)
+[English docs](https://seerline.github.io/clchart/) (processing)
 
-[中文文档](https://seerline.github.io/zh-cn) (编写中)
+[中文文档](https://seerline.github.io/clchart/zh/) (编写中)
 
 ## Contributing
 
@@ -59,19 +59,19 @@ npm run dev
 
 ### pc demo
 
-![pc demo](./screenshot/pc.png)
+<img src="./screenshot/pc.png" alt="pc demo" width="100%" height="auto"/>
 
 ### web demo
 
-![web demo](./screenshot/web.png)
+<img src="./screenshot/web.png" alt="web demo" width="100%" height="auto"/>
 
 ### mina demo
 
-![web demo](./screenshot/mina.png)
+<img src="./screenshot/mina.png" alt="mina demo" width="100%" height="auto"/>
 
 ### react native demo
 
-![web demo](./screenshot/reactnative.png)
+<img src="./screenshot/reactnative.png" alt="reactnative demo" width="100%" height="auto"/>
 
 ## Todos
 
