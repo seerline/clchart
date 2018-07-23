@@ -54,7 +54,7 @@ export class ClFormula {
    * @memberof ClFormula
    */
   runSingleStock (source, formula) {
-    // fix for Wechat mina not support eval
+    // fix for Wechat mina do not support eval
     if (!eval) {
       const singleValue = []
       const matchData = formula.match(/\.(\w+)(\(.+)/)
