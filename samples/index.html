@@ -345,15 +345,15 @@
 			// 切换主题颜色
 			let theme = 'black';
 			function hanldeToggleTheme() {
-				const sumDom = document.getElementById('iconSun')
+				const sunDom = document.getElementById('iconSun')
 				const moonDom = document.getElementById('iconMoon')
 				if (theme === 'black') {
 					moonDom.style.display = 'block'
-					sumDom.style.display = 'none'
+					sunDom.style.display = 'none'
 					theme = 'white'
 				} else {
 					moonDom.style.display = 'none'
-					sumDom.style.display = 'block'
+					sunDom.style.display = 'block'
 					theme = 'black'
 				}
 				document.body.className = 'theme-' + theme
