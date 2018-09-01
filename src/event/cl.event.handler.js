@@ -314,7 +314,7 @@ export default class ClEventHandler {
     }
   }
   /**
-   * touchedn
+   * touchend
    * @param {Object} e
    * @memberof ClEventHandler
    */
