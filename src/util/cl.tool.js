@@ -6,9 +6,7 @@
  *
  */
 
-// /////////////////////////////////////////
 //   时间处理函数
-// ////////////////////////////////////////
 
 /** @module ClTool */
 
@@ -122,9 +120,7 @@ export function getMinuteOffset (minute, offset) {
   return Math.floor(mincount / 60) * 100 + mincount % 60
 }
 
-// /////////////////////////////////////////
 // 公用无关性的函数集合
-// /////////////////////////////////////////
 
 export function copyArrayOfDeep (obj) {
   let out
@@ -362,6 +358,5 @@ export function formatInfo (value, format, coinunit, volzoom, middle) {
   }
   return out
 }
-// /////////////////////////////////////////
+
 // 数据转换函数集合
-// /////////////////////////////////////////

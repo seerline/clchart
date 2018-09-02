@@ -6,11 +6,9 @@
  *
  */
 
-// //////////////////////////////////////////////////
 // 以下是ClData的实体定义
 // 一般只用操作这个类就可以获取单个股票的所有数据
 // 不支持多个股票的数据，对于列表来说，这里只保存ID列表，其他的数据由实际画图自行获取，
-// //////////////////////////////////////////////////
 
 import {
   fromTradeTimeToIndex,
@@ -111,9 +109,7 @@ export default class ClData {
     this.InData = [] // 数据 json格式数据 {key:..,fields:.., value:[[],[]...]}
     this.OutData = [] // 专门用于获取数据时临时产生的数据
   }
-  // //////////////////////
   // 下面是设置数据的方法
-  // ////////////////////
   /**
    * set data
    * @param {String} key
@@ -233,9 +229,8 @@ export default class ClData {
     this.flushMin(nowdata, fields)
   }
 
-  // //////////////////////
   // 下面是获取数据的方法,先从OutData获取，没有数据就从InData数据中获取
-  // ////////////////////
+
   /**
    * get data
    * @param {String} key
@@ -529,9 +524,8 @@ export default class ClData {
     return source
   }
 
-  // /////////////////////////////////////////
   //  以下为公式系统，自由计算的定义
-  // /////////////////////////////////////////
+
   /**
    * make lien data
    * @param {Object} source

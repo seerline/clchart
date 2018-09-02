@@ -6,9 +6,8 @@
  *
  */
 
-// //////////////////////////////////////////////////
 // 以下是 ClDrawSeer 的实体定义
-// //////////////////////////////////////////////////
+
 // case 1: return '未生效';
 // case 2: return '股票停牌';
 // case 20: return '股东增持';
@@ -211,7 +210,7 @@ export default class ClDrawSeer {
     const xxRight = xx + period * (this.linkInfo.spaceX + this.linkInfo.unitX)
     this.drawTransRect(xxRight, this.rectMain.left + this.rectMain.width)
     if (startPrice === 0) return
-    // ///////////////////////////////
+
     let infos
     price = getValue(this.sourceSeer, 'stoploss', no)
     let yl = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY)
@@ -312,7 +311,7 @@ export default class ClDrawSeer {
         y: 'middle'
       }, infos)
     }
-    // ///////////显示预测结束的信息///////////////////
+
     const stop = getValue(this.sourceSeer, 'stop', no)
     // 100 进行中
     if (inArray(status, [101, 102, 200, 201, 202, 300])) {

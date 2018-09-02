@@ -168,9 +168,8 @@ export function getValueMin (data, label, value) {
   return out
 }
 
-// /////////////////////////////////////////
 // 日线除权的函数集合
-// /////////////////////////////////////////
+
 /**
  * get exright para
  * @param {String} rightdata
@@ -328,9 +327,9 @@ export function transExrightMin (days, rights, mode, start, end) {
   } else if (mode === 'backword') {}
   return days
 }
-// /////////////////
+
 // 检索数据函数集
-// /////////////////
+
 // 从分钟线查找对应记录
 /**
  * find index in min
@@ -445,9 +444,8 @@ export function findDateInDay (source, today) {
 //   };
 // }
 
-// /////////////////
 // 检查数据完整性
-// /////////////////
+
 /**
  * get size
  * @export
@@ -598,9 +596,8 @@ export function updateStatic (fields, value) {
   return out
 }
 
-// /////////////////
 // 对数据进行周期性合并
-// /////////////////
+
 // export function matchMinToMinute(source, outkey) {
 //   switch (outkey) {
 //     case 'M15': out = matchMin5ToMinute(out, outkey, 15);

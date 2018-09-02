@@ -227,9 +227,8 @@ export function _drawDashLine (context, x1, y1, x2, y2, dashLen) {
   // context.stroke();
 }
 
-// ////////////////////////////
 // 以下显示文字
-// ///////////////////////////
+
 /**
  * set font size
  * @export
@@ -488,9 +487,7 @@ export function _drawLogo (context, xx, yy, size) {
   context.fillRect(xx + 8.5 * lw, yy + 4 * lw, 6 * lw, 5 * lw)
 }
 
-// ////////////////////////////////////
 // 以下函数只能调用上面的函数,不能直接画图
-// //////////////////////////////////
 
 // data {o,h,l,c}
 /**
@@ -697,10 +694,9 @@ export function _drawVBar (context, config, value) {
   }
 }
 
-// ////////////////////////////////////
 // 以下函数为辅助画图的工具函数
 // Adjust 灰度
-// //////////////////////////////////
+
 // 为传入的16进制颜色增加透明度 ‘#1F1F2F’ -> rgba(...)
 /**
  * transfer color to rgba

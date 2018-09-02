@@ -6,10 +6,9 @@
  *
  */
 
-// /////////////////////////////////////////
 // 预先定义好的公式，比如MA等，可在这里扩展公式定义
 // 用户可以自定义公式注册到ClData层，便于系统调用
-// ////////////////////////////////////////
+
 import getValue from '../data/cl.data.tools'
 
 /**
@@ -81,9 +80,9 @@ export class ClFormula {
     eval(command)
     return singleValue
   }
-  // ///////////////////
+
   //  自定义公式
-  // /////////////////
+
   /**
    * calculate move averge data
    * @param {String} label

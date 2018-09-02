@@ -100,11 +100,11 @@ export default class ClChart {
   getChart (key) {
     return this.childCharts[key]
   }
-  // //////////////////////////////////////////////
+
   // 以下是设置chart的事件关联接口，element表示映射的chart类
   // 所有事件由外部获取事件后传递到eventLayer后，再统一分发给相应的图表
   // eventLayer中有针对html5的鼠标键盘事件处理接口，其他事件处理接口另外再做
-  // ////////////////////////////////////////////
+
   /**
    * get event layer
    * @return {Object} event layer

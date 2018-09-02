@@ -6,12 +6,11 @@
  *
  */
 
-// //////////////////////////////////////////////////
 // 以下是ClChartLine的实体定义  --- 画线类
-// //////////////////////////////////////////////////
+
 // 实际上就是获取某种类型数据，然后横坐标 0 开始排序，永远是数值型，但显示出什么要到对应的数组中找
 // 纵坐标根据数据类型，计算最大最小值，然后根据画线类型画出数据线，所有的不同全部在ClChart中处理
-// //////////////////////////////////////////////////
+
 import {
   _fillRect,
   _drawRect,
@@ -450,9 +449,8 @@ export default class ClChartLine {
       chart.hotIdx = 0
     }
   }
-  // //////////////////////////////////////
+
   // 下面开始是功能性函数 主要用于简化主函数的结构
-  // //////////////////////////////////////
 
   addLine (line) {
     // this.removeLine(line.name);
@@ -649,9 +647,8 @@ export default class ClChartLine {
     // this.img = _getImageData(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
   }
 
-  // ///////////////////////////////////////////////////////////
   // 画图前的准备工作
-  // ////////////////////////////////////////////////////////////
+
   /**
    * get middle
    * @param {String} method
@@ -711,7 +708,7 @@ export default class ClChartLine {
         }
       }
     }
-    // //////////////////
+
     if (!isEmptyArray(extremum.maxvalue)) {
       for (let m = 0; m < extremum.maxvalue.length; m++) {
         if (typeof (extremum.maxvalue[m]) === 'number') {
