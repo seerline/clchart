@@ -78,7 +78,7 @@
 			// 清除画布，及数据
 			Chart.clear()
 			// 初始化数据
-			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
 			// 设置相应的数据
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
@@ -142,7 +142,7 @@
 		function handleFiveDay (code) {
 			console.log('Five Day Line')
 			Chart.clear()
-			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'))
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
@@ -184,7 +184,7 @@
 			let source = peroid
 			if (peroid === 'WEEK' || peroid === 'MON') source = 'DAY'
 			Chart.clear()
-			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData(code, 'RIGHT'))
 			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData(code, source))
@@ -233,7 +233,7 @@
 		}
 		function handleSeer () {
 			Chart.clear()
-			Chart.initData(20180620, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'))
 			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'))
 			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'))
@@ -325,15 +325,18 @@
 		let drawMenus
 		let langMenus
 		window.onload = function () {
-			let lang = 'zh'
+			let langIdx = Number(localStorage.getItem('lang')) || 0
+			let lang = langMenusCfg[langIdx].lang
 			const spinner = document.getElementById('spinner')
 			spinner.style.display = 'none'
-			drawChart(typeMenusCfg[0])
-			drawMenus = new ListMenus('drawMenu', typeMenusCfg, lang)
+			let chartIdx = Number(localStorage.getItem('chart_type')) || 0
+			drawChart(typeMenusCfg[chartIdx])
+			drawMenus = new ListMenus('drawMenu', typeMenusCfg, lang, chartIdx)
 			drawMenus.createMenus(function (activeData) {
 				drawChart(activeData)
+				localStorage.setItem('chart_type', activeData.idx.toString())
 			})
-			langMenus = new ListMenus('langMenu', langMenusCfg, lang, 'icon-language')
+			langMenus = new ListMenus('langMenu', langMenusCfg, lang, langIdx, 'icon-language')
 			langMenus.createMenus(function (activeData) {
 				if (activeData.lang === lang) {
 					return
@@ -341,6 +344,7 @@
 				lang = activeData.lang
 				drawMenus.setLanguage(lang)
 				Chart.setStandard(activeData.standard)
+				localStorage.setItem('lang', activeData.idx.toString())
 			});
 			// 切换主题颜色
 			let theme = 'black';

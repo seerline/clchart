@@ -31,21 +31,21 @@ function _setMenusActive (menuId, activeDom) {
     activeDom.className = activeDom.className + ' active'
   }
 }
-function ListMenus (parentId, arr, lang, icon) {
-  this.menus = arr
+function ListMenus (parentId, menus, lang, activeIdx = 0, icon) {
+  this.menus = menus
   this.lang = lang
   this.icon = icon
   this.parentDom = document.getElementById(parentId)
   this.labeId = _makeid()
   this.checkId = _makeid()
   this.menusId = _makeid()
-  this.active = arr[0]
+  this.active = menus[activeIdx]
   this.callback = function () {}
 
   this.createMenus = function (callback) {
     this.callback = callback || function () {}
     const itemHtml = this.createMenuItems()
-    const ele = this.menus[0]
+    const ele = this.active
     const dataStr = this.createDataSet(ele)
     const html = `
       <div class="menu-container">
@@ -75,7 +75,7 @@ function ListMenus (parentId, arr, lang, icon) {
     for (let i = 0; i < this.menus.length; i++) {
       const ele = this.menus[i]
       const dataStr = this.createDataSet(ele)
-      html += `<li ${dataStr} class="menu-item">${this.getLabelByLanguage(ele, this.lang)}</li>`
+      html += `<li data-idx="${i}" ${dataStr} class="menu-item">${this.getLabelByLanguage(ele, this.lang)}</li>`
     }
     return html
   }
