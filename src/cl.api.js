@@ -53,6 +53,7 @@ export const util = {
  * @returns chart instance
  */
 export function createSingleChart (cfg) {
+  console.log("----------------------------------")
   const sysInfo = initSystem(cfg)
   const chart = new ClChart(sysInfo)
   const event = new ClEvent(sysInfo)
