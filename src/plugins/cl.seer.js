@@ -428,7 +428,7 @@ export default class ClDrawSeer {
     // let out = copyArrayOfDeep(this.data.value)
 
     this.hotKey = 'SEERDAY'
-    this.data = {key: 'SEERDAY', fields: FIELD_DAY, value: this.data.value}
+    this.data = { key: 'SEERDAY', fields: FIELD_DAY, value: this.data.value }
 
     this.linkInfo.showMode = 'fixed'
     // this.linkInfo.fixed.left = 20

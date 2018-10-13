@@ -102,7 +102,7 @@ export default class ClEventHandler {
    * }
    * @constructor
    */
-  constructor ({father, eventBuild, isTouch}) {
+  constructor ({ father, eventBuild, isTouch }) {
     this.father = father
     this.eventCanvas = father.eventCanvas
     if (typeof eventBuild === 'function') {
