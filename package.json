@@ -15,8 +15,8 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "deploy": "sh ./deploy.sh",
     "release": "npm run build && ./node_modules/.bin/gh-release -a ./dist/clchart.js",
+    "docs": "open http://localhost:8080/ && vuepress dev docs",
     "docs:api": "gulp doc && open ./vuepress/api/index.html && gulp watch",
-    "docs:dev": "open http://localhost:8080/ && vuepress dev docs",
     "docs:build": "vuepress build docs",
     "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
@@ -49,10 +49,11 @@
     "gulp-cli": "^2.0.1",
     "gulp-jsdoc3": "^2.0.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "vuepress": "^0.14.4",
+    "vuepress": "^1.0.0-alpha.13",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9",
     "webpack-merge": "^4.1.4"
-  }
+  },
+  "dependencies": {}
 }
