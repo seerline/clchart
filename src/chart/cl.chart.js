@@ -30,7 +30,7 @@ const DEFAULT_LINKINFO = {
     left: 20,
     right: 20
   },
-  locked: { // 只有当showMode==‘locked’模式才有作用
+  locked: { // 只有当showMode=='locked'模式才有作用
     index: -1, // 当前锁定的记录号，
     set: 0.5 // 表示锁定在中间，1表示锁定在最后一条记录，当前记录的百分比
   },

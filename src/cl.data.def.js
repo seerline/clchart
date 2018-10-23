@@ -17,14 +17,15 @@ export const STOCK_TYPE_A = 1
 export const STOCK_TYPE_B = 4
 export const STOCK_TYPE_OTHER = 5
 
-export const STOCK_TRADETIME = [{
-  begin: 930,
-  end: 1130
-},
-{
-  begin: 1300,
-  end: 1500
-}
+export const STOCK_TRADETIME = [
+  {
+    begin: 930,
+    end: 1130
+  },
+  {
+    begin: 1300,
+    end: 1500
+  }
 ]
 
 // 基本日线定义，历史分钟线，
