@@ -42,8 +42,12 @@ module.exports = {
             link: '/guide/',
           },
           {
-            text: 'Config Reference',
-            link: '/config/'
+            text: 'Tutorials',
+            link: '/tutorials/'
+          },
+          {
+            text: 'Plugins',
+            link: '/plugins/'
           },
           {
             text: 'API',
@@ -73,8 +77,12 @@ module.exports = {
             link: '/zh/guide/',
           },
           {
-            text: '配置',
-            link: '/zh/config/'
+            text: '教程',
+            link: '/zh/tutorials/'
+          },
+          {
+            text: '插件',
+            link: '/zh/plugins/'
           },
           {
             text: 'API',
@@ -89,9 +97,9 @@ module.exports = {
             link: 'https://github.com/seerline/clchart/blob/master/CHANGELOG.md'
           }
         ],
-        sidebar: {
-          '/zh/guide/': genSidebarConfig('指南')
-        }
+        // sidebar: {
+        //   '/zh/guide/': genSidebarConfig('指南')
+        // }
       }
     }
   }
