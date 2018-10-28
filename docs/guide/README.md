@@ -93,9 +93,9 @@ npm run build
 </html>
 ```
 
-## Create a Min Chart
+### Create a Min Chart
 
-### Initialization project
+#### Initialization project
 
 - Create a directory `clchart-demo`
 - Create a `demo01.html` file
@@ -170,7 +170,7 @@ clchart-demo
 </html>
 ```
 
-### Start drawing
+#### Start drawing
 
 
 ```html

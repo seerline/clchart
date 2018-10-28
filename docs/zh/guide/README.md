@@ -93,9 +93,9 @@ const ClChart = require('clchart')
 </html>
 ```
 
-## 绘制分钟图
+### 绘制分钟图
 
-### 初始化项目
+#### 初始化项目
 
 - 创建一个目录`clchart-demo`
 - 创建`demo01.html`文件
@@ -112,7 +112,7 @@ clchart-demo
 └── demo01.html
 ```
 
-### 初始化HTML文件
+#### 初始化HTML文件
 
 ```html
 <!DOCTYPE html>
@@ -169,7 +169,7 @@ clchart-demo
 </html>
 ```
 
-### 开始画图
+#### 开始画图
 
 
 ```html
