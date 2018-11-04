@@ -14,7 +14,6 @@ sidebar: auto
 
 #### 以下为我们在使用过程中对各画图库在绘制股票类型的K线图做的一个比较
 
-> 以下所做的比较均为使用这些图表库来绘制有价证劵类型的K线图的绘图能力的比较,数据为主观经验判定
 
 |   | chartjs | echart | techanjs | highchart | clchart |
 | --- | --- | --- | --- | --- | --- |
@@ -24,7 +23,9 @@ sidebar: auto
 | 扩展能力 | ☆☆☆ | ☆☆☆☆ | ☆☆☆☆ | ☆☆☆☆ | ☆☆☆☆☆ |
 | 跨平台 | ☆☆☆ | ☆☆☆ | ☆☆ | ☆ | ☆☆☆☆☆ |
 
-因此我们急需一个具有高性能、跨平台、简单易用的股票类型的图标库。
+> 此评分为主观经验判定
+
+因此我们需要一个具有高性能、跨平台、简单易用的股票类型的图表库。
 
 > 在现有的图标库React Native中可以通过webview来加载html文件，使用`window.document.addEventListener('message', function(e) {})`以及`window.postMessage`来完成html与React Natve来通讯绘图，但是使用实际的使用过程中，在一些性能较差的android设备上，特别是android版本小于4.4以下的android系统在绘图大数据量图表以及用户交互的时候表现的特别的糟糕，经常发生卡顿，并且有可能存在加载缓慢等问题。
 
