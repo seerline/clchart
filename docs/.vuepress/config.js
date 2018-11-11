@@ -42,10 +42,6 @@ module.exports = {
             link: '/guide/',
           },
           {
-            text: 'Tutorials',
-            link: '/tutorials/'
-          },
-          {
             text: 'Plugins',
             link: '/plugins/'
           },
@@ -77,10 +73,6 @@ module.exports = {
             link: '/zh/guide/',
           },
           {
-            text: '教程',
-            link: '/zh/tutorials/'
-          },
-          {
             text: '插件',
             link: '/zh/plugins/'
           },
@@ -97,9 +89,9 @@ module.exports = {
             link: 'https://github.com/seerline/clchart/blob/master/CHANGELOG.md'
           }
         ],
-        // sidebar: {
-        //   '/zh/guide/': genSidebarConfig('指南')
-        // }
+        sidebar: {
+          '/zh/guide/': genSidebarConfig('指南')
+        }
       }
     }
   }
@@ -109,10 +101,10 @@ function genSidebarConfig (title) {
   return [
     {
       title,
-      collapsable: false,
+      collapsable: true,
       children: [
         '',
-        'configuration',
+        'quickstart',
       ]
     }
   ]
