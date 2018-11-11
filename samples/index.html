@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+<head>
+	<title>ClChart Demo</title>
+	<meta data-n-head="true" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="A fast, simple, cross-platform, and configurable stock chart library created using canvas.">
+	<meta name="keywords" content="chart, canvas, stock chart, fast, simple, cross-platform, configurable">
+	<script src="./clchart.js"></script>
+	<script src="./menus.js?v=1"></script>
+	<script src="./debounce.js"></script>
+	<link rel="stylesheet" type="text/css" href="./style.css?v=1" />
+</head>
+
+<body class="theme-black">
+	<div class="container">
+		<div class="header-container">
+			<div class="header-logo">
+				<a href="https://github.com/seerline/clchart"><i class="icon-seer-white"></i></a>
+			</div>
+			<div id="drawMenu">
+			</div>
+			<div id="langMenu">
+			</div>
+			<div id="toggleTheme" class="theme-toggle">
+					<i id="iconSun" class="icon-sun"></i>
+					<i id="iconMoon" class="icon-moon" style="display: none;"></i>
+			</div>
+		</div>
+		<div class="chart-container">
+			<canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
+			<canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
+		</div>
+		<div id="spinner" class="spinner">
+			<i class="icon-spin5 animate-spin"></i>
+		</div>
+	</div>
+	<script src="./stockdata.js"></script>
+	<script>
+		'use strict'
+		// 获取浏览器内核版本
+		function getBrowserVersion() {
+			const ua = navigator.userAgent;
+			return {
+				trident: ua.indexOf('Trident') > -1, // IE内核
+				presto: ua.indexOf('Presto') > -1, // opera内核
+				webKit: ua.indexOf('AppleWebKit') > -1, // 苹果、谷歌内核
+				gecko: ua.indexOf('Gecko') > -1 && ua.indexOf('KHTML') === -1, // 火狐内核
+				mobile: !!ua.match(/AppleWebKit.*Mobile.*/), // 是否为移动终端
+				ios: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+				android: ua.indexOf('Android') > -1, // android终端
+				iPad: ua.indexOf('iPad') > -1, // 是否iPad
+				uc: ua.indexOf('UCBrowser') > -1, // 是否UC浏览器
+				qq: ua.indexOf('MQQBrowser') > -1, // 是否QQ浏览器
+				weixin: ua.indexOf('MicroMessenger') > -1 // 是否微信
+			}
+		}
+		// 开始画图
+		const canvas = document.getElementById('myChart')
+		const ctx = canvas.getContext('2d')
+		const cursorCanvas = document.getElementById('cursorChart')
+		const cursorCtx = cursorCanvas.getContext('2d')
+		const syscfg = {
+			scale: window.devicePixelRatio,
+			axisPlatform: getBrowserVersion().mobile ? 'phone' : 'web',
+			mainCanvas: {
+				canvas: canvas,
+				context: ctx
+			},
+			cursorCanvas: {
+				canvas: cursorCanvas,
+				context: cursorCtx
+			}
+		}
+		const Chart = ClChart.createSingleChart(syscfg)
+		// 画分钟线
+		function handleMin (code) {
+			console.log('Draw ====> Min Line')
+			// 清除画布，及数据
+			Chart.clear()
+			// 初始化数据
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
+			// 设置相应的数据
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
+			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
+			Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, getMockData(code, 'TICK'))
+			Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, getMockData(code, 'NOW'))
+			// 设置画布尺寸
+			let mainHeight = canvas.height * 2 / 3
+			let mainWidth = Math.max(canvas.width * 0.65, canvas.width - 400)
+			if (code === 'SH000001') mainWidth = canvas.width
+			// 设置画布区域布局
+			const mainLayoutCfg = {
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_NOW,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: mainWidth,
+					height: mainHeight
+				}
+			}
+			const mainChart = Chart.createChart('MIN', 'CHART.LINE', mainLayoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(mainChart, 'MIN')
+
+			const volumeLoyoutCfg = {
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_NOWVOL,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: mainWidth,
+					height: canvas.height - mainHeight
+				}
+			}
+			const volumeChart = Chart.createChart('MINNOW', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(volumeChart, 'MIN')
+
+			if (code !== 'SH000001') {
+				const orderLayoutCfg = {
+					layout: ClChart.DEF_CHART.CHART_LAYOUT,
+					config: ClChart.DEF_CHART.CHART_ORDER,
+					rectMain: {
+						left: mainWidth,
+						top: 0,
+						width: canvas.width - mainWidth,
+						height: canvas.height
+					}
+				}
+				const orderChart = Chart.createChart('ORDER', 'CHART.ORDER', orderLayoutCfg, function (result) {
+					//  console.log(result)
+				})
+				// Chart.bindData(orderChart, 'TICK')
+			}
+
+			Chart.onPaint()
+		}
+		// 画五日线
+		function handleFiveDay (code) {
+			console.log('Five Day Line')
+			Chart.clear()
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
+			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'))
+			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
+			const mainHeight = canvas.height * 2 / 3
+			const mainLayoutCfg = {
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_DAY5,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
+					height: mainHeight
+				}
+			}
+			const KBarChart = Chart.createChart('DAY5', 'CHART.LINE', mainLayoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(KBarChart, 'DAY5')
+
+			const volumeLoyoutCfg = {
+				layout: ClChart.DEF_CHART.CHART_LAYOUT,
+				config: ClChart.DEF_CHART.CHART_DAY5VOL,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight
+				}
+			}
+			const KVBarChart = Chart.createChart('VLINE5', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(KVBarChart, 'DAY5')
+
+			Chart.onPaint()
+		}
+		// 画日线
+		function handleKline (code, peroid) {
+			let source = peroid
+			if (peroid === 'WEEK' || peroid === 'MON') source = 'DAY'
+			Chart.clear()
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
+			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData(code, 'RIGHT'))
+			Chart.setData(source, ClChart.DEF_DATA.FIELD_DAY, getMockData(code, source))
+			const mainHeight = canvas.height * 2 / 3
+			const mainLayoutCfg = {
+				layout: {
+					offset: {
+						left: 5,
+						right: 10
+					}
+				},
+				buttons: ClChart.DEF_CHART.CHART_BUTTONS,
+				config: ClChart.DEF_CHART.CHART_KBAR,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
+					height: mainHeight
+				}
+			}
+			const KBarChart = Chart.createChart('KBAR', 'CHART.LINE', mainLayoutCfg, function (result) {
+			})
+			Chart.bindData(KBarChart, peroid)
+
+			const volumeLoyoutCfg = {
+				layout: {
+					offset: {
+						left: 5,
+						right: 10
+					}
+				},
+				config: ClChart.DEF_CHART.CHART_VBAR,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight
+				}
+			}
+			const KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(KVBarChart, peroid)
+
+			Chart.onPaint()
+		}
+		function handleSeer () {
+			Chart.clear()
+			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
+			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData('SZ300545', 'INFO'))
+			Chart.setData('RIGHT', ClChart.DEF_DATA.FIELD_RIGHT, getMockData('SZ300545', 'RIGHT'))
+			Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, getMockData('SZ300545', 'DAY'))
+			Chart.setData('SEER', ClChart.PLUGINS.FIELD_SEER, getMockData('SZ300545', 'SEER'))
+			Chart.setData('SEERHOT', {}, ['15'])
+			const mainHeight = canvas.height * 2 / 3
+			const mainLayoutCfg = {
+				layout: {
+					offset: {
+						left: 5,
+						right: 100,
+						top: 20,
+						bottom: 20
+					}
+				},
+				buttons: [ { key: 'zoomin' }, { key: 'zoomout' } ],
+				config: ClChart.PLUGINS.CHART_SEER,
+				rectMain: {
+					left: 0,
+					top: 0,
+					width: canvas.width,
+					height: mainHeight
+				}
+			}
+			const KBarChart = Chart.createChart('SEER', 'CHART.LINE', mainLayoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(KBarChart, 'DAY')
+
+			const volumeLayoutCfg = {
+				layout: {
+					offset: {
+						left: 5,
+						right: 100,
+						top: 20,
+						bottom: 0
+					}
+				},
+				config: ClChart.DEF_CHART.CHART_VBAR,
+				rectMain: {
+					left: 0,
+					top: mainHeight,
+					width: canvas.width,
+					height: canvas.height - mainHeight
+				}
+			}
+			const KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', volumeLayoutCfg, function (result) {
+				//  console.log(result)
+			})
+			Chart.bindData(KVBarChart, 'DAY')
+
+			Chart.onPaint()
+		}
+
+		const menuTypes = {
+			MIN: handleMin,
+			DAY5: handleFiveDay,
+			DAY: handleKline,
+			WEEK: handleKline,
+			MON: handleKline,
+			M5: handleKline,
+			SEER: handleSeer
+		}
+
+		// 画图
+		function drawChart (data) {
+			data = data || {}
+			const drawFunc = menuTypes[data.type]
+			if (typeof drawFunc === 'function') {
+				drawFunc(data.fc, data.type)
+			}
+		}
+
+		const typeMenusCfg = [
+			{ type: 'MIN', fc: 'SH000001', label_en: '1 min(Idx)', label_zh: '分时(指数)' },
+			{ type: 'DAY5', fc: 'SH000001', label_en: '5 days(Idx)', label_zh: '五日(指数)' },
+			{ type: 'MIN', fc: 'SZ300545', label_en: '1 min', label_zh: '分时' },
+			{ type: 'DAY5', fc: 'SZ300545', label_en: '5 days', label_zh: '五日' },
+			{ type: 'DAY', fc: 'SZ300545', label_en: '1 day', label_zh: '日K' },
+			{ type: 'WEEK', fc: 'SZ300545', label_en: '1 week', label_zh: '周线' },
+			{ type: 'MON', fc: 'SZ300545', label_en: '1 month', label_zh: '月线' },
+			{ type: 'M5', fc: 'SZ300545', label_en: '5 min', label_zh: '5分钟' },
+			{ type: 'SEER', fc: 'SZ300545', label_en: 'seer(extend)', label_zh: '预测' }
+		]
+		const langMenusCfg = [
+			{ lang: 'zh', label: '中文', standard: 'china' },
+			{ lang: 'en', label: 'English', standard: 'usa' }
+		]
+		let drawMenus
+		let langMenus
+		window.onload = function () {
+			let langIdx = Number(localStorage.getItem('lang')) || 0
+			let lang = langMenusCfg[langIdx].lang
+			const spinner = document.getElementById('spinner')
+			spinner.style.display = 'none'
+			let chartIdx = Number(localStorage.getItem('chart_type')) || 0
+			drawChart(typeMenusCfg[chartIdx])
+			drawMenus = new ListMenus('drawMenu', typeMenusCfg, lang, chartIdx)
+			drawMenus.createMenus(function (activeData) {
+				drawChart(activeData)
+				localStorage.setItem('chart_type', activeData.idx.toString())
+			})
+			langMenus = new ListMenus('langMenu', langMenusCfg, lang, langIdx, 'icon-language')
+			langMenus.createMenus(function (activeData) {
+				if (activeData.lang === lang) {
+					return
+				}
+				lang = activeData.lang
+				drawMenus.setLanguage(lang)
+				Chart.setStandard(activeData.standard)
+				localStorage.setItem('lang', activeData.idx.toString())
+			});
+			// 切换主题颜色
+			let theme = 'black';
+			function hanldeToggleTheme() {
+				const sunDom = document.getElementById('iconSun')
+				const moonDom = document.getElementById('iconMoon')
+				if (theme === 'black') {
+					moonDom.style.display = 'block'
+					sunDom.style.display = 'none'
+					theme = 'white'
+				} else {
+					moonDom.style.display = 'none'
+					sunDom.style.display = 'block'
+					theme = 'black'
+				}
+				document.body.className = 'theme-' + theme
+				// let timer = Date.now()
+				Chart.setColor(theme)
+				// 需要手动onPaint一次
+				Chart.onPaint()
+				// console.log('-------', Date.now() - timer)
+			}
+			const toggleThemeDom = document.getElementById('toggleTheme');
+			toggleThemeDom.addEventListener('click', hanldeToggleTheme)
+		}
+		window.onresize = window._debounce(function () {
+			canvas.width = canvas.clientWidth * window.devicePixelRatio
+			canvas.height = canvas.clientHeight * window.devicePixelRatio
+			drawChart(drawMenus.active)
+		}, 100)
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>chart/cl.chart.order.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="ClChart.html#.bindData">bindData</a></li><li data-type='method'><a href="ClChart.html#.clear">clear</a></li><li data-type='method'><a href="ClChart.html#.createChart">createChart</a></li><li data-type='method'><a href="ClChart.html#.fastDrawBegin">fastDrawBegin</a></li><li data-type='method'><a href="ClChart.html#.fastDrawEnd">fastDrawEnd</a></li><li data-type='method'><a href="ClChart.html#.getChart">getChart</a></li><li data-type='method'><a href="ClChart.html#.getData">getData</a></li><li data-type='method'><a href="ClChart.html#.getDataLayer">getDataLayer</a></li><li data-type='method'><a href="ClChart.html#.getEventLayer">getEventLayer</a></li><li data-type='method'><a href="ClChart.html#.initChart">initChart</a></li><li data-type='method'><a href="ClChart.html#.initData">initData</a></li><li data-type='method'><a href="ClChart.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChart.html#.readyData">readyData</a></li><li data-type='method'><a href="ClChart.html#.setColor">setColor</a></li><li data-type='method'><a href="ClChart.html#.setData">setData</a></li><li data-type='method'><a href="ClChart.html#.setDataLayer">setDataLayer</a></li><li data-type='method'><a href="ClChart.html#.setHideInfo">setHideInfo</a></li><li data-type='method'><a href="ClChart.html#.setStandard">setStandard</a></li></ul></li><li><a href="ClChartButton.html">ClChartButton</a><ul class='methods'><li data-type='method'><a href="ClChartButton.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartButton.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartButton.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClChartLine.html">ClChartLine</a><ul class='methods'><li data-type='method'><a href="ClChartLine.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClChartLine.html#.calcMaxMin">calcMaxMin</a></li><li data-type='method'><a href="ClChartLine.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartLine.html#.createButton">createButton</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildCharts">drawChildCharts</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildDraw">drawChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildLines">drawChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartLine.html#.drawTitleInfo">drawTitleInfo</a></li><li data-type='method'><a href="ClChartLine.html#.getDataRange">getDataRange</a></li><li data-type='method'><a href="ClChartLine.html#.getLineDataKey">getLineDataKey</a></li><li data-type='method'><a href="ClChartLine.html#.getMiddle">getMiddle</a></li><li data-type='method'><a href="ClChartLine.html#.getMouseMoveData">getMouseMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.getMoveData">getMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.hasButton">hasButton</a></li><li data-type='method'><a href="ClChartLine.html#.init">init</a></li><li data-type='method'><a href="ClChartLine.html#.locationData">locationData</a></li><li data-type='method'><a href="ClChartLine.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartLine.html#.onKeyDown">onKeyDown</a></li><li data-type='method'><a href="ClChartLine.html#.onLongPress">onLongPress</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseWheel">onMouseWheel</a></li><li data-type='method'><a href="ClChartLine.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartLine.html#.onPinch">onPinch</a></li><li data-type='method'><a href="ClChartLine.html#.readyDraw">readyDraw</a></li><li data-type='method'><a href="ClChartLine.html#.readyScroll">readyScroll</a></li><li data-type='method'><a href="ClChartLine.html#.removeLine">removeLine</a></li><li data-type='method'><a href="ClChartLine.html#.setButtons">setButtons</a></li><li data-type='method'><a href="ClChartLine.html#.setChildDraw">setChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.setChildLines">setChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.setHotButton">setHotButton</a></li><li data-type='method'><a href="ClChartLine.html#.setPublicRect">setPublicRect</a></li><li data-type='method'><a href="ClChartLine.html#.setScroll">setScroll</a></li><li data-type='method'><a href="ClChartLine.html#.setZoomInfo">setZoomInfo</a></li></ul></li><li><a href="ClChartOrder.html">ClChartOrder</a><ul class='methods'><li data-type='method'><a href="ClChartOrder.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartOrder.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartOrder.html#.drawGridLine">drawGridLine</a></li><li data-type='method'><a href="ClChartOrder.html#.drawIndex">drawIndex</a></li><li data-type='method'><a href="ClChartOrder.html#.drawOrder">drawOrder</a></li><li data-type='method'><a href="ClChartOrder.html#.drawReady">drawReady</a></li><li data-type='method'><a href="ClChartOrder.html#.drawTick">drawTick</a></li><li data-type='method'><a href="ClChartOrder.html#.getColor">getColor</a></li><li data-type='method'><a href="ClChartOrder.html#.init">init</a></li><li data-type='method'><a href="ClChartOrder.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartOrder.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartOrder.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClChartScroll.html">ClChartScroll</a><ul class='methods'><li data-type='method'><a href="ClChartScroll.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartScroll.html#.checkMin">checkMin</a></li><li data-type='method'><a href="ClChartScroll.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartScroll.html#.drawGridline">drawGridline</a></li><li data-type='method'><a href="ClChartScroll.html#.findMouseIndex">findMouseIndex</a></li><li data-type='method'><a href="ClChartScroll.html#.init">init</a></li><li data-type='method'><a href="ClChartScroll.html#.onChange">onChange</a></li><li data-type='method'><a href="ClChartScroll.html#.onInit">onInit</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseDown">onMouseDown</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseUp">onMouseUp</a></li><li data-type='method'><a href="ClChartScroll.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartScroll.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClData.html">ClData</a><ul class='methods'><li data-type='method'><a href="ClData.html#.clearData">clearData</a></li><li data-type='method'><a href="ClData.html#.flushMin">flushMin</a></li><li data-type='method'><a href="ClData.html#.flushNowData">flushNowData</a></li><li data-type='method'><a href="ClData.html#.flushTick">flushTick</a></li><li data-type='method'><a href="ClData.html#.getData">getData</a></li><li data-type='method'><a href="ClData.html#.initData">initData</a></li><li data-type='method'><a href="ClData.html#.makeLineData">makeLineData</a></li><li data-type='method'><a href="ClData.html#.makeMinute">makeMinute</a></li><li data-type='method'><a href="ClData.html#.mergeDay">mergeDay</a></li><li data-type='method'><a href="ClData.html#.mergeDay5">mergeDay5</a></li><li data-type='method'><a href="ClData.html#.mergeMon">mergeMon</a></li><li data-type='method'><a href="ClData.html#.mergeNowMinToMin">mergeNowMinToMin</a></li><li data-type='method'><a href="ClData.html#.mergeWeek">mergeWeek</a></li><li data-type='method'><a href="ClData.html#.setData">setData</a></li><li data-type='method'><a href="ClData.html#.updateMinute">updateMinute</a></li></ul></li><li><a href="ClDrawAxisX.html">ClDrawAxisX</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisX.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawAxisY.html">ClDrawAxisY</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisY.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawCursor.html">ClDrawCursor</a><ul class='methods'><li data-type='method'><a href="ClDrawCursor.html#.onClear">onClear</a></li><li data-type='method'><a href="ClDrawCursor.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawGrid.html">ClDrawGrid</a><ul class='methods'><li data-type='method'><a href="ClDrawGrid.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawInfo.html">ClDrawInfo</a><ul class='methods'><li data-type='method'><a href="ClDrawInfo.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawKBar.html">ClDrawKBar</a><ul class='methods'><li data-type='method'><a href="ClDrawKBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawLine.html">ClDrawLine</a><ul class='methods'><li data-type='method'><a href="ClDrawLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawRight.html">ClDrawRight</a><ul class='methods'><li data-type='method'><a href="ClDrawRight.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawSeer.html">ClDrawSeer</a><ul class='methods'><li data-type='method'><a href="ClDrawSeer.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawHotSeer">drawHotSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawTransRect">drawTransRect</a></li><li data-type='method'><a href="ClDrawSeer.html#.filterSeer">filterSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.getSeerPos">getSeerPos</a></li><li data-type='method'><a href="ClDrawSeer.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawTrade.html">ClDrawTrade</a><ul class='methods'><li data-type='method'><a href="ClDrawTrade.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVBar.html">ClDrawVBar</a><ul class='methods'><li data-type='method'><a href="ClDrawVBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVLine.html">ClDrawVLine</a><ul class='methods'><li data-type='method'><a href="ClDrawVLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClEvent.html">ClEvent</a><ul class='methods'><li data-type='method'><a href="ClEvent.html#.bindChart">bindChart</a></li><li data-type='method'><a href="ClEvent.html#.boardEvent">boardEvent</a></li><li data-type='method'><a href="ClEvent.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEvent.html#.emitEvent">emitEvent</a></li><li data-type='method'><a href="ClEvent.html#.findEventPath">findEventPath</a></li><li data-type='method'><a href="ClEvent.html#.getMousePos">getMousePos</a></li></ul></li><li><a href="ClEventHandler.html">ClEventHandler</a><ul class='methods'><li data-type='method'><a href="ClEventHandler.html#.addHandler">addHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.bindEvent">bindEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearHandler">clearHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.click">click</a></li><li data-type='method'><a href="ClEventHandler.html#.keydown">keydown</a></li><li data-type='method'><a href="ClEventHandler.html#.keyup">keyup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousedown">mousedown</a></li><li data-type='method'><a href="ClEventHandler.html#.mousein">mousein</a></li><li data-type='method'><a href="ClEventHandler.html#.mousemove">mousemove</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseout">mouseout</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseup">mouseup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousewheel">mousewheel</a></li><li data-type='method'><a href="ClEventHandler.html#.touchend">touchend</a></li><li data-type='method'><a href="ClEventHandler.html#.touchmove">touchmove</a></li><li data-type='method'><a href="ClEventHandler.html#.touchstart">touchstart</a></li></ul></li><li><a href="ClFormula.html">ClFormula</a><ul class='methods'><li data-type='method'><a href="ClFormula.html#getValue">getValue</a></li><li data-type='method'><a href="ClFormula.html#MA">MA</a></li><li data-type='method'><a href="ClFormula.html#runSingleStock">runSingleStock</a></li></ul></li><li><a href="ClFormula_ClFormula.html">ClFormula</a></li><li><a href="EV.html">EV</a><ul class='methods'><li data-type='method'><a href="EV.html#.addEventListener">addEventListener</a></li><li data-type='method'><a href="EV.html#.emit">emit</a></li><li data-type='method'><a href="EV.html#.emitWithScope">emitWithScope</a></li><li data-type='method'><a href="EV.html#.once">once</a></li><li data-type='method'><a href="EV.html#.removeAllListeners">removeAllListeners</a></li><li data-type='method'><a href="EV.html#.removeEventListener">removeEventListener</a></li></ul></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Modules</h3><ul><li><a href="module-ChartTools.html">ChartTools</a><ul class='methods'><li data-type='method'><a href="module-ChartTools.html#.findLabelToIndex">findLabelToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.findNearTimeToIndex">findNearTimeToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.setFixedLineFlags">setFixedLineFlags</a></li><li data-type='method'><a href="module-ChartTools.html#.setMoveLineFlags">setMoveLineFlags</a></li></ul></li><li><a href="module-ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="module-ClChart.html#.createMulChart">createMulChart</a></li><li data-type='method'><a href="module-ClChart.html#.createSingleChart">createSingleChart</a></li></ul></li><li><a href="module-ClChartDef.html">ClChartDef</a></li><li><a href="module-ClTool.html">ClTool</a><ul class='methods'><li data-type='method'><a href="module-ClTool.html#.addPreZero">addPreZero</a></li><li data-type='method'><a href="module-ClTool.html#.getDate">getDate</a></li><li data-type='method'><a href="module-ClTool.html#.getMTime">getMTime</a></li></ul></li><li><a href="module-DrawUtils.html">DrawUtils</a><ul class='methods'><li data-type='method'><a href="module-DrawUtils.html#._BezierEllipse">_BezierEllipse</a></li><li data-type='method'><a href="module-DrawUtils.html#._clearRect">_clearRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawBegin">_drawBegin</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawCircle">_drawCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawDashLine">_drawDashLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawEnd">_drawEnd</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawHline">_drawHline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawKBar">_drawKBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawline">_drawline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLineAlone">_drawLineAlone</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawlineTo">_drawlineTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLogo">_drawLogo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawmoveTo">_drawmoveTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawRect">_drawRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignCircle">_drawSignCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignHLine">_drawSignHLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignPlot">_drawSignPlot</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignVLine">_drawSignVLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxt">_drawTxt</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxtRect">_drawTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVBar">_drawVBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVline">_drawVline</a></li><li data-type='method'><a href="module-DrawUtils.html#._fill">_fill</a></li><li data-type='method'><a href="module-DrawUtils.html#._fillRect">_fillRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._getImageData">_getImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._getLineWidth">_getLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._getTxtWidth">_getTxtWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._putImageData">_putImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._setFontSize">_setFontSize</a></li><li data-type='method'><a href="module-DrawUtils.html#._setLineWidth">_setLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._setTransColor">_setTransColor</a></li><li data-type='method'><a href="module-DrawUtils.html#~__getTxtRect">__getTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#~_drawCircleAndFilled">_drawCircleAndFilled</a></li><li data-type='method'><a href="module-DrawUtils.html#~getTxtWith">getTxtWith</a></li></ul></li><li><a href="module-GetValue.html">GetValue</a><ul class='methods'><li data-type='method'><a href="module-GetValue.html#.checkDay5">checkDay5</a></li><li data-type='method'><a href="module-GetValue.html#.checkDayZero">checkDayZero</a></li><li data-type='method'><a href="module-GetValue.html#.checkZero">checkZero</a></li><li data-type='method'><a href="module-GetValue.html#.findDateInDay">findDateInDay</a></li><li data-type='method'><a href="module-GetValue.html#.findIndexInMin">findIndexInMin</a></li><li data-type='method'><a href="module-GetValue.html#.fromIndexToTradeTime">fromIndexToTradeTime</a></li><li data-type='method'><a href="module-GetValue.html#.fromTradeTimeToIndex">fromTradeTimeToIndex</a></li><li data-type='method'><a href="module-GetValue.html#.getExrightPriceRange">getExrightPriceRange</a></li><li data-type='method'><a href="module-GetValue.html#.getMinuteCount">getMinuteCount</a></li><li data-type='method'><a href="module-GetValue.html#.getSize">getSize</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMax">getValueMax</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMin">getValueMin</a></li><li data-type='method'><a href="module-GetValue.html#.getZipDay">getZipDay</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToMon">matchDayToMon</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToWeek">matchDayToWeek</a></li><li data-type='method'><a href="module-GetValue.html#.outputDay5">outputDay5</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightDay">transExrightDay</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightMin">transExrightMin</a></li><li data-type='method'><a href="module-GetValue.html#.updateStatic">updateStatic</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPara">_getExrightPara</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPrice">_getExrightPrice</a></li><li data-type='method'><a href="module-GetValue.html#~_isRight">_isRight</a></li></ul></li><li><a href="module-SeerConfig.html">SeerConfig</a></li><li><a href="module-SystemConfig.html">SystemConfig</a><ul class='methods'><li data-type='method'><a href="module-SystemConfig.html#._getOtherTxtWidth">_getOtherTxtWidth</a></li><li data-type='method'><a href="module-SystemConfig.html#.changeCursorStyle">changeCursorStyle</a></li><li data-type='method'><a href="module-SystemConfig.html#.checkLayout">checkLayout</a></li><li data-type='method'><a href="module-SystemConfig.html#.getLineColor">getLineColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.initCommonInfo">initCommonInfo</a></li><li data-type='method'><a href="module-SystemConfig.html#.initSystem">initSystem</a></li><li data-type='method'><a href="module-SystemConfig.html#.setColor">setColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.setScale">setScale</a></li><li data-type='method'><a href="module-SystemConfig.html#.setStandard">setStandard</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#_getDistance">_getDistance</a></li><li><a href="global.html#_getRotateDirection">_getRotateDirection</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">chart/cl.chart.order.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+//   画买卖盘
+
+// 画买卖盘和Tick
+
+import {
+  _fillRect,
+  _drawRect,
+  _drawHline,
+  _setLineWidth,
+  _drawTxt,
+  _getTxtWidth,
+  _drawBegin,
+  _drawEnd
+} from '../util/cl.draw'
+import {
+  fromTTimeToStr,
+  formatVolume,
+  formatPrice,
+  updateJsonOfDeep,
+  offsetRect
+} from '../util/cl.tool'
+import {
+  initCommonInfo,
+  checkLayout
+} from '../chart/cl.chart.init'
+import {
+  CHART_LAYOUT,
+  CHART_ORDER
+} from '../cl.chart.def'
+import getValue from '../data/cl.data.tools'
+import {
+  FIELD_NOW,
+  FIELD_NOW_IDX,
+  FIELD_TICK
+} from '../data/../cl.data.def'
+
+/**
+ * Class representing ClChartOrder
+ * @export
+ * @class ClChartOrder
+ */
+export default class ClChartOrder {
+  /**
+
+   * Creates an instance of ClChartOrder.
+   * @param {Object} father order chart's parent context
+   */
+  constructor (father) {
+    initCommonInfo(this, father)
+    this.linkInfo = father.linkInfo
+    this.static = this.father.dataLayer.static
+  }
+  /**
+   * init order chart
+   * @param {Object} cfg
+   * @memberof ClChartOrder
+   */
+  init (cfg) {
+    this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
+    this.layout = updateJsonOfDeep(cfg.layout, CHART_LAYOUT)
+
+    this.config = updateJsonOfDeep(cfg.config, CHART_ORDER)
+
+    this.style = cfg.config.style || 'normal'
+    // 下面对配置做一定的校验
+    this.checkConfig()
+    // 再做一些初始化运算，下面的运算范围是初始化设置后基本不变的数据
+    this.setPublicRect()
+  }
+  /**
+   * check config
+   * @memberof ClChartOrder
+   */
+  checkConfig () { // 检查配置有冲突的修正过来
+    checkLayout(this.layout)
+    this.txtLen = _getTxtWidth(this.context, '涨', this.layout.digit.font, this.layout.digit.pixel)
+    this.timeLen = _getTxtWidth(this.context, '15:30', this.layout.digit.font, this.layout.digit.pixel)
+    this.volLen = _getTxtWidth(this.context, '888888', this.layout.digit.font, this.layout.digit.pixel)
+    this.closeLen = _getTxtWidth(this.context, '888.88', this.layout.digit.font, this.layout.digit.pixel)
+  }
+  /**
+   * Calculate all rectangular areas
+   * @memberof ClChartOrder
+   */
+  setPublicRect () {
+    this.rectChart = offsetRect(this.rectMain, this.layout.margin)
+  }
+  /**
+   * handle click event
+   * @memberof ClChartOrder
+   */
+  onClick (/* e */) {
+    if (this.isIndex) return // 如果是指数就啥也不干
+    if (this.style === 'normal') {
+      this.style = 'tiny'
+    } else {
+      this.style = 'normal'
+    }
+    this.father.onPaint(this)
+  }
+  /**
+   * paint order chart
+   * @memberof ClChartOrder
+   */
+  onPaint () {
+    this.codeInfo = this.father.getData('INFO')
+    this.orderData = this.father.getData('NOW')
+    this.tickData = this.father.getData('TICK')
+    if (this.orderData === undefined || this.tickData === undefined) return
+    this.orderData.coinunit = this.static.coinunit
+    this.tickData.coinunit = this.static.coinunit
+    this.isIndex = getValue(this.codeInfo, 'type') === 0
+
+    _setLineWidth(this.context, this.scale)
+    this.drawClear() // 清理画图区
+    this.drawReady() // 数据准备
+
+    if (this.isIndex) {
+      this.drawIndex()
+    } else {
+      this.drawOrder()
+    }
+    this.drawTick()
+  }
+  /**
+   * clear chart
+   * @memberof ClChartOrder
+   */
+  drawClear () {
+    _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
+  }
+  /**
+   * set ready for draw
+   * @memberof ClChartOrder
+   */
+  drawReady () {
+    if (this.tickData === undefined) {
+      this.tickData = {
+        key: 'TICK',
+        fields: FIELD_TICK,
+        value: []
+      }
+    }
+    if (this.orderData === undefined) {
+      this.orderData = {
+        key: 'NOW',
+        fields: FIELD_NOW,
+        value: []
+      }
+    }
+    let yy
+    if (this.style === 'normal') {
+      yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 10
+    } else {
+      yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 2
+    }
+    if (this.isIndex) {
+      yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 4
+      this.rectOrder = {
+        left: this.rectChart.left,
+        top: this.rectChart.top,
+        width: this.rectChart.width,
+        height: yy
+      }
+    } else {
+      this.rectOrder = {
+        left: this.rectChart.left,
+        top: this.rectChart.top,
+        width: this.rectChart.width,
+        height: yy
+      }
+    }
+    if (this.config.title.display !== 'none') {
+      this.rectTitle = {
+        left: this.rectChart.left,
+        top: yy,
+        width: this.rectChart.width,
+        height: this.layout.title.height
+      }
+    } else {
+      this.rectTitle = {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0
+      }
+    }
+    yy += this.rectTitle.height
+    this.rectTick = {
+      left: this.rectChart.left,
+      top: yy,
+      width: this.rectChart.width,
+      height: this.rectChart.height - yy - this.layout.digit.height / 2
+    }
+  }
+  /**
+   * get color by close and before data
+   * @param {Number} close
+   * @param {Number} before
+   * @return {String} color
+   * @memberof ClChartOrder
+   */
+  getColor (close, before) {
+    if (close > before) {
+      return this.color.red
+    } else if (close &lt; before) {
+      return this.color.green
+    } else {
+      return this.color.white
+    }
+  }
+  /**
+   * draw index
+   * @memberof ClChartOrder
+   */
+  drawIndex () {
+    _drawBegin(this.context, this.color.grid)
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
+
+    const offy = this.rectOrder.height / 3
+    const offx = this.rectOrder.width / 3
+    let xx, yy, len
+    let value
+
+    yy = this.rectOrder.top + Math.floor((offy - this.layout.digit.height) / 2) // 画最上面的
+
+    xx = this.rectOrder.left + (offx - this.txtLen) / 2
+    _drawTxt(this.context, xx, yy, '涨', this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+    xx = this.rectOrder.left + offx + (offx - this.txtLen) / 2
+    _drawTxt(this.context, xx, yy, '跌', this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+    xx = this.rectOrder.left + 2 * offx + (offx - this.txtLen) / 2
+    _drawTxt(this.context, xx, yy, '平', this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    const inow = {
+      key: 'NOW',
+      fields: FIELD_NOW_IDX,
+      value: this.orderData.value
+    }
+    yy = this.rectOrder.top + offy + Math.floor((offy - this.layout.digit.height) / 2) // 画最上面的
+    value = formatVolume(getValue(inow, 'ups'), 1)
+    len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
+    xx = this.rectOrder.left + (offx - len) / 2
+    _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    value = formatVolume(getValue(inow, 'downs'), 1)
+    len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
+    xx = this.rectOrder.left + offx + (offx - len) / 2
+    _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    value = formatVolume(getValue(inow, 'mids'), 1)
+    len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
+    xx = this.rectOrder.left + 2 * offx + (offx - len) / 2
+    _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    yy = this.rectOrder.top + 2 * offy + Math.floor((offy - this.layout.digit.height) / 2)
+
+    value = formatVolume(getValue(inow, 'upvol'), 1)
+    len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
+    xx = this.rectOrder.left + (offx - len) / 2
+    _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    value = formatVolume(getValue(inow, 'downvol'), 1)
+    len = _getTxtWidth(this.context, value, this.layout.digit.font, this.layout.digit.pixel)
+    xx = this.rectOrder.left + offx + (offx - len) / 2
+    _drawTxt(this.context, xx, yy, value, this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+
+    if (this.config.title.display !== 'none') {
+      _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top)
+      _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top + this.rectTitle.height)
+      const ticklen = _getTxtWidth(this.context, '分时成交', this.layout.title.font, this.layout.digit.pixel)
+      xx = this.rectTitle.left + (this.rectTitle.width - ticklen) / 2
+      yy = this.rectTitle.top + 3 * this.scale
+      _drawTxt(this.context, xx, yy, '分时成交',
+        this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+    }
+    _drawEnd(this.context)
+  }
+  /**
+   * draw order
+   * @memberof ClChartOrder
+   */
+  drawOrder () {
+    const xpos = this.drawGridLine() // 先画线格
+    if (this.orderData === undefined || this.orderData.value.length &lt; 1) {
+      return
+    }
+    const offx = (this.rectOrder.width - xpos - 2 * this.layout.digit.spaceX - this.closeLen - this.volLen) / 2
+
+    let mmpCount = 1
+    if (this.style === 'normal') {
+      mmpCount = 5
+    }
+    const offy = this.rectOrder.height / (mmpCount * 2)
+
+    let xx, yy
+    let value, clr
+
+    yy = this.rectOrder.top + Math.floor((offy - this.layout.digit.height) / 2) // 画最上面的
+    for (let idx = mmpCount; idx >= 1; idx--) {
+      xx = this.rectOrder.left + xpos + offx + this.closeLen
+      if (!this.linkInfo.hideInfo) {
+        value = getValue(this.orderData, 'sell' + idx)
+        clr = this.getColor(value, this.static.before)
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+          this.layout.digit.font, this.layout.digit.pixel, clr, {
+            x: 'end'
+          })
+      }
+
+      xx += offx + this.volLen + this.layout.digit.spaceX
+      value = getValue(this.orderData, 'sellvol' + idx)
+      clr = this.color.vol
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
+        this.layout.digit.font, this.layout.digit.pixel, clr, {
+          x: 'end'
+        })
+
+      yy += offy
+    }
+    for (let idx = 1; idx &lt;= mmpCount; idx++) {
+      xx = this.rectOrder.left + xpos + offx + this.closeLen
+      if (!this.linkInfo.hideInfo) {
+        value = getValue(this.orderData, 'buy' + idx)
+        clr = this.getColor(value, this.static.before)
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+          this.layout.digit.font, this.layout.digit.pixel, clr, {
+            x: 'end'
+          })
+      }
+      xx += offx + this.volLen + this.layout.digit.spaceX
+      value = getValue(this.orderData, 'buyvol' + idx)
+      clr = this.color.vol
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
+        this.layout.digit.font, this.layout.digit.pixel, clr, {
+          x: 'end'
+        })
+
+      yy += offy
+    }
+  }
+  /**
+   * draw tick
+   * @memberof ClChartOrder
+   */
+  drawTick () {
+    if (this.tickData === undefined || this.tickData.value.length &lt; 1) return
+    const maxlines = Math.floor(this.rectTick.height / this.layout.digit.height) - 1 // 屏幕最大能显示多少条记录
+    const recs = this.tickData.value.length
+    const beginIndex = recs > maxlines ? recs - maxlines : 0
+    const offy = this.rectTick.height / maxlines
+
+    let xx, yy
+    let value, clr
+    let offx = (this.rectTick.width - 4 * this.layout.digit.spaceX - this.timeLen - this.closeLen - this.volLen) / 2
+    if (this.isIndex) offx = (this.rectTick.width - 3 * this.layout.digit.spaceX - this.timeLen - this.closeLen) / 2
+
+    yy = this.rectTick.top + 2 + Math.floor((offy - this.layout.digit.pixel) / 2) // 画最上面的
+    for (let idx = recs - 1; idx >= beginIndex; idx--) {
+      // for (let idx = beginIndex; idx &lt; recs; idx++) {
+      xx = this.rectTick.left + this.layout.digit.spaceX + this.timeLen
+      value = getValue(this.tickData, 'time', idx)
+      clr = this.color.txt
+      let str
+      if (idx === 0) {
+        str = fromTTimeToStr(value, 'minute')
+      } else {
+        str = fromTTimeToStr(value, 'minute', getValue(this.tickData, 'time', idx - 1))
+      }
+      _drawTxt(this.context, xx, yy, str,
+        this.layout.digit.font, this.layout.digit.pixel, clr, {
+          x: 'end'
+        })
+
+      if (this.isIndex) {
+        xx = this.rectTick.left + this.rectTick.width - this.layout.digit.spaceX
+
+        value = getValue(this.tickData, 'close', idx)
+        clr = this.getColor(value, this.static.before)
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+          this.layout.digit.font, this.layout.digit.pixel, clr, {
+            x: 'end'
+          })
+        yy += offy
+        continue
+      }
+      xx += offx + this.closeLen + this.layout.digit.spaceX
+
+      if (!this.linkInfo.hideInfo) {
+        value = getValue(this.tickData, 'close', idx)
+        clr = this.getColor(value, this.static.before)
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+          this.layout.digit.font, this.layout.digit.pixel, clr, {
+            x: 'end'
+          })
+      }
+      xx += offx + this.volLen + this.layout.digit.spaceX
+
+      value = getValue(this.tickData, 'decvol', idx)
+      clr = this.color.vol
+      _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
+        this.layout.digit.font, this.layout.digit.pixel, clr, {
+          x: 'end'
+        })
+
+      yy += offy
+    }
+  }
+  /**
+   * draw grid line
+   * @return {Number}
+   * @memberof ClChartOrder
+   */
+  drawGridLine () {
+    _drawBegin(this.context, this.color.grid)
+    _drawRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height)
+
+    let mmpCount = 1
+    if (this.style === 'normal') {
+      mmpCount = 5
+    }
+    let len = 0
+    _drawHline(this.context, this.rectOrder.left, this.rectOrder.left + this.rectOrder.width, this.rectOrder.top + Math.floor(this.rectOrder.height / 2))
+
+    let xx, yy, value
+    const strint = ['①', '②', '③', '④', '⑤']
+    const offy = this.rectOrder.height / (mmpCount * 2)
+
+    len = _getTxtWidth(this.context, '卖①', this.layout.title.font, this.layout.digit.height)
+    yy = this.rectOrder.top + Math.floor((offy - this.layout.digit.pixel) / 2) // 画最上面的
+    for (let idx = mmpCount - 1; idx >= 0; idx--) {
+      xx = this.rectOrder.left + this.layout.digit.spaceX
+      value = '卖' + strint[idx]
+      _drawTxt(this.context, xx, yy, value,
+        this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+      yy += offy
+    }
+    for (let idx = 0; idx &lt; mmpCount; idx++) {
+      xx = this.rectOrder.left + this.layout.digit.spaceX
+      value = '买' + strint[idx]
+      _drawTxt(this.context, xx, yy, value,
+        this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+      yy += offy
+    }
+    if (this.config.title.display !== 'none') {
+      _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top)
+      _drawHline(this.context, this.rectTitle.left, this.rectTitle.left + this.rectTitle.width, this.rectTitle.top + this.rectTitle.height)
+      if (this.style === 'normal') {
+        value = '分时成交 △'
+      } else {
+        value = '分时成交 ▽'
+      }
+      const ticklen = _getTxtWidth(this.context, value, this.layout.title.font, this.layout.digit.pixel)
+      xx = this.rectTitle.left + (this.rectTitle.width - ticklen) / 2
+      yy = this.rectTitle.top + 3 * this.scale
+      _drawTxt(this.context, xx, yy, value,
+        this.layout.digit.font, this.layout.digit.pixel, this.color.txt)
+    }
+    _drawEnd(this.context)
+    return len
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 11 2018 17:20:33 GMT+0800 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

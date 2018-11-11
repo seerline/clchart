@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>util/cl.tool.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="ClChart.html#.bindData">bindData</a></li><li data-type='method'><a href="ClChart.html#.clear">clear</a></li><li data-type='method'><a href="ClChart.html#.createChart">createChart</a></li><li data-type='method'><a href="ClChart.html#.fastDrawBegin">fastDrawBegin</a></li><li data-type='method'><a href="ClChart.html#.fastDrawEnd">fastDrawEnd</a></li><li data-type='method'><a href="ClChart.html#.getChart">getChart</a></li><li data-type='method'><a href="ClChart.html#.getData">getData</a></li><li data-type='method'><a href="ClChart.html#.getDataLayer">getDataLayer</a></li><li data-type='method'><a href="ClChart.html#.getEventLayer">getEventLayer</a></li><li data-type='method'><a href="ClChart.html#.initChart">initChart</a></li><li data-type='method'><a href="ClChart.html#.initData">initData</a></li><li data-type='method'><a href="ClChart.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChart.html#.readyData">readyData</a></li><li data-type='method'><a href="ClChart.html#.setColor">setColor</a></li><li data-type='method'><a href="ClChart.html#.setData">setData</a></li><li data-type='method'><a href="ClChart.html#.setDataLayer">setDataLayer</a></li><li data-type='method'><a href="ClChart.html#.setHideInfo">setHideInfo</a></li><li data-type='method'><a href="ClChart.html#.setStandard">setStandard</a></li></ul></li><li><a href="ClChartButton.html">ClChartButton</a><ul class='methods'><li data-type='method'><a href="ClChartButton.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartButton.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartButton.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClChartLine.html">ClChartLine</a><ul class='methods'><li data-type='method'><a href="ClChartLine.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClChartLine.html#.calcMaxMin">calcMaxMin</a></li><li data-type='method'><a href="ClChartLine.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartLine.html#.createButton">createButton</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildCharts">drawChildCharts</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildDraw">drawChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildLines">drawChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartLine.html#.drawTitleInfo">drawTitleInfo</a></li><li data-type='method'><a href="ClChartLine.html#.getDataRange">getDataRange</a></li><li data-type='method'><a href="ClChartLine.html#.getLineDataKey">getLineDataKey</a></li><li data-type='method'><a href="ClChartLine.html#.getMiddle">getMiddle</a></li><li data-type='method'><a href="ClChartLine.html#.getMouseMoveData">getMouseMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.getMoveData">getMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.hasButton">hasButton</a></li><li data-type='method'><a href="ClChartLine.html#.init">init</a></li><li data-type='method'><a href="ClChartLine.html#.locationData">locationData</a></li><li data-type='method'><a href="ClChartLine.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartLine.html#.onKeyDown">onKeyDown</a></li><li data-type='method'><a href="ClChartLine.html#.onLongPress">onLongPress</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseWheel">onMouseWheel</a></li><li data-type='method'><a href="ClChartLine.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartLine.html#.onPinch">onPinch</a></li><li data-type='method'><a href="ClChartLine.html#.readyDraw">readyDraw</a></li><li data-type='method'><a href="ClChartLine.html#.readyScroll">readyScroll</a></li><li data-type='method'><a href="ClChartLine.html#.removeLine">removeLine</a></li><li data-type='method'><a href="ClChartLine.html#.setButtons">setButtons</a></li><li data-type='method'><a href="ClChartLine.html#.setChildDraw">setChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.setChildLines">setChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.setHotButton">setHotButton</a></li><li data-type='method'><a href="ClChartLine.html#.setPublicRect">setPublicRect</a></li><li data-type='method'><a href="ClChartLine.html#.setScroll">setScroll</a></li><li data-type='method'><a href="ClChartLine.html#.setZoomInfo">setZoomInfo</a></li></ul></li><li><a href="ClChartOrder.html">ClChartOrder</a><ul class='methods'><li data-type='method'><a href="ClChartOrder.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartOrder.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartOrder.html#.drawGridLine">drawGridLine</a></li><li data-type='method'><a href="ClChartOrder.html#.drawIndex">drawIndex</a></li><li data-type='method'><a href="ClChartOrder.html#.drawOrder">drawOrder</a></li><li data-type='method'><a href="ClChartOrder.html#.drawReady">drawReady</a></li><li data-type='method'><a href="ClChartOrder.html#.drawTick">drawTick</a></li><li data-type='method'><a href="ClChartOrder.html#.getColor">getColor</a></li><li data-type='method'><a href="ClChartOrder.html#.init">init</a></li><li data-type='method'><a href="ClChartOrder.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartOrder.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartOrder.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClChartScroll.html">ClChartScroll</a><ul class='methods'><li data-type='method'><a href="ClChartScroll.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartScroll.html#.checkMin">checkMin</a></li><li data-type='method'><a href="ClChartScroll.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartScroll.html#.drawGridline">drawGridline</a></li><li data-type='method'><a href="ClChartScroll.html#.findMouseIndex">findMouseIndex</a></li><li data-type='method'><a href="ClChartScroll.html#.init">init</a></li><li data-type='method'><a href="ClChartScroll.html#.onChange">onChange</a></li><li data-type='method'><a href="ClChartScroll.html#.onInit">onInit</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseDown">onMouseDown</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseUp">onMouseUp</a></li><li data-type='method'><a href="ClChartScroll.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartScroll.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClData.html">ClData</a><ul class='methods'><li data-type='method'><a href="ClData.html#.clearData">clearData</a></li><li data-type='method'><a href="ClData.html#.flushMin">flushMin</a></li><li data-type='method'><a href="ClData.html#.flushNowData">flushNowData</a></li><li data-type='method'><a href="ClData.html#.flushTick">flushTick</a></li><li data-type='method'><a href="ClData.html#.getData">getData</a></li><li data-type='method'><a href="ClData.html#.initData">initData</a></li><li data-type='method'><a href="ClData.html#.makeLineData">makeLineData</a></li><li data-type='method'><a href="ClData.html#.makeMinute">makeMinute</a></li><li data-type='method'><a href="ClData.html#.mergeDay">mergeDay</a></li><li data-type='method'><a href="ClData.html#.mergeDay5">mergeDay5</a></li><li data-type='method'><a href="ClData.html#.mergeMon">mergeMon</a></li><li data-type='method'><a href="ClData.html#.mergeNowMinToMin">mergeNowMinToMin</a></li><li data-type='method'><a href="ClData.html#.mergeWeek">mergeWeek</a></li><li data-type='method'><a href="ClData.html#.setData">setData</a></li><li data-type='method'><a href="ClData.html#.updateMinute">updateMinute</a></li></ul></li><li><a href="ClDrawAxisX.html">ClDrawAxisX</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisX.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawAxisY.html">ClDrawAxisY</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisY.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawCursor.html">ClDrawCursor</a><ul class='methods'><li data-type='method'><a href="ClDrawCursor.html#.onClear">onClear</a></li><li data-type='method'><a href="ClDrawCursor.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawGrid.html">ClDrawGrid</a><ul class='methods'><li data-type='method'><a href="ClDrawGrid.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawInfo.html">ClDrawInfo</a><ul class='methods'><li data-type='method'><a href="ClDrawInfo.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawKBar.html">ClDrawKBar</a><ul class='methods'><li data-type='method'><a href="ClDrawKBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawLine.html">ClDrawLine</a><ul class='methods'><li data-type='method'><a href="ClDrawLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawRight.html">ClDrawRight</a><ul class='methods'><li data-type='method'><a href="ClDrawRight.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawSeer.html">ClDrawSeer</a><ul class='methods'><li data-type='method'><a href="ClDrawSeer.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawHotSeer">drawHotSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawTransRect">drawTransRect</a></li><li data-type='method'><a href="ClDrawSeer.html#.filterSeer">filterSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.getSeerPos">getSeerPos</a></li><li data-type='method'><a href="ClDrawSeer.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawTrade.html">ClDrawTrade</a><ul class='methods'><li data-type='method'><a href="ClDrawTrade.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVBar.html">ClDrawVBar</a><ul class='methods'><li data-type='method'><a href="ClDrawVBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVLine.html">ClDrawVLine</a><ul class='methods'><li data-type='method'><a href="ClDrawVLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClEvent.html">ClEvent</a><ul class='methods'><li data-type='method'><a href="ClEvent.html#.bindChart">bindChart</a></li><li data-type='method'><a href="ClEvent.html#.boardEvent">boardEvent</a></li><li data-type='method'><a href="ClEvent.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEvent.html#.emitEvent">emitEvent</a></li><li data-type='method'><a href="ClEvent.html#.findEventPath">findEventPath</a></li><li data-type='method'><a href="ClEvent.html#.getMousePos">getMousePos</a></li></ul></li><li><a href="ClEventHandler.html">ClEventHandler</a><ul class='methods'><li data-type='method'><a href="ClEventHandler.html#.addHandler">addHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.bindEvent">bindEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearHandler">clearHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.click">click</a></li><li data-type='method'><a href="ClEventHandler.html#.keydown">keydown</a></li><li data-type='method'><a href="ClEventHandler.html#.keyup">keyup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousedown">mousedown</a></li><li data-type='method'><a href="ClEventHandler.html#.mousein">mousein</a></li><li data-type='method'><a href="ClEventHandler.html#.mousemove">mousemove</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseout">mouseout</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseup">mouseup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousewheel">mousewheel</a></li><li data-type='method'><a href="ClEventHandler.html#.touchend">touchend</a></li><li data-type='method'><a href="ClEventHandler.html#.touchmove">touchmove</a></li><li data-type='method'><a href="ClEventHandler.html#.touchstart">touchstart</a></li></ul></li><li><a href="ClFormula.html">ClFormula</a><ul class='methods'><li data-type='method'><a href="ClFormula.html#getValue">getValue</a></li><li data-type='method'><a href="ClFormula.html#MA">MA</a></li><li data-type='method'><a href="ClFormula.html#runSingleStock">runSingleStock</a></li></ul></li><li><a href="ClFormula_ClFormula.html">ClFormula</a></li><li><a href="EV.html">EV</a><ul class='methods'><li data-type='method'><a href="EV.html#.addEventListener">addEventListener</a></li><li data-type='method'><a href="EV.html#.emit">emit</a></li><li data-type='method'><a href="EV.html#.emitWithScope">emitWithScope</a></li><li data-type='method'><a href="EV.html#.once">once</a></li><li data-type='method'><a href="EV.html#.removeAllListeners">removeAllListeners</a></li><li data-type='method'><a href="EV.html#.removeEventListener">removeEventListener</a></li></ul></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Modules</h3><ul><li><a href="module-ChartTools.html">ChartTools</a><ul class='methods'><li data-type='method'><a href="module-ChartTools.html#.findLabelToIndex">findLabelToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.findNearTimeToIndex">findNearTimeToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.setFixedLineFlags">setFixedLineFlags</a></li><li data-type='method'><a href="module-ChartTools.html#.setMoveLineFlags">setMoveLineFlags</a></li></ul></li><li><a href="module-ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="module-ClChart.html#.createMulChart">createMulChart</a></li><li data-type='method'><a href="module-ClChart.html#.createSingleChart">createSingleChart</a></li></ul></li><li><a href="module-ClChartDef.html">ClChartDef</a></li><li><a href="module-ClTool.html">ClTool</a><ul class='methods'><li data-type='method'><a href="module-ClTool.html#.addPreZero">addPreZero</a></li><li data-type='method'><a href="module-ClTool.html#.getDate">getDate</a></li><li data-type='method'><a href="module-ClTool.html#.getMTime">getMTime</a></li></ul></li><li><a href="module-DrawUtils.html">DrawUtils</a><ul class='methods'><li data-type='method'><a href="module-DrawUtils.html#._BezierEllipse">_BezierEllipse</a></li><li data-type='method'><a href="module-DrawUtils.html#._clearRect">_clearRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawBegin">_drawBegin</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawCircle">_drawCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawDashLine">_drawDashLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawEnd">_drawEnd</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawHline">_drawHline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawKBar">_drawKBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawline">_drawline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLineAlone">_drawLineAlone</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawlineTo">_drawlineTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLogo">_drawLogo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawmoveTo">_drawmoveTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawRect">_drawRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignCircle">_drawSignCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignHLine">_drawSignHLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignPlot">_drawSignPlot</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignVLine">_drawSignVLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxt">_drawTxt</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxtRect">_drawTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVBar">_drawVBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVline">_drawVline</a></li><li data-type='method'><a href="module-DrawUtils.html#._fill">_fill</a></li><li data-type='method'><a href="module-DrawUtils.html#._fillRect">_fillRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._getImageData">_getImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._getLineWidth">_getLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._getTxtWidth">_getTxtWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._putImageData">_putImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._setFontSize">_setFontSize</a></li><li data-type='method'><a href="module-DrawUtils.html#._setLineWidth">_setLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._setTransColor">_setTransColor</a></li><li data-type='method'><a href="module-DrawUtils.html#~__getTxtRect">__getTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#~_drawCircleAndFilled">_drawCircleAndFilled</a></li><li data-type='method'><a href="module-DrawUtils.html#~getTxtWith">getTxtWith</a></li></ul></li><li><a href="module-GetValue.html">GetValue</a><ul class='methods'><li data-type='method'><a href="module-GetValue.html#.checkDay5">checkDay5</a></li><li data-type='method'><a href="module-GetValue.html#.checkDayZero">checkDayZero</a></li><li data-type='method'><a href="module-GetValue.html#.checkZero">checkZero</a></li><li data-type='method'><a href="module-GetValue.html#.findDateInDay">findDateInDay</a></li><li data-type='method'><a href="module-GetValue.html#.findIndexInMin">findIndexInMin</a></li><li data-type='method'><a href="module-GetValue.html#.fromIndexToTradeTime">fromIndexToTradeTime</a></li><li data-type='method'><a href="module-GetValue.html#.fromTradeTimeToIndex">fromTradeTimeToIndex</a></li><li data-type='method'><a href="module-GetValue.html#.getExrightPriceRange">getExrightPriceRange</a></li><li data-type='method'><a href="module-GetValue.html#.getMinuteCount">getMinuteCount</a></li><li data-type='method'><a href="module-GetValue.html#.getSize">getSize</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMax">getValueMax</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMin">getValueMin</a></li><li data-type='method'><a href="module-GetValue.html#.getZipDay">getZipDay</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToMon">matchDayToMon</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToWeek">matchDayToWeek</a></li><li data-type='method'><a href="module-GetValue.html#.outputDay5">outputDay5</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightDay">transExrightDay</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightMin">transExrightMin</a></li><li data-type='method'><a href="module-GetValue.html#.updateStatic">updateStatic</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPara">_getExrightPara</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPrice">_getExrightPrice</a></li><li data-type='method'><a href="module-GetValue.html#~_isRight">_isRight</a></li></ul></li><li><a href="module-SeerConfig.html">SeerConfig</a></li><li><a href="module-SystemConfig.html">SystemConfig</a><ul class='methods'><li data-type='method'><a href="module-SystemConfig.html#._getOtherTxtWidth">_getOtherTxtWidth</a></li><li data-type='method'><a href="module-SystemConfig.html#.changeCursorStyle">changeCursorStyle</a></li><li data-type='method'><a href="module-SystemConfig.html#.checkLayout">checkLayout</a></li><li data-type='method'><a href="module-SystemConfig.html#.getLineColor">getLineColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.initCommonInfo">initCommonInfo</a></li><li data-type='method'><a href="module-SystemConfig.html#.initSystem">initSystem</a></li><li data-type='method'><a href="module-SystemConfig.html#.setColor">setColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.setScale">setScale</a></li><li data-type='method'><a href="module-SystemConfig.html#.setStandard">setStandard</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#_getDistance">_getDistance</a></li><li><a href="global.html#_getRotateDirection">_getRotateDirection</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">util/cl.tool.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2018-present clchart Contributors.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+//   时间处理函数
+
+/** @module ClTool */
+
+/**
+ * add prefix with 0
+ * @export
+ * @param {Number} v
+ * @param {Number} n
+ * @return {String}
+ */
+export function addPreZero (v, n) { // n表示总共几位  (9,2) ---09
+  n = n > 9 ? 9 : n
+  const s = '000000000' + v
+  return s.slice(-1 * n)
+}
+
+/**
+ * get time's millseconds
+ * @export
+ * @param {any} ttime
+ * @return {Number}
+ */
+export function getMTime (ttime) { // 得到1970-1-1开始的毫秒数
+  let mtime, seconds
+  if (ttime === undefined) {
+    mtime = new Date()
+  } else {
+    if (typeof ttime === 'string') {
+      seconds = parseInt(ttime)
+    } else {
+      seconds = ttime
+    }
+    if (!isNaN(seconds)) {
+      mtime = new Date(seconds * 1000)
+    } else {
+      mtime = new Date()
+    }
+  }
+  return mtime
+}
+
+// time_t转换成20180101格式
+/**
+ * format time_t to 20180101
+ *
+ * @export
+ * @param {any} ttime
+ * @return {Number}
+ */
+export function getDate (ttime) {
+  const mtime = getMTime(ttime)
+  return mtime.getFullYear() * 10000 + (mtime.getMonth() + 1) * 100 + mtime.getDate()
+}
+// time_t提取其中的分钟 1030
+export function getMinute (ttime) {
+  const mtime = getMTime(ttime)
+  return mtime.getHours() * 100 + mtime.getMinutes()
+}
+// 求星期几 0-周日 6-周六
+export function getDayWeek (day) {
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100)
+  return mtime.getDay()
+}
+// 求星期几 0-周日 6-周六
+export function getDayMon (day) {
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100)
+  return mtime.getMonth() + 1
+}
+// 日期转换成time_t
+function _dayToTTime (day) {
+  const mtime = new Date(Math.floor(day / 10000), Math.floor((day % 10000) / 100) - 1, day % 100)
+  return mtime / 1000
+}
+// 得到两个日期间隔的天数
+export function getDayGap (beginDay, endDay) {
+  return Math.floor((_dayToTTime(endDay) - _dayToTTime(beginDay)) / (24 * 3600))
+}
+// 格式化time_t为指定字符串
+export function fromTTimeToStr (ttime, format, ttimePre) {
+  const mtime = getMTime(ttime)
+  switch (format) {
+    case 'minute':
+      if (ttimePre === undefined) {
+        return mtime.getHours() + ':' + addPreZero(mtime.getMinutes(), 2)
+      } else {
+        if (getMinute(ttime) === getMinute(ttimePre)) {
+          return ':' + addPreZero(mtime.getSeconds(), 2)
+        } else {
+          return mtime.getHours() + ':' + addPreZero(mtime.getMinutes(), 2)
+        }
+      }
+    case 'datetime':
+      return mtime.getFullYear() * 10000 + (mtime.getMonth() + 1) * 100 + mtime.getDate() +
+      '-' + mtime.getHours() + ':' + addPreZero(mtime.getMinutes(), 2)
+    default:
+      return ''
+  }
+}
+// 分钟转字符串 1500 -- 15:00
+export function fromMinuteToStr (minute) {
+  return addPreZero(Math.floor(minute / 100), 2).toString() + ':' + addPreZero(minute % 100, 2).toString()
+}
+// 得到间隔分钟数
+export function getMinuteGap (beginMin, endMin) {
+  return (Math.floor(endMin / 100) - Math.floor(beginMin / 100)) * 60 + endMin % 100 - beginMin % 100
+}
+
+// 偏移分钟数，offset 为分钟数
+export function getMinuteOffset (minute, offset) {
+  const mincount = Math.floor(minute / 100) * 60 + minute % 100 + offset
+  return Math.floor(mincount / 60) * 100 + mincount % 60
+}
+
+// 公用无关性的函数集合
+
+export function copyArrayOfDeep (obj) {
+  let out
+  if (Array.isArray(obj)) {
+    out = []
+    const len = obj.length
+    for (let i = 0; i &lt; len; i++) {
+      out[i] = copyArrayOfDeep(obj[i])
+    }
+  } else {
+    out = obj
+  }
+  return out
+}
+export function copyJsonOfDeep (obj) {
+  let out
+  if (obj instanceof Object) { // 数组和文档都为真
+    if (Array.isArray(obj)) { // 只有数组为真
+      out = copyArrayOfDeep(obj)
+    } else {
+      out = {}
+      for (const key in obj) {
+        out[key] = copyJsonOfDeep(obj[key])
+      }
+    }
+  } else {
+    out = obj
+  }
+  return out
+}
+// obj为子集，生成新的对象，仅仅替换source中存在的对应元素
+// 例如 obj = {a:[111],b:2} source = {a:[1,2,3]}
+// out = {a:[111,2,3]}
+export function updateJsonOfDeep (obj, source) {
+  let out
+  if (source instanceof Object) {
+    if (Array.isArray(source)) {
+      out = []
+      for (const key in source) {
+        out[key] = obj &amp;&amp; obj[key]
+          ? updateJsonOfDeep(obj[key], source[key])
+          : copyArrayOfDeep(source[key])
+      }
+    } else {
+      out = {}
+      for (const key in source) {
+        out[key] = obj &amp;&amp; obj[key]
+          ? updateJsonOfDeep(obj[key], source[key])
+          : copyJsonOfDeep(source[key])
+      }
+    }
+  } else {
+    out = obj || source
+  }
+  return out
+}
+// // obj为原始集，不生成新的对象，用source中存在的对应元素替换obj的数据
+// // 例如 obj = {a:[111],b:2} source = {a:[1,2,3]}
+// // out = {a:[111,2,3],b:2}
+export function mergeJsonOfDeep (obj, source) {
+  const out = updateJsonOfDeep(obj, source)
+
+  for (const key in obj) {
+    if (out[key] !== undefined) continue
+    if (obj[key] instanceof Object) {
+      if (Array.isArray(obj[key])) {
+        out[key] = copyArrayOfDeep(obj[key])
+      } else {
+        out[key] = copyJsonOfDeep(obj[key])
+      }
+    } else {
+      out[key] = obj[key]
+    }
+  }
+  return out
+}
+// 数组是否为空
+export function isEmptyArray (obj) {
+  if (obj !== undefined &amp;&amp; Array.isArray(obj)) {
+    if (obj.length > 0) return false
+  }
+  return true
+}
+// 根据offset返回一个新的矩形
+// rect:{left,top,width,height}
+// offset:{left,top,right,bottom}
+export function offsetRect (rect, offset) {
+  if (rect === undefined) return { left: 0, top: 0, width: 0, height: 0 }
+  if (offset === undefined) return rect
+  return {
+    left: rect.left + offset.left,
+    top: rect.top + offset.top,
+    width: rect.width - (offset.left + offset.right),
+    height: rect.height - (offset.top + offset.bottom)
+  }
+}
+// 判断点是否在矩形内
+export function inRect (rect, point) {
+  if (rect === undefined || point === undefined) return false
+  if (point.x >= rect.left &amp;&amp; point.y >= rect.top &amp;&amp;
+    point.x &lt; (rect.left + rect.width) &amp;&amp;
+    point.y &lt; (rect.top + rect.height)) {
+    return true
+  }
+  return false
+}
+// 判断X是否在矩形宽度范围内
+export function inRangeX (rect, xx) {
+  if (rect === undefined || xx === undefined) return false
+  if (xx >= rect.left &amp;&amp;
+    xx &lt; (rect.left + rect.width)) {
+    return true
+  }
+  return false
+}
+// 判断Y是否在矩形高度范围内
+export function inRangeY (rect, yy) {
+  if (rect === undefined || yy === undefined) return false
+  if (yy >= rect.top &amp;&amp;
+    yy &lt; (rect.top + rect.height)) {
+    return true
+  }
+  return false
+}
+// 判断 v 是否在数组arr中, 比in准确
+export function inArray (v, arr) {
+  if (arr.indexOf(v) &lt; 0) return false
+  return true
+}
+// 求数组a和b的交集
+export function intersectArray (a, b) {
+  const result = []
+  for (let ai = 0; ai &lt; a.length; ai++) {
+    for (let bi = 0; bi &lt; b.length; bi++) {
+      if (a[ai] === b[bi]) {
+        result.push(a[ai])
+        break
+      }
+    }
+  }
+  return result
+}
+// 求数组a和b的并集,去掉重复的元素
+export function mergeArray (a, b) {
+  const result = []
+  for (let ai = 0; ai &lt; a.length; ai++) {
+    result.push(a[ai])
+  }
+  for (let bi = 0; bi &lt; b.length; bi++) {
+    if (!inArray(b[bi], result)) {
+      result.push(b[bi])
+    }
+  }
+  return result
+}
+// 格式化百分比
+export function formatRate (value, zero) {
+  if (value === undefined || isNaN(value) || zero === undefined) return '--'
+  if (typeof value === 'string') value = parseFloat(value)
+
+  let result = Math.abs((value - zero) / zero * 100)
+  result = result.toFixed(2) + '%'
+  return result // 10.20%
+}
+// 格式化成交量
+export function formatVolume (value, unit) {
+  if (value === undefined || isNaN(value)) return '--'
+  if (typeof value === 'string') value = parseFloat(value)
+
+  if (unit === undefined) unit = 100
+  let result = value / unit
+
+  if (result > 100000000000) result = (result / 100000000).toFixed(0) + '亿'
+  else if (result > 10000000000) result = (result / 100000000).toFixed(1) + '亿'
+  else if (result > 1000000000) result = (result / 100000000).toFixed(2) + '亿'
+  else if (result > 100000000) result = (result / 100000000).toFixed(3) + '亿'
+  else if (result > 10000000) result = (result / 10000).toFixed(0) + '万'
+  else if (result > 1000000) result = (result / 10000).toFixed(1) + '万'
+  else if (result > -0.000000001 &amp;&amp; result &lt; 0.000000001) result = '--'
+  else result = result.toFixed(0)
+  return String(result)
+}
+// 格式化价格 decimal为小数点，limit为最大长度[4,10]，
+export function formatPrice (value, coinunit, limit, isopen) {
+  if (value === undefined || isNaN(value)) return '--'
+  // if (typeof value === 'string') value = parseFloat(value);
+
+  let result = value
+  if (coinunit === undefined || coinunit &lt; 0 || coinunit > 10) coinunit = 0
+
+  if (value > -0.000000001 &amp;&amp; value &lt; 0.000000001 &amp;&amp; !isopen) {
+    return '--'
+  }
+  result = result.toFixed(coinunit)
+
+  if (limit === undefined || limit &lt; 4) return result
+  return result.substr(0, limit)
+}
+// 格式化时间
+export function formatShowTime (key, value, minute) {
+  let out = value
+  switch (key) {
+    case 'M5':
+    case 'M15':
+    case 'M30':
+    case 'M60':
+      out = fromTTimeToStr(value, 'datetime')
+      break
+    case 'MIN':
+      if (minute === undefined) {
+        out = fromTTimeToStr(value, 'minute')
+      } else {
+        out = fromMinuteToStr(minute)
+      }
+      break
+    case 'DAY5':
+      out = fromTTimeToStr(value, 'minute')
+      break
+  }
+  return out
+}
+
+export function formatInfo (value, format, coinunit, volzoom, middle) {
+  let out
+  if (format === 'rate') {
+    out = formatRate(value, middle)
+  } else {
+    if (format === 'price') {
+      if (coinunit === undefined) coinunit = 2
+      out = formatPrice(value, coinunit, 7)
+    } else {
+      if (volzoom === undefined) volzoom = 100
+      out = formatVolume(value, volzoom)
+    }
+  }
+  return out
+}
+
+// 数据转换函数集合
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 11 2018 17:20:33 GMT+0800 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

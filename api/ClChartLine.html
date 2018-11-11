@@ -1,0 +1,4374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>ClChartLine - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="ClChart.html#.bindData">bindData</a></li><li data-type='method'><a href="ClChart.html#.clear">clear</a></li><li data-type='method'><a href="ClChart.html#.createChart">createChart</a></li><li data-type='method'><a href="ClChart.html#.fastDrawBegin">fastDrawBegin</a></li><li data-type='method'><a href="ClChart.html#.fastDrawEnd">fastDrawEnd</a></li><li data-type='method'><a href="ClChart.html#.getChart">getChart</a></li><li data-type='method'><a href="ClChart.html#.getData">getData</a></li><li data-type='method'><a href="ClChart.html#.getDataLayer">getDataLayer</a></li><li data-type='method'><a href="ClChart.html#.getEventLayer">getEventLayer</a></li><li data-type='method'><a href="ClChart.html#.initChart">initChart</a></li><li data-type='method'><a href="ClChart.html#.initData">initData</a></li><li data-type='method'><a href="ClChart.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChart.html#.readyData">readyData</a></li><li data-type='method'><a href="ClChart.html#.setColor">setColor</a></li><li data-type='method'><a href="ClChart.html#.setData">setData</a></li><li data-type='method'><a href="ClChart.html#.setDataLayer">setDataLayer</a></li><li data-type='method'><a href="ClChart.html#.setHideInfo">setHideInfo</a></li><li data-type='method'><a href="ClChart.html#.setStandard">setStandard</a></li></ul></li><li><a href="ClChartButton.html">ClChartButton</a><ul class='methods'><li data-type='method'><a href="ClChartButton.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartButton.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartButton.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClChartLine.html">ClChartLine</a><ul class='methods'><li data-type='method'><a href="ClChartLine.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClChartLine.html#.calcMaxMin">calcMaxMin</a></li><li data-type='method'><a href="ClChartLine.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartLine.html#.createButton">createButton</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildCharts">drawChildCharts</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildDraw">drawChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.drawChildLines">drawChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartLine.html#.drawTitleInfo">drawTitleInfo</a></li><li data-type='method'><a href="ClChartLine.html#.getDataRange">getDataRange</a></li><li data-type='method'><a href="ClChartLine.html#.getLineDataKey">getLineDataKey</a></li><li data-type='method'><a href="ClChartLine.html#.getMiddle">getMiddle</a></li><li data-type='method'><a href="ClChartLine.html#.getMouseMoveData">getMouseMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.getMoveData">getMoveData</a></li><li data-type='method'><a href="ClChartLine.html#.hasButton">hasButton</a></li><li data-type='method'><a href="ClChartLine.html#.init">init</a></li><li data-type='method'><a href="ClChartLine.html#.locationData">locationData</a></li><li data-type='method'><a href="ClChartLine.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartLine.html#.onKeyDown">onKeyDown</a></li><li data-type='method'><a href="ClChartLine.html#.onLongPress">onLongPress</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartLine.html#.onMouseWheel">onMouseWheel</a></li><li data-type='method'><a href="ClChartLine.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartLine.html#.onPinch">onPinch</a></li><li data-type='method'><a href="ClChartLine.html#.readyDraw">readyDraw</a></li><li data-type='method'><a href="ClChartLine.html#.readyScroll">readyScroll</a></li><li data-type='method'><a href="ClChartLine.html#.removeLine">removeLine</a></li><li data-type='method'><a href="ClChartLine.html#.setButtons">setButtons</a></li><li data-type='method'><a href="ClChartLine.html#.setChildDraw">setChildDraw</a></li><li data-type='method'><a href="ClChartLine.html#.setChildLines">setChildLines</a></li><li data-type='method'><a href="ClChartLine.html#.setHotButton">setHotButton</a></li><li data-type='method'><a href="ClChartLine.html#.setPublicRect">setPublicRect</a></li><li data-type='method'><a href="ClChartLine.html#.setScroll">setScroll</a></li><li data-type='method'><a href="ClChartLine.html#.setZoomInfo">setZoomInfo</a></li></ul></li><li><a href="ClChartOrder.html">ClChartOrder</a><ul class='methods'><li data-type='method'><a href="ClChartOrder.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartOrder.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartOrder.html#.drawGridLine">drawGridLine</a></li><li data-type='method'><a href="ClChartOrder.html#.drawIndex">drawIndex</a></li><li data-type='method'><a href="ClChartOrder.html#.drawOrder">drawOrder</a></li><li data-type='method'><a href="ClChartOrder.html#.drawReady">drawReady</a></li><li data-type='method'><a href="ClChartOrder.html#.drawTick">drawTick</a></li><li data-type='method'><a href="ClChartOrder.html#.getColor">getColor</a></li><li data-type='method'><a href="ClChartOrder.html#.init">init</a></li><li data-type='method'><a href="ClChartOrder.html#.onClick">onClick</a></li><li data-type='method'><a href="ClChartOrder.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartOrder.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClChartScroll.html">ClChartScroll</a><ul class='methods'><li data-type='method'><a href="ClChartScroll.html#.checkConfig">checkConfig</a></li><li data-type='method'><a href="ClChartScroll.html#.checkMin">checkMin</a></li><li data-type='method'><a href="ClChartScroll.html#.drawClear">drawClear</a></li><li data-type='method'><a href="ClChartScroll.html#.drawGridline">drawGridline</a></li><li data-type='method'><a href="ClChartScroll.html#.findMouseIndex">findMouseIndex</a></li><li data-type='method'><a href="ClChartScroll.html#.init">init</a></li><li data-type='method'><a href="ClChartScroll.html#.onChange">onChange</a></li><li data-type='method'><a href="ClChartScroll.html#.onInit">onInit</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseDown">onMouseDown</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseMove">onMouseMove</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseOut">onMouseOut</a></li><li data-type='method'><a href="ClChartScroll.html#.onMouseUp">onMouseUp</a></li><li data-type='method'><a href="ClChartScroll.html#.onPaint">onPaint</a></li><li data-type='method'><a href="ClChartScroll.html#.setPublicRect">setPublicRect</a></li></ul></li><li><a href="ClData.html">ClData</a><ul class='methods'><li data-type='method'><a href="ClData.html#.clearData">clearData</a></li><li data-type='method'><a href="ClData.html#.flushMin">flushMin</a></li><li data-type='method'><a href="ClData.html#.flushNowData">flushNowData</a></li><li data-type='method'><a href="ClData.html#.flushTick">flushTick</a></li><li data-type='method'><a href="ClData.html#.getData">getData</a></li><li data-type='method'><a href="ClData.html#.initData">initData</a></li><li data-type='method'><a href="ClData.html#.makeLineData">makeLineData</a></li><li data-type='method'><a href="ClData.html#.makeMinute">makeMinute</a></li><li data-type='method'><a href="ClData.html#.mergeDay">mergeDay</a></li><li data-type='method'><a href="ClData.html#.mergeDay5">mergeDay5</a></li><li data-type='method'><a href="ClData.html#.mergeMon">mergeMon</a></li><li data-type='method'><a href="ClData.html#.mergeNowMinToMin">mergeNowMinToMin</a></li><li data-type='method'><a href="ClData.html#.mergeWeek">mergeWeek</a></li><li data-type='method'><a href="ClData.html#.setData">setData</a></li><li data-type='method'><a href="ClData.html#.updateMinute">updateMinute</a></li></ul></li><li><a href="ClDrawAxisX.html">ClDrawAxisX</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisX.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawAxisY.html">ClDrawAxisY</a><ul class='methods'><li data-type='method'><a href="ClDrawAxisY.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawCursor.html">ClDrawCursor</a><ul class='methods'><li data-type='method'><a href="ClDrawCursor.html#.onClear">onClear</a></li><li data-type='method'><a href="ClDrawCursor.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawGrid.html">ClDrawGrid</a><ul class='methods'><li data-type='method'><a href="ClDrawGrid.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawInfo.html">ClDrawInfo</a><ul class='methods'><li data-type='method'><a href="ClDrawInfo.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawKBar.html">ClDrawKBar</a><ul class='methods'><li data-type='method'><a href="ClDrawKBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawLine.html">ClDrawLine</a><ul class='methods'><li data-type='method'><a href="ClDrawLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawRight.html">ClDrawRight</a><ul class='methods'><li data-type='method'><a href="ClDrawRight.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawSeer.html">ClDrawSeer</a><ul class='methods'><li data-type='method'><a href="ClDrawSeer.html#.beforeLocation">beforeLocation</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawHotSeer">drawHotSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.drawTransRect">drawTransRect</a></li><li data-type='method'><a href="ClDrawSeer.html#.filterSeer">filterSeer</a></li><li data-type='method'><a href="ClDrawSeer.html#.getSeerPos">getSeerPos</a></li><li data-type='method'><a href="ClDrawSeer.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawTrade.html">ClDrawTrade</a><ul class='methods'><li data-type='method'><a href="ClDrawTrade.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVBar.html">ClDrawVBar</a><ul class='methods'><li data-type='method'><a href="ClDrawVBar.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClDrawVLine.html">ClDrawVLine</a><ul class='methods'><li data-type='method'><a href="ClDrawVLine.html#.onPaint">onPaint</a></li></ul></li><li><a href="ClEvent.html">ClEvent</a><ul class='methods'><li data-type='method'><a href="ClEvent.html#.bindChart">bindChart</a></li><li data-type='method'><a href="ClEvent.html#.boardEvent">boardEvent</a></li><li data-type='method'><a href="ClEvent.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEvent.html#.emitEvent">emitEvent</a></li><li data-type='method'><a href="ClEvent.html#.findEventPath">findEventPath</a></li><li data-type='method'><a href="ClEvent.html#.getMousePos">getMousePos</a></li></ul></li><li><a href="ClEventHandler.html">ClEventHandler</a><ul class='methods'><li data-type='method'><a href="ClEventHandler.html#.addHandler">addHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.bindEvent">bindEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearEvent">clearEvent</a></li><li data-type='method'><a href="ClEventHandler.html#.clearHandler">clearHandler</a></li><li data-type='method'><a href="ClEventHandler.html#.click">click</a></li><li data-type='method'><a href="ClEventHandler.html#.keydown">keydown</a></li><li data-type='method'><a href="ClEventHandler.html#.keyup">keyup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousedown">mousedown</a></li><li data-type='method'><a href="ClEventHandler.html#.mousein">mousein</a></li><li data-type='method'><a href="ClEventHandler.html#.mousemove">mousemove</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseout">mouseout</a></li><li data-type='method'><a href="ClEventHandler.html#.mouseup">mouseup</a></li><li data-type='method'><a href="ClEventHandler.html#.mousewheel">mousewheel</a></li><li data-type='method'><a href="ClEventHandler.html#.touchend">touchend</a></li><li data-type='method'><a href="ClEventHandler.html#.touchmove">touchmove</a></li><li data-type='method'><a href="ClEventHandler.html#.touchstart">touchstart</a></li></ul></li><li><a href="ClFormula.html">ClFormula</a><ul class='methods'><li data-type='method'><a href="ClFormula.html#getValue">getValue</a></li><li data-type='method'><a href="ClFormula.html#MA">MA</a></li><li data-type='method'><a href="ClFormula.html#runSingleStock">runSingleStock</a></li></ul></li><li><a href="ClFormula_ClFormula.html">ClFormula</a></li><li><a href="EV.html">EV</a><ul class='methods'><li data-type='method'><a href="EV.html#.addEventListener">addEventListener</a></li><li data-type='method'><a href="EV.html#.emit">emit</a></li><li data-type='method'><a href="EV.html#.emitWithScope">emitWithScope</a></li><li data-type='method'><a href="EV.html#.once">once</a></li><li data-type='method'><a href="EV.html#.removeAllListeners">removeAllListeners</a></li><li data-type='method'><a href="EV.html#.removeEventListener">removeEventListener</a></li></ul></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Modules</h3><ul><li><a href="module-ChartTools.html">ChartTools</a><ul class='methods'><li data-type='method'><a href="module-ChartTools.html#.findLabelToIndex">findLabelToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.findNearTimeToIndex">findNearTimeToIndex</a></li><li data-type='method'><a href="module-ChartTools.html#.setFixedLineFlags">setFixedLineFlags</a></li><li data-type='method'><a href="module-ChartTools.html#.setMoveLineFlags">setMoveLineFlags</a></li></ul></li><li><a href="module-ClChart.html">ClChart</a><ul class='methods'><li data-type='method'><a href="module-ClChart.html#.createMulChart">createMulChart</a></li><li data-type='method'><a href="module-ClChart.html#.createSingleChart">createSingleChart</a></li></ul></li><li><a href="module-ClChartDef.html">ClChartDef</a></li><li><a href="module-ClTool.html">ClTool</a><ul class='methods'><li data-type='method'><a href="module-ClTool.html#.addPreZero">addPreZero</a></li><li data-type='method'><a href="module-ClTool.html#.getDate">getDate</a></li><li data-type='method'><a href="module-ClTool.html#.getMTime">getMTime</a></li></ul></li><li><a href="module-DrawUtils.html">DrawUtils</a><ul class='methods'><li data-type='method'><a href="module-DrawUtils.html#._BezierEllipse">_BezierEllipse</a></li><li data-type='method'><a href="module-DrawUtils.html#._clearRect">_clearRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawBegin">_drawBegin</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawCircle">_drawCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawDashLine">_drawDashLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawEnd">_drawEnd</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawHline">_drawHline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawKBar">_drawKBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawline">_drawline</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLineAlone">_drawLineAlone</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawlineTo">_drawlineTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawLogo">_drawLogo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawmoveTo">_drawmoveTo</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawRect">_drawRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignCircle">_drawSignCircle</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignHLine">_drawSignHLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignPlot">_drawSignPlot</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawSignVLine">_drawSignVLine</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxt">_drawTxt</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawTxtRect">_drawTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVBar">_drawVBar</a></li><li data-type='method'><a href="module-DrawUtils.html#._drawVline">_drawVline</a></li><li data-type='method'><a href="module-DrawUtils.html#._fill">_fill</a></li><li data-type='method'><a href="module-DrawUtils.html#._fillRect">_fillRect</a></li><li data-type='method'><a href="module-DrawUtils.html#._getImageData">_getImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._getLineWidth">_getLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._getTxtWidth">_getTxtWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._putImageData">_putImageData</a></li><li data-type='method'><a href="module-DrawUtils.html#._setFontSize">_setFontSize</a></li><li data-type='method'><a href="module-DrawUtils.html#._setLineWidth">_setLineWidth</a></li><li data-type='method'><a href="module-DrawUtils.html#._setTransColor">_setTransColor</a></li><li data-type='method'><a href="module-DrawUtils.html#~__getTxtRect">__getTxtRect</a></li><li data-type='method'><a href="module-DrawUtils.html#~_drawCircleAndFilled">_drawCircleAndFilled</a></li><li data-type='method'><a href="module-DrawUtils.html#~getTxtWith">getTxtWith</a></li></ul></li><li><a href="module-GetValue.html">GetValue</a><ul class='methods'><li data-type='method'><a href="module-GetValue.html#.checkDay5">checkDay5</a></li><li data-type='method'><a href="module-GetValue.html#.checkDayZero">checkDayZero</a></li><li data-type='method'><a href="module-GetValue.html#.checkZero">checkZero</a></li><li data-type='method'><a href="module-GetValue.html#.findDateInDay">findDateInDay</a></li><li data-type='method'><a href="module-GetValue.html#.findIndexInMin">findIndexInMin</a></li><li data-type='method'><a href="module-GetValue.html#.fromIndexToTradeTime">fromIndexToTradeTime</a></li><li data-type='method'><a href="module-GetValue.html#.fromTradeTimeToIndex">fromTradeTimeToIndex</a></li><li data-type='method'><a href="module-GetValue.html#.getExrightPriceRange">getExrightPriceRange</a></li><li data-type='method'><a href="module-GetValue.html#.getMinuteCount">getMinuteCount</a></li><li data-type='method'><a href="module-GetValue.html#.getSize">getSize</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMax">getValueMax</a></li><li data-type='method'><a href="module-GetValue.html#.getValueMin">getValueMin</a></li><li data-type='method'><a href="module-GetValue.html#.getZipDay">getZipDay</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToMon">matchDayToMon</a></li><li data-type='method'><a href="module-GetValue.html#.matchDayToWeek">matchDayToWeek</a></li><li data-type='method'><a href="module-GetValue.html#.outputDay5">outputDay5</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightDay">transExrightDay</a></li><li data-type='method'><a href="module-GetValue.html#.transExrightMin">transExrightMin</a></li><li data-type='method'><a href="module-GetValue.html#.updateStatic">updateStatic</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPara">_getExrightPara</a></li><li data-type='method'><a href="module-GetValue.html#~_getExrightPrice">_getExrightPrice</a></li><li data-type='method'><a href="module-GetValue.html#~_isRight">_isRight</a></li></ul></li><li><a href="module-SeerConfig.html">SeerConfig</a></li><li><a href="module-SystemConfig.html">SystemConfig</a><ul class='methods'><li data-type='method'><a href="module-SystemConfig.html#._getOtherTxtWidth">_getOtherTxtWidth</a></li><li data-type='method'><a href="module-SystemConfig.html#.changeCursorStyle">changeCursorStyle</a></li><li data-type='method'><a href="module-SystemConfig.html#.checkLayout">checkLayout</a></li><li data-type='method'><a href="module-SystemConfig.html#.getLineColor">getLineColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.initCommonInfo">initCommonInfo</a></li><li data-type='method'><a href="module-SystemConfig.html#.initSystem">initSystem</a></li><li data-type='method'><a href="module-SystemConfig.html#.setColor">setColor</a></li><li data-type='method'><a href="module-SystemConfig.html#.setScale">setScale</a></li><li data-type='method'><a href="module-SystemConfig.html#.setStandard">setStandard</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#_getDistance">_getDistance</a></li><li><a href="global.html#_getRotateDirection">_getRotateDirection</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ClChartLine</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ClChartLine
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+
+    <h4 class="name" id="ClChartLine"><span class="type-signature"></span>new ClChartLine<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Class representing ClChartLine</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".beforeLocation"><span class="type-signature">(static) </span>beforeLocation<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line540">line 540</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>before location</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".calcMaxMin"><span class="type-signature">(static) </span>calcMaxMin<span class="signature">(data, extremum, start, stop)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line674">line 674</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>calc max and min data</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extremum</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>stop</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".checkConfig"><span class="type-signature">(static) </span>checkConfig<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>check config</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".createButton"><span class="type-signature">(static) </span>createButton<span class="signature">(name)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line336">line 336</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>create button</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>button name</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>button instacne</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".drawChildCharts"><span class="type-signature">(static) </span>drawChildCharts<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line525">line 525</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>draw child charts</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".drawChildDraw"><span class="type-signature">(static) </span>drawChildDraw<span class="signature">(name)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line611">line 611</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>draw child</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>child draw's name</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".drawChildLines"><span class="type-signature">(static) </span>drawChildLines<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line551">line 551</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>draw child lines</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".drawClear"><span class="type-signature">(static) </span>drawClear<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line515">line 515</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>clear chart</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".drawTitleInfo"><span class="type-signature">(static) </span>drawTitleInfo<span class="signature">(index)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line601">line 601</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>draw title info</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>title index</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getDataRange"><span class="type-signature">(static) </span>getDataRange<span class="signature">(data)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line789">line 789</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>get data range</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getLineDataKey"><span class="type-signature">(static) </span>getLineDataKey<span class="signature">(line)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line242">line 242</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>get line by data key</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>line</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>line instance</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getMiddle"><span class="type-signature">(static) </span>getMiddle<span class="signature">(method)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line658">line 658</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>get middle</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>method</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getMouseMoveData"><span class="type-signature">(static) </span>getMouseMoveData<span class="signature">(xpos)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line1029">line 1029</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>get mouse move data</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>xpos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getMoveData"><span class="type-signature">(static) </span>getMoveData<span class="signature">(index)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line566">line 566</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>According to the record index to obtain a set of data according to the keys, the data is {MA:[]...} is mainly provided for mouse movement</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".hasButton"><span class="type-signature">(static) </span>hasButton<span class="signature">(key, buttons)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line351">line 351</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>check has button by key</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>button key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buttons</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>buttons array</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".init"><span class="type-signature">(static) </span>init<span class="signature">(cfg, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>init line</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cfg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>line's config</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>initialized callback</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".locationData"><span class="type-signature">(static) </span>locationData<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line817">line 817</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>location data</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onClick"><span class="type-signature">(static) </span>onClick<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line891">line 891</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle click event</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onKeyDown"><span class="type-signature">(static) </span>onKeyDown<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line970">line 970</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle key down</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onLongPress"><span class="type-signature">(static) </span>onLongPress<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line907">line 907</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle long press</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onMouseMove"><span class="type-signature">(static) </span>onMouseMove<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line987">line 987</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle mouse move</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onMouseOut"><span class="type-signature">(static) </span>onMouseOut<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line938">line 938</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle mouse out</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onMouseWheel"><span class="type-signature">(static) </span>onMouseWheel<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line951">line 951</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle mouse wheel</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onPaint"><span class="type-signature">(static) </span>onPaint<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line624">line 624</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>draw all the layers contained in this area</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".onPinch"><span class="type-signature">(static) </span>onPinch<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line916">line 916</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>handle pinch</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".readyDraw"><span class="type-signature">(static) </span>readyDraw<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line852">line 852</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set ready for draw</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".readyScroll"><span class="type-signature">(static) </span>readyScroll<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line758">line 758</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>ready for draw scroll</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".removeLine"><span class="type-signature">(static) </span>removeLine<span class="signature">(name)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line464">line 464</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>remove line by name</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>line name</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setButtons"><span class="type-signature">(static) </span>setButtons<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line361">line 361</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set buttons</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setChildDraw"><span class="type-signature">(static) </span>setChildDraw<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line280">line 280</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set child draw instance</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setChildLines"><span class="type-signature">(static) </span>setChildLines<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line250">line 250</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set child line instance</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setHotButton"><span class="type-signature">(static) </span>setHotButton<span class="signature">(chart)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line502">line 502</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set hot button</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>chart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>chart instance</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setPublicRect"><span class="type-signature">(static) </span>setPublicRect<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set public rect</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setScroll"><span class="type-signature">(static) </span>setScroll<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line309">line 309</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set scroll instance</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".setZoomInfo"><span class="type-signature">(static) </span>setZoomInfo<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chart_cl.chart.line.js.html">chart/cl.chart.line.js</a>, <a href="chart_cl.chart.line.js.html#line476">line 476</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>set zoom info</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 11 2018 17:20:33 GMT+0800 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>
