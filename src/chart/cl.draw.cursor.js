@@ -91,7 +91,7 @@ export default class ClDrawCursor {
         yy = (this.maxmin.max - valueY) * this.maxmin.unitY + this.rectChart.top
       }
 
-      _drawLineAlone(this.context, this.rectMain.left, yy, this.rectMain.left + this.rectMain.width, yy, this.color.grid)
+      _drawLineAlone(this.context, this.rectMain.left, yy, this.rectMain.left + this.rectMain.width, yy, this.color.cursor)
       let posX = this.axisPlatform === 'phone' ? 'start' : 'end'
 
       if (this.axisYInfo.left.display !== 'none') {
@@ -133,7 +133,7 @@ export default class ClDrawCursor {
       }
     }
 
-    _drawLineAlone(this.context, mousePos.x, this.rectMain.top, mousePos.x, this.rectMain.top + this.rectMain.height - 1, this.color.grid)
+    _drawLineAlone(this.context, mousePos.x, this.rectMain.top, mousePos.x, this.rectMain.top + this.rectMain.height - 1, this.color.cursor)
     if (this.axisXInfo.display !== 'none') {
       xx = mousePos.x
       const th = Math.floor((this.axisX.height - this.axisX.pixel - this.scale) / 2)

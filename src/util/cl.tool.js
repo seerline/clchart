@@ -151,6 +151,12 @@ export function copyJsonOfDeep (obj) {
   }
   return out
 }
+
+export function isValue (obj) {
+  if (obj === undefined) return false
+  // if (isNaN(obj)) return false
+  return true
+}
 // obj为子集，生成新的对象，仅仅替换source中存在的对应元素
 // 例如 obj = {a:[111],b:2} source = {a:[1,2,3]}
 // out = {a:[111,2,3]}
@@ -160,20 +166,20 @@ export function updateJsonOfDeep (obj, source) {
     if (Array.isArray(source)) {
       out = []
       for (const key in source) {
-        out[key] = obj && obj[key]
+        out[key] = isValue(obj) && isValue(obj[key])
           ? updateJsonOfDeep(obj[key], source[key])
           : copyArrayOfDeep(source[key])
       }
     } else {
       out = {}
       for (const key in source) {
-        out[key] = obj && obj[key]
+        out[key] = isValue(obj) && isValue(obj[key])
           ? updateJsonOfDeep(obj[key], source[key])
           : copyJsonOfDeep(source[key])
       }
     }
   } else {
-    out = obj || source
+    out = isValue(obj) ? obj : source
   }
   return out
 }

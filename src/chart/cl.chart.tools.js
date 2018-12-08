@@ -98,6 +98,7 @@ export function setMoveLineFlags (info, config) {
       // info.locked.set = config.set ? config.set : info.locked.set;
       break
     case 'move':
+      info.maxIndex = info.minIndex + offset
       break
     default: // case 'last':
       info.maxIndex = config.size - 1

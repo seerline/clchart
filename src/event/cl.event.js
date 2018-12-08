@@ -36,7 +36,7 @@ import ClEventHandler from './cl.event.handler'
 
 export const EVENT_DEFINE = [
   'onMouseMove',
-  // 'onMouseIn',
+  'onMouseIn',
   'onMouseOut',
   'onMousewheel',
   'onMouseUp',
@@ -120,7 +120,7 @@ export default class ClEvent {
    */
   bindChart (source) {
     this.firstChart = source
-    this.HotWin = undefined
+    this.hotWin = []
   }
   /**
    * clear event
@@ -128,6 +128,31 @@ export default class ClEvent {
    */
   clearEvent () {
     this.eventSource.clearEvent()
+  }
+  // 建立一个hotWin列表，每次检查鼠标位置时，在区域内的win都会收到in的消息
+  // 下次再检查时凡事不再列表中的会收到out消息
+  /**
+   * clear event
+   * @memberof ClEvent
+   */
+  checkHotWin (event, charts) {
+    for (let k = 0; k < charts.length; k++) {
+      let finded = false
+      for (let i = 0; i < this.hotWin.length; i++) {
+        if (!inRect(this.hotWin[i].rectMain, event.mousePos)) {
+          if (this.hotWin[i]['onMouseOut']) this.hotWin[i]['onMouseOut'](event)
+          this.hotWin.splice(i, 1)
+          i--
+        }
+        if (charts[k] === this.hotWin[i]) {
+          finded = true
+        }
+      }
+      if (!finded) {
+        if (charts[k]['onMouseIn']) charts[k]['onMouseIn'](event)
+        this.hotWin.push(charts[k])
+      }
+    }
   }
   // 下面是接收事件后,根据热点位置来判断归属于哪一个chart,并分发事件;
   // config 必须包含鼠标位置 {offsetX:offsetY:}
@@ -138,13 +163,15 @@ export default class ClEvent {
    * @memberof ClEvent
    */
   emitEvent (eventName, config) {
-    // .....这里需要特殊分解处理Out的事件
-    if (eventName === 'onMouseOut' || eventName === 'onMouseMove') {
-      this.boardEvent(this.firstChart, eventName, config)
-      this.HotWin = undefined
-      return
-    }
+    const event = copyJsonOfDeep(config)
     const mousePos = this.getMousePos(config)
+    // 这里生成一个相对鼠标位置
+    event.mousePos = {
+      // x: mousePos.x - chartPath[k].rectMain.left,
+      // y: mousePos.y - chartPath[k].rectMain.top
+      x: mousePos.x,
+      y: mousePos.y
+    }
     const chartPath = []
     for (const name in this.firstChart.childCharts) {
       // 判断鼠标在哪个区域
@@ -152,25 +179,23 @@ export default class ClEvent {
         // 取得事件冒泡顺序
         this.findEventPath(chartPath, this.firstChart.childCharts[name], mousePos)
         // 只处理符合条件的一个区域，重叠区域不考虑
+        this.checkHotWin(event, chartPath)
         break
       }
     }
     if (chartPath.length < 1) return
     // 继承最初始的传入参数,从最顶层开始处理
-    const event = copyJsonOfDeep(config)
     for (let k = chartPath.length - 1; k >= 0; k--) {
       if (chartPath[k][eventName] !== undefined) {
-        // 这里生成一个相对鼠标位置
-        event.mousePos = {
-          // x: mousePos.x - chartPath[k].rectMain.left,
-          // y: mousePos.y - chartPath[k].rectMain.top
-          x: mousePos.x,
-          y: mousePos.y
-        }
         // 执行事件函数
         chartPath[k][eventName](event)
         if (event.break) break // 跳出循环
       }
+    }
+    // .....这里需要特殊分解处理Out的事件
+    // 20181208 先注释掉，否则scroll收不到mousemove事件
+    if (eventName === 'onMouseOut' || eventName === 'onMouseMove') {
+      this.boardEvent(this.firstChart, eventName, config)
     }
   }
   // 用于鼠标联动时，向childCharts同一级别画图区域广播事件

@@ -227,7 +227,8 @@ export default class ClChartLine {
     if (this.scroll.display !== 'none') {
       this.rectScroll = {
         left: axisInfo.left,
-        top: this.rectAxisX.top + this.rectAxisX.height + this.scale,
+        // top: this.rectAxisX.top + this.rectAxisX.height + this.scale,
+        top: this.rectAxisX.top + this.rectAxisX.height,
         width: axisInfo.right - axisInfo.left,
         height: this.layout.scroll.size
       }
@@ -323,6 +324,8 @@ export default class ClChartLine {
       const self = result.self.father
       if (self.father.linkInfo.minIndex !== result.minIndex) {
         self.father.linkInfo.minIndex = result.minIndex
+        self.father.linkInfo.showMode = 'move'
+        self.father.fastDrawEnd()
         self.father.onPaint()
       }
     })
@@ -626,6 +629,7 @@ export default class ClChartLine {
 
     this.data = this.father.getData(this.hotKey)
     this.locationData()
+
     this.father.readyData(this.data, this.config.lines)
 
     _setLineWidth(this.context, this.scale)
@@ -774,8 +778,10 @@ export default class ClChartLine {
         tail,
         left,
         right,
-        min: this.linkInfo.minIndex,
-        max: this.linkInfo.maxIndex,
+        select: {
+          min: this.linkInfo.minIndex,
+          max: this.linkInfo.maxIndex
+        },
         range: this.data.value.length
       })
     }
@@ -889,7 +895,7 @@ export default class ClChartLine {
    * @memberof ClChartLine
    */
   onClick (event) {
-    if (this.axisPlatform !== 'phone1') {
+    if (this.axisPlatform !== 'phone') {
       this.linkInfo.showCursorLine = !this.linkInfo.showCursorLine
       if (this.linkInfo.showCursorLine) {
         this.father.eventLayer.boardEvent(this.father, 'onMouseMove', event)

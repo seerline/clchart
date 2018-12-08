@@ -18,45 +18,45 @@ import ClDrawVLine from './chart/cl.draw.vline'
  * chart main layout config
  */
 export const CHART_LAYOUT = {
-  margin: {
+  margin: { // 画图区和边界的距离
     left: 0,
     top: 0,
     right: 0,
     bottom: 0
   },
-  offset: {
+  offset: { // 图形的偏移位置（不包括标题等），margin为整个图形区，offset仅仅是图形
     left: 2,
     top: 2,
     right: 2,
     bottom: 0
   },
-  title: {
-    pixel: 12,
-    height: 18,
-    spaceX: 10,
-    spaceY: 2,
+  title: { // 标题栏的配置
+    pixel: 12,  // 字体大小
+    height: 18, // 最大高度
+    spaceX: 10, // X方向留空
+    spaceY: 2,  // Y方向留空
     font: 'sans-serif'
   },
-  axisX: {
+  axisX: { // 纵坐标显示的配置
     pixel: 12,
     height: 18,
-    width: 50,
+    width: 50,  // 最大宽度
     spaceX: 2,
     font: 'sans-serif'
   },
-  scroll: {
+  scroll: {  // 最低下针对曲线的全量游标配置
     pixel: 12,
-    size: 15,
+    size: 15,  // 游标块的大小
     spaceX: 10,
     font: 'sans-serif'
   },
-  digit: {
+  digit: {  // 数字显示的字体和配置
     pixel: 12,
     height: 16,
     spaceX: 3,
     font: 'sans-serif'
   },
-  symbol: {
+  symbol: { // 符号，比如箭头等的字体和配置
     pixel: 10,
     size: 18,
     spaceX: 3,
@@ -68,9 +68,9 @@ export const CHART_LAYOUT = {
  * chart buttons config
  */
 export const CHART_BUTTONS = [
-  { key: 'zoomin' },
-  { key: 'zoomout' },
-  { key: 'exright' }
+  { key: 'zoomin' },  // 放大
+  { key: 'zoomout' }, // 缩小
+  { key: 'exright' }  // 除权
 ]
 
 /**
@@ -84,8 +84,8 @@ export const CHART_ORDER = {
 }
 
 const ZOOM_INFO_DEF = {
-  index: 3,
-  list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  index: 3,    // 当前缩放索引
+  list: [1, 2, 3, 4, 6, 8, 10, 13, 16, 19, 23]  // 缩放比例如何变化，
 }
 
 /**
@@ -96,35 +96,36 @@ export const CHART_KBAR = {
   // title: { display: 'none' },
   // scroll: {display: 'none'},
   zoomInfo: ZOOM_INFO_DEF,
-  scroll: {
-    display: 'none' // 'none' does not show
+  scroll: { // 是否显示下方的游标
+    display: 'yes' // 'none' does not show yes
   },
-  title: {
+  title: { // 标题
     display: 'text', // none does not show btn button text
     label: 'K线' // label information to be displayed
   },
   axisX: {
-    lines: 0,
+    lines: 0,  // 纵向线有几根，不包括两边的框线
     display: 'none', // 'none' | 'both' | 'block', 'none' does not show, 'both': show both, 'block': displays a value for each block based on lines = display coordinates
     type: 'normal', // 'normal' | 'day1' | 'day5'
-    format: 'date' // date time datetime normal tradetime(9:30)
+    format: 'date' // 坐标显示的格式，date time datetime normal tradetime(9:30)
   },
   axisY: {
-    lines: 3,
-    left: {
+    lines: 3,  // 横向线有几根
+    left: {  //左边的坐标信息
       display: 'both', // none不显示, both, noupper 不显示最上面, nofoot不显示最下面 = 显示坐标
       middle: 'none', // 是否有中间值 'before'=前收盘 ‘zero’ 0为中间值
       format: 'price' // 输出数据的格式 rate, price 保留一定小数位 vol 没有小数
     },
-    right: {
+    right: { //右边的坐标信息
       display: 'both', // none不显示，noupper 不显示最上面, nofoot不显示最下面 = 显示坐标
       middle: 'none', // 是否有中间值 'before'=前收盘 ‘zero’ 0为中间值
       format: 'price' // rate, price vol
     }
   },
+  // 下面是当前图形的所有需要画的线，一般非特殊的线，直接通过配置就可以得到想要的效果
   lines: [{
     // type: 'l_kbar',
-    className: ClDrawKBar,
+    className: ClDrawKBar,  // 图按ClDrawKBar类来画
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['high'], // 参与计算最大值的标签
@@ -133,17 +134,18 @@ export const CHART_KBAR = {
     // 第一根线默认的key是跟随chart的hotKey变化而变化的，其他线要么自己有数据，要么根据hotKey加上公式计算出自己的key
   },
   {
-    className: ClDrawRight
+    className: ClDrawRight 
   },
   {
     className: ClDrawLine,
-    info: { // 输出在信息栏目的数据
+    info: { // 输出在信息栏目（title）的数据
       txt: '5:',
       labelY: 'value', // 从key中获取对应的数据标签 用于显示信息用
       format: 'price'
     },
     formula: { // 数据生成方式，都需要基于基本数据，没有formula表示取绑定的数据
-      key: 'DAYM1', // 生成和获取数据的key，
+      key: 'DAYM1', // 生成和获取数据的key，必须要定义一个key，否则当你要使用的时候，并不知道取什么样的数据；
+      //另外当客户端修改参数或公式时，可以只修改参数和公式，而不修改key，也可以避免垃圾数据过多
       command: `out = this.MA('close',5)` // 公式只能输出值到out中
     }
   },

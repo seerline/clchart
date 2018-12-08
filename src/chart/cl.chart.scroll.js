@@ -128,6 +128,7 @@ export default class ClChartScroll {
       // stop = this.rectMain.top + spaceX * this.config.select;
     }
   }
+
   /**
    * paint scroll chart
    * @memberof ClChartScroll
@@ -148,6 +149,7 @@ export default class ClChartScroll {
   onChange (info) {
     this.config = updateJsonOfDeep(info, this.config)
     if (this.config.select.max > this.config.range) this.config.select.max = this.config.range - 1
+
     if (info.iscall) {
       this.callback({ self: this, minIndex: this.config.select.min })
     }
@@ -186,10 +188,19 @@ export default class ClChartScroll {
     this.who = undefined
   }
   /**
+   * on click
+   * @memberof ClChartScroll
+   */
+  onClick (event) {
+    // 阻止click再传递
+    event.break = true
+  }
+  /**
    * handle mouse out
    * @memberof ClChartScroll
    */
-  onMouseOut () {
+  onMouseOut (event) {
+    if (this.mouseDown) this.onMouseUp(event)
     changeCursorStyle('default')
     this.who = undefined
   }
@@ -210,6 +221,7 @@ export default class ClChartScroll {
     } else {
       this.who = undefined
     }
+    this.mouseDown = true
   }
   /**
    * handle mouse up
@@ -217,12 +229,14 @@ export default class ClChartScroll {
    * @memberof ClChartScroll
    */
   onMouseUp (event) {
+    this.mouseDown = false
     if (this.config.shape !== 'free' && this.who === undefined) {
+    // if (this.config.shape !== 'free') {
       const mousePos = event.mousePos
       const curIndex = this.findMouseIndex(mousePos.x)
       let min = curIndex - Math.floor((this.config.select.max - this.config.select.min) / 2)
       min = this.checkMin(min)
-      this.onChange({ min, iscall: true })
+      this.onChange({ select: { min }, iscall: true })
     }
     this.who = undefined
   }
@@ -232,6 +246,7 @@ export default class ClChartScroll {
    * @memberof ClChartScroll
    */
   onMouseMove (event) {
+    if (!this.mouseDown) return
     const mousePos = event.mousePos
     if (inRect(this.rectMin, mousePos) || inRect(this.rectMax, mousePos)) {
       changeCursorStyle('col-resize')
@@ -259,12 +274,12 @@ export default class ClChartScroll {
             max = curIndex
           }
         }
-        this.onChange({ min, max, iscall: true })
+        this.onChange({ select: { min, max }, iscall: true })
       } else {
         min = this.config.select.min + curIndex - this.index
         this.index = curIndex
         min = this.checkMin(min)
-        this.onChange({ min, iscall: true })
+        this.onChange({ select: { min }, iscall: true })
       }
     }
   }
@@ -303,6 +318,7 @@ export default class ClChartScroll {
         this.rectMid.width, this.rectMid.height)
       _fillRect(this.context, this.rectMid.left, this.rectMid.top,
         this.rectMid.width, this.rectMid.height, this.color.box)
+
       if (this.config.shape === 'free') {
         _fillRect(this.context, this.rectMin.left, this.rectMin.top,
           this.rectMin.width, this.rectMin.height, this.color.colume)

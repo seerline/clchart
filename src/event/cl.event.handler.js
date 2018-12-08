@@ -136,8 +136,8 @@ export default class ClEventHandler {
       this.addHandler('mousedown', this.mousedown.bind(this))
       this.addHandler('keyup', this.keyup.bind(this))
       this.addHandler('keydown', this.keydown.bind(this))
-
-      this.addHandler('click', this.click.bind(this))
+      // ???????????????????click???
+      // this.addHandler('click', this.click.bind(this))
     }
   }
   /**
@@ -159,7 +159,7 @@ export default class ClEventHandler {
       this.clearHandler('keyup', this.keyup.bind(this))
       this.clearHandler('keydown', this.keydown.bind(this))
 
-      this.clearHandler('click', this.click.bind(this))
+      // this.clearHandler('click', this.click.bind(this))
     }
   }
   /**
@@ -234,6 +234,14 @@ export default class ClEventHandler {
    */
   mouseup (event) {
     this.father.emitEvent('onMouseUp', _getEventInfo(event))
+
+    const timestamp = Date.now()
+    if ((Math.abs(event.pageX - this.startX) < 10) &&
+      (Math.abs(event.pageY - this.startY) < 10)) {
+      if (timestamp - this.startTime < 500) {
+        this.father.emitEvent('onClick', _getEventInfo(event))
+      }
+    }
   }
   /**
    * mouse down
@@ -242,6 +250,9 @@ export default class ClEventHandler {
    */
   mousedown (event) {
     this.father.emitEvent('onMouseDown', _getEventInfo(event))
+    this.startX = event.pageX
+    this.startY = event.pageY
+    this.startTime = Date.now()
   }
   // keyboard event
   /**
@@ -269,9 +280,9 @@ export default class ClEventHandler {
    * @param {Object} event
    * @memberof ClEventHandler
    */
-  click (event) {
-    this.father.emitEvent('onClick', _getEventInfo(event))
-  }
+  // click (event) {
+  //   this.father.emitEvent('onClick', _getEventInfo(event))
+  // }
   /**
    * touchstart
    * @param {Object} e

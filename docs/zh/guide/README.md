@@ -1,8 +1,8 @@
----
+﻿---
 sidebar: auto
 ---
 
-# 新手指南
+# 新手指南 
 
 ## 什么是 ClChart？
 
@@ -26,7 +26,7 @@ sidebar: auto
 
 因此我们急需一个具有高性能、跨平台、简单易用的股票类型的图标库。
 
-> 在现有的图标库React Native中可以通过webview来加载html文件，使用`window.document.addEventListener('message', function(e) {})`以及`window.postMessage`来完成html与React Natve来通讯绘图，但是使用实际的使用过程中，在一些性能较差的android设备上，特别是android版本小于4.4以下的android系统在绘图大数据量图表以及用户交互的时候表现的特别的糟糕，经常发生卡顿，并且有可能存在加载缓慢等问题。
+> 在现有的图标库React Native中可以通过webview来加载html文件，使用`window.document.addEventListener('message', function(e) {})`以及`window.postMessage`来完成html与React Native来通讯绘图，但是使用实际的使用过程中，在一些性能较差的android设备上，特别是android版本小于4.4以下的android系统在绘图大数据量图表以及用户交互的时候表现的特别的糟糕，经常发生卡顿，并且有可能存在加载缓慢等问题。
 
 ## ClChart设计目标
 
