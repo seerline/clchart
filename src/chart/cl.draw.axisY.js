@@ -86,7 +86,7 @@ export default class ClDrawAxisY {
       value = formatInfo(
         this.maxmin.max,
         this.axisY[this.align].format,
-        this.static.coinunit,
+        this.static.coindot,
         this.static.volzoom,
         this.static.before)
       _drawTxt(this.context, xx, yy, value,
@@ -100,7 +100,7 @@ export default class ClDrawAxisY {
       value = formatInfo(
         this.maxmin.min,
         this.axisY[this.align].format,
-        this.static.coinunit,
+        this.static.coindot,
         this.static.volzoom,
         this.static.before)
       _drawTxt(this.context, xx, yy, value,
@@ -125,7 +125,7 @@ export default class ClDrawAxisY {
       value = formatInfo(
         value,
         this.axisY[this.align].format,
-        this.static.coinunit,
+        this.static.coindot,
         this.static.volzoom,
         this.static.before)
 

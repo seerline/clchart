@@ -144,7 +144,7 @@ export default class ClDrawSeer {
 
     let yy = this.rectMain.top + Math.round((this.maxmin.max - price) * this.maxmin.unitY)
 
-    let startTxt = this.linkInfo.hideInfo ? '买点' : '买点:' + formatPrice(price, this.static.coinunit)
+    let startTxt = this.linkInfo.hideInfo ? '买点' : '买点:' + formatPrice(price, this.static.coindot)
     if (startPrice === 0) {
       startTxt = '停牌中' // 停牌期间预测的股票
       price = getValue(this.data, 'close', idx)
@@ -223,7 +223,7 @@ export default class ClDrawSeer {
         display: true
       },
       {
-        txt: this.linkInfo.hideInfo ? '止损' : '止损:' + formatPrice(price, this.static.coinunit),
+        txt: this.linkInfo.hideInfo ? '止损' : '止损:' + formatPrice(price, this.static.coindot),
         set: 100,
         display: !this.linkInfo.hideInfo
       }
@@ -273,7 +273,7 @@ export default class ClDrawSeer {
         display: true
       },
       {
-        txt: this.linkInfo.hideInfo ? '目标' : '目标:' + formatPrice(price, this.static.coinunit),
+        txt: this.linkInfo.hideInfo ? '目标' : '目标:' + formatPrice(price, this.static.coindot),
         set: 100,
         display: !this.linkInfo.hideInfo
       }

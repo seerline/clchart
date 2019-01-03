@@ -98,7 +98,7 @@ export default class ClDrawCursor {
         txt = formatInfo(
           valueY,
           this.axisYInfo.left.format,
-          this.static.coinunit,
+          this.static.coindot,
           this.static.volzoom,
           this.static.before)
         xx = this.rectMain.left + offX
@@ -116,7 +116,7 @@ export default class ClDrawCursor {
         txt = formatInfo(
           valueY,
           this.axisYInfo.right.format,
-          this.static.coinunit,
+          this.static.coindot,
           this.static.volzoom,
           this.static.before)
         posX = this.axisPlatform === 'phone' ? 'end' : 'start'

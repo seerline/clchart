@@ -49,7 +49,7 @@ export default class ClDrawLine {
    * @param {String} key
    * @memberof ClDrawLine
    */
-  onPaint (key) {
+  onPaint (key) {    
     if (key !== undefined) this.hotKey = key
     this.data = this.source.getData(this.hotKey)
 

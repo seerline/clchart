@@ -83,41 +83,28 @@ export const FIELD_NOW = {
   close: 4,
   vol: 5,
   money: 6,
-  buy1: 7,
-  buyvol1: 8,
-  sell1: 9,
-  sellvol1: 10,
-  buy2: 11,
-  buyvol2: 12,
-  sell2: 13,
-  sellvol2: 14,
-  buy3: 15,
-  buyvol3: 16,
-  sell3: 17,
-  sellvol3: 18,
-  buy4: 19,
-  buyvol4: 20,
-  sell4: 21,
-  sellvol4: 22,
-  buy5: 23,
-  buyvol5: 24,
-  sell5: 25,
-  sellvol5: 26
+  askp1: 7,
+  askp2: 8,
+  askp3: 9,
+  askp4: 10,
+  askp5: 11,
+  askv1: 12,
+  askv2: 13,
+  askv3: 14,
+  askv4: 15,
+  askv5: 16,
+  bidp1: 17,
+  bidp2: 18,
+  bidp3: 19,
+  bidp4: 20,
+  bidp5: 21,
+  bidv1: 22,
+  bidv2: 23,
+  bidv3: 24,
+  bidv4: 25,
+  bidv5: 26
 }
-// 简易一档实时行情
-export const FIELD_ENOW = {
-  time: 0,
-  open: 1,
-  high: 2,
-  low: 3,
-  close: 4,
-  vol: 5,
-  money: 6,
-  buy1: 7,
-  buyvol1: 8,
-  sell1: 9,
-  sellvol1: 10
-}
+
 // 指数实时行情
 export const FIELD_NOW_IDX = {
   time: 0,
@@ -136,24 +123,36 @@ export const FIELD_NOW_IDX = {
 }
 
 // 股票信息定义
+// export const FIELD_INFO = {
+//   marker: 0,
+//   code: 1,
+//   name: 2, // 股票名称
+//   search: 3,
+//   type: 4, // 股票类型
+//   coinunit: 5, // 保留小数点
+//   volunit: 6, // 成交量单位
+//   before: 7, // 前收盘
+//   stophigh: 8, // 涨停价
+//   stoplow: 9 // 跌停价
+// }
+
 export const FIELD_INFO = {
   marker: 0,
   code: 1,
   name: 2, // 股票名称
   search: 3,
   type: 4, // 股票类型
-  coinunit: 5, // 保留小数点
-  volunit: 6, // 成交量单位
-  before: 7, // 前收盘
-  stophigh: 8, // 涨停价
-  stoplow: 9 // 跌停价
+  coindot: 5, // 保留小数点
+  coinunit: 6, // 价格单位
+  volunit: 7, // 成交量单位
+  before: 8
 }
 
 // 除权字段定义
 export const FIELD_RIGHT = {
   time: 0,
   sendstock: 1, // 10送股 放大1000倍
-  accrual: 2, // 10送红利 放大1000倍
+  accrual: 2,  // 10送红利 放大1000倍
   allotstock: 3, // 10配股数 放大1000倍
   allotprice: 4 // 配股价 放大1000倍
 }

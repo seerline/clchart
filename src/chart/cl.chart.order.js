@@ -115,8 +115,8 @@ export default class ClChartOrder {
     this.orderData = this.father.getData('NOW')
     this.tickData = this.father.getData('TICK')
     if (this.orderData === undefined || this.tickData === undefined) return
-    this.orderData.coinunit = this.static.coinunit
-    this.tickData.coinunit = this.static.coinunit
+    this.orderData.coindot = this.static.coindot
+    this.tickData.coindot = this.static.coindot
     this.isIndex = getValue(this.codeInfo, 'type') === 0
 
     _setLineWidth(this.context, this.scale)
@@ -307,16 +307,16 @@ export default class ClChartOrder {
     for (let idx = mmpCount; idx >= 1; idx--) {
       xx = this.rectOrder.left + xpos + offx + this.closeLen
       if (!this.linkInfo.hideInfo) {
-        value = getValue(this.orderData, 'sell' + idx)
+        value = getValue(this.orderData, 'bidp' + idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coindot),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
       }
 
       xx += offx + this.volLen + this.layout.digit.spaceX
-      value = getValue(this.orderData, 'sellvol' + idx)
+      value = getValue(this.orderData, 'bidv' + idx)
       clr = this.color.vol
       _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
         this.layout.digit.font, this.layout.digit.pixel, clr, {
@@ -328,15 +328,15 @@ export default class ClChartOrder {
     for (let idx = 1; idx <= mmpCount; idx++) {
       xx = this.rectOrder.left + xpos + offx + this.closeLen
       if (!this.linkInfo.hideInfo) {
-        value = getValue(this.orderData, 'buy' + idx)
+        value = getValue(this.orderData, 'askp' + idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coindot),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
       }
       xx += offx + this.volLen + this.layout.digit.spaceX
-      value = getValue(this.orderData, 'buyvol' + idx)
+      value = getValue(this.orderData, 'askv' + idx)
       clr = this.color.vol
       _drawTxt(this.context, xx, yy, formatVolume(value, this.static.volzoom),
         this.layout.digit.font, this.layout.digit.pixel, clr, {
@@ -384,7 +384,7 @@ export default class ClChartOrder {
 
         value = getValue(this.tickData, 'close', idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coindot),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })
@@ -396,7 +396,7 @@ export default class ClChartOrder {
       if (!this.linkInfo.hideInfo) {
         value = getValue(this.tickData, 'close', idx)
         clr = this.getColor(value, this.static.before)
-        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coinunit),
+        _drawTxt(this.context, xx, yy, formatPrice(value, this.static.coindot),
           this.layout.digit.font, this.layout.digit.pixel, clr, {
             x: 'end'
           })

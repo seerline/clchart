@@ -85,6 +85,16 @@ export default class ClChart {
    * @memberof ClChart
    */
   clear () {
+    this.fastDraw = false
+    this.dataLayer.clearData()
+    // this.eventLayer.clear();
+  }
+  /**
+   * clear current data and recharge linkinfo
+   *
+   * @memberof ClChart
+   */
+  clearLayout () {
     this.childCharts = {}
     this.fastDraw = false
     this.dataLayer.clearData()
@@ -249,8 +259,8 @@ export default class ClChart {
       this.context._beforePaint()
     }
     this.fastDrawBegin()
-
     for (const key in this.childCharts) {
+      console.log('onPaint', this.static)
       if (chart !== undefined) {
         if (this.childCharts[key] === chart) {
           this.childCharts[key].onPaint()

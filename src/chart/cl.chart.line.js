@@ -581,7 +581,7 @@ export default class ClChartLine {
           value = getValue(this.father.getData(lines[k].formula.key), lines[k].info.labelY,
             index - this.linkInfo.minIndex)
         }
-        info = formatInfo(value, lines[k].info.format, this.static.coinunit, this.static.volzoom)
+        info = formatInfo(value, lines[k].info.format, this.static.coindot, this.static.volzoom)
         out.push({
           index: k,
           txt: lines[k].info.txt,

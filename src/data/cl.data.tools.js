@@ -57,37 +57,25 @@ export default function getValue ({
         if (fields.idx === undefined) val = index
         else val = source[fields.idx]
         break
-      case 'coinzoom':
-        val = Math.pow(10, getValue({
-          fields,
-          value
-        }, 'coinzoom', 0))
-        break
-      case 'volzoom':
-        val = Math.pow(10, getValue({
-          fields,
-          value
-        }, 'volunit', 0))
-        break
-      // case 'before':
-      // case 'open':
-      // case 'high':
-      // case 'low':
-      // case 'close':
-      // case 'stophigh':
-      // case 'stoplow':
-      // case 'buy1':
-      // case 'buy2':
-      // case 'buy3':
-      // case 'buy4':
-      // case 'buy5':
-      // case 'sell1':
-      // case 'sell2':
-      // case 'sell3':
-      // case 'sell4':
-      // case 'sell5':
-      //   val = source[fields[label]]
-      //   break
+        // case 'before':
+        // case 'open':
+        // case 'high':
+        // case 'low':
+        // case 'close':
+        // case 'stophigh':
+        // case 'stoplow':
+        // case 'buy1':
+        // case 'buy2':
+        // case 'buy3':
+        // case 'buy4':
+        // case 'buy5':
+        // case 'sell1':
+        // case 'sell2':
+        // case 'sell3':
+        // case 'sell4':
+        // case 'sell5':
+        //   val = source[fields[label]]
+        //   break
       case 'flow':
       case 'total':
         val = source[fields[label]] * 100
@@ -212,7 +200,7 @@ function _getExrightPrice (price, rightpara, mode) {
  * @param {Number} start
  * @param {Number} stop
  * @param {Number} price
-  * @param {Array} rights
+ * @param {Array} rights
  * @return {Number}
  */
 export function getExrightPriceRange (start, stop, price, rights) {
@@ -556,44 +544,39 @@ export function checkDay5 (source, tradeDate, tradetime) {
  * @param {Array} value
  * @return {Array}
  */
-export function updateStatic (fields, value) {
-  const coinzoom = getValue({
+export function updateStatic (stkstatic, fields, value) {
+  stkstatic.stktype = getValue({
     fields,
     value
-  }, 'coinzoom')
-  const volzoom = getValue({
+  }, 'type')
+  stkstatic.volzoom = getValue({
     fields,
     value
-  }, 'volzoom')
-  const out = {
-    stktype: getValue({
-      fields,
-      value
-    }, 'type'),
-    volzoom,
-    volunit: getValue({
-      fields,
-      value
-    }, 'volunit'),
-    coinzoom,
-    coinunit: getValue({
-      fields,
-      value
-    }, 'coinunit'),
-    before: getValue({
-      fields,
-      value
-    }, 'before'),
-    stophigh: getValue({
-      fields,
-      value
-    }, 'stophigh'),
-    stoplow: getValue({
-      fields,
-      value
-    }, 'stoplow')
-  }
-  return out
+  }, 'volunit') / 100
+  stkstatic.volunit = getValue({
+    fields,
+    value
+  }, 'volunit')
+  stkstatic.coindot = getValue({
+    fields,
+    value
+  }, 'coindot')
+  stkstatic.coinunit = getValue({
+    fields,
+    value
+  }, 'coinunit')
+  stkstatic.before = getValue({
+    fields,
+    value
+  }, 'before')
+  stkstatic.stophigh = getValue({
+    fields,
+    value
+  }, 'stophigh')
+  stkstatic.stoplow = getValue({
+    fields,
+    value
+  }, 'stoplow')
 }
 
 // 对数据进行周期性合并
@@ -804,6 +787,7 @@ export function matchDayToMon (daydata) {
  */
 export function getMinuteCount (tradetime) { // time_t
   let mincount = 0
+  if (tradetime === undefined) return 240
   for (let i = 0; i < tradetime.length; i++) {
     mincount += getMinuteGap(tradetime[i].begin, tradetime[i].end)
   }

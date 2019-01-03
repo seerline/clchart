@@ -61,12 +61,12 @@ export default class ClData {
     // this.formula = new ClFormula();
     this.static = {
       stktype: 1,
-      volunit: 100,
-      coinunit: 100,
-      decimal: 2,
-      before: 1000,
-      stophigh: 1100,
-      stoplow: 900
+      volunit: 100, // 乘以后为原始值 股票为100 指数为10000
+      coinunit: 1,
+
+      coindot: 2,
+      volzoom: 1, // 输出时缩小的倍数
+      before: 10.00
     }
   }
 
@@ -122,7 +122,7 @@ export default class ClData {
     if (this.InData[key] === undefined) this.InData[key] = {}
     switch (key) {
       case 'DAY5':
-        value = checkDay5(value, this.static.coinzoom, this.tradeDate, this.tradeTime)
+        value = checkDay5(value, this.tradeDate, this.tradeTime)
         break
       case 'NOW':
       case 'ENOW':
@@ -133,9 +133,11 @@ export default class ClData {
         value = checkDayZero(value, this.tradeDate)
         break
       case 'INFO':
-        this.static = updateStatic(FIELD_INFO, value)
+        // this.static = 
+        updateStatic(this.static, FIELD_INFO, value)
         break
     }
+    console.log('set', this.static)
     // // 设置了CODE或者INFO后，把一些常用的数取出来放到static中
     // 仅仅接收以上和 MIN5 RIGHT 等原始数据，周月年和其他周期分钟线，全部通过计算获取
     this.InData[key] = {
@@ -442,7 +444,7 @@ export default class ClData {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value)
-      out = transExrightMin(out, this.static.coinzoom, this.InData['RIGHT'].value, rightMode,
+      out = transExrightMin(out, this.InData['RIGHT'].value, rightMode,
         // this.config.start,this.config.stop);
         0, out.length - 1)
 

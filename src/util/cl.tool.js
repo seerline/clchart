@@ -292,12 +292,12 @@ export function formatRate (value, zero) {
   return result // 10.20%
 }
 // 格式化成交量
-export function formatVolume (value, unit) {
+export function formatVolume (value, volzoom) {
   if (value === undefined || isNaN(value)) return '--'
   if (typeof value === 'string') value = parseFloat(value)
 
-  if (unit === undefined) unit = 100
-  let result = value / unit
+  if (volzoom === undefined) volzoom = 1
+  let result = value / volzoom
 
   if (result > 100000000000) result = (result / 100000000).toFixed(0) + '亿'
   else if (result > 10000000000) result = (result / 100000000).toFixed(1) + '亿'
@@ -310,17 +310,17 @@ export function formatVolume (value, unit) {
   return String(result)
 }
 // 格式化价格 decimal为小数点，limit为最大长度[4,10]，
-export function formatPrice (value, coinunit, limit, isopen) {
+export function formatPrice (value, coindot, limit, isopen) {
   if (value === undefined || isNaN(value)) return '--'
   // if (typeof value === 'string') value = parseFloat(value);
 
   let result = value
-  if (coinunit === undefined || coinunit < 0 || coinunit > 10) coinunit = 0
+  if (coindot === undefined || coindot < 0 || coindot > 10) coindot = 0
 
   if (value > -0.000000001 && value < 0.000000001 && !isopen) {
     return '--'
   }
-  result = result.toFixed(coinunit)
+  result = result.toFixed(coindot)
 
   if (limit === undefined || limit < 4) return result
   return result.substr(0, limit)
@@ -349,16 +349,16 @@ export function formatShowTime (key, value, minute) {
   return out
 }
 
-export function formatInfo (value, format, coinunit, volzoom, middle) {
+export function formatInfo (value, format, coindot, volzoom, middle) {
   let out
   if (format === 'rate') {
     out = formatRate(value, middle)
   } else {
     if (format === 'price') {
-      if (coinunit === undefined) coinunit = 2
-      out = formatPrice(value, coinunit, 7)
+      if (coindot === undefined) coindot = 2
+      out = formatPrice(value, coindot, 7)
     } else {
-      if (volzoom === undefined) volzoom = 100
+      if (volzoom === undefined) volzoom = 1
       out = formatVolume(value, volzoom)
     }
   }

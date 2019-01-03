@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open --config webpack.config.js",
+    "demo": "cross-env NODE_ENV=development webpack-dev-server --progress --open --config webpack.config.demo.js",
     "lint": "eslint ./src",
     "fixcode": "eslint ./src --fix",
     "clean": "rm -rf node_modules && npm i",
