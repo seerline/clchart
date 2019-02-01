@@ -16,7 +16,7 @@ import {
   checkZero,
   getSize,
   checkDayZero,
-  checkDay5,
+  checkMDay,
   updateStatic,
   findDateInDay,
   findIndexInMin,
@@ -31,7 +31,7 @@ import {
   FIELD_DAY,
   FIELD_MIN,
   FIELD_TICK,
-  FIELD_DAY5,
+  FIELD_MDAY,
   FIELD_NOW,
   FIELD_ILINE,
   FIELD_ENOW
@@ -109,6 +109,32 @@ export default class ClData {
     this.InData = [] // 数据 json格式数据 {key:..,fields:.., value:[[],[]...]}
     this.OutData = [] // 专门用于获取数据时临时产生的数据
   }
+  /**
+   * clear data
+   * @memberof ClData
+   */
+  checkBefore () {
+    if (this.static.before <= 0)
+    {   
+      console.log(this.InData['NOW'],this.InData['DAY']);
+         
+      if (this.InData['DAY'] || this.InData['MDAY'] || this.InData['MIN'])
+      {
+        if (this.InData['DAY'] && this.InData['DAY'].value && this.InData['DAY'].value.length > 1)
+        {
+          this.static.before = this.InData['DAY'].value[this.InData['DAY'].value.length - 2][FIELD_DAY.close]
+        } 
+        if (this.InData['MIN'] && this.InData['MIN'].value && this.InData['MIN'].value.length > 0)
+        {
+          this.static.before = this.InData['MIN'].value[0][FIELD_DAY.open]
+        }
+        if (this.InData['MDAY'] && this.InData['MDAY'].value && this.InData['MDAY'].value.length > 0)
+        {
+          this.static.before = this.InData['MDAY'].value[0][FIELD_TICK.close]
+        }
+      }
+    }
+  }
   // 下面是设置数据的方法
   /**
    * set data
@@ -121,9 +147,9 @@ export default class ClData {
     if (value === undefined) value = []
     if (this.InData[key] === undefined) this.InData[key] = {}
     switch (key) {
-      case 'DAY5':
-        value = checkDay5(value, this.tradeDate, this.tradeTime)
-        break
+      case 'MDAY':
+        value = checkMDay(value, this.tradeDate, this.tradeTime)
+        break;
       case 'NOW':
       case 'ENOW':
         this.flushNowData(key, value)
@@ -145,6 +171,8 @@ export default class ClData {
       fields
     }
     this.InData[key].value = copyArrayOfDeep(value)
+    this.checkBefore()
+    console.log('---set', key, this.InData[key], this.static.before)
   }
   /**
    * flush tick
@@ -266,12 +294,12 @@ export default class ClData {
         this.OutData['MON'].value = this.mergeMon(this.InData['DAY'], this.InData['NOW'], rightMode)
         // 每次都从日线计算生成 -- 避免除权数据无法正确显示的错误
         break
-      case 'DAY5':
-        this.OutData['DAY5'] = {
+      case 'MDAY':
+        this.OutData['MDAY'] = {
           key,
-          fields: FIELD_DAY5
+          fields: FIELD_MDAY
         }
-        this.OutData['DAY5'].value = this.mergeDay5(this.InData['DAY5'], this.InData['MIN'])
+        this.OutData['MDAY'].value = this.mergeMDay(this.InData['MDAY'], this.InData['MIN'])
         // 每次都从日线计算生成
         break
       case 'M5':
@@ -282,7 +310,7 @@ export default class ClData {
           key,
           fields: FIELD_DAY
         }
-        this.OutData[key].value = this.makeMinute(key, this.InData[key], this.InData['MIN'], rightMode)
+        this.OutData[key].value = this.makeMinute(key, this.InData[key], rightMode)
         break
       case 'MIN':
         this.OutData[key] = {
@@ -394,7 +422,7 @@ export default class ClData {
    * @return {Array}
    * @memberof ClData
    */
-  mergeDay5 (source, min) {
+  mergeMDay (source, min) {
     let out = []
 
     if (source !== undefined && !isEmptyArray(source.value)) {
@@ -440,13 +468,16 @@ export default class ClData {
    * @return {Array}
    * @memberof ClData
    */
-  makeMinute (outkey, source, nowmin, rightMode) {
+  makeMinute (outkey, source, rightMode) {
     let out = []
     if (source !== undefined && !isEmptyArray(source.value)) {
       out = copyArrayOfDeep(source.value)
-      out = transExrightMin(out, this.InData['RIGHT'].value, rightMode,
-        // this.config.start,this.config.stop);
-        0, out.length - 1)
+      if (this.InData['RIGHT'] !== undefined)
+      {
+        out = transExrightMin(out, this.InData['RIGHT'].value, rightMode,
+            // this.config.start,this.config.stop);
+            0, out.length - 1)
+      }
 
       const lastDate = getDate(source.value[source.value.length - 1][source.fields.time])
       if (lastDate === this.tradeDate) {
@@ -455,13 +486,13 @@ export default class ClData {
       }
     }
     // 没有原始数据或者未收市，需要把当日的nowmin合并
-    if (nowmin !== undefined && !isEmptyArray(nowmin.value)) {
-      let offset = 5
-      if (outkey === 'M15') offset = 15
-      if (outkey === 'M30') offset = 30
-      if (outkey === 'M60') offset = 60
-      out = this.mergeNowMinToMin(out, nowmin, offset) // 当日的分钟线转成分钟线，索引转时间的问题
-    }
+    // if (nowmin !== undefined && !isEmptyArray(nowmin.value)) {
+    //   let offset = 5
+    //   if (outkey === 'M15') offset = 15
+    //   if (outkey === 'M30') offset = 30
+    //   if (outkey === 'M60') offset = 60
+    //   out = this.mergeNowMinToMin(out, nowmin, offset) // 当日的分钟线转成分钟线，索引转时间的问题
+    // }
     // out = matchMinToMinute(out, outkey);
     return out
   }

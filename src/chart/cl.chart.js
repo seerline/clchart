@@ -14,9 +14,10 @@
 import {
   copyJsonOfDeep
 } from '../util/cl.tool'
-import ClChartLine from './cl.chart.line'
-import ClChartOrder from './cl.chart.order'
-import { setColor, setStandard } from '../chart/cl.chart.init'
+// import ClChartLine from './cl.chart.line'
+// import ClChartBoard from './cl.chart.board'
+import { setColor, setStandard, _createClass } from '../chart/cl.chart.init'
+import { _clearRect } from '../util/cl.draw'
 
 const DEFAULT_LINKINFO = {
   showMode: 'last',
@@ -95,6 +96,10 @@ export default class ClChart {
    * @memberof ClChart
    */
   clearLayout () {
+    
+    _clearRect(this.cursorCanvas.context, 0, 0,
+      this.cursorCanvas.canvas.width, this.cursorCanvas.canvas.height)
+
     this.childCharts = {}
     this.fastDraw = false
     this.dataLayer.clearData()
@@ -233,12 +238,8 @@ export default class ClChart {
    * @memberof ClChart
    */
   createChart (name, className, usercfg, callback) {
-    let chart
-    switch (className) {
-      case 'CHART.ORDER': chart = new ClChartOrder(this); break
-      case 'CHART.LINE': chart = new ClChartLine(this); break
-      default : chart = new ClChartLine(this); break
-    }
+    let chart = _createClass(className, this);
+console.log(chart);
 
     chart.name = name
     this.childCharts[name] = chart

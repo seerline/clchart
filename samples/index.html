@@ -99,7 +99,7 @@
 					height: mainHeight
 				}
 			}
-			const mainChart = Chart.createChart('MIN', 'CHART.LINE', mainLayoutCfg, function (result) {
+			const mainChart = Chart.createChart('MIN', 'system.chart', mainLayoutCfg, function (result) {
 				//  console.log(result)
 			})
 			Chart.bindData(mainChart, 'MIN')
@@ -114,7 +114,7 @@
 					height: canvas.height - mainHeight
 				}
 			}
-			const volumeChart = Chart.createChart('MINNOW', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+			const volumeChart = Chart.createChart('MINNOW', 'system.chart', volumeLoyoutCfg, function (result) {
 				//  console.log(result)
 			})
 			Chart.bindData(volumeChart, 'MIN')
@@ -130,7 +130,7 @@
 						height: canvas.height
 					}
 				}
-				const orderChart = Chart.createChart('ORDER', 'CHART.ORDER', orderLayoutCfg, function (result) {
+				const orderChart = Chart.createChart('ORDER', 'system.board', orderLayoutCfg, function (result) {
 					//  console.log(result)
 				})
 				// Chart.bindData(orderChart, 'TICK')
@@ -144,12 +144,12 @@
 			Chart.clear()
 			Chart.initData(20180823, ClChart.DEF_DATA.STOCK_TRADETIME)
 			Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, getMockData(code, 'INFO'))
-			Chart.setData('DAY5', ClChart.DEF_DATA.FIELD_DAY5, getMockData(code, 'DAY5'))
+			Chart.setData('MDAY', ClChart.DEF_DATA.FIELD_MDAY, getMockData(code, 'MDAY'))
 			Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, getMockData(code, 'MIN'))
 			const mainHeight = canvas.height * 2 / 3
 			const mainLayoutCfg = {
 				layout: ClChart.DEF_CHART.CHART_LAYOUT,
-				config: ClChart.DEF_CHART.CHART_DAY5,
+				config: ClChart.DEF_CHART.CHART_MDAY,
 				rectMain: {
 					left: 0,
 					top: 0,
@@ -157,14 +157,14 @@
 					height: mainHeight
 				}
 			}
-			const KBarChart = Chart.createChart('DAY5', 'CHART.LINE', mainLayoutCfg, function (result) {
+			const KBarChart = Chart.createChart('mDAY', 'system.chart', mainLayoutCfg, function (result) {
 				//  console.log(result)
 			})
-			Chart.bindData(KBarChart, 'DAY5')
+			Chart.bindData(KBarChart, 'MDAY')
 
 			const volumeLoyoutCfg = {
 				layout: ClChart.DEF_CHART.CHART_LAYOUT,
-				config: ClChart.DEF_CHART.CHART_DAY5VOL,
+				config: ClChart.DEF_CHART.CHART_MDAYVOL,
 				rectMain: {
 					left: 0,
 					top: mainHeight,
@@ -172,10 +172,10 @@
 					height: canvas.height - mainHeight
 				}
 			}
-			const KVBarChart = Chart.createChart('VLINE5', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+			const KVBarChart = Chart.createChart('VLINE5', 'system.chart', volumeLoyoutCfg, function (result) {
 				//  console.log(result)
 			})
-			Chart.bindData(KVBarChart, 'DAY5')
+			Chart.bindData(KVBarChart, 'MDAY')
 
 			Chart.onPaint()
 		}
@@ -205,7 +205,7 @@
 					height: mainHeight
 				}
 			}
-			const KBarChart = Chart.createChart('KBAR', 'CHART.LINE', mainLayoutCfg, function (result) {
+			const KBarChart = Chart.createChart('KBAR', 'system.chart', mainLayoutCfg, function (result) {
 			})
 			Chart.bindData(KBarChart, peroid)
 
@@ -224,7 +224,7 @@
 					height: canvas.height - mainHeight
 				}
 			}
-			const KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+			const KVBarChart = Chart.createChart('VBAR', 'system.chart', volumeLoyoutCfg, function (result) {
 				//  console.log(result)
 			})
 			Chart.bindData(KVBarChart, peroid)
@@ -258,7 +258,7 @@
 					height: mainHeight
 				}
 			}
-			const KBarChart = Chart.createChart('SEER', 'CHART.LINE', mainLayoutCfg, function (result) {
+			const KBarChart = Chart.createChart('SEER', 'system.chart', mainLayoutCfg, function (result) {
 				//  console.log(result)
 			})
 			Chart.bindData(KBarChart, 'DAY')
@@ -280,7 +280,7 @@
 					height: canvas.height - mainHeight
 				}
 			}
-			const KVBarChart = Chart.createChart('VBAR', 'CHART.LINE', volumeLayoutCfg, function (result) {
+			const KVBarChart = Chart.createChart('VBAR', 'system.chart', volumeLayoutCfg, function (result) {
 				//  console.log(result)
 			})
 			Chart.bindData(KVBarChart, 'DAY')
@@ -290,7 +290,7 @@
 
 		const menuTypes = {
 			MIN: handleMin,
-			DAY5: handleFiveDay,
+			MDAY: handleFiveDay,
 			DAY: handleKline,
 			WEEK: handleKline,
 			MON: handleKline,
@@ -309,9 +309,9 @@
 
 		const typeMenusCfg = [
 			{ type: 'MIN', fc: 'SH000001', label_en: '1 min(Idx)', label_zh: '分时(指数)' },
-			{ type: 'DAY5', fc: 'SH000001', label_en: '5 days(Idx)', label_zh: '五日(指数)' },
+			{ type: 'MDAY', fc: 'SH000001', label_en: '5 days(Idx)', label_zh: '五日(指数)' },
 			{ type: 'MIN', fc: 'SZ300545', label_en: '1 min', label_zh: '分时' },
-			{ type: 'DAY5', fc: 'SZ300545', label_en: '5 days', label_zh: '五日' },
+			{ type: 'MDAY', fc: 'SZ300545', label_en: '5 days', label_zh: '五日' },
 			{ type: 'DAY', fc: 'SZ300545', label_en: '1 day', label_zh: '日K' },
 			{ type: 'WEEK', fc: 'SZ300545', label_en: '1 week', label_zh: '周线' },
 			{ type: 'MON', fc: 'SZ300545', label_en: '1 month', label_zh: '月线' },

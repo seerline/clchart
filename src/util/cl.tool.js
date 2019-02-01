@@ -22,7 +22,20 @@ export function addPreZero (v, n) { // n表示总共几位  (9,2) ---09
   const s = '000000000' + v
   return s.slice(-1 * n)
 }
+/**
+ * get random text
+ * @export
+ * @param {Number} size
+ * @return {String}
+ */
+function makeId (size) {
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  if (size > 20) size = 20;
+  for (let i = 0; i < size; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
 
+  return text
+}
 /**
  * get time's millseconds
  * @export
@@ -342,7 +355,7 @@ export function formatShowTime (key, value, minute) {
         out = fromMinuteToStr(minute)
       }
       break
-    case 'DAY5':
+    case 'MDAY':
       out = fromTTimeToStr(value, 'minute')
       break
   }

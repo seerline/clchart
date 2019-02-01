@@ -51,10 +51,11 @@ export const CHART_LAYOUT = {
     font: 'sans-serif'
   },
   digit: {  // 数字显示的字体和配置
-    pixel: 12,
+    pixel: 13,
     height: 16,
     spaceX: 3,
-    font: 'sans-serif'
+    // font: 'Roboto Mono'
+    font: 'Cousine'
   },
   symbol: { // 符号，比如箭头等的字体和配置
     pixel: 10,
@@ -360,14 +361,14 @@ export const CHART_NOWVOL = {
 /**
  * 5day chart config
  */
-export const CHART_DAY5 = {
+export const CHART_MDAY = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
   },
   axisX: {
     lines: 4,
     display: 'none', // none不显示，both 边各一个值, block 根据块大小每个块显示一个值 = 显示坐标
-    type: 'day5', // 有 day1 day5 和 normal 三种模式
+    type: 'mday', // 有 day1 day5 和 normal 三种模式
     format: 'date' // date time datetime normal tradetime：根据交易时间此时label无用 = 显示的信息方式
   },
   axisY: {
@@ -402,7 +403,7 @@ export const CHART_DAY5 = {
       showSort: 'idx'
     },
     formula: {
-      key: 'NOWDAY5', // 获取数据的key，
+      key: 'NOWMDAY', // 获取数据的key，
       command: `out = this.AVGPRC()` // 均价,要根据股票类型做变化
     }
   }]
@@ -411,14 +412,14 @@ export const CHART_DAY5 = {
 /**
  * 5 days chart volume config
  */
-export const CHART_DAY5VOL = {
+export const CHART_MDAYVOL = {
   title: {
     display: 'none' // none 不显示 btn 按钮 text 文字
   },
   axisX: {
     lines: 4,
     display: 'block',
-    type: 'day5', // 有 day1 day5 和 normal 三种模式
+    type: 'mday', // 有 day1 day5 和 normal 三种模式
     format: 'date' // date time datetime normal 显示的x轴信息方式
   },
   axisY: {

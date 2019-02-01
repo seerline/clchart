@@ -10,7 +10,7 @@ import {
   FIELD_DAY,
   FIELD_TICK,
   FIELD_RIGHT,
-  FIELD_DAY5
+  FIELD_MDAY
 } from '../cl.data.def'
 
 import {
@@ -491,11 +491,11 @@ export function checkDayZero (source) {
  * @param {Number} tradetime
  * @return {Array}
  */
-export function checkDay5 (source, tradeDate, tradetime) {
+export function checkMDay (source, tradeDate, tradetime) {
   const out = []
   if (source.length < 1) return out
 
-  const lastDate = getDate(source[source.length - 1][FIELD_DAY5.time])
+  const lastDate = getDate(source[source.length - 1][FIELD_MDAY.time])
   // 判断是否已经有收盘数据了
   let maxDays = 5
   if (!lastDate === tradeDate) maxDays = 4
@@ -504,15 +504,15 @@ export function checkDay5 (source, tradeDate, tradetime) {
   let count = 0
   let curDate = 0
   for (idx = source.length - 1; idx >= 0; idx--) {
-    if (curDate !== getDate(source[idx][FIELD_DAY5.time])) {
-      curDate = getDate(source[idx][FIELD_DAY5.time])
+    if (curDate !== getDate(source[idx][FIELD_MDAY.time])) {
+      curDate = getDate(source[idx][FIELD_MDAY.time])
       count++
       if (count > maxDays) {
         idx++
         break
       }
     }
-    out.splice(0, 0, [source[idx][FIELD_DAY5.time], source[idx][FIELD_DAY5.close], source[idx][FIELD_DAY5.vol]])
+    out.splice(0, 0, [source[idx][FIELD_MDAY.time], source[idx][FIELD_MDAY.close], source[idx][FIELD_MDAY.vol]])
   }
 
   count = 0
@@ -521,19 +521,19 @@ export function checkDay5 (source, tradeDate, tradetime) {
   let money = 0
   const daymins = getMinuteCount(tradetime)
   for (idx = 0; idx < out.length; idx++) {
-    if (curDate !== getDate(out[idx][FIELD_DAY5.time])) { // 增加记录
-      curDate = getDate(out[idx][FIELD_DAY5.time])
+    if (curDate !== getDate(out[idx][FIELD_MDAY.time])) { // 增加记录
+      curDate = getDate(out[idx][FIELD_MDAY.time])
       count++
       vol = 0
       money = 0
     }
-    vol += out[idx][FIELD_DAY5.vol]
-    money += out[idx][FIELD_DAY5.close] * out[idx][FIELD_DAY5.vol]
-    let index = fromTradeTimeToIndex(out[idx][FIELD_DAY5.time], tradetime)
+    vol += out[idx][FIELD_MDAY.vol]
+    money += out[idx][FIELD_MDAY.close] * out[idx][FIELD_MDAY.vol]
+    let index = fromTradeTimeToIndex(out[idx][FIELD_MDAY.time], tradetime)
     index += (count - 1) * daymins
-    out[idx][FIELD_DAY5.idx] = index
-    out[idx][FIELD_DAY5.allvol] = vol
-    out[idx][FIELD_DAY5.allmoney] = money
+    out[idx][FIELD_MDAY.idx] = index
+    out[idx][FIELD_MDAY.allvol] = vol
+    out[idx][FIELD_MDAY.allmoney] = money
   }
   return out
 }
@@ -865,32 +865,32 @@ export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
  * @param {Number} tradetime
  * @return {Array}
  */
-export function outputDay5 (source, tradetime) {
-  const out = {
-    key: 'DAY5',
-    fields: FIELD_DAY5,
-    value: []
-  }
-  if (source.length < 1) return out
+// export function outputMDay (source, tradetime) {
+//   const out = {
+//     key: 'MDAY',
+//     fields: FIELD_MDAY,
+//     value: []
+//   }
+//   if (source.length < 1) return out
 
-  let idx
-  let count = 0
-  let vol = 0
-  let money = 0
-  let curDate = 0
-  const daymins = getMinuteCount(tradetime)
-  for (idx = 0; idx < source.length; idx++) {
-    if (curDate !== getDate(source[idx][FIELD_TICK.time])) {
-      curDate = getDate(source[idx][FIELD_TICK.time])
-      count++
-      vol = 0
-      money = 0
-    }
-    vol += source[idx][FIELD_TICK.vol]
-    money += source[idx][FIELD_TICK.close] * source[idx][FIELD_TICK.vol]
-    let index = fromTradeTimeToIndex(source[idx][FIELD_TICK.time], tradetime)
-    index += (count - 1) * daymins
-    out.value.push([index, source[idx][FIELD_TICK.close], source[idx][FIELD_TICK.vol], money / vol])
-  }
-  return out
-}
+//   let idx
+//   let count = 0
+//   let vol = 0
+//   let money = 0
+//   let curDate = 0
+//   const daymins = getMinuteCount(tradetime)
+//   for (idx = 0; idx < source.length; idx++) {
+//     if (curDate !== getDate(source[idx][FIELD_TICK.time])) {
+//       curDate = getDate(source[idx][FIELD_TICK.time])
+//       count++
+//       vol = 0
+//       money = 0
+//     }
+//     vol += source[idx][FIELD_TICK.vol]
+//     money += source[idx][FIELD_TICK.close] * source[idx][FIELD_TICK.vol]
+//     let index = fromTradeTimeToIndex(source[idx][FIELD_TICK.time], tradetime)
+//     index += (count - 1) * daymins
+//     out.value.push([index, source[idx][FIELD_TICK.close], source[idx][FIELD_TICK.vol], money / vol])
+//   }
+//   return out
+// }

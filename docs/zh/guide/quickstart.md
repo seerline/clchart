@@ -170,7 +170,7 @@ clchart-demo
       height: mainHeight
     }
   }
-  const mainChart = Chart.createChart('MIN', 'CHART.LINE', mainLayoutCfg, function (result) {})
+  const mainChart = Chart.createChart('MIN', 'system.chart', mainLayoutCfg, function (result) {})
   Chart.bindData(mainChart, 'MIN')
 
   const volumeLoyoutCfg = {
@@ -183,7 +183,7 @@ clchart-demo
       height: canvas.height - mainHeight
     }
   }
-  const volumeChart = Chart.createChart('MINNOW', 'CHART.LINE', volumeLoyoutCfg, function (result) {})
+  const volumeChart = Chart.createChart('MINNOW', 'system.chart', volumeLoyoutCfg, function (result) {})
   Chart.bindData(volumeChart, 'MIN')
   // 执行绘图
   Chart.onPaint()

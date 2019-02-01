@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<link href="https://fonts.googleapis.com/css?family=Cousine|Roboto+Mono" rel="stylesheet">
 <style>
 
-html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+  html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
 
 *{
   -webkit-box-sizing: border-box;
@@ -21,7 +22,7 @@ html, body, .container {
   color: #f5f5f5;
 }
 .chart-container {
-  height: calc(100% - 50px);
+  height: calc(100% - 100px);
   position: relative;
 }
 
@@ -55,6 +56,7 @@ html, body, .container {
     <input type="text" name="send-string" id="code-string" value="sh600600" />
     <button onclick="drawChart('test')">test</button>
     <button onclick="drawChart('day')">day</button>
+    <button onclick="drawChart('min5')">min5</button>
     <button onclick="drawChart('mday')">mday</button>
     <button onclick="drawChart('min')">now</button>
     <button onclick="drawChart('level2')">level2</button>
@@ -125,7 +127,11 @@ html, body, .container {
     switch (style) {
       case 'day':
         initLayout(style); // 初始化布局，每种类型只用一次
-        drawKline(code.value, 'day');
+        drawKline(code.value, style);
+        break;
+      case 'min5':
+        initLayout('min5'); // 初始化布局，每种类型只用一次
+        drawMinline(code.value, style);
         break;
       case 'min':
         initLayout(style); // 初始化布局，每种类型只用一次
@@ -136,7 +142,6 @@ html, body, .container {
         drawMday(code.value);
         break;
       case 'level2':
-        initLayout(style); // 初始化布局，每种类型只用一次
         drawLevel2(code.value);
         break;
       default:
@@ -164,7 +169,7 @@ html, body, .container {
     }
   }
   console.log(syscfg);
-  
+
   client.Chart = ClChart.createSingleChart(syscfg);
   client.curChart = 'none';
 
@@ -187,7 +192,7 @@ html, body, .container {
           height: mainHeight
         }
       }
-      client.Chart.createChart('user.minline', 'CHART.LINE', mainLayoutCfg, function (result) {
+      client.Chart.createChart('user.minline', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
       const volumeLoyoutCfg = {
@@ -200,7 +205,7 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.minvol', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+      client.Chart.createChart('user.minvol', 'system.chart', volumeLoyoutCfg, function (result) {
         //  console.log(result)
       })
       const orderLayoutCfg = {
@@ -213,7 +218,7 @@ html, body, .container {
           height: mainCanvas.height
         }
       }
-      client.Chart.createChart('user.order', 'CHART.ORDER', orderLayoutCfg, function (result) {
+      client.Chart.createChart('user.order', 'system.board', orderLayoutCfg, function (result) {
         //  console.log(result)
       })
     }
@@ -222,7 +227,7 @@ html, body, .container {
       // 设置画布区域布局
       const mainLayoutCfg = {
         layout: ClChart.DEF_CHART.CHART_LAYOUT,
-        config: ClChart.DEF_CHART.CHART_DAY5,
+        config: ClChart.DEF_CHART.CHART_MDAY,
         rectMain: {
           left: 0,
           top: 0,
@@ -230,12 +235,12 @@ html, body, .container {
           height: mainHeight
         }
       }
-      client.Chart.createChart('user.mday.line', 'CHART.LINE', mainLayoutCfg, function (result) {
+      client.Chart.createChart('user.mday.line', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
       const volumeLoyoutCfg = {
         layout: ClChart.DEF_CHART.CHART_LAYOUT,
-        config: ClChart.DEF_CHART.CHART_DAY5VOL,
+        config: ClChart.DEF_CHART.CHART_MDAYVOL,
         rectMain: {
           left: 0,
           top: mainHeight,
@@ -243,11 +248,11 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.mday.vol', 'CHART.LINE', volumeLoyoutCfg, function (result) {
+      client.Chart.createChart('user.mday.vol', 'system.chart', volumeLoyoutCfg, function (result) {
         //  console.log(result)
       })
     }
-    if (style === 'day') {
+    if (style === 'day' || style === 'min5') {
       let mainHeight = mainCanvas.height * 2 / 3
       // 设置画布区域布局
       const mainLayoutCfg = {
@@ -266,7 +271,7 @@ html, body, .container {
           height: mainHeight
         }
       }
-      client.Chart.createChart('user.kbar', 'CHART.LINE', mainLayoutCfg, function (result) {
+      client.Chart.createChart('user.kbar', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
       const volumeLoyoutCfg = {
@@ -284,52 +289,7 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.vbar', 'CHART.LINE', volumeLoyoutCfg, function (result) {
-        //  console.log(result)
-      })
-    }
-    if (style === 'level2') {
-      // 设置画布尺寸
-      let mainHeight = mainCanvas.height * 2 / 3
-      let mainWidth = Math.max(mainCanvas.width * 0.65, mainCanvas.width - 400)
-      // 设置画布区域布局
-      const mainLayoutCfg = {
-        layout: ClChart.DEF_CHART.CHART_LAYOUT,
-        config: ClChart.DEF_CHART.CHART_NOW,
-        rectMain: {
-          left: 0,
-          top: 0,
-          width: mainWidth,
-          height: mainHeight
-        }
-      }
-      client.Chart.createChart('user.detail', 'CHART.ORDER', mainLayoutCfg, function (result) {
-        //  console.log(result)
-      })
-      const volumeLoyoutCfg = {
-        layout: ClChart.DEF_CHART.CHART_LAYOUT,
-        config: ClChart.DEF_CHART.CHART_NOWVOL,
-        rectMain: {
-          left: 0,
-          top: mainHeight,
-          width: mainWidth,
-          height: mainCanvas.height - mainHeight
-        }
-      }
-      client.Chart.createChart('user.queue', 'CHART.ORDER', volumeLoyoutCfg, function (result) {
-        //  console.log(result)
-      })
-      const orderLayoutCfg = {
-        layout: ClChart.DEF_CHART.CHART_LAYOUT,
-        config: ClChart.DEF_CHART.CHART_ORDER,
-        rectMain: {
-          left: mainWidth,
-          top: 0,
-          width: mainCanvas.width - mainWidth,
-          height: mainCanvas.height
-        }
-      }
-      client.Chart.createChart('user.order', 'CHART.ORDER', orderLayoutCfg, function (result) {
+      client.Chart.createChart('user.vbar', 'system.chart', volumeLoyoutCfg, function (result) {
         //  console.log(result)
       })
     }
@@ -368,6 +328,7 @@ html, body, .container {
         client.Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, data['min'].values)
         client.Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, data['tick'].values)
         client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].value)
+        // 只有pubData才会增补其他信息，并计算所有的线
         client.Chart.bindData(client.Chart.getChart('user.minline'), 'MIN')
         client.Chart.bindData(client.Chart.getChart('user.minvol'), 'MIN')
         client.Chart.onPaint()
@@ -380,14 +341,14 @@ html, body, .container {
     client.Chart.clear();
     // 初始化数据
     client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
-    
+
     send_client_command([{
           key: 'info',
           com: 'sisdb.get ' + code + '._info'
         },
         {
           key: 'mday',
-          com: 'sisdb.get ' + code + '.mday'
+          com: 'sisdb.get ' + code + '.mday {"search":{"start":-1200,"stop":-1}}'
         }
       ],
       function draw(data) {
@@ -424,6 +385,117 @@ html, body, .container {
         client.Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, data['day'].values)
         client.Chart.bindData(client.Chart.getChart('user.kbar'), 'DAY')
         client.Chart.bindData(client.Chart.getChart('user.vbar'), 'DAY')
+        client.Chart.onPaint()
+      });
+  }
+
+  function drawMinline(code, peroid) {
+
+    // 清除画布，及数据
+    client.Chart.clear();
+    // 初始化数据
+    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+
+    send_client_command([{
+          key: 'info',
+          com: 'sisdb.get ' + code + '._info'
+        },
+        {
+          key: 'min5',
+          com: 'sisdb.get ' + code + '.min5 {"search":{"start":-500,"stop":-1}}'
+        }
+      ],
+      function draw(data) {
+        console.log(data);
+
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('M5', ClChart.DEF_DATA.FIELD_DAY, data['min5'].values)
+        client.Chart.bindData(client.Chart.getChart('user.kbar'), 'M5')
+        client.Chart.bindData(client.Chart.getChart('user.vbar'), 'M5')
+        client.Chart.onPaint()
+      });
+  }
+
+  // 画分钟线
+  function drawLevel2(code) {
+    console.log('Draw ====> Level2 Line')
+    if (client.curChart !== 'level2')
+    {
+      let mainHeight = mainCanvas.height * 2 / 3
+      let mainWidth = Math.max(mainCanvas.width * 0.65, mainCanvas.width - 400)
+      // 设置画布区域布局
+
+      client.Chart.createChart('user.order', 'coollyer.super', {
+          rectMain: {
+            left: 0,
+            top: 0,
+            width: mainWidth,
+            height: mainHeight
+          }
+        },
+        function (result) {
+          //  console.log(result)
+        })
+      client.Chart.createChart('user.queue', 'coollyer.super', {
+          rectMain: {
+            left: 0,
+            top: mainHeight,
+            width: mainWidth,
+            height: mainCanvas.height - mainHeight
+          }
+        },
+        function (result) {
+          //  console.log(result)
+        })
+      // client.Chart.createChart('user.snapshot', 'coollyer.super', {
+        client.Chart.createChart('user.snapshot', 'system.board', {
+          layout: ClChart.DEF_CHART.CHART_LAYOUT,
+          config: ClChart.DEF_CHART.CHART_ORDER,
+          rectMain: {
+            left: mainWidth,
+            top: 0,
+            width: mainCanvas.width - mainWidth,
+            height: mainCanvas.height
+          }
+        },
+        function (result) {
+          //  console.log(result)
+        })
+      client.curChart = 'level2';
+    }
+    // 清除画布，及数据
+    client.Chart.clear();
+    // 初始化数据
+    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+
+    send_client_command([{
+          key: 'info',
+          com: 'sisdb.get ' + code + '._info'
+        },
+        {
+          key: 'order',
+          com: 'sisdb.get ' + code + '.order {"search":{"start":-50,"stop":-1}}'
+        },
+        {
+          key: 'queue',
+          com: 'sisdb.get ' + code + '.queue {"search":{"start":-50,"stop":-1}}'
+        },
+        {
+          key: 'snapshot',
+          com: 'sisdb.get ' + code + '.snapshot {"search":{"start":-50,"stop":-1}}'
+        }
+      ],
+      function draw(data) {
+        console.log(data);
+
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('order', data['order'].fields, data['order'].values)
+        client.Chart.setData('queue', data['queue'].fields, data['queue'].values)
+        client.Chart.setData('snapshot', data['snapshot'].fields, data['snapshot'].values)
+        client.Chart.setData('NOW', data['snapshot'].fields, data['snapshot'].values)
+        client.Chart.setData('TICK', data['order'].fields, data['order'].values)
+        // client.Chart.bindData(client.Chart.getChart('user.minline'), 'MIN')
+        // client.Chart.bindData(client.Chart.getChart('user.snapshot'), 'NOW')
         client.Chart.onPaint()
       });
   }

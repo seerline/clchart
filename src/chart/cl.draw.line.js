@@ -76,7 +76,7 @@ export default class ClDrawLine {
         idx = getValue(this.data, this.info.showSort, index)
       }
       // if (getValue(this.data, this.info.labelX, index) < 0) continue;
-      xx = this.rectMain.left + idx * (this.linkInfo.unitX + this.linkInfo.spaceX)
+      xx = this.rectMain.left + (idx + 0.5)* (this.linkInfo.unitX + this.linkInfo.spaceX)
       yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY)
       if (Math.floor(idx / this.info.skips) > count) {
         count = Math.floor(idx / this.info.skips)

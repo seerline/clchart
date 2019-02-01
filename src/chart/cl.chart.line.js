@@ -265,7 +265,7 @@ export default class ClChartLine {
           labelY: 'value'
         }
         if (this.config.lines[i].info !== undefined) line.info = this.config.lines[i].info
-        if (this.config.axisX.type === 'day5') {
+        if (this.config.axisX.type === 'mday') {
           // 专用于5日线跨天的连线问题
           line.info.skips = getMinuteCount(this.father.dataLayer.tradeTime)
         }
@@ -832,7 +832,7 @@ export default class ClChartLine {
           maxCount: getMinuteCount(this.father.dataLayer.tradeTime)
         }
       )
-    } else if (this.config.axisX.type === 'day5') {
+    } else if (this.config.axisX.type === 'mday') {
       setFixedLineFlags(
         this.linkInfo, {
           width: this.rectChart.width,
@@ -1004,7 +1004,7 @@ export default class ClChartLine {
     let idx, valueY
     let valueX = mouseIndex
     if (mouseIndex > 0) {
-      if (this.config.axisX.type === 'day1' || this.config.axisX.type === 'day5') {
+      if (this.config.axisX.type === 'day1' || this.config.axisX.type === 'mday') {
         valueX = valueX % 240
         valueX = fromIndexToTradeTime(valueX, this.father.dataLayer.tradeTime, this.father.dataLayer.tradeDate)
         idx = findLabelToIndex(this.data, mouseIndex, 'idx')
@@ -1036,7 +1036,7 @@ export default class ClChartLine {
     const idx = Math.round((xpos - this.rectChart.left) / (this.linkInfo.unitX + this.linkInfo.spaceX) - 0.5)
     if (this.config.axisX.type === 'day1') {
       return idx
-    } else if (this.config.axisX.type === 'day5') {
+    } else if (this.config.axisX.type === 'mday') {
       return idx
     } else {
       return this.linkInfo.minIndex + idx

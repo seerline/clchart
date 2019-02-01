@@ -11,6 +11,11 @@
 import {
   copyJsonOfDeep
 } from '../util/cl.tool'
+import {
+  _globalUserClassDefine
+} from '../plugins/cl.register'
+import ClChartLine from './cl.chart.line'
+import ClChartBoard from './cl.chart.board'
 
 import * as drawClass from '../util/cl.draw'
 
@@ -140,7 +145,14 @@ const _systemInfo = {
   sysColor: 'black', // 'white' | 'black'
   charMap: CHART_WIDTH_MAP, // Used to help degrade font width calculations for some platforms that do not support context measures
   mainCanvas: {}, // Main canvas
-  cursorCanvas: {} // Cursor canvas
+  cursorCanvas: {}, // Cursor canvas
+  sysClass :{
+    'system': {
+      'normal' : ClChartLine,
+      'chart' : ClChartLine,
+      'board' : ClChartBoard,
+    }
+  }
 }
 /**
  * set paint standard
@@ -325,4 +337,45 @@ export function changeCursorStyle (style) {
 export function getLineColor (index) {
   if (index === undefined) index = 0
   return _systemInfo.color.line[index % _systemInfo.color.line.length]
+}
+
+// 所有的类都在这里定义，不管是系统的还是用户自定义的，
+
+export function _registerPlugins (userName, className, classEntity) {
+  if (userName === undefined || _systemInfo.sysClass[userName])
+  {
+    _systemInfo.sysClass[userName] = {};
+  } 
+  _systemInfo.sysClass[userName][className] = classEntity;
+  console.log(_systemInfo.sysClass);
+}
+
+export function _createClass (className, father) {
+  let classList = className.split('.');
+  if (classList .length < 1) 
+  {
+    return new _systemInfo.sysClass['system']['normal'](father);
+  }
+  let userName = 'system'
+  let entityName = ''
+  if (classList.length === 1) 
+  {
+    if (_systemInfo.sysClass['system'][className] === undefined)
+    {
+      return new _systemInfo.sysClass['system']['normal'](father);
+    }
+    return new _systemInfo.sysClass['system'][className](father);
+  }
+
+  userName = classList.shift()
+  entityName = classList.toString();
+  // 先找系统中的，没有就找user定义的，再没有就调默认的
+  if (_systemInfo.sysClass[userName]&&_systemInfo.sysClass[userName][entityName])
+  {
+    return new _systemInfo.sysClass[userName][entityName](father);
+  } else if (_globalUserClassDefine[userName]&&_globalUserClassDefine[userName][entityName])
+  {
+    return new _globalUserClassDefine[userName][entityName](father);
+  }
+  return new _systemInfo.sysClass['system']['normal'](father);
 }

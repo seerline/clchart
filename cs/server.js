@@ -38,7 +38,8 @@ function from_client_to_server (message, argv) {
   let command = new class_redis_command(com, param, // {},
     {
       replyEncoding: 'utf8'
-    }, function (error, result) {
+    },
+    function (error, result) {
       console.log(':::', typeof result, result, arguments.length)
       from_server_to_client(message, result)
       for (var i = 0; i < arguments.length; i++) {
@@ -46,7 +47,7 @@ function from_client_to_server (message, argv) {
       }
     })
   server.redis_server.sendCommand(command)
-}
+  }
 
 // from_client_to_server({}, "sisdb.get", "sh6000001.queue",'{"format":"array"}');
 

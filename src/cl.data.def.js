@@ -55,7 +55,7 @@ export const FIELD_TICK = {
   close: 1,
   vol: 2
 }
-export const FIELD_DAY5 = {
+export const FIELD_MDAY = {
   time: 0,
   close: 1,
   vol: 2,

@@ -30,7 +30,7 @@ import {
 import {
   initCommonInfo,
   checkLayout
-} from '../chart/cl.chart.init'
+} from './cl.chart.init'
 import {
   CHART_LAYOUT,
   CHART_ORDER
@@ -40,17 +40,17 @@ import {
   FIELD_NOW,
   FIELD_NOW_IDX,
   FIELD_TICK
-} from '../data/../cl.data.def'
+} from '../cl.data.def'
 
 /**
- * Class representing ClChartOrder
+ * Class representing ClChartBoard
  * @export
- * @class ClChartOrder
+ * @class ClChartBoard
  */
-export default class ClChartOrder {
+export default class ClChartBoard {
   /**
 
-   * Creates an instance of ClChartOrder.
+   * Creates an instance of ClChartBoard.
    * @param {Object} father order chart's parent context
    */
   constructor (father) {
@@ -61,7 +61,7 @@ export default class ClChartOrder {
   /**
    * init order chart
    * @param {Object} cfg
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   init (cfg) {
     this.rectMain = cfg.rectMain || { left: 0, top: 0, width: 200, height: 300 }
@@ -77,7 +77,7 @@ export default class ClChartOrder {
   }
   /**
    * check config
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   checkConfig () { // 检查配置有冲突的修正过来
     checkLayout(this.layout)
@@ -88,14 +88,14 @@ export default class ClChartOrder {
   }
   /**
    * Calculate all rectangular areas
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   setPublicRect () {
     this.rectChart = offsetRect(this.rectMain, this.layout.margin)
   }
   /**
    * handle click event
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   onClick (/* e */) {
     if (this.isIndex) return // 如果是指数就啥也不干
@@ -108,7 +108,7 @@ export default class ClChartOrder {
   }
   /**
    * paint order chart
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   onPaint () {
     this.codeInfo = this.father.getData('INFO')
@@ -132,14 +132,14 @@ export default class ClChartOrder {
   }
   /**
    * clear chart
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawClear () {
     _fillRect(this.context, this.rectMain.left, this.rectMain.top, this.rectMain.width, this.rectMain.height, this.color.back)
   }
   /**
    * set ready for draw
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawReady () {
     if (this.tickData === undefined) {
@@ -206,7 +206,7 @@ export default class ClChartOrder {
    * @param {Number} close
    * @param {Number} before
    * @return {String} color
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   getColor (close, before) {
     if (close > before) {
@@ -219,7 +219,7 @@ export default class ClChartOrder {
   }
   /**
    * draw index
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawIndex () {
     _drawBegin(this.context, this.color.grid)
@@ -285,7 +285,7 @@ export default class ClChartOrder {
   }
   /**
    * draw order
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawOrder () {
     const xpos = this.drawGridLine() // 先画线格
@@ -348,7 +348,7 @@ export default class ClChartOrder {
   }
   /**
    * draw tick
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawTick () {
     if (this.tickData === undefined || this.tickData.value.length < 1) return
@@ -416,7 +416,7 @@ export default class ClChartOrder {
   /**
    * draw grid line
    * @return {Number}
-   * @memberof ClChartOrder
+   * @memberof ClChartBoard
    */
   drawGridLine () {
     _drawBegin(this.context, this.color.grid)

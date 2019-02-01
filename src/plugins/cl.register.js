@@ -7,8 +7,19 @@
  */
 
 import { CHART_SEER } from './cl.seer.def'
-import { FIELD_SEER } from './cl.seer'
+import { ClDrawSeer, FIELD_SEER } from './cl.seer'
+import ClChartSuper from './cl.super'
+
 export default {
   CHART_SEER,
   FIELD_SEER
 }
+
+// 为了避免重名，以作者的名字为命名空间，方便检索
+export const _globalUserClassDefine = {
+  // this is user register class
+  'coollyer' : {
+    'seer' : ClDrawSeer,
+    'super' : ClChartSuper,
+  }
+};
