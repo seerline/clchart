@@ -75,7 +75,7 @@ npm run dev
 
 ## Todos
 
-* [ ] karma test
+* [ ] jest test
 * [ ] more web demo
 * [ ] integrate [GCanvas](https://github.com/alibaba/GCanvas) for `react native android`
 * [ ] [weex](https://github.com/apache/incubator-weex) demo
