@@ -6,14 +6,14 @@ export interface Context extends CanvasRenderingContext2D {
   charMap: CharMap
 }
 export interface FontConfig {
-  spaceX: number
-  spaceY: number
+  spaceX?: number
+  spaceY?: number
   font: string
   pixel: number
-  clr: string
-  bakclr: string
-  x: 'start' | 'center' | 'end'
-  y: 'middle' | 'top' | 'bottom'
+  clr?: FillStyle
+  bakclr?: FillStyle
+  x?: CanvasTextAlign
+  y?: CanvasTextBaseline
 }
 
 export interface SignConfig {
@@ -27,8 +27,18 @@ export interface SignConfig {
   pixel: number
   spaceX: number
   spaceY: number
-  x: number
-  y: number
+  x: CanvasTextAlign
+  y: CanvasTextBaseline
+  top?: number
+  bottom?: number
+}
+
+export interface SignItem {
+  txt: string
+  set: number
+  display: boolean
+  minR: number
+  maxR: number
 }
 
 /** -----------------------tool functions---------------------------- */
@@ -89,7 +99,7 @@ export function fillRect(
   y: number,
   w: number,
   h: number,
-  fillclr: FillStyle
+  fillclr?: FillStyle
 ) {
   ctx.fillStyle = fillclr || ctx.fillStyle
   ctx.fillRect(x, y, w, h)
@@ -107,7 +117,7 @@ export function fill(ctx: Context, fillclr: FillStyle) {
 }
 
 // begin draw line
-export function drawBegin(ctx: Context, clr: FillStyle) {
+export function drawBegin(ctx: Context, clr?: FillStyle) {
   ctx.beginPath()
   ctx.strokeStyle = clr || ctx.strokeStyle
 }
@@ -151,8 +161,8 @@ export function drawTxt(
   txt: string,
   font: string,
   pixel: number,
-  clr: FillStyle,
-  pos?: { x: CanvasTextAlign; y: CanvasTextBaseline }
+  clr?: FillStyle,
+  pos?: { x?: CanvasTextAlign; y?: CanvasTextBaseline }
 ) {
   setFontSize(ctx, font, pixel)
   ctx.fillStyle = clr || ctx.fillStyle
@@ -341,24 +351,24 @@ export function drawSignCircle(
 }
 
 // draw sign horizontal line
-export function drawSignHLine(ctx: Context, config: any, item: any[]) {
+export function drawSignHLine(ctx: Context, config: SignConfig, item: SignItem[]) {
   drawBegin(ctx, config.clr)
-  drawDashLine(ctx, config.x, config.y, config.right - config.pixel / 2, config.y, 7)
+  drawDashLine(ctx, config.xx, config.yy, config.right - config.pixel / 2, config.yy, 7)
   drawEnd(ctx)
 
   const spaceX = config.spaceX || config.linew * 2
   const spaceY = config.spaceY || config.linew
 
-  config.width = config.right - config.x
+  let lwidth = config.right - config.xx
   for (let i = 0; i < item.length; i++) {
-    if (item[i].display === 'false') continue
-    let x = config.x + (config.width * item[i].set) / 100
+    if (item[i].display === false) continue
+    let xx = config.xx + (lwidth * item[i].set) / 100
     if (item[i].txt === 'arc') {
-      if (x + item[i].maxR > config.right) x = config.right - item[i].maxR
+      if (xx + item[i].maxR > config.right) xx = config.right - item[i].maxR
       drawSignCircle(
         ctx,
-        x,
-        config.y,
+        xx,
+        config.yy,
         { r: item[i].maxR, clr: config.clr },
         { r: item[i].minR, clr: config.bakclr }
       )
@@ -369,15 +379,15 @@ export function drawSignHLine(ctx: Context, config: any, item: any[]) {
         spaceX,
         spaceY
       })
-      if (x + txtRect.width > config.right) x = config.right - txtRect.width
-      let y = config.y
-      if (config.top && y < config.top + txtRect.height / 2) {
-        y = config.top + txtRect.height / 2
+      if (xx + txtRect.width > config.right) xx = config.right - txtRect.width
+      let yy = config.yy
+      if (config.top && yy < config.top + txtRect.height / 2) {
+        yy = config.top + txtRect.height / 2
       }
-      if (config.bottom && y > config.bottom - txtRect.height / 2) {
-        y = config.bottom - txtRect.height / 2
+      if (config.bottom && yy > config.bottom - txtRect.height / 2) {
+        yy = config.bottom - txtRect.height / 2
       }
-      drawTxtRect(ctx, x, y, item[i].txt, {
+      drawTxtRect(ctx, xx, yy, item[i].txt, {
         font: config.font,
         pixel: config.pixel,
         clr: config.clr,
@@ -492,12 +502,12 @@ export function setTransColor(scolor: string, trans: number, style: string) {
       }
       sColor = sColorNew
     }
-    // 处理六位的颜色值
+    // Handling six-digit color values
     const sColorChange = []
     for (let i = 1; i < 7; i += 2) {
       sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2), 10))
     }
-    // 效果处理
+    // effect processing
     switch (style) {
       case 'adjust':
         const r = sColorChange[0]
