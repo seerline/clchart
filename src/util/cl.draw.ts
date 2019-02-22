@@ -271,7 +271,14 @@ export function drawLineAlone(
 }
 
 // draw a ellipse
-export function bezierEllipse(ctx: Context, x: number, y: number, a: number, b: number, h: number) {
+export function bezierEllipse(
+  ctx: Context,
+  x: number,
+  y: number,
+  a: number,
+  b: number,
+  h: boolean
+) {
   const k = 0.5522848
   const ox = a * k // horizontal control point offset
   const oy = b * k // vertical control point offset
@@ -524,4 +531,31 @@ export function setTransColor(scolor: string, trans: number, style: string) {
   } else {
     return sColor
   }
+}
+
+// draw logo
+export function drawLogo(ctx: Context, xx: number, yy: number, size: number) {
+  ctx.beginPath()
+  const lw = size
+
+  ctx.lineWidth = lw
+  ctx.strokeStyle = '#efefef'
+
+  ctx.moveTo(xx - 0.5 * lw, yy)
+  ctx.lineTo(xx + 5.5 * lw, yy)
+  ctx.moveTo(xx, yy)
+  ctx.lineTo(xx, yy + 13 * lw)
+  ctx.moveTo(xx - 3 * lw, yy + 13 * lw)
+  ctx.lineTo(xx + 5.5 * lw, yy + 13 * lw)
+
+  ctx.moveTo(xx + 10 * lw, yy + 3.5 * lw)
+  ctx.lineTo(xx + 13.5 * lw, yy + 3.5 * lw)
+  ctx.moveTo(xx + 10 * lw, yy + 9.5 * lw)
+  ctx.lineTo(xx + 13.5 * lw, yy + 9.5 * lw)
+  ctx.stroke()
+
+  bezierEllipse(ctx, xx + 5.5 * lw, yy + 6.5 * lw, 5 * lw, 6.5 * lw, true)
+  bezierEllipse(ctx, xx + 9 * lw, yy + 6.5 * lw, 5 * lw, 6.5 * lw, false)
+  ctx.fillStyle = '#000'
+  ctx.fillRect(xx + 8.5 * lw, yy + 4 * lw, 6 * lw, 5 * lw)
 }
