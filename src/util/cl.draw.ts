@@ -486,7 +486,7 @@ export function drawKBar(ctx: Context, config: any, item: any[]) {
 }
 
 // draw volume bar
-export function _drawVBar(ctx: Context, config: any, value: number) {
+export function drawVBar(ctx: Context, config: any, value: number) {
   const x = config.rect.left + config.index * (config.unitX + config.spaceX)
   const y = config.rect.top + Math.round((config.maxmin.max - value) * config.unitY)
   const h = config.rect.top + config.rect.height - y
