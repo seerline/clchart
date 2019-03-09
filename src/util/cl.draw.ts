@@ -196,7 +196,6 @@ export function getTxtWidth(ctx: Context, txt: string, font: string, pixel: numb
     } catch (error) {
       width = getTxtWith(ctx.charMap, txt, pixel)
     }
-    // 简单的计算尺寸返回，这样子计算存在误差，特别是存在中英文的时候
   } else {
     width = getTxtWith(ctx.charMap, txt, pixel)
   }
