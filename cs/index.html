@@ -98,9 +98,13 @@ html, body, .container {
 </script>
 
 <script src="./clchart.js"></script>
-<script src="./datadrv.js"></script>
+<script src="./drive.js"></script>
 
 <script>
+// 
+  var code = document.getElementById("code-string");
+  code.value = client_config_get("code");
+
   function send_string() {
     var str = document.getElementById("send-string");
 
@@ -124,6 +128,8 @@ html, body, .container {
 
   function drawChart(style) {
     var code = document.getElementById("code-string");
+    client_config_set("code", code.value);
+    
     switch (style) {
       case 'day':
         initLayout(style); // 初始化布局，每种类型只用一次
@@ -380,7 +386,6 @@ html, body, .container {
       ],
       function draw(data) {
         console.log(data);
-
         client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
         client.Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, data['day'].values)
         client.Chart.bindData(client.Chart.getChart('user.kbar'), 'DAY')
