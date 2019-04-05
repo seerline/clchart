@@ -33,8 +33,7 @@ import {
   FIELD_TICK,
   FIELD_MDAY,
   FIELD_NOW,
-  FIELD_ILINE,
-  FIELD_ENOW
+  FIELD_ILINE
 } from '../cl.data.def'
 import {
   getDate,
@@ -249,7 +248,7 @@ export default class ClData {
   flushNowData (key, nowdata) {
     if (nowdata.length < 1) return
     let fields = FIELD_NOW
-    if (key === 'ENOW') fields = FIELD_ENOW
+    // if (key === 'ENOW') fields = FIELD_ENOW
     if (checkZero(nowdata, fields)) return
 
     // 先处理TICK

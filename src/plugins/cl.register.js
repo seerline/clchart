@@ -7,7 +7,8 @@
  */
 
 import { CHART_SEER } from './cl.seer.def'
-import { ClDrawSeer, FIELD_SEER } from './cl.seer'
+// import ClDrawSeer from './cl.seer'
+import ClDrawSeer, { FIELD_SEER } from './cl.seer'
 import ClChartSuper from './cl.super'
 
 export default {
@@ -20,6 +21,6 @@ export const _globalUserClassDefine = {
   // this is user register class
   'coollyer' : {
     'seer' : ClDrawSeer,
-    'super' : ClChartSuper,
+    'super' : ClChartSuper
   }
 };

@@ -25,8 +25,8 @@ const commonConfig = {
     }]
   },
   output: {
-    filename: 'clchart.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: 'clchart.js',
     library: 'ClChart',
     libraryTarget: 'umd',
     umdNamedDefine: true

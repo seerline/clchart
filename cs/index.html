@@ -49,7 +49,7 @@ html, body, .container {
 <body>
   <div id='message'>Welcome to ClChart</div>
   <div class="form-group">
-    <input type="text" style="width:50%" name="send-string" id="send-string" value="sisdb.get sh600600._info" />
+    <input type="text" style="width:50%" name="send-string" id="send-string" value="sisdb.get sh600600.info" />
     <button onclick="send_string()">send string</button>
   </div>
   <div class="form-group">
@@ -97,7 +97,7 @@ html, body, .container {
   }
 </script>
 
-<script src="./clchart.js"></script>
+<script src="../dist/clchart.js"></script>
 <script src="./drive.js"></script>
 
 <script>
@@ -110,7 +110,7 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: str.value
+          com: str.value.split(' ')
         },
         // {key:'exch',com:"sisdb.get sh600600.day"}
       ],
@@ -181,6 +181,7 @@ html, body, .container {
 
   function initLayout(style) {
     if (client.curChart === style) return; // 布局不变就不重置了
+    console.log(client.Chart);
     client.Chart.clearLayout();
     // client.Chart.clear();
     if (style === 'min') {
@@ -304,7 +305,7 @@ html, body, .container {
 
   // 画分钟线
   function drawMinute(code) {
-    console.log('Draw ====> Min Line')
+    // console.log('Draw ====> Min Line')
     // 清除画布，及数据
     client.Chart.clear();
     // 初始化数据
@@ -312,19 +313,19 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: 'sisdb.get ' + code + '._info'
+          com: ['sisdb.get' , code + '.info']
         },
         {
           key: 'min',
-          com: 'sisdb.get ' + code + '.min'
+          com: ['sisdb.get' , code + '.min']
         },
         {
           key: 'tick',
-          com: 'sisdb.get ' + code + '.tick {"search":{"start":-50,"stop":-1}}'
+          com: ['sisdb.get', code + '.tick','{"search":{"start":-50,"stop":-1}}']
         },
         {
           key: 'now',
-          com: 'sisdb.get ' + code + '.now'
+          com: ['sisdb.get' , code + '.now']
         }
       ],
       function draw(data) {
@@ -350,11 +351,11 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: 'sisdb.get ' + code + '._info'
+          com: ['sisdb.get' , code + '.info']
         },
         {
           key: 'mday',
-          com: 'sisdb.get ' + code + '.mday {"search":{"start":-1200,"stop":-1}}'
+          com: ['sisdb.get', + code + '.mday', '{"search":{"start":-1200,"stop":-1}}']
         }
       ],
       function draw(data) {
@@ -377,11 +378,12 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: 'sisdb.get ' + code + '._info'
+          com: ['sisdb.get' , code + '.info']
         },
         {
           key: 'day',
-          com: 'sisdb.get ' + code + '.day {"search":{"start":-500,"stop":-1}}'
+          com: ['sisdb.get', code + '.day', '{"search":{"start":-500,"stop":-1}}']
+          // com: ['sisdb.get', code + '.day']
         }
       ],
       function draw(data) {
@@ -403,11 +405,11 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: 'sisdb.get ' + code + '._info'
+          com: ['sisdb.get' , code + '.info']
         },
         {
           key: 'min5',
-          com: 'sisdb.get ' + code + '.min5 {"search":{"start":-500,"stop":-1}}'
+          com: ['sisdb.get', code + '.min5', '{"search":{"start":-500,"stop":-1}}']
         }
       ],
       function draw(data) {
@@ -421,87 +423,87 @@ html, body, .container {
       });
   }
 
-  // 画分钟线
-  function drawLevel2(code) {
-    console.log('Draw ====> Level2 Line')
-    if (client.curChart !== 'level2')
-    {
-      let mainHeight = mainCanvas.height * 2 / 3
-      let mainWidth = Math.max(mainCanvas.width * 0.65, mainCanvas.width - 400)
-      // 设置画布区域布局
+  // // 画分钟线
+  // function drawLevel2(code) {
+  //   console.log('Draw ====> Level2 Line')
+  //   if (client.curChart !== 'level2')
+  //   {
+  //     let mainHeight = mainCanvas.height * 2 / 3
+  //     let mainWidth = Math.max(mainCanvas.width * 0.65, mainCanvas.width - 400)
+  //     // 设置画布区域布局
 
-      client.Chart.createChart('user.order', 'coollyer.super', {
-          rectMain: {
-            left: 0,
-            top: 0,
-            width: mainWidth,
-            height: mainHeight
-          }
-        },
-        function (result) {
-          //  console.log(result)
-        })
-      client.Chart.createChart('user.queue', 'coollyer.super', {
-          rectMain: {
-            left: 0,
-            top: mainHeight,
-            width: mainWidth,
-            height: mainCanvas.height - mainHeight
-          }
-        },
-        function (result) {
-          //  console.log(result)
-        })
-      // client.Chart.createChart('user.snapshot', 'coollyer.super', {
-        client.Chart.createChart('user.snapshot', 'system.board', {
-          layout: ClChart.DEF_CHART.CHART_LAYOUT,
-          config: ClChart.DEF_CHART.CHART_ORDER,
-          rectMain: {
-            left: mainWidth,
-            top: 0,
-            width: mainCanvas.width - mainWidth,
-            height: mainCanvas.height
-          }
-        },
-        function (result) {
-          //  console.log(result)
-        })
-      client.curChart = 'level2';
-    }
-    // 清除画布，及数据
-    client.Chart.clear();
-    // 初始化数据
-    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+  //     client.Chart.createChart('user.order', 'coollyer.super', {
+  //         rectMain: {
+  //           left: 0,
+  //           top: 0,
+  //           width: mainWidth,
+  //           height: mainHeight
+  //         }
+  //       },
+  //       function (result) {
+  //         //  console.log(result)
+  //       })
+  //     client.Chart.createChart('user.queue', 'coollyer.super', {
+  //         rectMain: {
+  //           left: 0,
+  //           top: mainHeight,
+  //           width: mainWidth,
+  //           height: mainCanvas.height - mainHeight
+  //         }
+  //       },
+  //       function (result) {
+  //         //  console.log(result)
+  //       })
+  //     // client.Chart.createChart('user.snapshot', 'coollyer.super', {
+  //       client.Chart.createChart('user.snapshot', 'system.board', {
+  //         layout: ClChart.DEF_CHART.CHART_LAYOUT,
+  //         config: ClChart.DEF_CHART.CHART_ORDER,
+  //         rectMain: {
+  //           left: mainWidth,
+  //           top: 0,
+  //           width: mainCanvas.width - mainWidth,
+  //           height: mainCanvas.height
+  //         }
+  //       },
+  //       function (result) {
+  //         //  console.log(result)
+  //       })
+  //     client.curChart = 'level2';
+  //   }
+  //   // 清除画布，及数据
+  //   client.Chart.clear();
+  //   // 初始化数据
+  //   client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
 
-    send_client_command([{
-          key: 'info',
-          com: 'sisdb.get ' + code + '._info'
-        },
-        {
-          key: 'order',
-          com: 'sisdb.get ' + code + '.order {"search":{"start":-50,"stop":-1}}'
-        },
-        {
-          key: 'queue',
-          com: 'sisdb.get ' + code + '.queue {"search":{"start":-50,"stop":-1}}'
-        },
-        {
-          key: 'snapshot',
-          com: 'sisdb.get ' + code + '.snapshot {"search":{"start":-50,"stop":-1}}'
-        }
-      ],
-      function draw(data) {
-        console.log(data);
+  //   send_client_command([{
+  //         key: 'info',
+  //         com: ['sisdb.get' , code + '.info']
+  //       },
+  //       {
+  //         key: 'order',
+  //         com: ['sisdb.get', code + '.order', '{"search":{"start":-50,"stop":-1}}']
+  //       },
+  //       {
+  //         key: 'queue',
+  //         com: ['sisdb.get', code + '.queue', '{"search":{"start":-50,"stop":-1}}']
+  //       },
+  //       {
+  //         key: 'snapshot',
+  //         com: ['sisdb.get', code + '.snapshot' ,'{"search":{"start":-50,"stop":-1}}']
+  //       }
+  //     ],
+  //     function draw(data) {
+  //       console.log(data);
 
-        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
-        client.Chart.setData('order', data['order'].fields, data['order'].values)
-        client.Chart.setData('queue', data['queue'].fields, data['queue'].values)
-        client.Chart.setData('snapshot', data['snapshot'].fields, data['snapshot'].values)
-        client.Chart.setData('NOW', data['snapshot'].fields, data['snapshot'].values)
-        client.Chart.setData('TICK', data['order'].fields, data['order'].values)
-        // client.Chart.bindData(client.Chart.getChart('user.minline'), 'MIN')
-        // client.Chart.bindData(client.Chart.getChart('user.snapshot'), 'NOW')
-        client.Chart.onPaint()
-      });
-  }
+  //       client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+  //       client.Chart.setData('order', data['order'].fields, data['order'].values)
+  //       client.Chart.setData('queue', data['queue'].fields, data['queue'].values)
+  //       client.Chart.setData('snapshot', data['snapshot'].fields, data['snapshot'].values)
+  //       client.Chart.setData('NOW', data['snapshot'].fields, data['snapshot'].values)
+  //       client.Chart.setData('TICK', data['order'].fields, data['order'].values)
+  //       // client.Chart.bindData(client.Chart.getChart('user.minline'), 'MIN')
+  //       // client.Chart.bindData(client.Chart.getChart('user.snapshot'), 'NOW')
+  //       client.Chart.onPaint()
+  //     });
+  // }
 </script>
