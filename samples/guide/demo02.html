@@ -89,16 +89,15 @@
       const peroid = 'DAY'
 
       let infoData
-      sisClient.getData(code, 'info')
-      .then(data => {
-        infoData = data
-        return sisClient.getData(code, peroid, { search:{ start:-500,stop:-1 } })
-      })
-      .then(data => {
+      Promise.all([
+        sisClient.getData(code, 'info'),
+        sisClient.getData(code, peroid, { search:{ start:-500,stop:-1 } })
+      ])
+      .then(([infoData, dayData]) => {
         Chart.clear()
         Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
         Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.value)
-        Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, data.values)
+        Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, dayData.values)
         const mainHeight = mainCanvas.height * 2 / 3
         const mainLayoutCfg = {
           layout: {
