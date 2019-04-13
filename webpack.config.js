@@ -7,7 +7,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const commonConfig = {
   entry: {
-    app: './src/cl.api'
+    ClChart: './src/cl.api',
+    SisClient: './client/index'
   },
   plugins: [
     new CleanWebpackPlugin(['dist'])
@@ -25,9 +26,9 @@ const commonConfig = {
     }]
   },
   output: {
-    filename: 'clchart.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'ClChart',
+    library: '[name]',
     libraryTarget: 'umd',
     umdNamedDefine: true
   }

@@ -4,8 +4,8 @@
 var client = {}
 
 function connect_server() {
-  client.ws = new WebSocket('ws://192.168.3.118:7329');
-  // client.ws = new WebSocket('ws://192.168.1.186:7329');
+  // client.ws = new WebSocket('ws://192.168.30.118:7329');
+  client.ws = new WebSocket('ws://127.0.0.1:7329');
   console.log('connection ...')
   // client.ws = new WebSocket('ws://localhost:8888');
   // ws.binaryType = 'blob';
@@ -27,15 +27,17 @@ client.ws.onerror = function (evt) {
   console.log(evt)
 }
 
+let count = 1000
 function _makeid() {
-  let text = ''
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  // let text = ''
+  count++
+  // const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-  for (let i = 0; i < 20; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   text += possible.charAt(Math.floor(Math.random() * possible.length))
+  // }
 
-  return text
+  return count.toString()
 }
 
 // function make_command_buffer(sign, command) {
