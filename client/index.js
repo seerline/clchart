@@ -10,10 +10,6 @@ export function uniqueId () {
 const DEFAULT_RECONNECT_INTERVAL = 10000
 
 export class Client extends EventEmitter {
-  emit () {
-    setTimeout(super.emit.bind(this, ...arguments), 0)
-  }
-
   constructor (options) {
     super()
 
@@ -47,6 +43,7 @@ export class Client extends EventEmitter {
     this.socket.on('close', () => {
       this.status = 'disconnected'
       this.messageQueue.empty()
+      this.calls = []
       this.emit('disconnected')
       if (this.autoReconnect) {
         // Schedule a reconnection
