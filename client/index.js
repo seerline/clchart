@@ -88,9 +88,9 @@ export class Client extends EventEmitter {
     const id = uniqueId()
     this.messageQueue.push({
       id,
-      com: 'sisdb.get',
+      cmd: 'sisdb.get',
       key: `${code}.${key}`,
-      argv: params
+      argv: [params]
     })
     this.calls.push({
       id: id,

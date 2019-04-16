@@ -91,7 +91,7 @@
       let infoData
       Promise.all([
         sisClient.getData(code, 'info'),
-        sisClient.getData(code, peroid, { search:{ start:-500,stop:-1 } })
+        sisClient.getData(code, peroid, { search:{ start:-300,stop:-1 } })
       ])
       .then(([infoData, dayData]) => {
         Chart.clear()
