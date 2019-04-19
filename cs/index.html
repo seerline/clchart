@@ -97,7 +97,7 @@ html, body, .container {
   }
 </script>
 
-<script src="../dist/clchart.js"></script>
+<script src="./clchart.js"></script>
 <script src="./drive.js"></script>
 
 <script>
@@ -110,9 +110,9 @@ html, body, .container {
 
     send_client_command([{
           key: 'info',
-          com: str.value.split(' ')
+          cmd: str.value.split(' ')
         },
-        // {key:'exch',com:"sisdb.get sh600600.day"}
+        // {key:'exch',cmd:"sisdb.get sh600600.day"}
       ],
       function show(data) {
         var str = document.getElementById("recv-string");
@@ -301,6 +301,7 @@ html, body, .container {
       })
     }
     client.curChart = style;
+    client.tradeDate = 20190419;
   }
 
   // 画分钟线
@@ -309,23 +310,23 @@ html, body, .container {
     // 清除画布，及数据
     client.Chart.clear();
     // 初始化数据
-    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+    client.Chart.initData(client.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
 
     send_client_command([{
           key: 'info',
-          com: ['sisdb.get' , code + '.info']
+          cmd: ['sisdb.get' , code + '.info']
         },
         {
           key: 'min',
-          com: ['sisdb.get' , code + '.min']
+          cmd: ['sisdb.get' , code + '.min']
         },
         {
           key: 'tick',
-          com: ['sisdb.get', code + '.tick','{"search":{"start":-50,"stop":-1}}']
+          cmd: ['sisdb.get', code + '.tick','{"search":{"start":-50,"stop":-1}}']
         },
         {
           key: 'now',
-          com: ['sisdb.get' , code + '.now']
+          cmd: ['sisdb.get' , code + '.now']
         }
       ],
       function draw(data) {
@@ -347,21 +348,26 @@ html, body, .container {
     // 清除画布，及数据
     client.Chart.clear();
     // 初始化数据
-    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+    client.Chart.initData(client.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
 
     send_client_command([{
           key: 'info',
-          com: ['sisdb.get' , code + '.info']
+          cmd: ['sisdb.get' , code + '.info']
+        },
+        {
+          key: 'now',
+          cmd: ['sisdb.get' , code + '.now']
         },
         {
           key: 'mday',
-          com: ['sisdb.get', + code + '.mday', '{"search":{"start":-1200,"stop":-1}}']
+          cmd: ['sisdb.get', code + '.mday', '{"search":{"start":-1200,"stop":-1}}']
         }
       ],
       function draw(data) {
         console.log(data);
 
         client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].value)
         client.Chart.setData('MDAY', ClChart.DEF_DATA.FIELD_MIN, data['mday'].values)
         client.Chart.bindData(client.Chart.getChart('user.mday.line'), 'MDAY')
         client.Chart.bindData(client.Chart.getChart('user.mday.vol'), 'MDAY')
@@ -374,16 +380,16 @@ html, body, .container {
     // 清除画布，及数据
     client.Chart.clear();
     // 初始化数据
-    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+    client.Chart.initData(client.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
 
     send_client_command([{
           key: 'info',
-          com: ['sisdb.get' , code + '.info']
+          cmd: ['sisdb.get' , code + '.info']
         },
         {
           key: 'day',
-          com: ['sisdb.get', code + '.day', '{"search":{"start":-500,"stop":-1}}']
-          // com: ['sisdb.get', code + '.day']
+          cmd: ['sisdb.get', code + '.day', '{"search":{"start":-500,"stop":-1}}']
+          // cmd: ['sisdb.get', code + '.day']
         }
       ],
       function draw(data) {
@@ -401,15 +407,15 @@ html, body, .container {
     // 清除画布，及数据
     client.Chart.clear();
     // 初始化数据
-    client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+    client.Chart.initData(client.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
 
     send_client_command([{
           key: 'info',
-          com: ['sisdb.get' , code + '.info']
+          cmd: ['sisdb.get' , code + '.info']
         },
         {
           key: 'min5',
-          com: ['sisdb.get', code + '.min5', '{"search":{"start":-500,"stop":-1}}']
+          cmd: ['sisdb.get', code + '.min5', '{"search":{"start":-500,"stop":-1}}']
         }
       ],
       function draw(data) {
@@ -473,23 +479,23 @@ html, body, .container {
   //   // 清除画布，及数据
   //   client.Chart.clear();
   //   // 初始化数据
-  //   client.Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+  //   client.Chart.initData(client.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
 
   //   send_client_command([{
   //         key: 'info',
-  //         com: ['sisdb.get' , code + '.info']
+  //         cmd: ['sisdb.get' , code + '.info']
   //       },
   //       {
   //         key: 'order',
-  //         com: ['sisdb.get', code + '.order', '{"search":{"start":-50,"stop":-1}}']
+  //         cmd: ['sisdb.get', code + '.order', '{"search":{"start":-50,"stop":-1}}']
   //       },
   //       {
   //         key: 'queue',
-  //         com: ['sisdb.get', code + '.queue', '{"search":{"start":-50,"stop":-1}}']
+  //         cmd: ['sisdb.get', code + '.queue', '{"search":{"start":-50,"stop":-1}}']
   //       },
   //       {
   //         key: 'snapshot',
-  //         com: ['sisdb.get', code + '.snapshot' ,'{"search":{"start":-50,"stop":-1}}']
+  //         cmd: ['sisdb.get', code + '.snapshot' ,'{"search":{"start":-50,"stop":-1}}']
   //       }
   //     ],
   //     function draw(data) {

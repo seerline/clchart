@@ -18,6 +18,7 @@ import {
   checkDayZero,
   checkMDay,
   updateStatic,
+  updateStaticPrice,
   findDateInDay,
   findIndexInMin,
   matchDayToWeek,
@@ -61,11 +62,13 @@ export default class ClData {
     this.static = {
       stktype: 1,
       volunit: 100, // 乘以后为原始值 股票为100 指数为10000
-      coinunit: 1,
+      coinzoom: 1,
 
       coindot: 2,
-      volzoom: 1, // 输出时缩小的倍数
-      before: 10.00
+      volzoom: 1, // 成交量单位 乘以后为真实值 一般不用转换
+      before: 1000,
+      stophigh: 1100,
+      stoplow: 900
     }
   }
 
@@ -151,6 +154,7 @@ export default class ClData {
         break;
       case 'NOW':
       case 'ENOW':
+        updateStaticPrice(this.static, FIELD_NOW, value)
         this.flushNowData(key, value)
         break
       case 'MIN':

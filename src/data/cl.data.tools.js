@@ -561,10 +561,19 @@ export function updateStatic (stkstatic, fields, value) {
     fields,
     value
   }, 'coindot')
-  stkstatic.coinunit = getValue({
+  stkstatic.coinzoom = getValue({
     fields,
     value
-  }, 'coinunit')
+  }, 'coinzoom')
+}
+/**
+ * update static
+ * @export
+ * @param {Object} fields
+ * @param {Array} value
+ * @return {Array}
+ */
+export function updateStaticPrice (stkstatic, fields, value) {
   stkstatic.before = getValue({
     fields,
     value

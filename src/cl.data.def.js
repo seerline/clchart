@@ -83,26 +83,29 @@ export const FIELD_NOW = {
   close: 4,
   vol: 5,
   money: 6,
-  askp1: 7,
-  askp2: 8,
-  askp3: 9,
-  askp4: 10,
-  askp5: 11,
-  askv1: 12,
-  askv2: 13,
-  askv3: 14,
-  askv4: 15,
-  askv5: 16,
-  bidp1: 17,
-  bidp2: 18,
-  bidp3: 19,
-  bidp4: 20,
-  bidp5: 21,
-  bidv1: 22,
-  bidv2: 23,
-  bidv3: 24,
-  bidv4: 25,
-  bidv5: 26
+  before: 7,
+  stophigh: 8,
+  stoplow: 9,
+  askp1: 10,
+  askp2: 11,
+  askp3: 12,
+  askp4: 13,
+  askp5: 14,
+  askv1: 15,
+  askv2: 16,
+  askv3: 17,
+  askv4: 18,
+  askv5: 19,
+  bidp1: 20,
+  bidp2: 21,
+  bidp3: 22,
+  bidp4: 23,
+  bidp5: 24,
+  bidv1: 25,
+  bidv2: 26,
+  bidv3: 27,
+  bidv4: 28,
+  bidv5: 29
 }
 
 // 指数实时行情
@@ -122,19 +125,6 @@ export const FIELD_NOW_IDX = {
   midvol: 12
 }
 
-// 股票信息定义
-// export const FIELD_INFO = {
-//   marker: 0,
-//   code: 1,
-//   name: 2, // 股票名称
-//   search: 3,
-//   type: 4, // 股票类型
-//   coinunit: 5, // 保留小数点
-//   volunit: 6, // 成交量单位
-//   before: 7, // 前收盘
-//   stophigh: 8, // 涨停价
-//   stoplow: 9 // 跌停价
-// }
 
 export const FIELD_INFO = {
   marker: 0,
@@ -143,9 +133,8 @@ export const FIELD_INFO = {
   search: 3,
   type: 4, // 股票类型
   coindot: 5, // 保留小数点
-  coinunit: 6, // 价格单位
-  volunit: 7, // 成交量单位
-  before: 8
+  coinzoom: 6, // 价格放大倍数 除以后为真实值
+  volunit: 7 // 成交量单位 乘以后为真实值
 }
 
 // 除权字段定义

@@ -4,8 +4,8 @@
 var client = {}
 
 function connect_server() {
-  // client.ws = new WebSocket('ws://192.168.3.118:7329');
-  client.ws = new WebSocket('ws://192.168.1.186:7329');
+  client.ws = new WebSocket('ws://192.168.3.118:7329');
+  // client.ws = new WebSocket('ws://192.168.1.186:7329');
   console.log('connection ...')
   // client.ws = new WebSocket('ws://localhost:8888');
   // ws.binaryType = 'blob';
@@ -40,43 +40,55 @@ function _makeid() {
 
 // function make_command_buffer(sign, command) {
 //   let count = command.length + 1
-//   let com = '*' + count + '\r\n'
-//   com += '$' + sign.length + '\r\n' + sign + '\r\n';
+//   let cmd = '*' + count + '\r\n'
+//   cmd += '$' + sign.length + '\r\n' + sign + '\r\n';
 //   for (let k = 0; k < command.length; k++) {
-//     com += '$' + command[k].length + '\r\n' + command[k] + '\r\n';
+//     cmd += '$' + command[k].length + '\r\n' + command[k] + '\r\n';
 //   }
-//   return com
+//   return cmd
 // }
 
 function make_command_buffer(sign, command) {
   // console.log('<===', typeof command, command);
-  let com = sign + ':{'
+  let cmd = sign + ':{'
+  let argv = false
   for (let k = 0; k < command.length; k++) {
     let isjson = '"';
     if(command[k][0]==='['||command[k][0]==='{')
     {
       isjson = '';
     }
-    switch (k) {
-      case 0:
-        com += '"com":' + isjson + command[k] + isjson
-        break
-      case 1:
-        com += '"key":' + isjson + command[k] + isjson
-        break    
-      case 2:
-        com += '"argv":' + isjson + command[k] + isjson
-        break         
-      default:
-        com += '"argv' + (k - 2) + '":' + isjson + command[k] + isjson
-        break
+    if (k === 0)
+    {
+      cmd += '"cmd":' + isjson + command[k] + isjson
     }
-    if (k < command.length - 1) {
-      com += ','
+    else
+    if (k === 1)
+    {
+      cmd += '"key":' + isjson + command[k] + isjson
+    }
+    else
+    {
+      if (!argv)
+      {
+        cmd += '"argv":['
+        argv = true
+      }
+      cmd += isjson + command[k] + isjson
+    }
+    if (k < command.length - 1) 
+    {
+      cmd += ','
     }
   }
-  com += '}'
-  return com
+  if (argv)
+  {
+    cmd += ']'
+  }
+  cmd += '}'
+  console.log("cmd", cmd);
+  
+  return cmd
 }
 
 client.ws.onmessage = function (message) {
@@ -113,9 +125,9 @@ function send_client_command(commands, call) {
   for (let index = 0; index < commands.length; index++) {
     let sign = _makeid()
     client.wait.commands[sign] = commands[index].key
-    // console.log(sign + ' ' + commands[index].com);
+    // console.log(sign + ' ' + commands[index].cmd);
 
-    let sendstr = make_command_buffer(sign, commands[index].com)
+    let sendstr = make_command_buffer(sign, commands[index].cmd)
 
     console.log('<===', sendstr)
 
