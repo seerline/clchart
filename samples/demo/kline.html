@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ClChat Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+    }
+
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    html, body, .container {
+      height: 100%;
+      width: 100%;
+      background-color: #3b3b42;
+      color: #f5f5f5;
+    }
+    .container {
+      position: relative;
+    }
+    .chart-canvas {
+      height: 100%;
+      width: 100%;
+    }
+    #cursorChart {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
+    <canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
+  </div>
+
+  <script src="../ClChart.js"></script>
+  <script src="../SisClient.js"></script>
+
+  <script>
+
+    var sisClient = new SisClient.Client({
+      SocketConstructor: WebSocket,
+      endpoint: 'ws://139.224.34.238:7329',
+    })
+
+    // 获取页面中的main canvas以及cursor canvas
+    // mainCanvas 用来绘制主图
+    // cursorCanvas 用来绘制十字光标
+    const mainCanvas = document.getElementById('myChart')
+    const mainCtx = mainCanvas.getContext('2d')
+    const cursorCanvas = document.getElementById('cursorChart')
+    const cursorCtx = cursorCanvas.getContext('2d')
+  
+    // 定于绘图的配置，并且把mainCanvas及cursorCanvas传入做初始化
+    const syscfg = {
+      scale: window.devicePixelRatio,
+      axisPlatform: 'web', // 'phone' | 'web'
+      mainCanvas: {
+        canvas: mainCanvas,
+        context: mainCtx
+      },
+      cursorCanvas: {
+        canvas: cursorCanvas,
+        context: cursorCtx
+      }
+    }
+    // 创建单一股票Chart实例
+    const Chart = ClChart.createSingleChart(syscfg)
+
+    function paintKline() {
+      const code = 'sh600600'
+      const peroid = 'DAY'
+
+      let infoData
+      Promise.all([
+        sisClient.getData(code, 'info'),
+        sisClient.getData(code, peroid, { search:{ start:-300,stop:-1 } })
+      ])
+      .then(([infoData, dayData]) => {
+        Chart.clear()
+        Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.value)
+        Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, dayData.values)
+        const mainHeight = mainCanvas.height * 2 / 3
+        const mainLayoutCfg = {
+          layout: {
+            offset: {
+              left: 5,
+              right: 10
+            }
+          },
+          buttons: ClChart.DEF_CHART.CHART_BUTTONS,
+          config: ClChart.DEF_CHART.CHART_KBAR,
+          rectMain: {
+            left: 0,
+            top: 0,
+            width: mainCanvas.width,
+            height: mainHeight
+          }
+        }
+        const KBarChart = Chart.createChart('KBAR', 'system.chart', mainLayoutCfg, function (result) {
+        })
+        Chart.bindData(KBarChart, peroid)
+
+        const volumeLoyoutCfg = {
+          layout: {
+            offset: {
+              left: 5,
+              right: 10
+            }
+          },
+          config: ClChart.DEF_CHART.CHART_VBAR,
+          rectMain: {
+            left: 0,
+            top: mainHeight,
+            width: mainCanvas.width,
+            height: mainCanvas.height - mainHeight
+          }
+        }
+        const KVBarChart = Chart.createChart('VBAR', 'system.chart', volumeLoyoutCfg, function (result) {
+          //  console.log(result)
+        })
+        Chart.bindData(KVBarChart, peroid)
+
+        Chart.onPaint()
+      })
+    }
+      
+    window.onload = () => {
+      paintKline()
+    }
+  </script>
+</body>
+</html>

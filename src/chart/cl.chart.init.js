@@ -347,7 +347,6 @@ export function _registerPlugins (userName, className, classEntity) {
     _systemInfo.sysClass[userName] = {};
   } 
   _systemInfo.sysClass[userName][className] = classEntity;
-  console.log(_systemInfo.sysClass);
 }
 
 export function _createClass (className, father) {
