@@ -35,18 +35,43 @@
 
 <script>
   var lists = [
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
-    { name: 'kline', title: 'K线图'},
+    {
+      title: '历史数据',
+      charts: [
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+      ]
+    },
+    {
+      title: '实时数据',
+      charts: [
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+      ]
+    },
+    {
+      title: '其他示例',
+      charts: [
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+        { name: 'kline', title: 'K线图'},
+      ]
+    }
   ]
-  function getItemHtml(item) {
-    return `
+  function getSectionHtml(item) {
+    var html = `<div class="col-md-12">
+<h4 class="section-header">${item.title}</h4>
+</div>`;
+    item.charts.forEach(item => {
+      html += `
 <div class="col-md-4 col-sm-6 card-item">
   <a target="_blank" class="chart-link" href="./demo/${item.name}.html">
     <h4 class="chart-title">${item.title}</h4>
@@ -54,11 +79,13 @@
       data-original="./demo/${item.name}.png" style="display: inline;">
   </a>
 </div>
-    ` 
+` 
+    });
+    return html;
   }
   window.onload = function() {
     var container = document.getElementById('sectionList')
-    container.innerHTML = lists.map(getItemHtml).join('')
+    container.innerHTML = lists.map(getSectionHtml).join('')
   }
 </script>
 
