@@ -30,7 +30,7 @@
       position: relative;
     }
     .chart-canvas {
-      height: calc(100% - 20px);
+      height: 100%;
       width: 100%;
     }
     #cursorChart {
@@ -41,10 +41,6 @@
   </style>
 </head>
 <body>
-  <div style="height: 20px;">
-    <input type="text" id="code" value="sh600600">
-    <button onclick="onBtnClick()">draw</button>
-  </div>
   <div class="container">
     <canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
     <canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
@@ -71,7 +67,7 @@
     // 定于绘图的配置，并且把mainCanvas及cursorCanvas传入做初始化
     const syscfg = {
       scale: window.devicePixelRatio,
-      axisPlatform: 'phone', // 'phone' | 'web'
+      axisPlatform: 'web', // 'phone' | 'web'
       mainCanvas: {
         canvas: mainCanvas,
         context: mainCtx
@@ -84,8 +80,8 @@
     // 创建单一股票Chart实例
     const Chart = ClChart.createSingleChart(syscfg)
 
-    function onBtnClick() {
-      const code = document.getElementById('code').value || 'sh600600'
+    function paintKline() {
+      const code = 'sh600600'
       const peroid = 'DAY'
 
       let infoData
@@ -144,7 +140,7 @@
     }
       
     window.onload = () => {
-      onBtnClick()
+      paintKline()
     }
   </script>
 </body>
