@@ -38,21 +38,17 @@
     {
       title: '历史数据',
       charts: [
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
+        { name: 'daykline', title: 'day kline'},
+        { name: 'minkline', title: 'min kline'},
         { name: 'kline', title: 'K线图'},
       ]
     },
     {
       title: '实时数据',
       charts: [
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
-        { name: 'kline', title: 'K线图'},
+        { name: 'realline', title: 'realline'},
+        { name: 'mdayline', title: 'mdayline'},
+        { name: 'ddxline', title: 'ddxline'},
       ]
     },
     {
@@ -66,6 +62,11 @@
       ]
     }
   ]
+  function nofind(){
+         var img=event.srcElement;  
+         img.src="./demo/kline.png";  
+         img.onerror=null;
+     }
   function getSectionHtml(item) {
     var html = `<div class="col-md-12">
 <h4 class="section-header">${item.title}</h4>
@@ -76,7 +77,7 @@
   <a target="_blank" class="chart-link" href="./demo/${item.name}.html">
     <h4 class="chart-title">${item.title}</h4>
     <img class="chart-image" src="./demo/${item.name}.png"
-      data-original="./demo/${item.name}.png" style="display: inline;">
+      data-original="./demo/${item.name}.png" style="display: inline;" onerror="nofind();">
   </a>
 </div>
 ` 

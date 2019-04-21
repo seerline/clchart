@@ -5,40 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ClChat Demo</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-    }
-
-    canvas {
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    html, body, .container {
-      height: 100%;
-      width: 100%;
-      background-color: #3b3b42;
-      color: #f5f5f5;
-    }
-    .container {
-      position: relative;
-    }
-    .chart-canvas {
-      height: 100%;
-      width: 100%;
-    }
-    #cursorChart {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/client.css">
 </head>
 <body>
   <div class="container">
@@ -53,18 +20,18 @@
 
     var sisClient = new SisClient.Client({
       SocketConstructor: WebSocket,
-      endpoint: 'ws://139.224.34.238:7329',
+      // endpoint: 'ws://139.224.34.238:7329',
+      endpoint: 'ws://192.168.3.118:7329',
     })
 
-    // 获取页面中的main canvas以及cursor canvas
-    // mainCanvas 用来绘制主图
-    // cursorCanvas 用来绘制十字光标
+    // get main canvas && cursor canvas
+    // mainCanvas Used to draw the main map
+    // cursorCanvas : Used to draw cross cursors
     const mainCanvas = document.getElementById('myChart')
     const mainCtx = mainCanvas.getContext('2d')
     const cursorCanvas = document.getElementById('cursorChart')
     const cursorCtx = cursorCanvas.getContext('2d')
   
-    // 定于绘图的配置，并且把mainCanvas及cursorCanvas传入做初始化
     const syscfg = {
       scale: window.devicePixelRatio,
       axisPlatform: 'web', // 'phone' | 'web'
@@ -77,7 +44,7 @@
         context: cursorCtx
       }
     }
-    // 创建单一股票Chart实例
+    // Create a single stock Chart instance
     const Chart = ClChart.createSingleChart(syscfg)
 
     function paintKline() {
@@ -87,11 +54,11 @@
       let infoData
       Promise.all([
         sisClient.getData(code, 'info'),
-        sisClient.getData(code, peroid, { search:{ start:-300,stop:-1 } })
+        sisClient.getData(code, peroid, { search:{ start:-3000,stop:-1 } })
       ])
       .then(([infoData, dayData]) => {
         Chart.clear()
-        Chart.initData(20190103, ClChart.DEF_DATA.STOCK_TRADETIME)
+        Chart.initData(20190419, ClChart.DEF_DATA.STOCK_TRADETIME)
         Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.value)
         Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, dayData.values)
         const mainHeight = mainCanvas.height * 2 / 3

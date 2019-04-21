@@ -4,8 +4,8 @@
 var client = {}
 
 function connect_server() {
-  // client.ws = new WebSocket('ws://192.168.30.118:7329');
-  client.ws = new WebSocket('ws://127.0.0.1:7329');
+  client.ws = new WebSocket('ws://192.168.3.118:7329');
+  // client.ws = new WebSocket('ws://127.0.0.1:7329');
   console.log('connection ...')
   // client.ws = new WebSocket('ws://localhost:8888');
   // ws.binaryType = 'blob';
