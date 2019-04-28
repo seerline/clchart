@@ -693,7 +693,33 @@ export function _drawVBar (context, config, value) {
     _drawRect(context, xx, yy, config.unitX, hh)
   }
 }
-
+/**
+ * draw volume bar
+ * @export
+ * @param {Object} context canvas's context
+ * @param {Object} config
+ * @param {Object} value
+ */
+export function _drawZVBar (context, config, value) {
+  const xx = config.rect.left + config.index * (config.unitX + config.spaceX)
+  if (value > 0)
+  {
+    let hh = Math.round((config.maxmin.max - value) * config.unitY)
+    const yy = config.rect.top + hh
+    hh = config.rect.height / 2 - hh
+    // console.log('_drawZVBar', xx, yy, config.unitX, hh)
+    
+    _fillRect(context, xx, yy, config.unitX, hh, config.fillclr)
+  }
+  else if (value < 0)
+  {
+    let hh = Math.round((value - config.maxmin.min) * config.unitY)
+    const yy = config.rect.top + config.rect.height / 2
+    hh = config.rect.height / 2 - hh
+    // console.log('_drawZVBar', xx, yy, config.unitX, hh)
+    _fillRect(context, xx, yy, config.unitX, hh, config.fillclr)
+  }
+}
 // 以下函数为辅助画图的工具函数
 // Adjust 灰度
 

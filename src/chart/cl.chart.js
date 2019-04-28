@@ -261,7 +261,7 @@ console.log(chart);
     }
     this.fastDrawBegin()
     for (const key in this.childCharts) {
-      console.log('onPaint', this.static)
+      // console.log('onPaint', this.static)
       if (chart !== undefined) {
         if (this.childCharts[key] === chart) {
           this.childCharts[key].onPaint()

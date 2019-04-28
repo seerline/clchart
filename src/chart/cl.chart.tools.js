@@ -85,7 +85,9 @@ export function setMoveLineFlags (info, config) {
   info.spaceX = spaceX < config.scale ? config.scale : spaceX
   info.maxCount = Math.floor(config.width / (info.unitX + info.spaceX)) // 整个图形区域最大显示记录数
   const offset = info.maxCount > config.size ? config.size : info.maxCount
-
+  
+  console.log('--before--',info);
+  
   switch (info.showMode) {
     case 'fixed':
     // 要根据fixed的最大最小值，合并数据
@@ -99,10 +101,15 @@ export function setMoveLineFlags (info, config) {
       break
     case 'move':
       info.maxIndex = info.minIndex + offset
+      if (info.maxIndex > config.size)
+      {
+        info.maxIndex = config.size - 1
+      }
       break
     default: // case 'last':
       info.maxIndex = config.size - 1
       info.minIndex = config.size - offset
       break
   }
+  console.log('--after--',info);
 }

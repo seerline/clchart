@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link href="https://fonts.googleapis.com/css?family=Cousine|Roboto+Mono" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +16,8 @@
 
   <script src="../ClChart.js"></script>
   <script src="../SisClient.js"></script>
-
+  <script src="./config.js"></script>
   <script>
-
-    var sisClient = new SisClient.Client({
-      SocketConstructor: WebSocket,
-      // endpoint: 'ws://139.224.34.238:7329',
-      endpoint: 'ws://192.168.3.118:7329',
-    })
 
     // get main canvas && cursor canvas
     // mainCanvas Used to draw the main map
@@ -46,68 +41,271 @@
     }
     // Create a single stock Chart instance
     const Chart = ClChart.createSingleChart(syscfg)
+    let isInited = false;
 
-    function paintKline() {
-      const code = 'sh600600'
-      const peroid = 'DAY'
+    function initLayout() {
+      if (isInited) return; 
+      isInited = true;
 
+      Chart.clearLayout();
+      let minHeight = mainCanvas.height / 12
+      let minWidth = 400
+
+      let mainHeight = minHeight * 6
+      let mainWidth = Math.max(mainCanvas.width * 0.65, mainCanvas.width - 2 * minWidth)
+      
+      // 设置画布区域布局
+      let mainConfig = ClChart.DEF_UTIL.copyJsonOfDeep(ClChart.DEF_CHART.CHART_NOW);
+      mainConfig.lines.push(
+        {
+          className: 'ClDrawLine',
+          source: 'minddx',
+          info: {
+            showSort: 'idx',
+            labelX: 'idx',
+            labelY: 'zdmrp',
+            color: 'red'
+          }
+        }
+      )
+      mainConfig.lines.push(
+        {
+          className: 'ClDrawLine',
+          source: 'minddx',
+          info: {
+            showSort: 'idx',
+            labelX: 'idx',
+            labelY: 'zdmcp',
+            color: 'green'
+          }
+        }
+      )
+      const mainLayoutCfg = {
+        layout: ClChart.DEF_CHART.CHART_LAYOUT,
+        config: mainConfig,
+        rectMain: {
+          left: 0,
+          top: 0,
+          width: mainWidth,
+          height: mainHeight
+        }
+      }
+      Chart.createChart('user.minline', 'system.chart', mainLayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      const volumeLayoutCfg = {
+        layout: ClChart.DEF_CHART.CHART_LAYOUT,
+        config: ClChart.DEF_CHART.CHART_NOWVOL,
+        rectMain: {
+          left: 0,
+          top: mainHeight,
+          width: mainWidth,
+          height: minHeight * 3
+        }
+      }
+      Chart.createChart('user.minvol', 'system.chart', volumeLayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      let ddxConfig = ClChart.DEF_UTIL.copyJsonOfDeep(ClChart.DEF_CHART.CHART_NOWVOL);
+      ddxConfig.title.display = 'texts'
+      ddxConfig.title.label = 'DDX'
+      ddxConfig.axisY.left.display = 'both'
+      ddxConfig.axisY.right.display = 'both'
+      ddxConfig.axisY.left.middle = 'zero'
+      ddxConfig.axisY.right.middle = 'zero'
+      ddxConfig.lines = 
+        [
+        {
+          className: 'ClDrawLine',
+          source: 'minddx',
+          info: {
+            showSort: 'idx',
+            labelX: 'idx',
+            labelY: 'zdjz',
+            format: 'vol',
+            color: 'white'
+          }
+        },
+        {
+          className: 'ClDrawZVBar',
+          extremum: { // 如何取极值
+            method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+            maxvalue: ['zdmr','zdmc','zdjz'], // 参与计算最大值的标签
+            minvalue: ['zdmr','zdmc','zdjz'] // 参与计算最小值的标签
+          },
+          info: {
+            txt: 'IN:',
+            labelY: 'zdmr', // 需要显示的变量，从key中获取对应的数据标签
+            format: 'vol'
+          }
+        },
+        {
+          className: 'ClDrawZVBar',
+          info: {
+            txt: 'OUT:',
+            labelY: 'zdmc', // 需要显示的变量，从key中获取对应的数据标签
+            format: 'vol'
+          }
+        }]
+      const ddxlayoutCfg = {
+        layout: ClChart.DEF_CHART.CHART_LAYOUT,
+        config: ddxConfig,
+        rectMain: {
+          left: 0,
+          top: mainHeight + minHeight * 3,
+          width: mainWidth,
+          height: mainCanvas.height - mainHeight - minHeight * 3
+        }
+      }
+      Chart.createChart('user.ddx', 'system.chart', ddxlayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      minWidth = (mainCanvas.width - mainWidth) / 2
+      const reportLayoutCfg = {
+        layout: ClChart.DEF_CHART.CHART_LAYOUT,
+        config: {
+          // title: {
+          //   display: 'none'
+          // },
+          // listinfo:
+          //  [{label:'time', alignTxt:'left'}, 
+          //   {label:'price'},
+          //   {label:'vol'}
+          // ],
+          style: 'normal'
+        },
+        rectMain: {
+          left: mainWidth,
+          top: 0,
+          width: minWidth,
+          height: mainCanvas.height
+        }
+      }
+      Chart.createChart('user.report', 'system.report', reportLayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      const orderLayoutCfg = {
+        layout: ClChart.DEF_CHART.CHART_LAYOUT,
+        config: {
+          style: 'normal', 
+          title: {
+            display: 'text'
+          },
+          mmpCount : 10
+        },
+        rectMain: {
+          left: mainWidth + minWidth,
+          top: 0,
+          width: mainCanvas.width - mainWidth - minWidth,
+          height: mainCanvas.height
+        }
+      }
+      Chart.createChart('user.board', 'system.board', orderLayoutCfg, function (result) {
+        //  console.log(result)
+      })
+    }    
+    function paintDrawline() {
+      const code = sisdb.code
+
+      const minTime = ClChart.DEF_UTIL.makeTimeT(sisdb.tradeDate, 90000)
+      const maxTime = ClChart.DEF_UTIL.makeTimeT(sisdb.tradeDate, 150000)
+      console.log(minTime, maxTime);
+      
       let infoData
       Promise.all([
         sisClient.getData(code, 'info'),
-        sisClient.getData(code, peroid, { search:{ start:-3000,stop:-1 } })
+        sisClient.getData(code, 'tick', { search:{ start:-50,stop:-1 } }),
+        sisClient.getData(code, 'min'),
+        sisClient.getData(code, 'reports', { search:{ start:-100,stop:-1 } }),
+        sisClient.getData(code, 'minddx', { search:{ min: minTime, max: maxTime } }),
+        sisClient.getData(code, 'snapshot', { search:{ start:-1,stop:-1 } })
       ])
-      .then(([infoData, dayData]) => {
+      .then(([infoData,  tickData,  minData, reportData, minddxData, nowData]) => {
         Chart.clear()
-        Chart.initData(20190419, ClChart.DEF_DATA.STOCK_TRADETIME)
-        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.value)
-        Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, dayData.values)
-        const mainHeight = mainCanvas.height * 2 / 3
-        const mainLayoutCfg = {
-          layout: {
-            offset: {
-              left: 5,
-              right: 10
+        Chart.initData(sisdb.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
+        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.values)
+        Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, tickData.values)
+        Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, minData.values)
+        Chart.setData('NOW', nowData.fields, nowData.values)
+        Chart.setData('reports', reportData.fields, reportData.values)
+        // 数据转换
+        let ddxline = []
+        let k = 0;
+        const offset = 4;
+        const ask_vol = minddxData.fields.askv6
+        const ask_money = minddxData.fields.askm6
+        const bid_vol = minddxData.fields.bidv6
+        const bid_money = minddxData.fields.bidm6
+
+        const today = sisdb.tradeDate;//ClChart.DEF_UTIL.getDate(nowData.values[0][0])
+        for (let index = 0; index < minddxData.values.length; index++) {
+          const element = minddxData.values[index];
+          const idx = ClChart.DEF_DATA_UTIL.fromTradeTimeToIndex(element[0],ClChart.DEF_DATA.STOCK_TRADETIME)-1
+          if(ClChart.DEF_UTIL.getDate(element[0]) === today)
+          {
+            for (; k < minData.values.length; k++) 
+            {
+              if(minData.values[k][0] !== idx)
+              {               
+                ddxline.push([minData.values[k][0],0,0,
+                ddxline.length > 1 ? ddxline[ddxline.length-1][3] : 0,
+                ddxline.length > 1 ? ddxline[ddxline.length-1][4] : 0,
+                ddxline.length > 1 ? ddxline[ddxline.length-1][5] : 0
+              ])
+              }
+              else
+              {
+                k++;
+                break;
+              }
             }
-          },
-          buttons: ClChart.DEF_CHART.CHART_BUTTONS,
-          config: ClChart.DEF_CHART.CHART_KBAR,
-          rectMain: {
-            left: 0,
-            top: 0,
-            width: mainCanvas.width,
-            height: mainHeight
+            if (index > 0)
+            {
+              const ago = minddxData.values[index - 1];
+              // console.log('minData', idx, element[18], minddxData.fields);
+              const askvol = element[ask_vol] - ago[ask_vol]
+              const askmoney = element[ask_money] - ago[ask_money]
+              const bidvol = element[bid_vol] - ago[bid_vol]
+              const bidmoney = element[bid_money] - ago[bid_money]
+              ddxline.push([idx,
+                askmoney/100,
+                -1*(bidmoney/100),
+                (element[ask_money] - element[bid_money])/100,
+                // askvol ? askmoney/askvol :  ddxline[ddxline.length-1][4],
+                // bidvol ? bidmoney/bidvol :  ddxline[ddxline.length-1][5],
+                element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
+                element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
+              ])
+            }
+            else
+            {
+              ddxline.push([idx,
+                element[ask_money]/100,
+                -1*element[bid_money]/100,
+                (element[ask_money] - element[bid_money])/100,
+                element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
+                element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
+              ])
+            }
           }
         }
-        const KBarChart = Chart.createChart('KBAR', 'system.chart', mainLayoutCfg, function (result) {
-        })
-        Chart.bindData(KBarChart, peroid)
-
-        const volumeLoyoutCfg = {
-          layout: {
-            offset: {
-              left: 5,
-              right: 10
-            }
-          },
-          config: ClChart.DEF_CHART.CHART_VBAR,
-          rectMain: {
-            left: 0,
-            top: mainHeight,
-            width: mainCanvas.width,
-            height: mainCanvas.height - mainHeight
-          }
-        }
-        const KVBarChart = Chart.createChart('VBAR', 'system.chart', volumeLoyoutCfg, function (result) {
-          //  console.log(result)
-        })
-        Chart.bindData(KVBarChart, peroid)
-
+        Chart.setData('minddx', {time:0,zdmr:1,zdmc:2,zdjz:3,zdmrp:4,zdmcp:5}, ddxline)
+        console.log('minddx', today, ddxline);
+        // console.log('min', today, minData.values);
+        
+        Chart.bindData(Chart.getChart('user.minline'), 'MIN')
+        Chart.bindData(Chart.getChart('user.minvol'), 'MIN')
+        Chart.bindData(Chart.getChart('user.board'), 'NOW')
+        Chart.bindData(Chart.getChart('user.ddx'), 'minddx')
+        Chart.bindData(Chart.getChart('user.report'), 'reports')
         Chart.onPaint()
+
       })
     }
       
     window.onload = () => {
-      paintKline()
+      initLayout()
+      paintDrawline()
     }
   </script>
 </body>

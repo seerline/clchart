@@ -69,6 +69,8 @@ export default class ClChartBoard {
 
     this.config = updateJsonOfDeep(cfg.config, CHART_ORDER)
 
+    this.maxMmpCount = cfg.config.mmpCount === undefined ? 5 : cfg.config.mmpCount
+ 
     this.style = cfg.config.style || 'normal'
     // 下面对配置做一定的校验
     this.checkConfig()
@@ -158,7 +160,7 @@ export default class ClChartBoard {
     }
     let yy
     if (this.style === 'normal') {
-      yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 10
+      yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * this.maxMmpCount * 2
     } else {
       yy = this.rectChart.top + (this.layout.digit.height + this.layout.digit.spaceX) * 2
     }
@@ -296,7 +298,7 @@ export default class ClChartBoard {
 
     let mmpCount = 1
     if (this.style === 'normal') {
-      mmpCount = 5
+      mmpCount = this.maxMmpCount
     }
     const offy = this.rectOrder.height / (mmpCount * 2)
 
@@ -363,13 +365,13 @@ export default class ClChartBoard {
     if (this.isIndex) offx = (this.rectTick.width - 3 * this.layout.digit.spaceX - this.timeLen - this.closeLen) / 2
 
     yy = this.rectTick.top + 2 + Math.floor((offy - this.layout.digit.pixel) / 2) // 画最上面的
-    for (let idx = recs - 1; idx >= beginIndex; idx--) {
-      // for (let idx = beginIndex; idx < recs; idx++) {
+    // for (let idx = recs - 1; idx >= beginIndex; idx--) {
+    for (let idx = beginIndex; idx < recs; idx++) {
       xx = this.rectTick.left + this.layout.digit.spaceX + this.timeLen
       value = getValue(this.tickData, 'time', idx)
       clr = this.color.txt
       let str
-      if (idx === 0) {
+      if (idx === beginIndex) {
         str = fromTTimeToStr(value, 'minute')
       } else {
         str = fromTTimeToStr(value, 'minute', getValue(this.tickData, 'time', idx - 1))
@@ -424,13 +426,13 @@ export default class ClChartBoard {
 
     let mmpCount = 1
     if (this.style === 'normal') {
-      mmpCount = 5
+      mmpCount = this.maxMmpCount
     }
     let len = 0
     _drawHline(this.context, this.rectOrder.left, this.rectOrder.left + this.rectOrder.width, this.rectOrder.top + Math.floor(this.rectOrder.height / 2))
 
     let xx, yy, value
-    const strint = ['①', '②', '③', '④', '⑤']
+    const strint = ['①', '②', '③', '④', '⑤','⑥','⑦','⑧','⑨','⑩']
     const offy = this.rectOrder.height / (mmpCount * 2)
 
     len = _getTxtWidth(this.context, '卖①', this.layout.title.font, this.layout.digit.height)

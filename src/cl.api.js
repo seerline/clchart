@@ -14,6 +14,11 @@ import * as ClChartDef from './cl.chart.def'
 import * as ClDataDef from './cl.data.def'
 import ClPlugins from './plugins/cl.register'
 
+import * as ClChartUtil from './util/cl.tool'
+
+import * as ClDataUtil from './data/cl.data.tools'
+
+
 import {
   initSystem
 } from './chart/cl.chart.init'
@@ -21,6 +26,14 @@ import {
 import EV from './util/cl.ev'
 
 /** @module ClChart */
+
+/**
+ * chart default defined
+ * @export
+ */
+export const DEF_UTIL= ClChartUtil
+
+export const DEF_DATA_UTIL= ClDataUtil
 
 /**
  * chart default defined

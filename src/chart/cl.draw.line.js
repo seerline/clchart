@@ -44,6 +44,25 @@ export default class ClDrawLine {
 
     this.maxmin = father.maxmin
   }
+  _getYaxis(value)
+  {
+      // this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY)
+    let yy = 0
+    if (value >= 0)
+    {
+      let hh = Math.round((this.maxmin.max - value) * this.maxmin.unitY)
+      yy = this.rectMain.top + hh
+      // hh = this.rectMain.height / 2 - hh
+    }
+    else if (value < 0)
+    {
+      // let hh = Math.round((value - this.maxmin.min) * this.maxmin.unitY)
+      let hh = Math.round(Math.abs(value) * this.maxmin.unitY)
+      yy = this.rectMain.top + this.rectMain.height / 2 + hh
+      // hh = this.rectMain.height / 2 - hh
+    }
+    return yy
+  }
   /**
    * paint
    * @param {String} key
@@ -51,8 +70,10 @@ export default class ClDrawLine {
    */
   onPaint (key) {    
     if (key !== undefined) this.hotKey = key
-    this.data = this.source.getData(this.hotKey)
 
+    this.data = this.source.getData(this.hotKey)
+    // console.log("lines:", this.hotKey, this.info.labelY, this.data)
+    
     if (this.info.labelX === undefined) this.info.labelX = 'idx'
     if (this.info.labelY === undefined) this.info.labelY = 'value'
     // 分钟线为‘close’
@@ -77,7 +98,8 @@ export default class ClDrawLine {
       }
       // if (getValue(this.data, this.info.labelX, index) < 0) continue;
       xx = this.rectMain.left + (idx + 0.5)* (this.linkInfo.unitX + this.linkInfo.spaceX)
-      yy = this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY)
+      yy = this._getYaxis(getValue(this.data, this.info.labelY, index))
+      // this.rectMain.top + Math.round((this.maxmin.max - getValue(this.data, this.info.labelY, index)) * this.maxmin.unitY)
       if (Math.floor(idx / this.info.skips) > count) {
         count = Math.floor(idx / this.info.skips)
         isBegin = false
@@ -87,6 +109,8 @@ export default class ClDrawLine {
         if (isBegin) _drawmoveTo(this.context, xx, yy)
         continue
       }
+      // console.log('yy:', yy, this.maxmin.max, getValue(this.data, this.info.labelY, index), index, this.data.value.length);
+      
       _drawlineTo(this.context, xx, yy)
     }
     _drawEnd(this.context)

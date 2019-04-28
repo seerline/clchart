@@ -60,7 +60,27 @@ export function getMTime (ttime) { // 得到1970-1-1开始的毫秒数
   }
   return mtime
 }
+/**
+ * get time's millseconds
+ * @export
+ * @param {any} ttime
+ * @return {Number}
+ */
+export function makeTimeT (tdate, ttime) { // 20011010 - 120000 --> time_t
+  const year = parseInt(tdate/10000)
+  const month = parseInt(tdate%10000/100)
+  const day = parseInt(tdate%100)
 
+  const hour = parseInt(ttime/10000)
+  const minute = parseInt(ttime%10000/100)
+  const sec = parseInt(ttime%100)
+
+  let mtime = year.toString()+'/'+month.toString()+'/'+day.toString()+' '
+              +hour.toString()+':'+minute.toString()+':'+sec.toString()
+              console.log(mtime);
+              
+  return new Date(mtime).getTime()/1000
+}
 // time_t转换成20180101格式
 /**
  * format time_t to 20180101
@@ -318,7 +338,7 @@ export function formatVolume (value, volzoom) {
   else if (result > 100000000) result = (result / 100000000).toFixed(3) + '亿'
   else if (result > 10000000) result = (result / 10000).toFixed(0) + '万'
   else if (result > 1000000) result = (result / 10000).toFixed(1) + '万'
-  else if (result > -0.000000001 && result < 0.000000001) result = '--'
+  else if (result > -0.000000001 && result < 0.000000001) result = '0'
   else result = result.toFixed(0)
   return String(result)
 }
@@ -358,6 +378,13 @@ export function formatShowTime (key, value, minute) {
     case 'MDAY':
       out = fromTTimeToStr(value, 'minute')
       break
+    default:
+      if (minute === undefined) {
+        out = fromTTimeToStr(value, 'minute')
+      } else {
+        out = fromMinuteToStr(minute)
+      }
+      break;
   }
   return out
 }

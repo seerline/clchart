@@ -126,7 +126,7 @@ export const CHART_KBAR = {
   // 下面是当前图形的所有需要画的线，一般非特殊的线，直接通过配置就可以得到想要的效果
   lines: [{
     // type: 'l_kbar',
-    className: ClDrawKBar,  // 图按ClDrawKBar类来画
+    className: 'ClDrawKBar',  // 图按ClDrawKBar类来画
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['high'], // 参与计算最大值的标签
@@ -135,10 +135,10 @@ export const CHART_KBAR = {
     // 第一根线默认的key是跟随chart的hotKey变化而变化的，其他线要么自己有数据，要么根据hotKey加上公式计算出自己的key
   },
   {
-    className: ClDrawRight 
+    className: 'ClDrawRight' 
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: { // 输出在信息栏目（title）的数据
       txt: '5:',
       labelY: 'value', // 从key中获取对应的数据标签 用于显示信息用
@@ -151,7 +151,7 @@ export const CHART_KBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '10:',
       labelY: 'value',
@@ -163,7 +163,7 @@ export const CHART_KBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '20:',
       labelY: 'value',
@@ -175,7 +175,7 @@ export const CHART_KBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '60:',
       labelY: 'value',
@@ -217,7 +217,7 @@ export const CHART_VBAR = {
     }
   },
   lines: [{
-    className: ClDrawVBar,
+    className: 'ClDrawVBar',
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['vol'], // 参与计算最大值的标签
@@ -229,7 +229,7 @@ export const CHART_VBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '5:',
       labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
@@ -241,7 +241,7 @@ export const CHART_VBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '10:',
       labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
@@ -253,7 +253,7 @@ export const CHART_VBAR = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       txt: '20:',
       labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
@@ -293,7 +293,7 @@ export const CHART_NOW = {
     }
   },
   lines: [{
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     extremum: { // 如何取极值
       method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['high'], // 参与计算最大值的标签
@@ -306,7 +306,7 @@ export const CHART_NOW = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       showSort: 'idx'
     },
@@ -344,7 +344,7 @@ export const CHART_NOWVOL = {
     }
   },
   lines: [{
-    className: ClDrawVLine,
+    className: 'ClDrawVLine',
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['decvol'], // 参与计算最大值的标签
@@ -385,7 +385,7 @@ export const CHART_MDAY = {
     }
   },
   lines: [{
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     extremum: { // 如何取极值
       method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['close'], // 参与计算最大值的标签
@@ -398,7 +398,7 @@ export const CHART_MDAY = {
     }
   },
   {
-    className: ClDrawLine,
+    className: 'ClDrawLine',
     info: {
       showSort: 'idx'
     },
@@ -436,7 +436,7 @@ export const CHART_MDAYVOL = {
     }
   },
   lines: [{
-    className: ClDrawVLine,
+    className: 'ClDrawVLine',
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['vol'], // 参与计算最大值的标签
@@ -476,6 +476,6 @@ export const CHART_NORMAL = {
     }
   },
   lines: [{
-    className: ClDrawLine
+    className: 'ClDrawLine'
   }]
 }

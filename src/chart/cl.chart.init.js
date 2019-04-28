@@ -16,6 +16,7 @@ import {
 } from '../plugins/cl.register'
 import ClChartLine from './cl.chart.line'
 import ClChartBoard from './cl.chart.board'
+import ClChartReport from './cl.chart.report'
 
 import * as drawClass from '../util/cl.draw'
 
@@ -151,6 +152,7 @@ const _systemInfo = {
       'normal' : ClChartLine,
       'chart' : ClChartLine,
       'board' : ClChartBoard,
+      'report' : ClChartReport,
     }
   }
 }

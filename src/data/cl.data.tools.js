@@ -549,14 +549,13 @@ export function updateStatic (stkstatic, fields, value) {
     fields,
     value
   }, 'type')
-  stkstatic.volzoom = getValue({
-    fields,
-    value
-  }, 'volunit') / 100
   stkstatic.volunit = getValue({
     fields,
     value
   }, 'volunit')
+  stkstatic.volunit = Math.pow(10, stkstatic.volunit)
+  stkstatic.volzoom = stkstatic.volunit / 100
+
   stkstatic.coindot = getValue({
     fields,
     value
@@ -565,6 +564,7 @@ export function updateStatic (stkstatic, fields, value) {
     fields,
     value
   }, 'coinzoom')
+  stkstatic.coinzoom = Math.pow(10, stkstatic.coinzoom)
 }
 /**
  * update static
@@ -858,7 +858,10 @@ export function fromIndexToTradeTime (tindex, tradetime, tradeDate) {
     nowmin = getMinuteGap(tradetime[i].begin, tradetime[i].end)
     if (index < nowmin) {
       offset = getMinuteOffset(tradetime[i].begin, index + 1)
-      const ttime = new Date(Math.floor(tradeDate / 10000), Math.floor(tradeDate % 10000 / 100) - 1, tradeDate % 100,
+      const ttime = new Date(
+        Math.floor(tradeDate / 10000), 
+        Math.floor(tradeDate % 10000 / 100) - 1, 
+        tradeDate % 100,
         Math.floor(offset / 100), offset % 100, 0)
       return Math.floor(ttime / 1000)
     }

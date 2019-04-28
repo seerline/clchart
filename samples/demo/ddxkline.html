@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css?family=Cousine|Roboto+Mono" rel="stylesheet">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ClChat Demo</title>
+  <link rel="stylesheet" href="../css/client.css">
+</head>
+<body>
+  <div class="container">
+    <canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
+    <canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
+  </div>
+
+  <script src="../ClChart.js"></script>
+  <script src="../SisClient.js"></script>
+
+  <script src="./config.js"></script>
+  <script>
+
+
+    // get main canvas && cursor canvas
+    // mainCanvas Used to draw the main map
+    // cursorCanvas : Used to draw cross cursors
+    const mainCanvas = document.getElementById('myChart')
+    const mainCtx = mainCanvas.getContext('2d')
+    const cursorCanvas = document.getElementById('cursorChart')
+    const cursorCtx = cursorCanvas.getContext('2d')
+  
+    const syscfg = {
+      scale: window.devicePixelRatio,
+      axisPlatform: 'web', // 'phone' | 'web'
+      mainCanvas: {
+        canvas: mainCanvas,
+        context: mainCtx
+      },
+      cursorCanvas: {
+        canvas: cursorCanvas,
+        context: cursorCtx
+      }
+    }
+    // Create a single stock Chart instance
+    const Chart = ClChart.createSingleChart(syscfg)
+
+    let isInited = false;
+
+    function initLayout() {
+      if (isInited) return; 
+      isInited = true;
+
+      Chart.clearLayout();
+
+      let mainHeight = mainCanvas.height * 2 / 4
+      const mainLayoutCfg = {
+        layout: {
+          offset: {
+            left: 5,
+            right: 10
+          }
+        },
+        buttons: ClChart.DEF_CHART.CHART_BUTTONS,
+        config: ClChart.DEF_CHART.CHART_KBAR,
+        rectMain: {
+          left: 0,
+          top: 0,
+          width: mainCanvas.width,
+          height: mainHeight
+        }
+      }
+      Chart.createChart('user.kbar', 'system.chart', mainLayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      let volHeight = mainCanvas.height / 5
+      let volConfig = ClChart.DEF_UTIL.copyJsonOfDeep(ClChart.DEF_CHART.CHART_VBAR);
+      // volConfig.axisX.display = 'none'
+      const volumelayoutCfg = {
+        layout: {
+          offset: {
+            left: 5,
+            right: 10
+          }
+        },
+        config: volConfig,
+        rectMain: {
+          left: 0,
+          top: mainHeight,
+          width: mainCanvas.width,
+          height: volHeight
+        }
+      }
+      Chart.createChart('user.vbar', 'system.chart', volumelayoutCfg, function (result) {
+        //  console.log(result)
+      })
+      let ddxConfig = ClChart.DEF_UTIL.copyJsonOfDeep(ClChart.DEF_CHART.CHART_VBAR);
+      ddxConfig.title.label = 'DDX'
+      ddxConfig.axisY.left.display = 'both'
+      ddxConfig.axisY.right.display = 'both'
+      ddxConfig.axisY.left.middle = 'zero'
+      ddxConfig.axisY.right.middle = 'zero'
+      ddxConfig.lines = 
+        [
+        {
+          className: 'ClDrawZVBar',
+          extremum: { // 如何取极值
+            method: 'fixedLeft', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+            maxvalue: ['zdmr'], // 参与计算最大值的标签
+            minvalue: ['zdmr'] // 参与计算最小值的标签
+          },
+          info: {
+            labelY: 'zdmr', // 需要显示的变量，从key中获取对应的数据标签
+            format: 'vol'
+          }
+        // },
+        // {
+        //   className: 'ClDrawZVBar',
+        //   extremum: { // 如何取极值
+        //     method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+        //     maxvalue: ['zsmr'], // 参与计算最大值的标签
+        //     minvalue: ['zsmr'] // 参与计算最小值的标签
+        //   },
+        //   info: {
+        //     labelY: 'zsmr', // 需要显示的变量，从key中获取对应的数据标签
+        //     format: 'vol'
+        //   }
+        // {
+        //   className: 'ClDrawLine',
+        //   // extremum: { // 如何取极值
+        //   //   method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+        //   //   maxvalue: ['askm6','bidm6'], // 参与计算最大值的标签
+        //   //   minvalue: ['askm6','bidm6'] // 参与计算最小值的标签
+        //   // },
+        //   info: {
+        //     txt: 'ZD:',
+        //     labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
+        //     format: 'vol'
+        //   },
+        //   formula: {
+        //     key: 'DDX6', // 获取数据的key，
+        //     command: `out = this.getValue('askm6', 0) - this.getValue('bidm6', 0)` // 公式只能输出值到out中
+        //   }
+        }]
+
+      const ddxlayoutCfg = {
+        layout: {
+          offset: {
+            left: 5,
+            right: 10
+          }
+        },
+        config: ddxConfig,
+        rectMain: {
+          left: 0,
+          top: mainHeight+volHeight,
+          width: mainCanvas.width,
+          height: mainCanvas.height - mainHeight - volHeight
+        }
+      }
+      Chart.createChart('user.ddx', 'system.chart', ddxlayoutCfg, function (result) {
+        //  console.log(result)
+      })
+    }
+    function paintDrawline() {
+      const code = sisdb.code
+      const peroid = 'DAY'
+
+      let infoData
+      Promise.all([
+        sisClient.getData(code, 'info'),
+        sisClient.getData(code, 'dayddx'),
+        sisClient.getData(code, 'day', { search:{ start:-500,stop:-1 } })
+      ])
+      .then(([infoData, ddxData, dayData]) => {
+        Chart.clear()
+        // 开市时间和日期可以从exch中获取
+        Chart.initData(sisdb.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
+        // 所有来源的数据都应该转换格式后再写入
+        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.values)
+        Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, dayData.values)
+
+        // 数据转换
+        let ddxline = []
+        let k = 0;
+        for (let index = 0; index < ddxData.values.length; index++) {
+          const element = ddxData.values[index];
+          for (; k < dayData.values.length; k++) {
+            if(dayData.values[k][0]==element[0])
+            {
+              ddxline.push([dayData.values[k][0],
+                  element[ddxData.fields.askm6]-element[ddxData.fields.bidm6],
+                  element[ddxData.fields.askm4]-element[ddxData.fields.bidm4],
+                ]);
+              k++;
+              break;
+            }
+            else{
+              ddxline.push([dayData.values[k][0],0,0])
+            }
+          }
+        }
+        Chart.setData('dayddx', {time:0,zdmr:1,zsmr:2}, ddxline)
+        // console.log('ddxline',ddxline);
+        
+
+        Chart.bindData(Chart.getChart('user.kbar'), peroid)
+        Chart.bindData(Chart.getChart('user.vbar'), peroid)
+        Chart.bindData(Chart.getChart('user.ddx'), 'dayddx')
+
+        Chart.onPaint()
+      })
+    }
+      
+    window.onload = () => {
+      initLayout()
+      paintDrawline()
+    }
+  </script>
+</body>
+</html>

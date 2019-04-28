@@ -178,7 +178,7 @@ clchart-demo
   const mainChart = Chart.createChart('MIN', 'system.chart', mainLayoutCfg, function (result) {})
   Chart.bindData(mainChart, 'MIN')
 
-  const volumeLoyoutCfg = {
+  const volumeLayoutCfg = {
     layout: ClChart.DEF_CHART.CHART_LAYOUT,
     config: ClChart.DEF_CHART.CHART_NOWVOL,
     rectMain: {
@@ -188,7 +188,7 @@ clchart-demo
       height: canvas.height - mainHeight
     }
   }
-  const volumeChart = Chart.createChart('MINNOW', 'system.chart', volumeLoyoutCfg, function (result) {})
+  const volumeChart = Chart.createChart('MINNOW', 'system.chart', volumeLayoutCfg, function (result) {})
   Chart.bindData(volumeChart, 'MIN')
   // Perform drawing
   Chart.onPaint()

@@ -78,7 +78,7 @@ export default class ClDrawAxisY {
       }
     }
     yy = this.rectMain.top + this.scale // 画最上面的
-
+    
     // 画不画最上面的坐标
     if (this.axisY[this.align].display !== 'noupper') {
       yy = this.rectMain.top + this.scale // 画最上面的
@@ -89,6 +89,7 @@ export default class ClDrawAxisY {
         this.static.coindot,
         this.static.volzoom,
         this.static.before)
+        // console.log('axis:', this.maxmin, value, this.static.volzoom)
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, clr,
         { x: posX, y: 'top' })

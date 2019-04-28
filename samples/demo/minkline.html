@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css?family=Cousine|Roboto+Mono" rel="stylesheet">
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -15,14 +16,9 @@
 
   <script src="../ClChart.js"></script>
   <script src="../SisClient.js"></script>
-
+  <script src="./config.js"></script>
   <script>
 
-    var sisClient = new SisClient.Client({
-      SocketConstructor: WebSocket,
-      // endpoint: 'ws://139.224.34.238:7329',
-      endpoint: 'ws://192.168.3.118:7329',
-    })
 
     // get main canvas && cursor canvas
     // mainCanvas Used to draw the main map
@@ -76,7 +72,7 @@
       Chart.createChart('user.kbar', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
-      const volumeLoyoutCfg = {
+      const volumeLayoutCfg = {
         layout: {
           offset: {
             left: 5,
@@ -91,12 +87,12 @@
           height: mainCanvas.height - mainHeight
         }
       }
-      Chart.createChart('user.vbar', 'system.chart', volumeLoyoutCfg, function (result) {
+      Chart.createChart('user.vbar', 'system.chart', volumeLayoutCfg, function (result) {
         //  console.log(result)
       })
     }
     function paintDrawline() {
-      const code = 'sh600600'
+      const code = sisdb.code
       const peroid = 'M5'
       
       // 应该通过设置数据属性来进行时间转换
@@ -108,8 +104,8 @@
       ])
       .then(([infoData, minData]) => {
         Chart.clear()
-        Chart.initData(20190419, ClChart.DEF_DATA.STOCK_TRADETIME)
-        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.value)
+        Chart.initData(sisdb.tradeDate, ClChart.DEF_DATA.STOCK_TRADETIME)
+        Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, infoData.values)
         Chart.setData(peroid, ClChart.DEF_DATA.FIELD_DAY, minData.values)
 
         Chart.bindData(Chart.getChart('user.kbar'), peroid)

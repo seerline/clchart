@@ -59,7 +59,11 @@ import ClDrawCursor from './cl.draw.cursor'
 import ClDrawGrid from './cl.draw.grid'
 import ClDrawInfo from './cl.draw.info'
 import ClDrawLine from './cl.draw.line'
+import ClDrawKBar from './cl.draw.kbar'
+import ClDrawRight from './cl.draw.right'
 import ClDrawVLine from './cl.draw.vline'
+import ClDrawVBar from './cl.draw.vbar'
+import ClDrawZVBar from './cl.draw.zvbar'
 
 /**
  * Class representing ClChartLine
@@ -241,19 +245,34 @@ export default class ClChartLine {
    * @memberof ClChartLine
    */
   getLineDataKey (line) {
-    if (line.formula === undefined) return this.hotKey
+    if (line.formula === undefined)
+    {
+      if (line.source !== undefined) return line.source
+      else  return this.hotKey
+    }
     return line.formula.key
   }
   /**
    * set child line instance
    * @memberof ClChartLine
    */
+  getClassName(name) {
+    switch (name) {
+      case 'ClDrawKBar': return ClDrawKBar
+      case 'ClDrawRight': return ClDrawRight
+      // case 'ClDrawSeer': return ClDrawSeer
+      case 'ClDrawVLine': return ClDrawVLine
+      case 'ClDrawZVBar': return ClDrawZVBar
+      case 'ClDrawVBar': return ClDrawVBar
+      default: return ClDrawLine
+    }
+  }
   setChildLines () {
     // l_kbar，l_line，l_nowvol，l_vbar l_nowline
     let line
     let clr = 0
     for (let i = 0; i < this.config.lines.length; i++) {
-      const ClassName = this.config.lines[i].className
+      const ClassName = this.getClassName(this.config.lines[i].className)
       line = new ClassName(this, this.rectChart)
 
       this.childLines['NAME' + i] = line
@@ -271,6 +290,10 @@ export default class ClChartLine {
         }
         line.info.colorIndex = clr
         clr++
+      }
+      else
+      {
+        line.info = this.config.lines[i].info
       }
     }
   }
@@ -696,7 +719,7 @@ export default class ClChartLine {
         for (let m = 0; m < extremum.maxvalue.length; m++) {
           if (typeof (extremum.maxvalue[m]) !== 'string') continue
           value = getValue(data, extremum.maxvalue[m], k)
-          if (value > 0 && value > mm.max) {
+          if (value !== 0 && value > mm.max) {
             mm.max = value
           }
         }
@@ -706,13 +729,14 @@ export default class ClChartLine {
           if (typeof (extremum.minvalue[m]) !== 'string') continue
           value = getValue(data, extremum.minvalue[m], k)
           if (mm.min === 0.0) mm.min = value
-          if (value > 0 && value < mm.min) {
+          // if (value > 0 && value < mm.min) {
+          if (value !== 0 && value < mm.min) {
             mm.min = value
           }
         }
       }
     }
-
+    
     if (!isEmptyArray(extremum.maxvalue)) {
       for (let m = 0; m < extremum.maxvalue.length; m++) {
         if (typeof (extremum.maxvalue[m]) === 'number') {
@@ -729,30 +753,42 @@ export default class ClChartLine {
         }
       }
     }
-
+    // console.log('maxmin:', mm);
     if (extremum.method === 'fixedLeft' || extremum.method === 'fixedRight') {
       const middle = this.getMiddle(extremum.method)
       if (mm.max === mm.min) {
         if (mm.max > middle) mm.min = middle
         if (mm.min < middle) mm.max = middle
       }
-      const maxrate = Math.abs(mm.max - middle) / middle
-      const minrate = Math.abs(middle - mm.min) / middle
-      if (maxrate < 0.01 && minrate < 0.01 &&
-        this.static.stktype !== STOCK_TYPE_INDEX) {
-        mm.min = middle * (1 - 0.01)
-        mm.max = middle * (1 + 0.01)
-      } else {
-        if (maxrate > minrate) {
-          // mm.min = middle / (1 + maxrate)
-          mm.min = middle * (1 - maxrate)
+      if (middle !== 0)
+      {
+        const maxrate = Math.abs(mm.max - middle) / middle
+        const minrate = Math.abs(middle - mm.min) / middle
+        if (maxrate < 0.01 && minrate < 0.01 &&
+          this.static.stktype !== STOCK_TYPE_INDEX) {
+          mm.min = middle * (1 - 0.01)
+          mm.max = middle * (1 + 0.01)
         } else {
-          mm.max = middle * (1 + minrate)
+          if (maxrate > minrate) {
+            // mm.min = middle / (1 + maxrate)
+            mm.min = middle * (1 - maxrate)
+          } else {
+            mm.max = middle * (1 + minrate)
+          }
         }
+        if (mm.min < 0) mm.min = 0
       }
-      if (mm.min < 0) mm.min = 0
+      else
+      {
+        if (Math.abs(mm.max) > Math.abs(mm.min)) {
+          mm.min = -1 * mm.max
+        } else {
+          mm.max = -1 * mm.min
+        }        
+      }
     }
-
+    console.log('maxmin:', mm);
+    
     return mm
   }
   /**
@@ -1003,10 +1039,12 @@ export default class ClChartLine {
     const mouseIndex = this.getMouseMoveData(mousePos.x)
     let idx, valueY
     let valueX = mouseIndex
-    if (mouseIndex > 0) {
+    if (mouseIndex >= 0) {
       if (this.config.axisX.type === 'day1' || this.config.axisX.type === 'mday') {
         valueX = valueX % 240
         valueX = fromIndexToTradeTime(valueX, this.father.dataLayer.tradeTime, this.father.dataLayer.tradeDate)
+        // console.log('valueX', valueX);
+        
         idx = findLabelToIndex(this.data, mouseIndex, 'idx')
       } else {
         valueX = getValue(this.data, 'time', mouseIndex)

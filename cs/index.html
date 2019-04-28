@@ -103,14 +103,14 @@ html, body, .container {
 <script>
 // 
   var code = document.getElementById("code-string");
-  code.value = client_config_get("code");
+  code.values = client_config_get("code");
 
   function send_string() {
     var str = document.getElementById("send-string");
 
     send_client_command([{
           key: 'info',
-          cmd: str.value.split(' ')
+          cmd: str.values.split(' ')
         },
         // {key:'exch',cmd:"sisdb.get sh600600.day"}
       ],
@@ -128,27 +128,27 @@ html, body, .container {
 
   function drawChart(style) {
     var code = document.getElementById("code-string");
-    client_config_set("code", code.value);
+    client_config_set("code", code.values);
     
     switch (style) {
       case 'day':
         initLayout(style); // 初始化布局，每种类型只用一次
-        drawKline(code.value, style);
+        drawKline(code.values, style);
         break;
       case 'min5':
         initLayout('min5'); // 初始化布局，每种类型只用一次
-        drawMinline(code.value, style);
+        drawMinline(code.values, style);
         break;
       case 'min':
         initLayout(style); // 初始化布局，每种类型只用一次
-        drawMinute(code.value);
+        drawMinute(code.values);
         break;
       case 'mday':
         initLayout(style); // 初始化布局，每种类型只用一次
-        drawMday(code.value);
+        drawMday(code.values);
         break;
       case 'level2':
-        drawLevel2(code.value);
+        drawLevel2(code.values);
         break;
       default:
         break;
@@ -202,7 +202,7 @@ html, body, .container {
       client.Chart.createChart('user.minline', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
-      const volumeLoyoutCfg = {
+      const volumeLayoutCfg = {
         layout: ClChart.DEF_CHART.CHART_LAYOUT,
         config: ClChart.DEF_CHART.CHART_NOWVOL,
         rectMain: {
@@ -212,7 +212,7 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.minvol', 'system.chart', volumeLoyoutCfg, function (result) {
+      client.Chart.createChart('user.minvol', 'system.chart', volumeLayoutCfg, function (result) {
         //  console.log(result)
       })
       const orderLayoutCfg = {
@@ -245,7 +245,7 @@ html, body, .container {
       client.Chart.createChart('user.mday.line', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
-      const volumeLoyoutCfg = {
+      const volumeLayoutCfg = {
         layout: ClChart.DEF_CHART.CHART_LAYOUT,
         config: ClChart.DEF_CHART.CHART_MDAYVOL,
         rectMain: {
@@ -255,7 +255,7 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.mday.vol', 'system.chart', volumeLoyoutCfg, function (result) {
+      client.Chart.createChart('user.mday.vol', 'system.chart', volumeLayoutCfg, function (result) {
         //  console.log(result)
       })
     }
@@ -281,7 +281,7 @@ html, body, .container {
       client.Chart.createChart('user.kbar', 'system.chart', mainLayoutCfg, function (result) {
         //  console.log(result)
       })
-      const volumeLoyoutCfg = {
+      const volumeLayoutCfg = {
         layout: {
           offset: {
             left: 5,
@@ -296,7 +296,7 @@ html, body, .container {
           height: mainCanvas.height - mainHeight
         }
       }
-      client.Chart.createChart('user.vbar', 'system.chart', volumeLoyoutCfg, function (result) {
+      client.Chart.createChart('user.vbar', 'system.chart', volumeLayoutCfg, function (result) {
         //  console.log(result)
       })
     }
@@ -332,10 +332,10 @@ html, body, .container {
       function draw(data) {
         console.log(data);
 
-        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].values)
         client.Chart.setData('MIN', ClChart.DEF_DATA.FIELD_MIN, data['min'].values)
         client.Chart.setData('TICK', ClChart.DEF_DATA.FIELD_TICK, data['tick'].values)
-        client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].value)
+        client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].values)
         // 只有pubData才会增补其他信息，并计算所有的线
         client.Chart.bindData(client.Chart.getChart('user.minline'), 'MIN')
         client.Chart.bindData(client.Chart.getChart('user.minvol'), 'MIN')
@@ -366,8 +366,8 @@ html, body, .container {
       function draw(data) {
         console.log(data);
 
-        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
-        client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].value)
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].values)
+        client.Chart.setData('NOW', ClChart.DEF_DATA.FIELD_NOW, data['now'].values)
         client.Chart.setData('MDAY', ClChart.DEF_DATA.FIELD_MIN, data['mday'].values)
         client.Chart.bindData(client.Chart.getChart('user.mday.line'), 'MDAY')
         client.Chart.bindData(client.Chart.getChart('user.mday.vol'), 'MDAY')
@@ -394,7 +394,7 @@ html, body, .container {
       ],
       function draw(data) {
         console.log(data);
-        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].values)
         client.Chart.setData('DAY', ClChart.DEF_DATA.FIELD_DAY, data['day'].values)
         client.Chart.bindData(client.Chart.getChart('user.kbar'), 'DAY')
         client.Chart.bindData(client.Chart.getChart('user.vbar'), 'DAY')
@@ -421,7 +421,7 @@ html, body, .container {
       function draw(data) {
         console.log(data);
 
-        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+        client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].values)
         client.Chart.setData('M5', ClChart.DEF_DATA.FIELD_DAY, data['min5'].values)
         client.Chart.bindData(client.Chart.getChart('user.kbar'), 'M5')
         client.Chart.bindData(client.Chart.getChart('user.vbar'), 'M5')
@@ -501,7 +501,7 @@ html, body, .container {
   //     function draw(data) {
   //       console.log(data);
 
-  //       client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].value)
+  //       client.Chart.setData('INFO', ClChart.DEF_DATA.FIELD_INFO, data['info'].values)
   //       client.Chart.setData('order', data['order'].fields, data['order'].values)
   //       client.Chart.setData('queue', data['queue'].fields, data['queue'].values)
   //       client.Chart.setData('snapshot', data['snapshot'].fields, data['snapshot'].values)

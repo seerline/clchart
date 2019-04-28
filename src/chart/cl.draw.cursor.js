@@ -119,7 +119,7 @@ export default class ClDrawCursor {
           this.static.coindot,
           this.static.volzoom,
           this.static.before)
-        posX = this.axisPlatform === 'phone' ? 'end' : 'start'
+          posX = this.axisPlatform === 'phone' ? 'end' : 'start'
         xx = this.rectMain.left + this.rectMain.width - offX
         _drawTxtRect(this.context, xx, yy, txt, {
           font: this.axisX.font,
@@ -146,6 +146,8 @@ export default class ClDrawCursor {
         xx = this.rectMain.left + this.rectMain.width - offX
         posX = 'end'
       }
+      // console.log('this.axisXInfo' , txt, valueX);
+        
       _drawTxtRect(this.context, xx, yy, txt, {
         font: this.axisX.font,
         pixel: this.axisX.pixel,

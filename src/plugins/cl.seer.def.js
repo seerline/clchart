@@ -65,7 +65,7 @@ export const CHART_SEER = {
   },
   lines: [{
     // type: 'l_kbar',
-    className: ClDrawKBar,
+    className: 'ClDrawKBar',
     extremum: { // 如何取极值
       method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
       maxvalue: ['high'], // 参与计算最大值的标签
@@ -74,9 +74,9 @@ export const CHART_SEER = {
     // 第一根线默认的key是跟随chart的hotKey变化而变化的，其他线要么自己有数据，要么根据hotKey加上公式计算出自己的key
   },
   {
-    className: ClDrawRight
+    className: 'ClDrawRight'
   },
   {
-    className: ClDrawSeer
+    className: 'ClDrawSeer'
   }]
 }
