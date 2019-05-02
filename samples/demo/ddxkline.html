@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="../css/client.css">
 </head>
 <body>
-  <div class="container">
-    <canvas class="chart-canvas" id="myChart" width="400" height="600"></canvas>
-    <canvas class="chart-canvas" id="cursorChart" width="400" height="600"></canvas>
+  <div id="container" class="container">
   </div>
 
   <script src="../ClChart.js"></script>
@@ -20,26 +18,16 @@
   <script src="./config.js"></script>
   <script>
 
+    const container = document.getElementById('container')
 
-    // get main canvas && cursor canvas
-    // mainCanvas Used to draw the main map
-    // cursorCanvas : Used to draw cross cursors
-    const mainCanvas = document.getElementById('myChart')
-    const mainCtx = mainCanvas.getContext('2d')
-    const cursorCanvas = document.getElementById('cursorChart')
-    const cursorCtx = cursorCanvas.getContext('2d')
-  
     const syscfg = {
       scale: window.devicePixelRatio,
       axisPlatform: 'web', // 'phone' | 'web'
-      mainCanvas: {
-        canvas: mainCanvas,
-        context: mainCtx
-      },
-      cursorCanvas: {
-        canvas: cursorCanvas,
-        context: cursorCtx
-      }
+      container: container
+    }
+    const  mainCanvas ={
+      width: container.offsetWidth * window.devicePixelRatio,
+      height: container.offsetHeight * window.devicePixelRatio,
     }
     // Create a single stock Chart instance
     const Chart = ClChart.createSingleChart(syscfg)
