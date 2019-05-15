@@ -59,6 +59,34 @@ export const util = {
   EV
 }
 
+export function createCanvas (container) {
+  const mainCanvas = document.createElement('canvas')
+  const cursorCanvas = document.createElement('canvas')
+  mainCanvas.style.width = '100%'
+  mainCanvas.style.height = '100%'
+  mainCanvas.style.position = 'absolute'
+  mainCanvas.style.top = '0px'
+  mainCanvas.style.left = '0px'
+  cursorCanvas.style.width = '100%'
+  cursorCanvas.style.height = '100%'
+  cursorCanvas.style.position = 'absolute'
+  cursorCanvas.style.top = '0px'
+  cursorCanvas.style.left = '0px'
+  container.style.position = 'relative'
+  container.append(mainCanvas)
+  container.append(cursorCanvas)
+  return {
+    mainCanvas: {
+      canvas: mainCanvas,
+      context: mainCanvas.getContext('2d')
+    },
+    cursorCanvas: {
+      canvas: cursorCanvas,
+      context: cursorCanvas.getContext('2d')
+    }
+  }
+}
+
 /**
  * create single stock chart
  * @export
@@ -66,6 +94,10 @@ export const util = {
  * @returns chart instance
  */
 export function createSingleChart (cfg) {
+  if (!cfg.mainCanvas) {
+    const canvasDom = createCanvas(cfg.container)
+    cfg = { ...cfg, ...canvasDom }
+  }
   const sysInfo = initSystem(cfg)
   const chart = new ClChart(sysInfo)
   const event = new ClEvent(sysInfo)
