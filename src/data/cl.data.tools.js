@@ -553,7 +553,8 @@ export function updateStatic (stkstatic, fields, value) {
     fields,
     value
   }, 'volunit')
-  stkstatic.volunit = Math.pow(10, stkstatic.volunit)
+  // stkstatic.volunit = Math.pow(10, stkstatic.volunit)
+  stkstatic.volunit = stkstatic.volunit
   stkstatic.volzoom = stkstatic.volunit / 100
 
   stkstatic.coindot = getValue({
@@ -564,7 +565,8 @@ export function updateStatic (stkstatic, fields, value) {
     fields,
     value
   }, 'coinzoom')
-  stkstatic.coinzoom = Math.pow(10, stkstatic.coinzoom)
+  stkstatic.coinzoom = stkstatic.coinzoom
+  // stkstatic.coinzoom = Math.pow(10, stkstatic.coinzoom)
 }
 /**
  * update static

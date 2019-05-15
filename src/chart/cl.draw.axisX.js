@@ -53,7 +53,7 @@ export default class ClDrawAxisX {
 
     let xx, value, spaceX
     xx = this.rectMain.left + this.text.spaceX
-    // console.log('this.axisX', this.axisX, this.father.father.dataLayer.tradeTime)
+    // console.log('this.axisX', this.axisX, this.axisX.format, this.father.father.dataLayer.tradeTime)
     const yy = this.rectMain.top + this.rectMain.height / 2
     if (this.axisX.display === 'block') {
       let count = -1
@@ -94,6 +94,7 @@ export default class ClDrawAxisX {
         //   this.rectMain.left + this.rectMain.width, this.rectMain.top, this.color.red)
         value = getValue(this.data, 'time', this.linkInfo.minIndex)
         value = formatShowTime(this.data.key, value, this.maxmin.min)
+        console.log('this.axisX', this.data);
         _drawTxt(this.context, xx, yy, value,
           this.text.font, this.text.pixel, this.color.axis, {
             y: 'middle'

@@ -89,7 +89,7 @@ export default class ClDrawAxisY {
         this.static.coindot,
         this.static.volzoom,
         this.static.before)
-        // console.log('axis:', this.maxmin, value, this.static.volzoom)
+        console.log('axis:', this.maxmin, value, this.static.volzoom)
       _drawTxt(this.context, xx, yy, value,
         this.text.font, this.text.pixel, clr,
         { x: posX, y: 'top' })

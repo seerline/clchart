@@ -112,34 +112,35 @@
             labelY: 'zdmr', // 需要显示的变量，从key中获取对应的数据标签
             format: 'vol'
           }
-        // },
-        // {
-        //   className: 'ClDrawZVBar',
-        //   extremum: { // 如何取极值
-        //     method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
-        //     maxvalue: ['zsmr'], // 参与计算最大值的标签
-        //     minvalue: ['zsmr'] // 参与计算最小值的标签
-        //   },
-        //   info: {
-        //     labelY: 'zsmr', // 需要显示的变量，从key中获取对应的数据标签
-        //     format: 'vol'
-        //   }
+        },
         // {
         //   className: 'ClDrawLine',
-        //   // extremum: { // 如何取极值
-        //   //   method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
-        //   //   maxvalue: ['askm6','bidm6'], // 参与计算最大值的标签
-        //   //   minvalue: ['askm6','bidm6'] // 参与计算最小值的标签
-        //   // },
         //   info: {
         //     txt: 'ZD:',
         //     labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
         //     format: 'vol'
         //   },
         //   formula: {
-        //     key: 'DDX6', // 获取数据的key，
-        //     command: `out = this.getValue('askm6', 0) - this.getValue('bidm6', 0)` // 公式只能输出值到out中
+        //     key: 'DDX1', // 获取数据的key，
+        //     command: `out = this.VEMA('zdmr', 60)` // 公式只能输出值到out中
         //   }
+        // },
+        {
+          className: 'ClDrawLine',
+          // extremum: { // 如何取极值
+          //   method: 'normal', // fixedLeft fixedRight 上下固定,此时需要取axisY.middle的定义
+          //   maxvalue: ['askm6','bidm6'], // 参与计算最大值的标签
+          //   minvalue: ['askm6','bidm6'] // 参与计算最小值的标签
+          // },
+          info: {
+            txt: 'ZD:',
+            labelY: 'value', // 需要显示的变量，从key中获取对应的数据标签
+            format: 'vol'
+          },
+          formula: {
+            key: 'DDX4', // 获取数据的key，
+            command: `out = this.SUM('zdmr', 20)` // 公式只能输出值到out中
+          }
         }]
 
       const ddxlayoutCfg = {
@@ -188,8 +189,8 @@
             if(dayData.values[k][0]==element[0])
             {
               ddxline.push([dayData.values[k][0],
-                  element[ddxData.fields.askm6]-element[ddxData.fields.bidm6],
                   element[ddxData.fields.askm4]-element[ddxData.fields.bidm4],
+                  element[ddxData.fields.askm6]-element[ddxData.fields.bidm6],
                 ]);
               k++;
               break;
@@ -202,7 +203,6 @@
         Chart.setData('dayddx', {time:0,zdmr:1,zsmr:2}, ddxline)
         // console.log('ddxline',ddxline);
         
-
         Chart.bindData(Chart.getChart('user.kbar'), peroid)
         Chart.bindData(Chart.getChart('user.vbar'), peroid)
         Chart.bindData(Chart.getChart('user.ddx'), 'dayddx')

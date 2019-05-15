@@ -378,6 +378,10 @@ export function formatShowTime (key, value, minute) {
     case 'MDAY':
       out = fromTTimeToStr(value, 'minute')
       break
+    case 'DAY':
+    case 'dayddx':
+      out = value
+      break
     default:
       if (minute === undefined) {
         out = fromTTimeToStr(value, 'minute')

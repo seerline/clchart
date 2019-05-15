@@ -102,6 +102,34 @@ export class ClFormula {
     }
     return off === 0 ? 0 : value / off
   }
+  SUM (label, period) {
+    let value = 0
+    for (let m = 0; m < period; m++) {
+      const v = this.getValue(label, m)
+      if (v !== 0) {
+        value += v
+      }
+    }
+    return value
+  }
+  VEMA (label, period) {
+    let zoom = 1/period
+    let off = 1
+    let value = 0
+    for (let m = 0; m < period; m++) {
+      const v = this.getValue(label, m)
+      if (v === 0) continue;
+      if ( m === 0)
+      {
+        value += v
+        continue;
+      }
+      off += Math.pow(1 - zoom, m)
+      value += v*Math.pow(1 - zoom, m)
+      
+    }
+    return off === 0 ? 0 : value / off
+  }
   AVGPRC () {
     let value = 0
     value = this.getValue('allmoney', 0) / this.getValue('allvol', 0)

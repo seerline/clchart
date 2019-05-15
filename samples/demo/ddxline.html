@@ -203,7 +203,77 @@
       Chart.createChart('user.board', 'system.board', orderLayoutCfg, function (result) {
         //  console.log(result)
       })
-    }    
+    }   
+    function getMinddxline(minddxData, minData) {
+      let ddxline = []
+      if (minddxData.fields === undefined)
+      {
+        return ddxline
+      }
+      let k = 0;
+      const offset = 4;
+      console.log('minddxData', minddxData);
+      
+      const ask_vol = minddxData.fields.askv6
+      const ask_money = minddxData.fields.askm6
+      const bid_vol = minddxData.fields.bidv6
+      const bid_money = minddxData.fields.bidm6
+
+      const today = sisdb.tradeDate;//ClChart.DEF_UTIL.getDate(nowData.values[0][0])
+      for (let index = 0; index < minddxData.values.length; index++) {
+        const element = minddxData.values[index];
+        const idx = ClChart.DEF_DATA_UTIL.fromTradeTimeToIndex(element[0],ClChart.DEF_DATA.STOCK_TRADETIME)-1
+        if(ClChart.DEF_UTIL.getDate(element[0]) === today)
+        {
+          for (; k < minData.values.length; k++) 
+          {
+            if(minData.values[k][0] !== idx)
+            {               
+              ddxline.push([minData.values[k][0],0,0,
+              ddxline.length > 1 ? ddxline[ddxline.length-1][3] : 0,
+              ddxline.length > 1 ? ddxline[ddxline.length-1][4] : 0,
+              ddxline.length > 1 ? ddxline[ddxline.length-1][5] : 0
+            ])
+            }
+            else
+            {
+              k++;
+              break;
+            }
+          }
+          if (index > 0)
+          {
+            const ago = minddxData.values[index - 1];
+            // console.log('minData', idx, element[18], minddxData.fields);
+            const askvol = element[ask_vol] - ago[ask_vol]
+            const askmoney = element[ask_money] - ago[ask_money]
+            const bidvol = element[bid_vol] - ago[bid_vol]
+            const bidmoney = element[bid_money] - ago[bid_money]
+            ddxline.push([idx,
+              askmoney/100,
+              -1*(bidmoney/100),
+              (element[ask_money] - element[bid_money])/100,
+              // askvol ? askmoney/askvol :  ddxline[ddxline.length-1][4],
+              // bidvol ? bidmoney/bidvol :  ddxline[ddxline.length-1][5],
+              element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
+              element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
+            ])
+          }
+          else
+          {
+            ddxline.push([idx,
+              element[ask_money]/100,
+              -1*element[bid_money]/100,
+              (element[ask_money] - element[bid_money])/100,
+              element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
+              element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
+            ])
+          }
+        }
+      }
+      console.log('minddx', today, ddxline)
+      return ddxline
+    } 
     function paintDrawline() {
       const code = sisdb.code
 
@@ -216,7 +286,7 @@
         sisClient.getData(code, 'info'),
         sisClient.getData(code, 'tick', { search:{ start:-50,stop:-1 } }),
         sisClient.getData(code, 'min'),
-        sisClient.getData(code, 'reports', { search:{ start:-100,stop:-1 } }),
+        sisClient.getData(code, 'tick', { search:{ start:-100,stop:-1 } }),
         sisClient.getData(code, 'minddx', { search:{ min: minTime, max: maxTime } }),
         sisClient.getData(code, 'snapshot', { search:{ start:-1,stop:-1 } })
       ])
@@ -229,70 +299,12 @@
         Chart.setData('NOW', nowData.fields, nowData.values)
         Chart.setData('reports', reportData.fields, reportData.values)
         // 数据转换
-        let ddxline = []
-        let k = 0;
-        const offset = 4;
-        const ask_vol = minddxData.fields.askv6
-        const ask_money = minddxData.fields.askm6
-        const bid_vol = minddxData.fields.bidv6
-        const bid_money = minddxData.fields.bidm6
 
-        const today = sisdb.tradeDate;//ClChart.DEF_UTIL.getDate(nowData.values[0][0])
-        for (let index = 0; index < minddxData.values.length; index++) {
-          const element = minddxData.values[index];
-          const idx = ClChart.DEF_DATA_UTIL.fromTradeTimeToIndex(element[0],ClChart.DEF_DATA.STOCK_TRADETIME)-1
-          if(ClChart.DEF_UTIL.getDate(element[0]) === today)
-          {
-            for (; k < minData.values.length; k++) 
-            {
-              if(minData.values[k][0] !== idx)
-              {               
-                ddxline.push([minData.values[k][0],0,0,
-                ddxline.length > 1 ? ddxline[ddxline.length-1][3] : 0,
-                ddxline.length > 1 ? ddxline[ddxline.length-1][4] : 0,
-                ddxline.length > 1 ? ddxline[ddxline.length-1][5] : 0
-              ])
-              }
-              else
-              {
-                k++;
-                break;
-              }
-            }
-            if (index > 0)
-            {
-              const ago = minddxData.values[index - 1];
-              // console.log('minData', idx, element[18], minddxData.fields);
-              const askvol = element[ask_vol] - ago[ask_vol]
-              const askmoney = element[ask_money] - ago[ask_money]
-              const bidvol = element[bid_vol] - ago[bid_vol]
-              const bidmoney = element[bid_money] - ago[bid_money]
-              ddxline.push([idx,
-                askmoney/100,
-                -1*(bidmoney/100),
-                (element[ask_money] - element[bid_money])/100,
-                // askvol ? askmoney/askvol :  ddxline[ddxline.length-1][4],
-                // bidvol ? bidmoney/bidvol :  ddxline[ddxline.length-1][5],
-                element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
-                element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
-              ])
-            }
-            else
-            {
-              ddxline.push([idx,
-                element[ask_money]/100,
-                -1*element[bid_money]/100,
-                (element[ask_money] - element[bid_money])/100,
-                element[ask_vol] ? element[ask_money]/element[ask_vol] : 0,
-                element[bid_vol] ? element[bid_money]/element[bid_vol] : 0
-              ])
-            }
-          }
-        }
-        Chart.setData('minddx', {time:0,zdmr:1,zdmc:2,zdjz:3,zdmrp:4,zdmcp:5}, ddxline)
-        console.log('minddx', today, ddxline);
+        Chart.setData('minddx', {time:0,zdmr:1,zdmc:2,zdjz:3,
+              zdmrp:4,zdmcp:5}, getMinddxline(minddxData, minData))
         // console.log('min', today, minData.values);
         
+
         Chart.bindData(Chart.getChart('user.minline'), 'MIN')
         Chart.bindData(Chart.getChart('user.minvol'), 'MIN')
         Chart.bindData(Chart.getChart('user.board'), 'NOW')
