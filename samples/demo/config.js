@@ -17,7 +17,7 @@ var sisdb = {
 
 var sisClient = new SisClient.Client({
   SocketConstructor: WebSocket,
-  endpoint: 'ws://139.224.34.238:7329',
+  endpoint: 'ws://139.224.34.92:7329',
   // endpoint: 'ws://192.168.3.118:7329',
 })
 
