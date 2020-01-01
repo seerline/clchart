@@ -49,6 +49,7 @@
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
     "gulp-jsdoc3": "^2.0.0",
+    "husky": "^3.1.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "vuepress": "^1.0.0-alpha.13",
     "webpack": "^4.20.2",
