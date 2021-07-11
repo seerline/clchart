@@ -1,6 +1,6 @@
 <p align="center"><a href="https://seerline.github.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://seerline.github.io/logo.png" alt="ClChart logo"></a></p>
 
-# clchart
+# clchart --  cymatics line chart
 
 [![apm](https://img.shields.io/apm/l/vim-mode.svg?style=plastic)](https://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
